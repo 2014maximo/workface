@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "facework-a": {
+    "workface": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -62,18 +62,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "facework-a:build"
+            "browserTarget": "workface:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "facework-a:build:production"
+              "browserTarget": "workface:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "facework-a:build"
+            "browserTarget": "workface:build"
           }
         },
         "test": {
@@ -110,15 +110,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "facework-a:serve"
+            "devServerTarget": "workface:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "facework-a:serve:production"
+              "devServerTarget": "workface:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "facework-a"
+  "defaultProject": "workface"
 }
