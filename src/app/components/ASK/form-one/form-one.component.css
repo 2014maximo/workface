@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300i,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light+Two&display=swap');
+
+:root {
+    --fuente-uno: 'Open Sans Condensed', sans-serif;
+    --fuente-dos: 'Alex Brush', cursive;
+    --fuente-tres: 'Shadows Into Light Two', cursive;
+    --color-uno: #f6921e;
+    --color-dos:#262626;
+    --color-tres:#24a9df;
+    --color-cuatro:#8bc53f;
+    --color-cinco:#ed4036;
+    --color-seis: #c18de2;
+    --color-siete: #c3c1cf;
+    --color-ocho: #a1b0a0;
+    --color-nueve: #5ba8db;
+    --color-dark-uno: #2a2d3e;
+    --color-dark-dos: #002451;
+    --color-dark-tres:#3a0000;
+}
+.fuenteUno {
+    font-family: var(--fuente-uno);
+}
+.fuenteDos {
+    font-family: var(--fuente-dos);
+}
+.fuenteTres {
+    font-family: var(--fuente-tres);
+}

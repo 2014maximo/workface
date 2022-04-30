@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light+Two&display=swap');
+
+.linkCategoria {
+    cursor: pointer;
+    transition: 0.3s;
+}
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.8) !important;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 0;
+}
+.sidenav ul {
+    list-style:none
+}
+
+.closebtn {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 50px;
+    color: #fff;
+    display: block;
+    transition: 0.3s;
+    text-decoration: none;
+}
+a {
+    color: #fff;
+    transition: 0.3s;
+}
+a:hover {
+    text-decoration: none;
+}
+.box:hover{
+    position: relative;
+    float: left;
+    -moz-animation: 3s ease 0s normal none infinite swing;
+    -moz-transform-origin: center top;
+    -webkit-animation:swing 3s ease-in-out;
+    -webkit-transform-origin:top;
+}
+
+@-moz-keyframes swing{
+    0%{-moz-transform:rotate(-3deg)}
+    50%{-moz-transform:rotate(3deg)}
+    100%{-moz-transform:rotate(-3deg)}
+}
+@-webkit-keyframes swing{
+    0%{-webkit-transform:rotate(-3deg)}
+    50%{-webkit-transform:rotate(3deg)}
+    100%{-webkit-transform:rotate(-3deg)}
+}
+.btn-menu-catego svg{
+    height: 60px !important;
+    width: 60px !important;
+    color: white;
+    cursor: pointer;
+    margin: 40px;
+}
+.menu-hamburger-open{
+    width: 100% !important;
+    z-index: 1040;
+}
+.menu-hamburger-close {
+    width: 0% !important;
+    cursor: pointer;
+}

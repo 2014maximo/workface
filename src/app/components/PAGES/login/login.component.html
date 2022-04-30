@@ -1,0 +1,45 @@
+<div>
+<app-header></app-header>
+<div class="espaciado"></div>
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <div class="row">
+            <div class="col-md-8">
+
+            </div>
+            <div class="col-md-4">
+                <div class="p-5 text-center sombraUno">
+                    <div class="p-5">
+                        <img src="assets/img/icons/facework-blue.png" alt="" class="img-fluid drop">
+                    </div>
+                    <div *ngIf="!mostrarOcultarRecordar">
+                        <form [formGroup]="form">
+                            <input class="fuenteUno fw-3 w-100 mb-2 pl-2" type="text" placeholder="Email" formControlName="email">
+                            <input class="fuenteUno fw-3 w-100 mb-3 pl-2" type="password" placeholder="Clave"  formControlName="password">
+                            <a href="inicio" class="text-light fuenteUno fw-3">INGRESAR</a><br>
+                            <a href="http://" class="fuenteUno t3 fw-3" (click)="recordarClave(true)">Recordar contraseña</a>
+                        </form>
+                        <div class="text-center mt-3">
+                            <img src="assets/img/icons/google-favicon.png" class="mx-auto drop mb-2" alt="" height="100" width="auto">
+                            <a href="http://" class="text-light fuenteUno fw-3"><p>INGRESAR CON GMAIL</p></a>
+                        </div>
+                    </div>
+                    <div *ngIf="mostrarOcultarRecordar">
+                        <h3 class="text-light fuenteTres">RECORDAR CLAVE</h3>
+                        <form action="">
+                            <input class="fuenteUno fw-3 t3 w-100 mb-2" type="text" placeholder="Correo">
+                            <a href="inicio" class="text-light fuenteUno fw-3">ENVIAR</a><br>
+                        </form>
+                        <p class="text-light fuenteUno fw-3"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+<div class="espaciado"></div>
+<div class="espaciado"></div>
+</div>
+
