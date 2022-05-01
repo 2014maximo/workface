@@ -10,6 +10,9 @@ import { SharedModule } from './shared/shared.module';
 import { LoginComponent } from './components/login/login.component';
 import { RouterModule } from '@angular/router';
 import { ROUTES } from './app.routes';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AngularFireModule } from '@angular/fire/compat';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -20,10 +23,13 @@ import { ROUTES } from './app.routes';
     AlphaComponent,
     LoginComponent
   ],
-  imports: [
+  imports: [ 
     BrowserModule,
     SharedModule,
+    AngularFireModule.initializeApp(environment.firebase, 'workface'), 
     RouterModule.forRoot (ROUTES),
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
