@@ -1,21 +1,30 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SliderHomeComponent } from './slider-home/slider-home.component';
+import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './header/header.component';
 import { SliderFrasesHomeComponent } from './slider-frases-home/slider-frases-home.component';
+import { SliderHomeComponent } from './slider-home/slider-home.component';
+import { AlphaComponent } from './TEMPLATES/alpha/alpha.component';
 
 
 
 @NgModule({
   declarations: [
-    SliderHomeComponent,
+    FooterComponent,
+    HeaderComponent,
     SliderFrasesHomeComponent,
+    SliderHomeComponent,
+    AlphaComponent
   ],
   imports: [
     CommonModule
   ],
   exports: [
-    SliderHomeComponent,
+    FooterComponent,
+    HeaderComponent,
     SliderFrasesHomeComponent,
+    SliderHomeComponent,
+    AlphaComponent
   ]
 })
 export class SharedModule { }

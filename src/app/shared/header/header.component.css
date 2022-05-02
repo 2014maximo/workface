@@ -68,5 +68,5 @@ a:hover {
 }
 .menu-hamburger-close {
     width: 0% !important;
-    cursor: pointer;
+    cursor: pointer; 
 }
