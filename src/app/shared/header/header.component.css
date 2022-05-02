@@ -70,3 +70,7 @@ a:hover {
     width: 0% !important;
     cursor: pointer; 
 }
+
+.perfil-img{
+    border-radius: 5 5 5 5;
+}

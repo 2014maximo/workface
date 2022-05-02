@@ -17,13 +17,17 @@
                             <form [formGroup]="form">
                                 <input class="fuenteUno fw-3 w-100 mb-2 pl-2" type="text" placeholder="Email" formControlName="email">
                                 <input class="fuenteUno fw-3 w-100 mb-3 pl-2" type="password" placeholder="Clave"  formControlName="password">
-                                <a href="inicio" class="text-light fuenteUno fw-3">INGRESAR</a><br>
+                                <div class="bg-danger" *ngIf="usuarioIncorrecto">
+                                    <p class="text-light f-open-sans-c">USUARIO O CLAVE INCORRECTO</p>
+                                </div>
+                                <a class="text-light fuenteUno fw-3 cursor-p" (click)="ingresar()">INGRESAR /</a>
+                                <a class="tc-blue-one f-open-sans-c fw-3 cursor-p" (click)="ingresar()"> REGISTRAR</a><br>
                                 <a href="http://" class="fuenteUno t3 fw-3" (click)="recordarClave(true)">Recordar contraseña</a>
                             </form>
                             <div class="text-center mt-3">
-                                <a href="http://">
+                                <a href="http://" (click)="ingresarGoogle()">
                                     <img src="assets/img/icons/google-favicon.png" class="mx-auto drop mb-2 cursor-p" alt="" height="80" width="auto">
-                                    <p class="text-light fuenteUno fw-3">REGISTRAR CON GMAIL</p>
+                                    <p class="text-light fuenteUno fw-3">INGRESAR CON GMAIL</p>
                                 </a>
                             </div>
                         </div>

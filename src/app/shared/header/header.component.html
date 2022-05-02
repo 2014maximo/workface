@@ -41,13 +41,17 @@
             <div class="col-md-10 text-center">
                 <div  class="row fs-30 fuenteTres">
                     <ul class="w-100">
-                        <li class="cp text-light">
+                        <li *ngIf="userLogged|async as user">
+                            <img src="{{user.photoURL}}" alt="" height="80">
+                            <p class="tc-blue-one"><small>{{user.email}}</small></p>
+                            <a class="cursor-p" (click)="logout()">LOGOUT</a>
+                        </li>
+                        <li class="cp text-light" *ngIf="!mostrarLogin">
                             <a href="login">
-                                LOGIN
+                                INGRESAR
                             </a>
                         </li>
                         <li class="cp text-light">DEMO</li>
-                        <li class="cp text-light">REGISTRAR</li>
                         <li class="cp text-light">
                             <a href="assets/img/items/GALERIA.jpg" target="_blank">
                                 NUEVAS PLANTILLAS

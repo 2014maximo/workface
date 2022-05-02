@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -8,11 +9,14 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
+  public userLogged = this.authService.getUserLogged();
+
   public abrirMenu: string = '';
   public iconAbrir: boolean = true;
   public returnHome: string = '';
+  public mostrarLogin: string = '';
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private authService: AuthService) {
     this.inicializarVariables();
   }
 
@@ -25,9 +29,14 @@ export class HeaderComponent implements OnInit {
     // tslint:disable-next-line: prefer-const
     let path = this.route.snapshot.url.join('/');
 
+    if(path === 'login'){
+      this.mostrarLogin = 'login';
+    }
+
+
     if (path !== 'home'){
       this.returnHome = 'home';
-    }else{
+    } else {
       this.returnHome = '';
     }
 
@@ -41,5 +50,10 @@ export class HeaderComponent implements OnInit {
     this.abrirMenu = 'menu-hamburger-close';
     this.iconAbrir = true;
   }
+
+  public logout(){
+    this.authService.loggout();
+  }
+
 
 }
