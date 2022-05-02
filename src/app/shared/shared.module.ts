@@ -5,6 +5,7 @@ import { HeaderComponent } from './header/header.component';
 import { SliderFrasesHomeComponent } from './slider-frases-home/slider-frases-home.component';
 import { SliderHomeComponent } from './slider-home/slider-home.component';
 import { AlphaComponent } from './TEMPLATES/alpha/alpha.component';
+import { FormBasicComponent } from './form-basic/form-basic.component';
 
 
 
@@ -14,7 +15,8 @@ import { AlphaComponent } from './TEMPLATES/alpha/alpha.component';
     HeaderComponent,
     SliderFrasesHomeComponent,
     SliderHomeComponent,
-    AlphaComponent
+    AlphaComponent,
+    FormBasicComponent
   ],
   imports: [
     CommonModule
@@ -24,7 +26,8 @@ import { AlphaComponent } from './TEMPLATES/alpha/alpha.component';
     HeaderComponent,
     SliderFrasesHomeComponent,
     SliderHomeComponent,
-    AlphaComponent
+    AlphaComponent,
+    FormBasicComponent
   ]
 })
 export class SharedModule { }
