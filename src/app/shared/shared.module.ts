@@ -6,6 +6,7 @@ import { SliderFrasesHomeComponent } from './slider-frases-home/slider-frases-ho
 import { SliderHomeComponent } from './slider-home/slider-home.component';
 import { AlphaComponent } from './TEMPLATES/alpha/alpha.component';
 import { FormBasicComponent } from './form-basic/form-basic.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -19,7 +20,9 @@ import { FormBasicComponent } from './form-basic/form-basic.component';
     FormBasicComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   exports: [
     FooterComponent,

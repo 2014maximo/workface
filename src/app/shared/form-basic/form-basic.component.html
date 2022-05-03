@@ -1,1 +1,13 @@
-<p>form-basic works!</p>
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        
+    </div>
+    <div class="col-md-1"></div>
+    <form [formGroup]="formBasic">
+        <input class="fuenteUno fw-3 w-100 mb-2 pl-2" type="text" placeholder="Email" formControlName="email">
+        <input class="fuenteUno fw-3 w-100 mb-3 pl-2" type="password" placeholder="Clave"  formControlName="password">
+        <div class="bg-danger">
+        </div>
+    </form>
+</div>
