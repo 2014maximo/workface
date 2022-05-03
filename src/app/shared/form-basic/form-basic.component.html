@@ -1,13 +1,33 @@
+
 <div class="row">
     <div class="col-md-1"></div>
     <div class="col-md-10">
         
+        <form [formGroup]="formBasic">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="f-shadow-into-l fs-30 tc-blue-one">Nombre Completo</p>
+                    <input class="f-open-sans-c w-50 fw-3 mb-2 pl-2" type="text" placeholder="Primer nombre" formControlName="primerNombre">
+                    <input class="f-open-sans-c w-50 fw-3 mb-2 pl-2" type="text" placeholder="Segundo nombre" formControlName="segundoNombre">
+                    <input class="f-open-sans-c w-50 fw-3 mb-2 pl-2" type="text" placeholder="Primer apellido" formControlName="primerApellido">
+                    <input class="f-open-sans-c w-50 fw-3 mb-2 pl-2" type="text" placeholder="Segudo apellido" formControlName="segundoApellido">
+                </div>
+                <div class="col-md-6">
+                    <p class="f-shadow-into-l fs-30 tc-blue-one">Documento de identidad</p>
+                    <select class="js-example-basic-single f-open-sans-c w-50" name="state" formControlName="tipoIdentificacion">
+                        <option value="">Tipo de identificación<nav></nav></option>
+                        <option *ngFor="let lista of listaTipoIdentificacion" value="{{lista.value}}">{{lista.label}}</option>
+                    </select>
+                    <input class="f-open-sans-c w-50 fw-3 mb-2 pl-2" type="text" placeholder="Identificación" formControlName="Identificacion">
+                    <p class="f-shadow-into-l fs-30 tc-blue-one">Nacimiento</p>
+                    <input class="f-open-sans-c w-50 fw-3 mb-2 pl-2" type="date" placeholder="Fecha de Nacimiento" formControlName="fechaNacimiento">
+                    <input class="f-open-sans-c w-50 fw-3 mb-2 pl-2" type="text" placeholder="Lugar de Nacimiento" formControlName="ciudadNacimiento">
+                </div>
+
+            </div>
+
+        </form>
+
     </div>
     <div class="col-md-1"></div>
-    <form [formGroup]="formBasic">
-        <input class="fuenteUno fw-3 w-100 mb-2 pl-2" type="text" placeholder="Email" formControlName="email">
-        <input class="fuenteUno fw-3 w-100 mb-3 pl-2" type="password" placeholder="Clave"  formControlName="password">
-        <div class="bg-danger">
-        </div>
-    </form>
 </div>
