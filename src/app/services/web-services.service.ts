@@ -1,15 +1,20 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebServicesService {
 
-  private paises: string = 'http://country.io/names.json'
+  private recursos: string = 'https://plantillas_dev.gitlab.io/styles/assets/json/recursos.json'
 
-  constructor( ) { }
+  constructor(private http: HttpClient) { }
 
-  consultarPaises(){
-    
+  consultarRecursos(): Observable<any[]> {
+    return this.http.get<any[]>(this.recursos);
   }
+
+
+
 }
