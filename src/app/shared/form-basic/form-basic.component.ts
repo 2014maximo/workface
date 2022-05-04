@@ -30,6 +30,7 @@ export class FormBasicComponent implements OnInit {
       genero: ['', [Validators.required]],
       experienciaLaboral: ['', [Validators.required]],
       telFijo: [''],
+      telCel: [''],
       email:['', [Validators.required, Validators.pattern(/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/)]],
     });
 
