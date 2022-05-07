@@ -1,7 +1,17 @@
 .estilo-input {
     background: transparent;
     color: white;
-    border-top: 0;
-    border-right: 0;
-    border-left: 0;
+    border-top: none;
+    border-right: none;
+    border-left: 0.3px solid gray;
+    border-bottom: 0.3px solid gray;
+}
+.estiloLabel{
+    color: black;
+    background-color: #fff;
+    font-size: 13px;
+    position: relative;
+    height: 20px;
+    line-height: 1;
+    transform: rotate(-9deg);
 }

@@ -17,26 +17,47 @@
                         <div class="carousel-inner">
                             <div class="carousel-item active">
                                 <div class="espaciado"></div>
-                                <p class="f-shadow-into-l fs-30 tc-blue-one">Nombre Completo</p>
-                                <input class="f-open-sans-c w-50 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="Primer nombre" formControlName="primerNombre">
-                                <input class="f-open-sans-c w-50 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="Segundo nombre" formControlName="segundoNombre">
-                                <input class="f-open-sans-c w-50 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="Primer apellido" formControlName="primerApellido">
-                                <input class="f-open-sans-c w-50 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="Segundo apellido" formControlName="segundoApellido">
+                                <div class="shadow-two bg-black p-5">
+                                    <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">NOMBRE COMPLETO</h3>
+                                    <div class="espacio"></div>
+                                    <label class="estiloLabel f-open-sans-c p-1">Primer nombre<span class="text-danger">*</span></label>
+                                    <input class="f-open-sans-c w-100 fw-3 fs-17 mb-2 pl-2 estilo-input" type="text" formControlName="primerNombre">
+
+                                    <label class="estiloLabel f-open-sans-c p-1">Segundo nombre</label>
+                                    <input class="f-open-sans-c w-100 fw-3 fs-17 mb-2 pl-2 estilo-input" type="text"formControlName="segundoNombre">
+
+                                    <label class="estiloLabel f-open-sans-c p-1">Primer apellido<span class="text-danger">*</span></label>
+                                    <input class="f-open-sans-c w-100 fw-3 fs-17 mb-2 pl-2 estilo-input" type="text" formControlName="primerApellido">
+
+                                    <label class="estiloLabel f-open-sans-c p-1">Segundo apellido</label>
+                                    <input class="f-open-sans-c w-100 fw-3 fs-17 mb-2 pl-2 estilo-input" type="text" formControlName="segundoApellido">
+                                </div>
+
                                 <div class="espaciado"></div>
                             </div>
                             
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
-                                <p class="f-shadow-into-l fs-30 tc-blue-one">Identificación</p>
-                                <select class="f-open-sans-c w-50 estilo-input" name="state" formControlName="tipoIdentificacion">
-                                    <option value="">Tipo documento</option>
-                                    <option *ngFor="let tipoIden of listaTipoIdentificacion" value="">{{ tipoIden.label}}</option>
-                                </select>
-                                <input class="f-open-sans-c w-50 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="Identificación" formControlName="identificacion">
-                                <select class="f-open-sans-c w-50 estilo-input" name="state" formControlName="nacionalidad">
-                                    <option value="">Nacionalidad</option>
-                                    <option *ngFor="let pais of paises" value="">{{ pais.pais}}</option>
-                                </select>
+                                <div class="shadow-two bg-black p-5">
+                                    <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">IDENTIFICACIÓN</h3>
+                                    <div class="espacio"></div>
+
+                                    <label class="estiloLabel f-open-sans-c p-1">Tipo documento<span class="text-danger">*</span></label>
+                                    <select class="f-open-sans-c w-100 estilo-input text-dark" name="state" formControlName="tipoIdentificacion">
+                                        <option value="null"></option>
+                                        <option *ngFor="let tipoIden of listaTipoIdentificacion" value="">{{ tipoIden.label}}</option>
+                                    </select>
+
+                                    <label class="estiloLabel f-open-sans-c p-1">Identificación<span class="text-danger">*</span></label>
+                                    <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="Identificación" formControlName="identificacion">
+                                    
+                                    
+                                    <label class="estiloLabel f-open-sans-c p-1">Nacionalidad<span class="text-danger">*</span></label>
+                                    <select class="f-open-sans-c w-100 estilo-input" name="state" formControlName="nacionalidad">
+                                        <option value="null">----</option>
+                                        <option *ngFor="let pais of paises" value="">{{ pais.pais}}</option>
+                                    </select>
+                                </div>
                                 <div class="espaciado"></div>
                             </div>
 
