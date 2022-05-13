@@ -13,5 +13,5 @@
     position: relative;
     height: 20px;
     line-height: 1;
-    transform: rotate(-9deg);
+    border-radius: 5px;
 }

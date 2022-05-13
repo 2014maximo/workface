@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 import { UsuarioModel } from '../../models/usuario.model';
 import { WebServicesService } from '../../services/web-services.service';
 
@@ -28,19 +28,89 @@ export class FormBasicComponent implements OnInit {
       direccionResidencia: ['', [Validators.required]],
       barrioResidencia: ['', [Validators.required]],
       genero: ['', [Validators.required]],
-      experienciaLaboral: ['', [Validators.required]],
       telFijo: [''],
       telCel: [''],
       email:['', [Validators.required, Validators.pattern(/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/)]],
+      estudios: this.fb.array([]),
+      expLaboral: this.fb.array([]),
+      conocimientosAdicionales: this.fb.array([]),
+      referenciasPersonales: this.fb.array([]),
+      referenciasFamiliares: this.fb.array([])
+
     });
 
     this.listaTipoIdentificacion = [];
     this.paises = [];
     this.cargarTipoIdentificacion();
-
   }
 
   ngOnInit(): void {
+  }
+
+  get estudios(): FormArray {
+    return this.formBasic.get('estudios') as FormArray;
+  }
+  get expLaboral(): FormArray {
+    return this.formBasic.get('expLaboral') as FormArray;
+  }
+  get conocimientosAdicionales(): FormArray {
+    return this.formBasic.get('conocimientosAdicionales') as FormArray;
+  }
+  get referenciasPersonales(): FormArray {
+    return this.formBasic.get('referenciasPersonales') as FormArray;
+  }
+  get referenciasFamiliares(): FormArray {
+    return this.formBasic.get('referenciasFamiliares') as FormArray;
+  }
+  
+  agregarEstudios(){
+    const estudio = this.fb.group({
+      nombreInstitucion: ['', [Validators.required]],
+      tituloObtenido: ['', [Validators.required]],
+      fechaTitulo: [new Date(), [Validators.required]]
+    });
+    this.estudios.push(estudio);
+  }
+
+  agregarExpLaboral(){
+    const labor = this.fb.group({
+      nombreEmpresa: ['', [Validators.required]],
+      nombreJefeInmediato: ['', [Validators.required]],
+      fechaInicio: [new Date(), [Validators.required]],
+      fechaFinal: [new Date(), [Validators.required]],
+      telContacto: ['', [Validators.required]],
+    });
+    this.expLaboral.push(labor);
+  }
+  
+  agregarConocimientos(){
+    const conocimiento = this.fb.group({
+      nombreConocimiento: ['', [Validators.required]],
+      duracion: ['', [Validators.required]],
+      fechaFinalizacion: [new Date(), [Validators.required]],
+    });
+    this.conocimientosAdicionales.push(conocimiento);
+  }
+
+  agregarReferenciaPersonal(){
+    const referencia = this.fb.group({
+      nombreCompleto: ['', [Validators.required]],
+      ocupacion: ['', [Validators.required]],
+      telefono: ['', [Validators.required]],
+      empresa: ['', [Validators.required]],
+    });
+    this.referenciasPersonales.push(referencia);
+  }
+
+  agregarReferenciaFamiliar(){
+    const referencia = this.fb.group({
+      nombreCompleto: ['', [Validators.required]],
+      ocupacion: ['', [Validators.required]],
+      telefono: ['', [Validators.required]],
+      parentesco: ['', [Validators.required]],
+      empresa: ['', [Validators.required]],
+    });
+    this.referenciasFamiliares.push(referencia);
   }
 
   cargarTipoIdentificacion(){
