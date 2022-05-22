@@ -1,11 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Grape+Nuts&display=swap');
 .estilo-input {
     background: transparent;
-    color: white;
+    color: #FFEF27;
     border-top: none;
     border-right: none;
     border-left: 0.3px solid gray;
     border-bottom: 0.3px solid gray;
+    height: 40px;
+    font-size: 30px;
+    font-family: 'Grape Nuts', cursive !important;
 }
+
 .estiloLabel{
     color: black;
     background-color: #fff;
@@ -14,4 +19,16 @@
     height: 20px;
     line-height: 1;
     border-radius: 5px;
+}
+.bg-form {
+    
+background: rgba(61,56,61,1);
+background: -moz-radial-gradient(center, ellipse cover, rgba(61,56,61,1) 0%, rgba(26,26,26,1) 59%, rgba(26,26,26,1) 100%);
+background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(61,56,61,1)), color-stop(59%, rgba(26,26,26,1)), color-stop(100%, rgba(26,26,26,1)));
+background: -webkit-radial-gradient(center, ellipse cover, rgba(61,56,61,1) 0%, rgba(26,26,26,1) 59%, rgba(26,26,26,1) 100%);
+background: -o-radial-gradient(center, ellipse cover, rgba(61,56,61,1) 0%, rgba(26,26,26,1) 59%, rgba(26,26,26,1) 100%);
+background: -ms-radial-gradient(center, ellipse cover, rgba(61,56,61,1) 0%, rgba(26,26,26,1) 59%, rgba(26,26,26,1) 100%);
+background: radial-gradient(ellipse at center, rgba(61,56,61,1) 0%, rgba(26,26,26,1) 59%, rgba(26,26,26,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3d383d', endColorstr='#1a1a1a', GradientType=1 );
+
 }

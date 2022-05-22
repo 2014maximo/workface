@@ -63,6 +63,10 @@ export class FormBasicComponent implements OnInit {
     return (this.formBasic.get(formArray) as FormArray).controls;
   }
 
+  eraseForm(campos: string[]){
+    campos.forEach(campo => this.formBasic.get(campo)?.reset());
+  }
+
   deleteControls(formArray: string, index: number){
     (<FormArray>this.formBasic.controls[formArray]).removeAt(index);
   }
