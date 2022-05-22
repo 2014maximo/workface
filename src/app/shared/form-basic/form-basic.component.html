@@ -10,6 +10,8 @@
                     <li data-target="#carousel-form" data-slide-to="1"></li>
                     <li data-target="#carousel-form" data-slide-to="2"></li>
                     <li data-target="#carousel-form" data-slide-to="3"></li>
+                    <li data-target="#carousel-form" data-slide-to="4"></li>
+                    <li data-target="#carousel-form" data-slide-to="5"></li>
                 </ol>
                 <div class="row">
                     <div class="col-md-2"></div>
@@ -18,6 +20,7 @@
                             <div class="carousel-item active">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-black p-5">
+                                    <h4 class="text-light f-shadow-into-l fs-40">01/06</h4>
                                     <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">NOMBRE COMPLETO</h3>
                                     <label class="estiloLabel f-open-sans-c p-1">Primer nombre<span class="text-danger">*</span></label>
                                     <input class="f-open-sans-c w-100 fw-3 fs-17 mb-2 pl-2 estilo-input" type="text" formControlName="primerNombre">
@@ -38,6 +41,7 @@
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-black p-5">
+                                    <h4 class="text-light f-shadow-into-l fs-40">02/06</h4>
                                     <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">IDENTIFICACIÓN</h3>
                                     
                                     <label class="estiloLabel f-open-sans-c p-1">Tipo documento<span class="text-danger">*</span></label>
@@ -62,6 +66,7 @@
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-black p-5">
+                                    <h4 class="text-light f-shadow-into-l fs-40">03/06</h4>
                                     <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">NACIMIENTO</h3>
                                     <label class="estiloLabel f-open-sans-c p-1">Fecha de nacimiento<span class="text-danger">*</span></label>
                                     <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="date" formControlName="fechaNacimiento">
@@ -81,27 +86,87 @@
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-black p-5">
+                                    <h4 class="text-light f-shadow-into-l fs-40">04/06</h4>
                                     <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">CONTACTO</h3>
-                                    <input class="f-open-sans-c w-50 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="Dirección Residencia" formControlName="direccionResidencia">
-                                    <input class="f-open-sans-c w-50 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="Barrio Residencia" formControlName="barrioResidencia">
-                                    <input class="f-open-sans-c w-50 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="Número Fijo" formControlName="telFijo">
-                                    <input class="f-open-sans-c w-50 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="Número Móvil" formControlName="telCel">
-                                    <input class="f-open-sans-c w-50 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="Email" formControlName="email">
+                                    <label class="estiloLabel f-open-sans-c p-1">Dirección residencia<span class="text-danger">*</span></label>
+                                    <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="direccionResidencia">
+                                    <label class="estiloLabel f-open-sans-c p-1">Barrio residencia<span class="text-danger">*</span></label>
+                                    <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="barrioResidencia">
+                                    <label class="estiloLabel f-open-sans-c p-1">Número fijo<span class="text-danger">*</span></label>
+                                    <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="telFijo">
+                                    <label class="estiloLabel f-open-sans-c p-1">Número móvil<span class="text-danger">*</span></label>
+                                    <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="telCel">
+                                    <label class="estiloLabel f-open-sans-c p-1">Email<span class="text-danger">*</span></label>
+                                    <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="email">
                                 </div>
                                 
                                 <div class="espaciado"></div>
                             </div>
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
-                                <div class="shadow-two">
+                                <div class="shadow-two bg-black p-5">
+                                    <h4 class="text-light f-shadow-into-l fs-40">05/06</h4>
                                     <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">ESTUDIOS</h3>
-                                    <ng-container formGroupName="estudios">
-                                        <label class="estiloLabel f-open-sans-c p-1">Email<span class="text-danger">*</span></label>
-                                        <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="email">
+                                    <div class="espacio"></div>
+                                    <ng-container formArrayName="estudios">
+                                        <div [formGroupName]="i" *ngFor="let estudio of getControls('estudios'); let i = index">
 
+                                                <label class="estiloLabel f-open-sans-c p-1">Nombre institución<span class="text-danger">*</span></label>
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="nombreInstitucion">
+                                                <label class="estiloLabel f-open-sans-c p-1">Título obtenido<span class="text-danger">*</span></label>
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="tituloObtenido">
+                                                <label class="estiloLabel f-open-sans-c p-1">Fecha título<span class="text-danger">*</span></label>
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="date" formControlName="fechaTitulo">
+                                                <div class="text-center">
+                                                    <button (click)="deleteControls('estudios', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-trash3-fill drop" viewBox="0 0 16 16">
+                                                            <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                        </div>
+                                        <div class="espacio"></div>
                                     </ng-container>
+                                    <button (click)="agregarEstudio()" class="mb-5 bg-transparent f-open-sans-c fs-18 text-light cursor-p border-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                        </svg>
+                                    </button>
                                 </div>
                                 <div class="espaciado"></div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="espaciado"></div>
+                                <div class="shadow-two bg-black p-5">
+                                    <h4 class="text-light f-shadow-into-l fs-40">06/06</h4>
+                                    <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">EXPERIENCIA LABORAL</h3>
+                                    <ng-container formArrayName="expLaboral">
+                                        <div [formGroupName]="i"  *ngFor="let formExpLaboral of getControls('expLaboral'); let i = index">
+                                            <label class="estiloLabel f-open-sans-c p-1">Empresa<span class="text-danger">*</span></label>
+                                            <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="nombreEmpresa">
+                                            <label class="estiloLabel f-open-sans-c p-1">Jefe inmediato<span class="text-danger">*</span></label>
+                                            <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="JefeInmediatoEmpresa">
+                                            <label class="estiloLabel f-open-sans-c p-1">Fecha de inicio<span class="text-danger">*</span></label>
+                                            <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="date" formControlName="fechaInicioEmpresa">
+                                            <label class="estiloLabel f-open-sans-c p-1">Fecha de final actual<span class="text-danger">*</span></label>
+                                            <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="date" formControlName="fechaFinalEmpresa">
+                                            <label class="estiloLabel f-open-sans-c p-1">Número de contacto<span class="text-danger">*</span></label>
+                                            <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="telContactoEmpresa">
+
+                                            <button (click)="deleteControls('expLaboral', i)" class="tc-red-one cursor-p text-center w-100">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                                                    <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+                                                  </svg>
+                                            </button>
+                                        </div>
+                                    </ng-container>
+                                    <div class="w-100 text-center">
+                                        <button class="btn btn-primary" (click)="agregarExpLaboral()">
+                                            + Agregar Empresa
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                 </div>
@@ -120,8 +185,12 @@
                             <span class="sr-only">Next</span>
                         </button>
                     </div>
+                    <button (click)="estadoForm()">
+                        VALOR DEL FORM CONSOLA
+                    </button>
 
         </form>
     </div>
     <div class="col-md-1"></div>
 </div>
+<div class="espaciado"></div>
