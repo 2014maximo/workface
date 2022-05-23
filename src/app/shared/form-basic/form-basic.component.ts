@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, FormArray, AbstractControl } from '@angular/forms';
 import { UsuarioModel } from '../../models/usuario.model';
 import { WebServicesService } from '../../services/web-services.service';
 
@@ -63,8 +63,12 @@ export class FormBasicComponent implements OnInit {
     return (this.formBasic.get(formArray) as FormArray).controls;
   }
 
-  eraseForm(campos: string[]){
-    campos.forEach(campo => this.formBasic.get(campo)?.reset());
+  eraseForm(campos: string[], formArray?: AbstractControl){
+    if(formArray){
+      formArray.reset();
+    } else {
+      campos.forEach(campo => this.formBasic.get(campo)?.reset());
+    }
   }
 
   deleteControls(formArray: string, index: number){

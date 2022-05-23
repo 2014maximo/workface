@@ -1,8 +1,6 @@
-
 <div class="row">
     <div class="col-md-1"></div>
     <div class="col-md-10">
-        
         <form [formGroup]="formBasic">
             <div id="carousel-form" class="carousel slide carousel-fade" data-touch="false" data-interval="false">
                 <ol class="carousel-indicators">
@@ -12,6 +10,9 @@
                     <li data-target="#carousel-form" data-slide-to="3"></li>
                     <li data-target="#carousel-form" data-slide-to="4"></li>
                     <li data-target="#carousel-form" data-slide-to="5"></li>
+                    <li data-target="#carousel-form" data-slide-to="6"></li>
+                    <li data-target="#carousel-form" data-slide-to="7"></li>
+                    <li data-target="#carousel-form" data-slide-to="8"></li>
                 </ol>
                 <div class="row">
                     <div class="col-md-2"></div>
@@ -20,7 +21,7 @@
                             <div class="carousel-item active">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">01/<span class="fs-12">08</span></h4>
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">01/<span class="fs-12">09</span></h4>
                                     <!--------------------------------------------------------------------------------->
                                     <!-------------------------------------- NOMBRE ----------------------------------->
                                     <!--------------------------------------------------------------------------------->
@@ -53,7 +54,7 @@
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">02/<span class="fs-12">08</span></h4>
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">02/<span class="fs-12">09</span></h4>
                                     <!----------------------------------------------------------------------------------------->
                                     <!-------------------------------------- IDENTIFICACIÓN ----------------------------------->
                                     <!----------------------------------------------------------------------------------------->
@@ -90,7 +91,7 @@
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">03/<span class="fs-12">08</span></h4>
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">03/<span class="fs-12">09</span></h4>
                                     <!------------------------------------------------------------------------------------->
                                     <!-------------------------------------- NACIMIENTO ----------------------------------->
                                     <!------------------------------------------------------------------------------------->
@@ -107,6 +108,12 @@
                                             <option value="">Masculino</option>
                                             <option value="">Transgénero</option>
                                         </select>
+
+                                        <button (click)="eraseForm(['fechaNacimiento','ciudadNacimiento','genero'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-right" title="Borrar contenido de campos">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
+                                                <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
+                                            </svg>
+                                        </button>
                                     </div>
                                 </div>
                                 <div class="espaciado"></div>
@@ -115,29 +122,38 @@
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">04/<span class="fs-12">08</span></h4>
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">04/<span class="fs-12">09</span></h4>
                                     <!----------------------------------------------------------------------------------->
                                     <!-------------------------------------- CONTACTO ----------------------------------->
                                     <!----------------------------------------------------------------------------------->
                                     <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">CONTACTO</h3>
-                                    <label class="estiloLabel f-open-sans-c p-1">Dirección residencia<span class="text-danger">*</span></label>
-                                    <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="direccionResidencia">
-                                    <label class="estiloLabel f-open-sans-c p-1">Barrio residencia<span class="text-danger">*</span></label>
-                                    <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="barrioResidencia">
-                                    <label class="estiloLabel f-open-sans-c p-1">Número fijo<span class="text-danger">*</span></label>
-                                    <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="telFijo">
-                                    <label class="estiloLabel f-open-sans-c p-1">Número móvil<span class="text-danger">*</span></label>
-                                    <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="telCel">
-                                    <label class="estiloLabel f-open-sans-c p-1">Email<span class="text-danger">*</span></label>
-                                    <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="email">
+                                    <div class="p-5">
+                                        <label class="estiloLabel f-open-sans-c p-1">Dirección residencia<span class="text-danger">*</span></label>
+                                        <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="direccionResidencia">
+                                        <label class="estiloLabel f-open-sans-c p-1">Barrio residencia<span class="text-danger">*</span></label>
+                                        <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="barrioResidencia">
+                                        <label class="estiloLabel f-open-sans-c p-1">Número fijo<span class="text-danger">*</span></label>
+                                        <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="telFijo">
+                                        <label class="estiloLabel f-open-sans-c p-1">Número móvil<span class="text-danger">*</span></label>
+                                        <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="telCel">
+                                        <label class="estiloLabel f-open-sans-c p-1">Email<span class="text-danger">*</span></label>
+                                        <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="email">
+
+                                        <button (click)="eraseForm(['direccionResidencia','barrioResidencia','telFijo','telCel','email'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-right" title="Borrar contenido de campos">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
+                                                <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
                                 </div>
                                 
                                 <div class="espaciado"></div>
                             </div>
+
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">05/<span class="fs-12">08</span></h4>
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">05/<span class="fs-12">09</span></h4>
                                     <!----------------------------------------------------------------------------------->
                                     <!-------------------------------------- ESTUDIOS ----------------------------------->
                                     <!----------------------------------------------------------------------------------->
@@ -153,6 +169,12 @@
                                                 <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="tituloObtenido">
                                                 <label class="estiloLabel f-open-sans-c p-1">Fecha título<span class="text-danger">*</span></label>
                                                 <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="date" formControlName="fechaTitulo">
+
+                                                <button (click)="eraseForm(['nombreInstitucion','tituloObtenido','fechaTitulo'], estudio)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-right" title="Borrar contenido de campos">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
+                                                        <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
+                                                    </svg>
+                                                </button>
     
                                                 <button (click)="deleteControls('estudios', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-right">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill drop" viewBox="0 0 16 16">
@@ -175,33 +197,43 @@
                                 </div>
                                 <div class="espaciado"></div>
                             </div>
+
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">06/<span class="fs-12">08</span></h4>
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">06/<span class="fs-12">09</span></h4>
                                     <!----------------------------------------------------------------------------------------->
                                     <!-------------------------------------- EXPERIENCIA LABORAL ------------------------------>
                                     <!----------------------------------------------------------------------------------------->
                                     <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">EXPERIENCIA LABORAL</h3>
                                     <ng-container formArrayName="expLaboral">
                                         <div [formGroupName]="i"  *ngFor="let formExpLaboral of getControls('expLaboral'); let i = index">
-                                            <h4 class="f-open-sans-c tc-yellow-one">Empresa {{i + 1}}</h4>
-                                            <label class="estiloLabel f-open-sans-c p-1">Empresa<span class="text-danger">*</span></label>
-                                            <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="nombreEmpresa">
-                                            <label class="estiloLabel f-open-sans-c p-1">Jefe inmediato<span class="text-danger">*</span></label>
-                                            <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="JefeInmediatoEmpresa">
-                                            <label class="estiloLabel f-open-sans-c p-1">Fecha de inicio<span class="text-danger">*</span></label>
-                                            <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="date" formControlName="fechaInicioEmpresa">
-                                            <label class="estiloLabel f-open-sans-c p-1">Fecha de final actual<span class="text-danger">*</span></label>
-                                            <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="date" formControlName="fechaFinalEmpresa">
-                                            <label class="estiloLabel f-open-sans-c p-1">Número de contacto<span class="text-danger">*</span></label>
-                                            <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="telContactoEmpresa">
+                                            <div class="p-5">
+                                                <h4 class="f-grape tc-blue-two fs-17 text-shadow-one">Empresa {{i + 1}}</h4>
+                                                <label class="estiloLabel f-open-sans-c p-1">Empresa<span class="text-danger">*</span></label>
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="nombreEmpresa">
+                                                <label class="estiloLabel f-open-sans-c p-1">Jefe inmediato<span class="text-danger">*</span></label>
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="JefeInmediatoEmpresa">
+                                                <label class="estiloLabel f-open-sans-c p-1">Fecha de inicio<span class="text-danger">*</span></label>
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="date" formControlName="fechaInicioEmpresa">
+                                                <label class="estiloLabel f-open-sans-c p-1">Fecha de final actual<span class="text-danger">*</span></label>
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="date" formControlName="fechaFinalEmpresa">
+                                                <label class="estiloLabel f-open-sans-c p-1">Número de contacto<span class="text-danger">*</span></label>
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="telContactoEmpresa">
+    
+                                                <button (click)="eraseForm([], formExpLaboral)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-right" title="Borrar contenido de campos">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
+                                                        <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
+                                                    </svg>
+                                                </button>
 
-                                            <button (click)="deleteControls('expLaboral', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
-                                                    <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
-                                                  </svg>
-                                            </button>
+                                                <button (click)="deleteControls('expLaboral', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-right">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill drop" viewBox="0 0 16 16">
+                                                        <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+                                                    </svg>
+                                                </button>
+
+                                            </div>
                                         </div>
                                     </ng-container>
                                     <button (click)="agregarExpLaboral()" class="mb-5 bg-transparent f-open-sans-c fs-18 text-light cursor-p border-0">
@@ -211,11 +243,13 @@
                                         </svg>
                                     </button>
                                 </div>
+                                <div class="espaciado"></div>
                             </div>
+
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">07/<span class="fs-12">08</span></h4>
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">07/<span class="fs-12">09</span></h4>
                                     <!----------------------------------------------------------------------------------------->
                                     <!-------------------------------------- OTROS CONOCIMIENTOS ------------------------------>
                                     <!----------------------------------------------------------------------------------------->
@@ -223,19 +257,27 @@
 
                                     <ng-container formArrayName="conocimientosAdicionales">
                                         <div [formGroupName]="i"  *ngFor="let conocimientos of getControls('conocimientosAdicionales'); let i = index">
-                                            <h4 class="f-open-sans-c tc-yellow-one">Conocimiento {{i + 1}}</h4>
-                                            <label class="estiloLabel f-open-sans-c p-1">Conocimiento<span class="text-danger">*</span></label>
-                                            <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="nombreConocimiento">
-                                            <label class="estiloLabel f-open-sans-c p-1">Duración<span class="text-danger">*</span></label>
-                                            <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="duracion">
-                                            <label class="estiloLabel f-open-sans-c p-1">Fecha Finalización<span class="text-danger">*</span></label>
-                                            <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="date" formControlName="fechaFinalizacion">
-
-                                            <button (click)="deleteControls('conocimientosAdicionales', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
-                                                    <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
-                                                  </svg>
-                                            </button>
+                                            <div class="p-5">
+                                                <h4 class="f-grape tc-blue-two fs-17 text-shadow-one">Conocimiento {{i + 1}}</h4>
+                                                <label class="estiloLabel f-open-sans-c p-1">Conocimiento<span class="text-danger">*</span></label>
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="nombreConocimiento">
+                                                <label class="estiloLabel f-open-sans-c p-1">Duración<span class="text-danger">*</span></label>
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="duracion">
+                                                <label class="estiloLabel f-open-sans-c p-1">Fecha Finalización<span class="text-danger">*</span></label>
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="date" formControlName="fechaFinalizacion">
+    
+                                                <button (click)="eraseForm([], conocimientos)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-right" title="Borrar contenido de campos">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
+                                                        <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
+                                                    </svg>
+                                                </button>
+    
+                                                <button (click)="deleteControls('conocimientosAdicionales', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-right">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill drop" viewBox="0 0 16 16">
+                                                        <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
                                         </div>
                                     </ng-container>
                                     <button (click)="agregarConocimientos()" title="Agregar otro conocimiento" class="mb-5 bg-transparent f-open-sans-c fs-18 text-light cursor-p border-0">
@@ -245,11 +287,13 @@
                                         </svg>
                                     </button>
                                 </div>
+                                <div class="espaciado"></div>
                             </div>
+
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">08/<span class="fs-12">08</span></h4>
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">08/<span class="fs-12">09</span></h4>
                                     <!----------------------------------------------------------------------------------------->
                                     <!-------------------------------------- REFERENCIAS PERSONALES --------------------------->
                                     <!----------------------------------------------------------------------------------------->
@@ -257,21 +301,29 @@
 
                                     <ng-container formArrayName="referenciasPersonales">
                                         <div [formGroupName]="i"  *ngFor="let referenciasPersonales of getControls('referenciasPersonales'); let i = index">
-                                            <h4 class="f-open-sans-c tc-yellow-one">Referencia {{i + 1}}</h4>
-                                            <label class="estiloLabel f-open-sans-c p-1">Nombre Completo<span class="text-danger">*</span></label>
-                                            <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="nombreCompleto">
-                                            <label class="estiloLabel f-open-sans-c p-1">Ocupación - Cargo<span class="text-danger">*</span></label>
-                                            <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="ocupacion">
-                                            <label class="estiloLabel f-open-sans-c p-1">Teléfono<span class="text-danger">*</span></label>
-                                            <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="telefono">
-                                            <label class="estiloLabel f-open-sans-c p-1">Empresa<span class="text-danger">*</span></label>
-                                            <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="empresa">
-
-                                            <button (click)="deleteControls('referenciasPersonales', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
-                                                    <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
-                                                  </svg>
-                                            </button>
+                                            <div class="p-5">
+                                                <h4 class="f-grape tc-blue-two fs-17 text-shadow-one">Persona {{i + 1}}</h4>
+                                                <label class="estiloLabel f-open-sans-c p-1">Nombre Completo<span class="text-danger">*</span></label>
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="nombreCompleto">
+                                                <label class="estiloLabel f-open-sans-c p-1">Ocupación - Cargo<span class="text-danger">*</span></label>
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="ocupacion">
+                                                <label class="estiloLabel f-open-sans-c p-1">Teléfono<span class="text-danger">*</span></label>
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="telefono">
+                                                <label class="estiloLabel f-open-sans-c p-1">Empresa<span class="text-danger">*</span></label>
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="empresa">
+    
+                                                <button (click)="eraseForm([], referenciasPersonales)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-right" title="Borrar contenido de campos">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
+                                                        <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
+                                                    </svg>
+                                                </button>
+    
+                                                <button (click)="deleteControls('referenciasPersonales', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-right">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill drop" viewBox="0 0 16 16">
+                                                        <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
                                         </div>
                                     </ng-container>
                                     <button (click)="agregarReferenciaPersonal()" title="Agregar referencia personal" class="mb-5 bg-transparent f-open-sans-c fs-18 text-light cursor-p border-0">
@@ -281,27 +333,73 @@
                                         </svg>
                                     </button>
                                 </div>
+                                <div class="espaciado"></div>
+                            </div>
+
+                            <div class="carousel-item">
+                                <div class="espaciado"></div>
+                                <div class="shadow-two bg-form p-5">
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">09/<span class="fs-12">09</span></h4>
+                                    <!----------------------------------------------------------------------------------------->
+                                    <!-------------------------------------- REFERENCIAS FAMILIARES --------------------------->
+                                    <!----------------------------------------------------------------------------------------->
+                                    <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">REFERENCIAS FAMILIARES</h3>
+
+                                    <ng-container formArrayName="referenciasFamiliares">
+                                        <div [formGroupName]="i"  *ngFor="let referenciasFamiliares of getControls('referenciasFamiliares'); let i = index">
+                                            <div class="p-5">
+                                                <h4 class="f-grape tc-blue-two fs-17 text-shadow-one">Familiar {{i + 1}}</h4>
+                                                <label class="estiloLabel f-open-sans-c p-1">Nombre Completo<span class="text-danger">*</span></label>
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="nombreCompleto">
+                                                <label class="estiloLabel f-open-sans-c p-1">Ocupación<span class="text-danger">*</span></label>
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="ocupacion">
+                                                <label class="estiloLabel f-open-sans-c p-1">Teléfono<span class="text-danger">*</span></label>
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="telefono">
+                                                <label class="estiloLabel f-open-sans-c p-1">Parentesco<span class="text-danger">*</span></label>
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="parentesco">
+                                                <label class="estiloLabel f-open-sans-c p-1">Empresa<span class="text-danger">*</span></label>
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="empresa">
+                                            
+                                                
+                                                <button (click)="eraseForm([], referenciasFamiliares)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-right" title="Borrar contenido de campos">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
+                                                        <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
+                                                    </svg>
+                                                </button>
+    
+                                                <button (click)="deleteControls('referenciasFamiliares', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-right">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill drop" viewBox="0 0 16 16">
+                                                        <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div> 
+                                    </ng-container>
+                                    <button (click)="agregarReferenciaFamiliar()" title="Agregar referencia personal" class="mb-5 bg-transparent f-open-sans-c fs-18 text-light cursor-p border-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="espaciado"></div>
                             </div>
                         </div>
                     </div>
-                <div class="col-md-2"></div>
+                    <div class="col-md-2"></div>
+                </div>
+                
+                <button class="carousel-control-prev border-0 bg-cero" type="button" data-target="#carousel-form" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </button>
+                <button class="carousel-control-next border-0 bg-cero" type="button" data-target="#carousel-form" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </button>
             </div>
-
-                        <button class="carousel-control-prev border-0 bg-cero" type="button" data-target="#carousel-form" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </button>
-                        <button class="carousel-control-next border-0 bg-cero" type="button" data-target="#carousel-form" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </button>
-                    </div>
-                    <button (click)="estadoForm()">
-                        VALOR DEL FORM CONSOLA
-                    </button>
-
         </form>
     </div>
     <div class="col-md-1"></div>
 </div>
-<div class="espaciado"></div>
+<div class="espaciado bg-transparent"></div>
