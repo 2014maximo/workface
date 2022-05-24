@@ -15,16 +15,19 @@
                         </div>
                         <div *ngIf="!mostrarOcultarRecordar">
                             <form [formGroup]="form">
-                                <input class="fuenteUno fw-3 w-100 mb-2 pl-2" type="text" placeholder="Email" formControlName="email">
-                                <input class="fuenteUno fw-3 w-100 mb-3 pl-2" type="password" placeholder="Clave"  formControlName="password">
+                                <input class="f-open-sans-c fw-3 w-100 mb-2 pl-2" type="text" placeholder="Email" formControlName="email">
+                                <input class="f-open-sans-c fw-3 w-100 mb-2 pl-2" *ngIf="camposRegistrar" type="text" placeholder="Confirmar email" formControlName="emailConfirm">
+                                <input class="f-open-sans-c fw-3 w-100 mb-2 pl-2" type="password" placeholder="Clave"  formControlName="password">
+                                <input class="f-open-sans-c fw-3 w-100 mb-3 pl-2" *ngIf="camposRegistrar" type="password" placeholder="Confirmar clave" formControlName="confirmPassword">
                                 <div class="bg-danger" *ngIf="usuarioIncorrecto">
                                     <p class="text-light f-open-sans-c">USUARIO O CLAVE INCORRECTO</p>
                                 </div>
-                                <a class="text-light fuenteUno fw-3 cursor-p" (click)="ingresar()">INGRESAR /</a>
-                                <a class="tc-blue-one f-open-sans-c fw-3 cursor-p" (click)="ingresar()"> REGISTRAR</a><br>
-                                <a href="http://" class="fuenteUno t3 fw-3" (click)="recordarClave(true)">Recordar contraseña</a>
+                                <a class="text-light fuenteUno fw-3 cursor-p" *ngIf="!camposRegistrar" (click)="ingresar()">INGRESAR </a>
+                                <a class="tc-blue-one f-open-sans-c fw-3 cursor-p" *ngIf="!camposRegistrar" (click)="registrar()">/ REGISTRAR</a><br>
+                                <a href="http://" class="fuenteUno t3 fw-3" *ngIf="!camposRegistrar" (click)="recordarClave(true)">Recordar contraseña</a>
+                                <button (click)="register()" *ngIf="camposRegistrar" class="w-100">REGISTRAR</button>
                             </form>
-                            <div class="text-center mt-3">
+                            <div class="text-center mt-3" *ngIf="!camposRegistrar" >
                                 <a href="http://" (click)="ingresarGoogle()">
                                     <img src="assets/img/icons/google-favicon.png" class="mx-auto drop mb-2 cursor-p" alt="" height="80" width="auto">
                                     <p class="text-light fuenteUno fw-3">INGRESAR CON GMAIL</p>

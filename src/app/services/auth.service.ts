@@ -28,6 +28,15 @@ export class AuthService {
     }
   }
 
+  async resetPassword(email: string, password: string){
+    try {
+      return await this.auth.sendPasswordResetEmail(email);
+    } catch (err) {
+      console.error(err);
+      return null;
+    }
+  }
+
   async loginGoogle(email: string, password: string){
     try {
       return await this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
@@ -53,5 +62,7 @@ export class AuthService {
   loggout(){
     this.auth.signOut();
   }
+
+  
 
 }

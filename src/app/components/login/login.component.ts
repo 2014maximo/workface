@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ValidatorFn, Validators, AbstractControl, ValidationErrors, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { trigger, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +14,7 @@ export class LoginComponent implements OnInit {
   public mostrarOcultarRecordar: boolean;
   public form: FormGroup;
   public usuarioIncorrecto: boolean;
+  public camposRegistrar: boolean;
 
   constructor( private fb: FormBuilder,
                private authService: AuthService,
@@ -21,8 +23,24 @@ export class LoginComponent implements OnInit {
     this.usuarioIncorrecto = false;
     this.form = this.fb.group({
       email:['', [Validators.required, Validators.pattern(/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/)]],
-      password: ['', [Validators.required]]
-    });
+      emailConfirm:['', [Validators.required, Validators.pattern(/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/)]],
+      password: ['', [Validators.required]],
+      confirmPassword: ['']
+    }, { validators: this.checkPasswords});
+    this.camposRegistrar = false;
+  }
+
+  private checkPasswords: ValidatorFn = (group: AbstractControl):  ValidationErrors | null => { 
+    let pass = group.get('password')?.value;
+    let confirmPass = group.get('confirmPassword')?.value
+    return pass === confirmPass ? null : { notSame: true }
+  }
+
+  public isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const invalidCtrl = !!(control?.invalid && control?.parent?.dirty);
+    const invalidParent = !!(control?.parent?.invalid && control?.parent?.dirty);
+
+    return invalidCtrl || invalidParent;
   }
 
   ngOnInit(): void {
@@ -52,6 +70,7 @@ export class LoginComponent implements OnInit {
   }
 
   public ingresar(){
+    
     this.authService.login(this.getEmail(), this.getPass()).then( res =>{
       if(res){
         this.route.navigate(['profile']);
@@ -62,9 +81,12 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  public registrar(){
+    this.camposRegistrar = true;
+  }
+
   public register(){
     this.authService.register(this.getEmail(), this.getPass()).then( res =>{
-
 
     })
   }
