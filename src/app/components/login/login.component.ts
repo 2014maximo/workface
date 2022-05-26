@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ValidatorFn, Validators, AbstractControl, ValidationErrors, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { trigger, style, animate, transition } from '@angular/animations';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +23,6 @@ export class LoginComponent implements OnInit {
     this.usuarioIncorrecto = false;
     this.form = this.fb.group({
       email:['', [Validators.required, Validators.pattern(/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/)]],
-      emailConfirm:['', [Validators.required, Validators.pattern(/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/)]],
       password: ['', [Validators.required]],
       confirmPassword: ['']
     }, { validators: this.checkPasswords});
@@ -46,11 +45,28 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  private getEmail(){
+  private getEmail():FormControl{
     return this.form.value.email;
   }
-  private getPass(){
+  private getPass():FormControl{
     return this.form.value.password;
+  }
+  private getConfirmPass():FormControl{
+    return this.form.value.confirmPassword;
+  }
+
+  private sweetAlert(){
+    return Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    });
   }
 
   recordarClave(cambiar: boolean){
@@ -59,7 +75,7 @@ export class LoginComponent implements OnInit {
 
   ingresarGoogle(){
 
-    this.authService.loginGoogle(this.getEmail(), this.getPass()).then( res =>{
+    this.authService.loginGoogle(this.getEmail().value, this.getPass().value).then( res =>{
       if(res){
         console.log(res, 'INGRESO CON GMAIL');
         this.route.navigate(['profile']);
@@ -70,25 +86,58 @@ export class LoginComponent implements OnInit {
   }
 
   public ingresar(){
+    const Toast = this.sweetAlert();
     
-    this.authService.login(this.getEmail(), this.getPass()).then( res =>{
-      if(res){
+    this.authService.login(this.getEmail().value, this.getPass().value).then( res =>{
+      if(res?.operationType === "signIn"){
+        console.log(res, 'INGRESO');
         this.route.navigate(['profile']);
       } else {
+        Toast.fire({
+          icon: 'error',
+          title: 'El usuario no esta registrado'
+        });
         this.usuarioIncorrecto = true;
-        this.form.reset();
+        
       }
     });
   }
 
   public registrar(){
     this.camposRegistrar = true;
+    this.form.reset();
   }
 
   public register(){
-    this.authService.register(this.getEmail(), this.getPass()).then( res =>{
+    const Toast = this.sweetAlert();
 
-    })
+    if(this.getConfirmPass() == this.getPass()){
+      
+      if(this.form.valid){
+        this.authService.register(this.getEmail().value, this.getPass().value).then( res => {
+          if(res?.additionalUserInfo?.isNewUser){
+            Toast.fire({
+              icon: 'success',
+              title: 'Registrado correctamente'
+            });
+          }else{
+            Toast.fire({
+              icon: 'error',
+              title: 'El usuario ya se encuentra registrado'
+            });
+
+          }
+        })
+
+      }
+    } else {
+    }
+  }
+
+  public volver(){
+    this.form.reset();
+    this.camposRegistrar = false;
+    
   }
 
 }

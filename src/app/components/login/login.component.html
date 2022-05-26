@@ -16,7 +16,6 @@
                         <div *ngIf="!mostrarOcultarRecordar">
                             <form [formGroup]="form">
                                 <input class="f-open-sans-c fw-3 w-100 mb-2 pl-2" type="text" placeholder="Email" formControlName="email">
-                                <input class="f-open-sans-c fw-3 w-100 mb-2 pl-2" *ngIf="camposRegistrar" type="text" placeholder="Confirmar email" formControlName="emailConfirm">
                                 <input class="f-open-sans-c fw-3 w-100 mb-2 pl-2" type="password" placeholder="Clave"  formControlName="password">
                                 <input class="f-open-sans-c fw-3 w-100 mb-3 pl-2" *ngIf="camposRegistrar" type="password" placeholder="Confirmar clave" formControlName="confirmPassword">
                                 <div class="bg-danger" *ngIf="usuarioIncorrecto">
@@ -26,6 +25,11 @@
                                 <a class="tc-blue-one f-open-sans-c fw-3 cursor-p" *ngIf="!camposRegistrar" (click)="registrar()">/ REGISTRAR</a><br>
                                 <a href="http://" class="fuenteUno t3 fw-3" *ngIf="!camposRegistrar" (click)="recordarClave(true)">Recordar contraseña</a>
                                 <button (click)="register()" *ngIf="camposRegistrar" class="w-100">REGISTRAR</button>
+                                <div class="text-left cursor-p mt-3" *ngIf="camposRegistrar" title="Volver" (click)="volver()">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-arrow-left text-light" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                                    </svg>
+                                </div>
                             </form>
                             <div class="text-center mt-3" *ngIf="!camposRegistrar" >
                                 <a href="http://" (click)="ingresarGoogle()">
