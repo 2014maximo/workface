@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ValidatorFn, Validators, AbstractControl, ValidationErrors, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import Swal from 'sweetalert2';
+import { timeout } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -15,12 +16,18 @@ export class LoginComponent implements OnInit {
   public form: FormGroup;
   public usuarioIncorrecto: boolean;
   public camposRegistrar: boolean;
+  public ingreso: boolean;
+  public recordar: boolean;
+  public registro: boolean;
 
   constructor( private fb: FormBuilder,
                private authService: AuthService,
                private route: Router ) {
     this.mostrarOcultarRecordar = false;             
     this.usuarioIncorrecto = false;
+    this.ingreso = true;
+    this.recordar = false;
+    this.registro = false;
     this.form = this.fb.group({
       email:['', [Validators.required, Validators.pattern(/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/)]],
       password: ['', [Validators.required]],
@@ -69,10 +76,6 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  recordarClave(cambiar: boolean){
-    this.mostrarOcultarRecordar = cambiar;
-  }
-
   ingresarGoogle(){
 
     this.authService.loginGoogle(this.getEmail().value, this.getPass().value).then( res =>{
@@ -98,14 +101,44 @@ export class LoginComponent implements OnInit {
           title: 'El usuario no esta registrado'
         });
         this.usuarioIncorrecto = true;
+        setTimeout(()=>{
+          this.usuarioIncorrecto = false;
+          
+        },5000);
+
+        this.focoEmail();
         
       }
     });
   }
 
+  public focoEmail(){
+    setTimeout( ()=>{
+      this.resetForm();
+      document.getElementById('email')?.focus();
+    }, 1000)
+  }
+
+  public resetForm(){
+    this.form.get('email')?.setValue('');
+    this.form.get('password')?.setValue('');
+    this.form.get('confirmPassword')?.setValue('');
+  }
+
   public registrar(){
-    this.camposRegistrar = true;
-    this.form.reset();
+    this.resetForm();
+    this.focoEmail();
+    this.ingreso = false;
+    this.recordar = false;
+    this.registro = true;
+  }
+
+  public recordarClave(){
+    this.resetForm();
+    this.focoEmail();
+    this.ingreso = false;
+    this.registro = false;
+    this.recordar = true;
   }
 
   public register(){
@@ -135,9 +168,32 @@ export class LoginComponent implements OnInit {
   }
 
   public volver(){
-    this.form.reset();
+    this.resetForm();
     this.camposRegistrar = false;
-    
+    this.mostrarOcultarRecordar = false;
+  }
+
+  public submit(){
+    if(this.ingreso){
+      this.toas('success', 'ingreso');
+      
+    } else if(this.registro){
+      this.resetForm();
+      this.toas('success', 'registro');
+
+      
+    } else if(this.recordar){
+      this.resetForm();
+      this.toas('success', 'recordar');
+    }
+  }
+
+  private toas(icon: any, message: string){
+    const Toast = this.sweetAlert();
+    Toast.fire({
+      icon: icon,
+      title: message
+    });
   }
 
 }

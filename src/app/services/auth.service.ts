@@ -28,7 +28,7 @@ export class AuthService {
     }
   }
 
-  async resetPassword(email: string, password: string){
+  async resetPassword(email: string){
     try {
       return await this.auth.sendPasswordResetEmail(email);
     } catch (err) {
