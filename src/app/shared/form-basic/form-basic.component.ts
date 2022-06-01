@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray, AbstractControl } from '@angular/forms';
-import { UsuarioModel } from '../../models/usuario.model';
+import { SweetAlert } from 'src/app/constants/functions.constants';
+import { AuthService } from 'src/app/services/auth.service';
+import { FirebaseService } from 'src/app/services/firebase.service';
 import { WebServicesService } from '../../services/web-services.service';
 
 @Component({
@@ -14,7 +16,11 @@ export class FormBasicComponent implements OnInit {
   public listaTipoIdentificacion: any[];
   public paises: any[];
 
-  constructor(private fb: FormBuilder, public webService: WebServicesService) {
+  constructor(private fb: FormBuilder,
+    public webService: WebServicesService,
+    private authService: AuthService,
+    private database: FirebaseService
+    ) {
 
     this.formBasic = new FormGroup({
       'primerNombre': new FormControl('', Validators.required),
@@ -132,6 +138,28 @@ export class FormBasicComponent implements OnInit {
 
   estadoForm(){
     console.log(this.formBasic, 'LOS ESTUDIOS')
+  }
+
+  public guardar(){
+
+    this.authService.getUserLogged().subscribe( (resp: any) =>{
+      if(resp){
+        console.log(resp.multiFactor.user.uid, 'LO QUE TRAE EL USUARIO LOGEADO');
+      } else {
+
+      }
+    })
+    
+/*     this.database.create('form-basic', this.formBasic.value).then( res => {
+      if(res){
+        SweetAlert('success','FORMULARIO GUARDADO');
+      }
+
+    }).catch( err => {
+      console.error( err);
+      SweetAlert('error', 'ERROR GUARDANDO');
+      
+    }); */
   }
 
 }

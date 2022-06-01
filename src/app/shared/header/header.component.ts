@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -16,7 +16,9 @@ export class HeaderComponent implements OnInit {
   public returnHome: string = '';
   public mostrarLogin: string = '';
 
-  constructor(private route: ActivatedRoute, private authService: AuthService) {
+  constructor(private route: ActivatedRoute,
+    private authService: AuthService,
+    private routes: Router) {
     this.inicializarVariables();
   }
 
@@ -53,6 +55,7 @@ export class HeaderComponent implements OnInit {
 
   public logout(){
     this.authService.loggout();
+    this.routes.navigate(['login']);
   }
 
 

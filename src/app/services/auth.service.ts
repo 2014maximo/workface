@@ -8,7 +8,7 @@ import firebase from 'firebase/compat/app';
 })
 export class AuthService {
 
-  constructor(public auth: AngularFireAuth) { }
+  constructor(private auth: AngularFireAuth) { }
 
   async register(email: string, password: string){
     try {
@@ -32,8 +32,7 @@ export class AuthService {
     try {
       return await this.auth.sendPasswordResetEmail(email);
     } catch (err) {
-      console.error(err);
-      return null;
+      return err;
     }
   }
 

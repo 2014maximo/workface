@@ -44,14 +44,13 @@
                         <li *ngIf="userLogged|async as user">
                             <img src="{{user.photoURL}}" alt="" height="80">
                             <p class="tc-blue-one"><small>{{user.email}}</small></p>
-                            <a class="cursor-p" (click)="logout()">LOGOUT</a>
+                            <a class="cursor-p" (click)="logout()">SALIR</a>
                         </li>
-                        <li class="cp text-light" *ngIf="!mostrarLogin">
+                        <li class="cp text-light">
                             <a href="login">
                                 INGRESAR
                             </a>
                         </li>
-                        <li class="cp text-light">DEMO</li>
                         <li class="cp text-light">
                             <a href="assets/img/items/GALERIA.jpg" target="_blank">
                                 NUEVAS PLANTILLAS

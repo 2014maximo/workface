@@ -1,4 +1,19 @@
 
+EDITAR REGLAS FIREBASE
+1. npm install -g firebase-tools
+   instalar las herramientas de comandos de gestión de firebase.
+
+2. firebase login
+   Iniciar sesión con el administrador de firebase
+
+3. firebase init
+   Iniciar la consola de gestión de bases de datos firebase
+
+4. Leer opciones según el caso.
+
+5. firebase deploy
+   Subir los cambios y aplicarlos.
+
 
 PROCESO GITHUB-PAGES
 1. Se cre un nuevo repositorio público en github con proyecto angular dentro y funcional.
