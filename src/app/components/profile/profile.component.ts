@@ -9,13 +9,7 @@ import { AuthService } from '../../services/auth.service';
 export class ProfileComponent implements OnInit {
 
   constructor( private auth: AuthService) {
-    this.auth.getUserLogged().subscribe( resp =>{
-      if(resp){
-        console.log(resp, 'LO QUE TRAE EL USUARIO LOGEADO');
-      } else {
-
-      }
-    })
+    
   }
 
   ngOnInit(): void {

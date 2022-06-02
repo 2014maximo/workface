@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray, AbstractControl } from '@angular/forms';
 import { SweetAlert } from 'src/app/constants/functions.constants';
+import { UsuarioModel } from 'src/app/models/usuario.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { WebServicesService } from '../../services/web-services.service';
@@ -12,9 +13,11 @@ import { WebServicesService } from '../../services/web-services.service';
 })
 export class FormBasicComponent implements OnInit {
 
+
   public formBasic: FormGroup;
   public listaTipoIdentificacion: any[];
   public paises: any[];
+  public uid?: any;
 
   constructor(private fb: FormBuilder,
     public webService: WebServicesService,
@@ -59,10 +62,19 @@ export class FormBasicComponent implements OnInit {
   }
   
   inicializarVariables(){
+    this.authService.getUserLogged().subscribe( (resp: any) =>{
+      if(resp){
+        this.uid = resp.multiFactor.user.uid;
+      }
+    });
 
+    if(this.uid){
+      console.log(this.uid, 'CONTENIDO ID USUARIO');
+    }
   }
-
+  
   ngOnInit(): void {
+
   }
   
   getControls(formArray: string){
@@ -141,25 +153,18 @@ export class FormBasicComponent implements OnInit {
   }
 
   public guardar(){
+    let usuario:any = {};
+    usuario.idUsuario = this.uid? this.uid : '';
+    usuario.formBasic = this.formBasic.value;
+    usuario.avatar = '';
+    usuario.firma = '';
 
-    this.authService.getUserLogged().subscribe( (resp: any) =>{
-      if(resp){
-        console.log(resp.multiFactor.user.uid, 'LO QUE TRAE EL USUARIO LOGEADO');
-      } else {
-
-      }
-    })
-    
-/*     this.database.create('form-basic', this.formBasic.value).then( res => {
-      if(res){
-        SweetAlert('success','FORMULARIO GUARDADO');
-      }
-
+    this.database.createUid('form-basic', usuario, usuario.idUsuario).then( res =>{
+      SweetAlert('success','FORMULARIO GUARDADO');
     }).catch( err => {
       console.error( err);
-      SweetAlert('error', 'ERROR GUARDANDO');
-      
-    }); */
+        SweetAlert('error', 'ERROR GUARDANDO');
+    })
   }
 
 }

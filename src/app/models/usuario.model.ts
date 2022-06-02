@@ -1,30 +1,11 @@
+import { FormGroup } from '@angular/forms';
 export class UsuarioModel {
-    public idUsuario: string;
-    public nombreCompleto: NombreModel;
-
-
-    constructor(){
-        this.idUsuario = '';
-        this.nombreCompleto = {
-            primerNombre: '',
-            segundoNombre: '',
-            primerApellido: '',
-            segundoApellido: ''
-        }
-
-    }
-}
-
-export class NombreModel {
-    public primerNombre: string;
-    public segundoNombre: string;
-    public primerApellido: string;
-    public segundoApellido: string;
+    public idUsuario?: string;
+    public avatar?: string;
+    public firma?: string;
+    public formBasic?: FormGroup;
 
     constructor(){
-        this.primerNombre = '';
-        this.segundoNombre = '';
-        this.primerApellido = '';
-        this.segundoApellido = '';
+
     }
 }
