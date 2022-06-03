@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray, AbstractControl } from '@angular/forms';
+import { concatMap, filter } from 'rxjs';
 import { SweetAlert } from 'src/app/constants/functions.constants';
 import { UsuarioModel } from 'src/app/models/usuario.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -18,6 +19,7 @@ export class FormBasicComponent implements OnInit {
   public listaTipoIdentificacion: any[];
   public paises: any[];
   public uid?: any;
+  public datosGenerales: any;
 
   constructor(private fb: FormBuilder,
     public webService: WebServicesService,
@@ -62,15 +64,21 @@ export class FormBasicComponent implements OnInit {
   }
   
   inicializarVariables(){
-    this.authService.getUserLogged().subscribe( (resp: any) =>{
-      if(resp){
-        this.uid = resp.multiFactor.user.uid;
+    this.authService.getUserLogged().subscribe( (usuario: any) => {
+      if(usuario){
+        this.database.getById('form-basic', usuario.multiFactor.user.uid).then( respuesta => {
+          if(respuesta){
+            respuesta?.subscribe( (formulario:any) => {
+              if(formulario){
+                this.datosGenerales = formulario.data();
+                this.setFormBasic(formulario.data());
+              }
+              
+            })
+          }
+        })
       }
-    });
-
-    if(this.uid){
-      console.log(this.uid, 'CONTENIDO ID USUARIO');
-    }
+    })
   }
   
   ngOnInit(): void {
@@ -152,6 +160,10 @@ export class FormBasicComponent implements OnInit {
     console.log(this.formBasic, 'LOS ESTUDIOS')
   }
 
+  setFormBasic(respuesta: any){
+    this.formBasic.patchValue(respuesta.formBasic);
+  }
+
   public guardar(){
     let usuario:any = {};
     usuario.idUsuario = this.uid? this.uid : '';
@@ -159,12 +171,19 @@ export class FormBasicComponent implements OnInit {
     usuario.avatar = '';
     usuario.firma = '';
 
-    this.database.createUid('form-basic', usuario, usuario.idUsuario).then( res =>{
-      SweetAlert('success','FORMULARIO GUARDADO');
-    }).catch( err => {
-      console.error( err);
-        SweetAlert('error', 'ERROR GUARDANDO');
-    })
+    if(this.datosGenerales){
+      this.database.update(this.datosGenerales.idUsuario, usuario).then( respuesta => {
+        SweetAlert('success','FORMULARIO ACTUALIZADO');
+
+      });
+    }else{
+      this.database.createUid('form-basic', usuario, usuario.idUsuario).then( res =>{
+        SweetAlert('success','FORMULARIO GUARDADO');
+      }).catch( err => {
+        console.error( err);
+          SweetAlert('error', 'ERROR GUARDANDO');
+      })
+    }
   }
 
 }

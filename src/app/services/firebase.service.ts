@@ -37,4 +37,13 @@ export class FirebaseService {
     }
   }
 
+  async update(id: any, data:any){
+    try {
+      return await this.firestore.collection('form-basic').doc(id).update(data);
+    } catch(error){
+      console.error(error);
+      return null
+    }
+  }
+
 }
