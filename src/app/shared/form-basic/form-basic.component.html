@@ -64,7 +64,7 @@
                                         <label class="estiloLabel f-open-sans-c p-1">Tipo documento<span class="text-danger">*</span></label>
                                         <select class="w-100 estilo-input bg-transparent-one mb-2" name="state" formControlName="tipoIdentificacion">
                                             <option value="">---Seleccione---</option>
-                                            <option *ngFor="let tipoIden of listaTipoIdentificacion" value="" class="f-grape">{{ tipoIden.label}}</option>
+                                            <option *ngFor="let tipoIden of listaTipoIdentificacion" [value]="tipoIden.label" class="f-grape">{{ tipoIden.label}}</option>
                                         </select>
                                         
                                         <label class="estiloLabel f-open-sans-c p-1">Identificación<span class="text-danger">*</span></label>
@@ -74,7 +74,7 @@
                                         <label class="estiloLabel f-open-sans-c p-1">Nacionalidad<span class="text-danger">*</span></label>
                                         <select class="w-100 estilo-input bg-transparent-one" name="state" formControlName="nacionalidad">
                                             <option value="">---Seleccione---</option>
-                                            <option *ngFor="let pais of paises" value="">{{ pais.pais}}</option>
+                                            <option *ngFor="let pais of paises" [value]="pais.pais">{{ pais.pais}}</option>
                                         </select>
 
                                         <button (click)="eraseForm(['tipoIdentificacion','identificacion','nacionalidad'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-right" title="Borrar contenido de campos">
@@ -104,9 +104,9 @@
                                         <label class="estiloLabel f-open-sans-c p-1">Género<span class="text-danger">*</span></label>
                                         <select class="w-100 tc-yellow-one estilo-input bg-black" name="state" formControlName="genero">
                                             <option value="">---Seleccione---</option>
-                                            <option value="">Femenino</option>
-                                            <option value="">Masculino</option>
-                                            <option value="">Transgénero</option>
+                                            <option value="Femenino">Femenino</option>
+                                            <option value="Masculino">Masculino</option>
+                                            <option value="Transgénero">Transgénero</option>
                                         </select>
 
                                         <button (click)="eraseForm(['fechaNacimiento','ciudadNacimiento','genero'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-right" title="Borrar contenido de campos">
@@ -126,7 +126,7 @@
                                     <!----------------------------------------------------------------------------------->
                                     <!-------------------------------------- CONTACTO ----------------------------------->
                                     <!----------------------------------------------------------------------------------->
-                                    <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">CONTACTO</h3>
+                                    <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">ME CONTACTAN EN</h3>
                                     <div class="p-5">
                                         <label class="estiloLabel f-open-sans-c p-1">Dirección residencia<span class="text-danger">*</span></label>
                                         <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="direccionResidencia">

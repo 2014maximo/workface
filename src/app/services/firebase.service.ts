@@ -37,9 +37,9 @@ export class FirebaseService {
     }
   }
 
-  async update(id: any, data:any){
+  async update(collection: string, id: any, data:any){
     try {
-      return await this.firestore.collection('form-basic').doc(id).update(data);
+      return await this.firestore.collection(collection).doc(id).update(data);
     } catch(error){
       console.error(error);
       return null

@@ -84,7 +84,7 @@ export class LoginComponent implements OnInit {
   }
 
   public ingresoGoogle(){
-    this.authService.loginGoogle(this.getEmail(), this.getPass()).then( res =>{
+    this.authService.loginGoogle().then( res =>{
       if(res){
         this.route.navigate(['profile']);
       } else {
@@ -117,52 +117,71 @@ export class LoginComponent implements OnInit {
   }
 
   public ingresoUsuario(){
+
     if(this.getEmail() && this.getPass()){
-      this.authService.login(this.getEmail(), this.getPass()).then( res =>{
-        if(res?.operationType === "signIn"){
-          this.route.navigate(['profile']);
-        } else {
-          this.toas('error','Email o clave errados');
-          this.usuarioIncorrecto = true;
-          setTimeout(()=>{
-            this.usuarioIncorrecto = false;
-          },5000);
-  
-          this.focoEmail();
-        }
-      });
+      if(!this.validarGoogle()){
+        this.authService.login(this.getEmail(), this.getPass()).then( res =>{
+          if(res?.operationType === "signIn"){
+            this.route.navigate(['profile']);
+          } else {
+            this.toas('error','Email o clave errados');
+            this.usuarioIncorrecto = true;
+            setTimeout(()=>{
+              this.usuarioIncorrecto = false;
+            },5000);
+    
+            this.focoEmail();
+          }
+        });
+      } else {
+        this.ingresoGoogle();
+      }
+    } else {
+      this.toas('error', 'Ingrese correctamente los datos');
     }
+
   }
 
   public registroUsuario(){
-    if(this.form.valid){
-      this.authService.register(this.getEmail(), this.getPass()).then( res => {
-        console.log(this.getEmail().value, this.getPass().value, 'EL VALOR QUE SE MANDA');
-        if(res?.additionalUserInfo?.isNewUser){
-          this.toas('success','Registro correcto');
-          this.resetForm();
-        }else{
-          this.toas('error', 'El usuario ya esta registrado');
-          this.resetForm();
-          this.focoEmail();
-        }
-      });
+    if(!this.validarGoogle()){
+      if(this.form.valid){
+        this.authService.register(this.getEmail(), this.getPass()).then( res => {
+          console.log(this.getEmail().value, this.getPass().value, 'EL VALOR QUE SE MANDA');
+          if(res?.additionalUserInfo?.isNewUser){
+            this.toas('success','Registro correcto');
+            this.resetForm();
+          }else{
+            this.toas('error', 'El usuario ya esta registrado');
+            this.resetForm();
+            this.focoEmail();
+          }
+        });
+      } else {
+        this.toas('error', 'Formulario inválido');
+        this.resetForm();
+        this.focoEmail();
+      }
     } else {
-      this.toas('error', 'Formulario inválido');
-      this.resetForm();
-      this.focoEmail();
+      this.ingresoGoogle();
     }
   }
 
   public recordarClave(){
-    this.authService.resetPassword(this.getEmail()).then( res => {
-      if(res){
-
-      }else{
-        
+    if(this.getEmail()){
+      if(!this.validarGoogle()){
+        this.authService.resetPassword(this.getEmail()).then( res => {
+  
+        });
+      } else {
+        this.ingresoGoogle();
       }
-      console.log(res, 'RESPUESTA');
-    })
+    } else {
+      this.toas('error', 'Ingresa correctamente el correo');
+    }
+  }
+
+  private validarGoogle(): boolean{
+    return this.getEmail().includes('gmail');
   }
 
 

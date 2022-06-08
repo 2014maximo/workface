@@ -25,7 +25,7 @@ export class FormBasicComponent implements OnInit {
     public webService: WebServicesService,
     private authService: AuthService,
     private database: FirebaseService
-    ) {
+    ) {  0
 
     this.formBasic = new FormGroup({
       'primerNombre': new FormControl('', Validators.required),
@@ -51,12 +51,6 @@ export class FormBasicComponent implements OnInit {
 
     });
 
-    this.agregarEstudio();
-    this.agregarExpLaboral();
-    this.agregarConocimientos();
-    this.agregarReferenciaPersonal();
-    this.agregarReferenciaFamiliar();
-
     this.listaTipoIdentificacion = [];
     this.paises = [];
     this.cargarTipoIdentificacion();
@@ -66,12 +60,15 @@ export class FormBasicComponent implements OnInit {
   inicializarVariables(){
     this.authService.getUserLogged().subscribe( (usuario: any) => {
       if(usuario){
+        this.uid = usuario.multiFactor.user.uid;
         this.database.getById('form-basic', usuario.multiFactor.user.uid).then( respuesta => {
           if(respuesta){
             respuesta?.subscribe( (formulario:any) => {
               if(formulario){
                 this.datosGenerales = formulario.data();
                 this.setFormBasic(formulario.data());
+                this.loadFormsArray(this.datosGenerales);
+                console.log(this.datosGenerales, 'DATOS GENERALES')
               }
               
             })
@@ -83,6 +80,29 @@ export class FormBasicComponent implements OnInit {
   
   ngOnInit(): void {
 
+  }
+  
+  loadFormsArray(formularios: any){
+    formularios.formBasic.estudios.forEach((staff: any, index: number, form: any) => {
+      this.agregarEstudio();
+      (<FormArray>this.formBasic.get('estudios')).at(index).setValue(staff);
+    });
+    formularios.formBasic.expLaboral.forEach((staff: any, index: number, form: any) => {
+      this.agregarExpLaboral();
+      (<FormArray>this.formBasic.get('expLaboral')).at(index).setValue(staff);
+    });
+    formularios.formBasic.conocimientosAdicionales.forEach((staff: any, index: number, form: any) => {
+      this.agregarConocimientos();
+      (<FormArray>this.formBasic.get('conocimientosAdicionales')).at(index).setValue(staff);
+    });
+    formularios.formBasic.referenciasPersonales.forEach((staff: any, index: number, form: any) => {
+      this.agregarReferenciaPersonal();
+      (<FormArray>this.formBasic.get('referenciasPersonales')).at(index).setValue(staff);
+    });
+    formularios.formBasic.referenciasFamiliares.forEach((staff: any, index: number, form: any) => {
+      this.agregarReferenciaFamiliar();
+      (<FormArray>this.formBasic.get('referenciasFamiliares')).at(index).setValue(staff);
+    });
   }
   
   getControls(formArray: string){
@@ -156,12 +176,18 @@ export class FormBasicComponent implements OnInit {
     })
   }
 
-  estadoForm(){
-    console.log(this.formBasic, 'LOS ESTUDIOS')
-  }
 
   setFormBasic(respuesta: any){
-    this.formBasic.patchValue(respuesta.formBasic);
+    // let form = this.formBasic.get('estudios') as FormArray;
+    this.formBasic.patchValue(respuesta.formBasic as FormGroup);
+/*     this.formBasic.controls[1].get('estudios')?.setValue(respuesta.formBasic.estudios[1]);
+    this.formBasic.controls[0].get('estudios')?.setValue(respuesta.formBasic.estudios[0]); */
+    // this.formBasic.setControl('estudios',  new FormControl(respuesta.formBasic.estudios));
+    
+    /* respuesta.formBasic.esudios.forEach( (staff: any, index: number, form: any  ) => this.formBasic.at(index).get('estudios').setValue(staff)); */
+    //  form.patchValue(respuesta.formBasic.estudios[1]);
+    // console.log(this.formBasic.controls['estudios'].value, 'COMO QUEDA EL FORMULARIO DESPUES DEL PATCHVALUE');
+
   }
 
   public guardar(){
@@ -171,8 +197,9 @@ export class FormBasicComponent implements OnInit {
     usuario.avatar = '';
     usuario.firma = '';
 
+
     if(this.datosGenerales){
-      this.database.update(this.datosGenerales.idUsuario, usuario).then( respuesta => {
+      this.database.update('form-basic',this.uid, usuario).then( respuesta => {
         SweetAlert('success','FORMULARIO ACTUALIZADO');
 
       });
