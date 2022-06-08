@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+
+.fuenteBase{
+    font-family: 'Russo One', sans-serif;
+}
+.colorBase{
+    color: var(--color-base);
+}
+.bgBase{
+    background-color: #2d4399 !important;
+}
+.anchoBase{
+    width: 1200px;
+    margin: auto;
+    border: 1px solid white;
+}
+.marcofoto{
+    border-radius: 50%;
+    height: 80px;
+    width: 80px;
+}
+.foto{
+    border-radius: 50%;
+    object-fit: cover;
+}
