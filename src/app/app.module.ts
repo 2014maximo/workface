@@ -14,13 +14,15 @@ import { ROUTES } from './app.routes';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './components/profile/profile.component';
 import { HttpClientModule } from '@angular/common/http';
+import { GaleriaTemplatesComponent } from './components/galeria-templates/galeria-templates.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    GaleriaTemplatesComponent
   ],
   imports: [
     FormsModule,

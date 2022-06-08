@@ -39,24 +39,37 @@
         <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-10 text-center">
-                <div  class="row fs-30 fuenteTres">
+                <div  class="row fs-30">
                     <ul class="w-100">
-                        <li *ngIf="userLogged|async as user">
+                        <li class="f-shadow-into-l" *ngIf="userLogged|async as user">
                             <img src="{{user.photoURL}}" alt="" height="80">
                             <p class="tc-blue-one"><small>{{user.email}}</small></p>
-                            <a class="cursor-p" (click)="logout()">SALIR</a>
                         </li>
-                        <li class="cp text-light">
+                        <li  class="f-shadow-into-l">
                             <a href="login">
                                 INGRESAR
                             </a>
                         </li>
-                        <li class="cp text-light">
-                            <a href="assets/img/items/GALERIA.jpg" target="_blank">
-                                NUEVAS PLANTILLAS
+                        <li class="f-shadow-into-l">
+                            <a class="cursor-p" (click)="logout()">
+                                SALIR
                             </a>
                         </li>
-                        <li class="cp text-light">CONTÁCTANOS</li>
+                        <li class="f-shadow-into-l">
+                            <a href="profile">
+                                PERFIL
+                            </a>
+                        </li>
+                        <li class="f-shadow-into-l">
+                            <a class="tc-yellow-one" href="templates">
+                                PLANTILLAS
+                            </a>
+                        </li>
+                        <li class="f-shadow-into-l">
+                            <a class="" href="templates">
+                                CONTÁCTANOS
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>

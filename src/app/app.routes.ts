@@ -3,6 +3,8 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AngularFireAuthGuard } from '@angular/fire/compat/auth-guard';
+import { AlphaComponent } from "./shared/TEMPLATES/alpha/alpha.component";
+import { GaleriaTemplatesComponent } from "./components/galeria-templates/galeria-templates.component";
 
 export const ROUTES: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'home'},
@@ -11,7 +13,9 @@ export const ROUTES: Routes = [
 // COMPONENTS
     { path: 'login', component: LoginComponent },
     { path: 'profile', component: ProfileComponent, canActivate: [AngularFireAuthGuard] },
-
-// TEMPLATES
+    { path: 'templates', component: GaleriaTemplatesComponent, canActivate: [AngularFireAuthGuard] },
+    
+    // TEMPLATES
+    { path: 'alpha', component: AlphaComponent, canActivate: [AngularFireAuthGuard] },
 
 ]
