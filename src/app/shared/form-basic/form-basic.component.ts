@@ -25,7 +25,7 @@ export class FormBasicComponent implements OnInit {
     public webService: WebServicesService,
     private authService: AuthService,
     private database: FirebaseService
-    ) {  0
+    ) {
 
     this.formBasic = new FormGroup({
       'primerNombre': new FormControl('', Validators.required),
@@ -43,6 +43,17 @@ export class FormBasicComponent implements OnInit {
       'telFijo': new FormControl('', ),
       'telCel': new FormControl('', ),
       'email': new FormControl('', Validators.email),
+      'webSite': new FormControl('', Validators.required),
+      'instagram': new FormControl('', Validators.required),
+      'facebook': new FormControl('', Validators.required),
+      'twitter': new FormControl('', Validators.required),
+      'linkedin': new FormControl('', Validators.required),
+      'cargoActual': new FormControl('', Validators.required),
+      'acercaDMi': new FormControl('', Validators.required),
+      'idiomas': new FormArray([]),
+      'debilidades': new FormArray([]),
+      'habilidades': new FormArray([]),
+      'intereses': new FormArray([]),
       'estudios': new FormArray([]),
       'expLaboral': new FormArray([]),
       'conocimientosAdicionales': new FormArray([]),
@@ -83,22 +94,47 @@ export class FormBasicComponent implements OnInit {
   }
   
   loadFormsArray(formularios: any){
+
+    formularios.formBasic.intereses.forEach((staff: any, index: number, form: any) => {
+      this.agregarInteres();
+      (<FormArray>this.formBasic.get('intereses')).at(index).setValue(staff);
+    });
+
+    formularios.formBasic.habilidades.forEach((staff: any, index: number, form: any) => {
+      this.agregarHabilidad();
+      (<FormArray>this.formBasic.get('habilidades')).at(index).setValue(staff);
+    });
+
+    formularios.formBasic.debilidades.forEach((staff: any, index: number, form: any) => {
+      this.agregarDebilidad();
+      (<FormArray>this.formBasic.get('debilidades')).at(index).setValue(staff);
+    });
+
+    formularios.formBasic.idiomas.forEach((staff: any, index: number, form: any) => {
+      this.agregarIdioma();
+      (<FormArray>this.formBasic.get('idiomas')).at(index).setValue(staff);
+    });
+
     formularios.formBasic.estudios.forEach((staff: any, index: number, form: any) => {
       this.agregarEstudio();
       (<FormArray>this.formBasic.get('estudios')).at(index).setValue(staff);
     });
+
     formularios.formBasic.expLaboral.forEach((staff: any, index: number, form: any) => {
       this.agregarExpLaboral();
       (<FormArray>this.formBasic.get('expLaboral')).at(index).setValue(staff);
     });
+
     formularios.formBasic.conocimientosAdicionales.forEach((staff: any, index: number, form: any) => {
       this.agregarConocimientos();
       (<FormArray>this.formBasic.get('conocimientosAdicionales')).at(index).setValue(staff);
     });
+
     formularios.formBasic.referenciasPersonales.forEach((staff: any, index: number, form: any) => {
       this.agregarReferenciaPersonal();
       (<FormArray>this.formBasic.get('referenciasPersonales')).at(index).setValue(staff);
     });
+
     formularios.formBasic.referenciasFamiliares.forEach((staff: any, index: number, form: any) => {
       this.agregarReferenciaFamiliar();
       (<FormArray>this.formBasic.get('referenciasFamiliares')).at(index).setValue(staff);
@@ -119,6 +155,34 @@ export class FormBasicComponent implements OnInit {
 
   deleteControls(formArray: string, index: number){
     (<FormArray>this.formBasic.controls[formArray]).removeAt(index);
+  }
+
+  agregarInteres(){
+    (<FormArray>this.formBasic.controls['intereses']).push(new FormGroup({
+      'interes': new FormControl('', Validators.required),
+      'nivel': new FormControl('', Validators.required)
+    }));
+  }
+
+  agregarDebilidad(){
+    (<FormArray>this.formBasic.controls['debilidades']).push(new FormGroup({
+      'debilidad': new FormControl('', Validators.required),
+      'nivelDesconocimiento': new FormControl('', Validators.required)
+    }));
+  }
+
+  agregarHabilidad(){
+    (<FormArray>this.formBasic.controls['habilidades']).push(new FormGroup({
+      'habilidad': new FormControl('', Validators.required),
+      'nivel': new FormControl('', Validators.required)
+    }));
+  }
+
+  agregarIdioma(){
+    (<FormArray>this.formBasic.controls['idiomas']).push(new FormGroup({
+      'idioma': new FormControl('', Validators.required),
+      'nivel': new FormControl('', Validators.required)
+    }));
   }
 
   agregarEstudio(){

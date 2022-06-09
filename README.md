@@ -14,6 +14,9 @@ EDITAR REGLAS FIREBASE
 5. firebase deploy
    Subir los cambios y aplicarlos.
 
+LIBRERIAS USADAS
+- jspdf & html2canvas
+npm install jspdf html2canvas --save
 
 PROCESO GITHUB-PAGES
 1. Se cre un nuevo repositorio público en github con proyecto angular dentro y funcional.

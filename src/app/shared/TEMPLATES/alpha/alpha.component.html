@@ -1,7 +1,13 @@
 <app-header></app-header>
 <div class="espaciado"></div>
 <div class="">
-    <div class="anchoBase">
+    <div class="text-center">
+        <a class="cursor-p border f-open-sans-c text-light p-2" (click)="saveToPdf()">
+            GUARDAR
+        </a>
+    </div>
+    <div class="espacio"></div>
+    <div id="alpha" class="anchoBase bg-dark shadow-one">
         <div class="row pl-5">
             <div class="col-md-3 bgBase p-50">
                 <div class="marcofoto">
@@ -9,16 +15,17 @@
                 </div>
                 <div class="espaciado"></div>
                 <p class="text-light m-0 fw-6 f-open-sans fs-15">FN:</p>
-                <p class="text-light f-open-sans fs-15">10/02/1983</p>
+                <p class="text-light f-open-sans fs-15">{{ this.datosGenerales.formBasic.fechaNacimiento }}</p>
                 <div class="espaciado"></div>
             </div>
             <div class="col-md-9">
                 <div class="espaciado"></div>
-                <h1 class="fuenteBase fw-6 fs-60 text-light">ALEX MUÑOZ</h1>
+                <h1 class="fuenteBase fw-6 fs-60 text-light">{{ this.datosGenerales.formBasic.primerNombre }} {{ this.datosGenerales.formBasic.primerApellido }}</h1>
                 <div class="p-2 bgBase d-block">
                     <p class="text-light m-0">CREATIVE DESIGNER</p>
                 </div>
             </div>
         </div>
     </div>
+    <div class="espaciado"></div>
 </div>
