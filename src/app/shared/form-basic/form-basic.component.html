@@ -159,6 +159,52 @@
                                     <!-------------------------------------- CARGO ------------------------------------>
                                     <!----------------------------------------------------------------------------------->
                                     <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">CARGO</h3>
+                                    <div class="p-5">
+                                        <label class="estiloLabel f-open-sans-c p-1">Foto sin fondo<span class="text-danger">*</span></label>
+                                        <label> <img [src]="imageUrl" alt="" height="90" width="auto"> </label>
+                                        <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" (change)="onSelectNewFile($event)" type="file" placeholder="">
+                                        <label class="estiloLabel f-open-sans-c p-1">Foto con fondo<span class="text-danger">*</span></label>
+                                        <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="fotoFrontalConFondo">
+                                        <label class="estiloLabel f-open-sans-c p-1">Cargo actual<span class="text-danger">*</span></label>
+                                        <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="cargoActual">
+                                        <label class="estiloLabel f-open-sans-c p-1">A cerca de mí<span class="text-danger">*</span></label>
+                                        <textarea rows="10"class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="acercaDMi">
+                                        </textarea>
+
+                                        <button (click)="eraseForm(['fotoFrontalSinFondo','fotoFrontalConFondo','cargoActual','acercaDMi'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-right" title="Borrar contenido de campos">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
+                                                <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="carousel-item">
+                                <div class="espaciado"></div>
+                                <div class="shadow-two bg-form p-5">
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">05/<span class="fs-12">10</span></h4>
+                                    <!----------------------------------------------------------------------------------->
+                                    <!-------------------------------------- REDES ------------------------------------>
+                                    <!----------------------------------------------------------------------------------->
+                                    <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">REDES</h3>
+                                    <div class="p-5">
+                                        <label class="estiloLabel f-open-sans-c p-1">Website<span class="text-danger">*</span></label>
+                                        <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="webSite">
+                                        <label class="estiloLabel f-open-sans-c p-1">Instagram<span class="text-danger">*</span></label>
+                                        <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="instagram">
+                                        <label class="estiloLabel f-open-sans-c p-1">Facebook<span class="text-danger">*</span></label>
+                                        <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="facebook">
+                                        <label class="estiloLabel f-open-sans-c p-1">Twitter<span class="text-danger">*</span></label>
+                                        <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="twitter">
+                                        <label class="estiloLabel f-open-sans-c p-1">Linkedin<span class="text-danger">*</span></label>
+                                        <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="linkedin">
+                                        <button (click)="eraseForm(['webSite','instagram','facebook','twitter','linkedin'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-right" title="Borrar contenido de campos">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
+                                                <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 

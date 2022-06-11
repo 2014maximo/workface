@@ -1,8 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray, AbstractControl } from '@angular/forms';
-import { concatMap, filter } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
 import { SweetAlert } from 'src/app/constants/functions.constants';
-import { UsuarioModel } from 'src/app/models/usuario.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { WebServicesService } from '../../services/web-services.service';
@@ -14,42 +13,58 @@ import { WebServicesService } from '../../services/web-services.service';
 })
 export class FormBasicComponent implements OnInit {
 
-
+  public base64: string = '';
+  public fileSelected?: Blob;
   public formBasic: FormGroup;
   public listaTipoIdentificacion: any[];
   public paises: any[];
   public uid?: any;
   public datosGenerales: any;
+  public imageUrl?: string;
 
   constructor(private fb: FormBuilder,
     public webService: WebServicesService,
     private authService: AuthService,
-    private database: FirebaseService
+    private database: FirebaseService,
+    private sant:DomSanitizer
     ) {
 
     this.formBasic = new FormGroup({
+      // NOMBRE
       'primerNombre': new FormControl('', Validators.required),
       'segundoNombre': new FormControl('', ),
       'primerApellido': new FormControl('', Validators.required),
       'segundoApellido': new FormControl('', ),
+
+      // IDENTIFICACIÓN
       'tipoIdentificacion': new FormControl('', Validators.required),
       'identificacion': new FormControl('', Validators.required),
+      'nacionalidad': new FormControl('', Validators.required),
+
+      // NACIMIENTO
       'fechaNacimiento': new FormControl(new Date, Validators.required),
       'ciudadNacimiento': new FormControl('', Validators.required),
-      'nacionalidad': new FormControl('', Validators.required),
+      'genero': new FormControl('', Validators.required),
+
+      // DE CONTACTO
       'direccionResidencia': new FormControl('', Validators.required),
       'barrioResidencia': new FormControl('', Validators.required),
-      'genero': new FormControl('', Validators.required),
       'telFijo': new FormControl('', ),
       'telCel': new FormControl('', ),
       'email': new FormControl('', Validators.email),
+
+      // CARGO
+      'fotoFrontalSinFondo': new FormControl('', Validators.required),
+      'fotoFrontalConFondo': new FormControl('', Validators.required),
+      'cargoActual': new FormControl('', Validators.required),
+      'acercaDMi': new FormControl('', Validators.required),
       'webSite': new FormControl('', Validators.required),
       'instagram': new FormControl('', Validators.required),
       'facebook': new FormControl('', Validators.required),
       'twitter': new FormControl('', Validators.required),
       'linkedin': new FormControl('', Validators.required),
-      'cargoActual': new FormControl('', Validators.required),
-      'acercaDMi': new FormControl('', Validators.required),
+
+      
       'idiomas': new FormArray([]),
       'debilidades': new FormArray([]),
       'habilidades': new FormArray([]),
@@ -67,7 +82,11 @@ export class FormBasicComponent implements OnInit {
     this.cargarTipoIdentificacion();
     this.inicializarVariables();
   }
-  
+
+  ngOnInit(): void {
+
+  }
+
   inicializarVariables(){
     this.authService.getUserLogged().subscribe( (usuario: any) => {
       if(usuario){
@@ -89,28 +108,42 @@ export class FormBasicComponent implements OnInit {
     })
   }
   
-  ngOnInit(): void {
-
+  onSelectNewFile(files: any): void{
+    console.log(files)
+    let file = files.target.files;
+    this.fileSelected = file[0] as Blob;
+    this.imageUrl = this.sant.bypassSecurityTrustUrl(window.URL.createObjectURL(this.fileSelected)) as string;
+    this.base64 = '';
+    this.convertFileToBase64();
+  }
+  
+  convertFileToBase64(): void{
+    let reader = new FileReader();
+    reader.readAsDataURL(this.fileSelected as Blob);
+    reader.onloadend = () => {
+      this.base64 = reader.result as string;
+      this.formBasic.controls['fotoFrontalSinFondo'].setValue(this.base64);
+    }
   }
   
   loadFormsArray(formularios: any){
 
-    formularios.formBasic.intereses.forEach((staff: any, index: number, form: any) => {
+    formularios.formBasic.intereses?.forEach((staff: any, index: number, form: any) => {
       this.agregarInteres();
       (<FormArray>this.formBasic.get('intereses')).at(index).setValue(staff);
     });
 
-    formularios.formBasic.habilidades.forEach((staff: any, index: number, form: any) => {
+    formularios.formBasic.habilidades?.forEach((staff: any, index: number, form: any) => {
       this.agregarHabilidad();
       (<FormArray>this.formBasic.get('habilidades')).at(index).setValue(staff);
     });
 
-    formularios.formBasic.debilidades.forEach((staff: any, index: number, form: any) => {
+    formularios.formBasic.debilidades?.forEach((staff: any, index: number, form: any) => {
       this.agregarDebilidad();
       (<FormArray>this.formBasic.get('debilidades')).at(index).setValue(staff);
     });
 
-    formularios.formBasic.idiomas.forEach((staff: any, index: number, form: any) => {
+    formularios.formBasic.idiomas?.forEach((staff: any, index: number, form: any) => {
       this.agregarIdioma();
       (<FormArray>this.formBasic.get('idiomas')).at(index).setValue(staff);
     });
@@ -261,8 +294,9 @@ export class FormBasicComponent implements OnInit {
     usuario.avatar = '';
     usuario.firma = '';
 
+    console.log(this.formBasic.value, 'COMO ESTA EL FORMULARIO');
 
-    if(this.datosGenerales){
+    if(this.datosGenerales){ 
       this.database.update('form-basic',this.uid, usuario).then( respuesta => {
         SweetAlert('success','FORMULARIO ACTUALIZADO');
 
