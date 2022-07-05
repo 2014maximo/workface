@@ -1,11 +1,17 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { UsuarioModel } from '../models/usuario.model';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/storage';
+import { environment } from '../../environments/environment.prod';
+
+firebase.initializeApp(environment.firebase);
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
+
+  public storageRef = firebase.app().storage().ref();
 
   constructor(private firestore: AngularFirestore) {
   }
@@ -44,6 +50,22 @@ export class FirebaseService {
       console.error(error);
       return null
     }
+  }
+
+  async loadImg(categoria: string, nombre: string, imgBase64: any){
+    try{
+      let respuesta = await this.storageRef.child(categoria + nombre).putString(imgBase64, 'data_url');
+      return  await respuesta.ref.getDownloadURL();
+
+    }catch(err){
+      console.error(err);
+      return null;
+      
+    }
+  }
+
+  dropImg(){
+    this.storageRef.delete()
   }
 
 }

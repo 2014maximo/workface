@@ -21,6 +21,10 @@ export class FormBasicComponent implements OnInit {
   public uid?: any;
   public datosGenerales: any;
   public imageUrl?: string;
+  public fotoFrontalSinFondo: any[]=[];
+  public fotoFrontalConFondo: any[]=[];
+  public imgFirma: any[]=[];
+  public imgFondo: any[]=[];
 
   constructor(private fb: FormBuilder,
     public webService: WebServicesService,
@@ -35,6 +39,15 @@ export class FormBasicComponent implements OnInit {
       'segundoNombre': new FormControl('', ),
       'primerApellido': new FormControl('', Validators.required),
       'segundoApellido': new FormControl('', ),
+
+      // FOTO PERFIL
+      'fotoFrontalSinFondo': new FormControl('', Validators.required),
+      'fotoFrontalConFondo': new FormControl('', Validators.required),
+
+      // IMAGEN DE FONDO
+      'imgFondo': new FormControl('', Validators.required),
+      'imgFirma': new FormControl('', Validators.required),
+
 
       // IDENTIFICACIÓN
       'tipoIdentificacion': new FormControl('', Validators.required),
@@ -54,8 +67,6 @@ export class FormBasicComponent implements OnInit {
       'email': new FormControl('', Validators.email),
 
       // CARGO
-      'fotoFrontalSinFondo': new FormControl('', Validators.required),
-      'fotoFrontalConFondo': new FormControl('', Validators.required),
       'cargoActual': new FormControl('', Validators.required),
       'acercaDMi': new FormControl('', Validators.required),
       'webSite': new FormControl('', Validators.required),
@@ -98,7 +109,8 @@ export class FormBasicComponent implements OnInit {
                 this.datosGenerales = formulario.data();
                 this.setFormBasic(formulario.data());
                 this.loadFormsArray(this.datosGenerales);
-                console.log(this.datosGenerales, 'DATOS GENERALES')
+                this.cargarImagenes(this.datosGenerales);
+                console.log(this.datosGenerales, 'DATOS GENERALES');
               }
               
             })
@@ -106,6 +118,20 @@ export class FormBasicComponent implements OnInit {
         })
       }
     })
+  }
+  cargarImagenes(datosGenerales: any) {
+    if(datosGenerales.formBasic.fotoFrontalSinFondo){
+      this.fotoFrontalSinFondo[0] = datosGenerales.formBasic.fotoFrontalSinFondo;
+    } 
+    if(datosGenerales.formBasic.fotoFrontalConFondo){
+      this.fotoFrontalConFondo[0] = datosGenerales.formBasic.fotoFrontalConFondo;
+    }
+    if(datosGenerales.formBasic.imgFondo){
+      this.imgFondo[0] = datosGenerales.formBasic.imgFondo;
+    }
+    if(datosGenerales.formBasic.imgFirma){
+      this.imgFirma[0] = datosGenerales.formBasic.imgFirma;
+    }
   }
   
   onSelectNewFile(files: any): void{
@@ -115,6 +141,57 @@ export class FormBasicComponent implements OnInit {
     this.imageUrl = this.sant.bypassSecurityTrustUrl(window.URL.createObjectURL(this.fileSelected)) as string;
     this.base64 = '';
     this.convertFileToBase64();
+  }
+
+  loadImg(categoria: string, files: any, campo: string){
+    let file = files.target.files;
+    let reader = new FileReader();
+
+    reader.readAsDataURL(file[0]);
+    reader.onloadend = () => {
+      // this.fotoFrontalSinFondo.push(reader.result);
+      if(categoria === '/frontal-sin-fondo/'){
+        this.fotoFrontalSinFondo?.push(reader.result);
+      }else if(categoria === '/frontal-con-fondo/'){
+        this.fotoFrontalConFondo?.push(reader.result);
+      }else if(categoria === '/fondo/'){
+        this.imgFondo?.push(reader.result);
+      }else if(categoria === '/firma/'){
+        this.imgFirma?.push(reader.result);
+      }
+      // this.selectionImg(categoria, reader);
+      this.database.loadImg(categoria, 'img_' + Date.now(), reader.result).then((urlImagen: any) => {
+        this.formBasic.controls[campo].setValue(urlImagen);
+      })
+    }
+  }
+  /**
+   * Estas son carpetas de storage-firebase
+   * van a almacenar muchas imágenes y la 
+   * idea es darles un orden inicial, muy
+   * posiblemente cambie este modo de almacenamiento
+   * @param database 
+   * @param clasificate 
+   */
+  private alertMaxFileSize(categoria: string, result: FileReader){
+    switch(categoria){
+      case '/frontal-sin-fondo/':
+        this.fotoFrontalSinFondo?.push(result.result);
+        break;
+
+      case '/frontal-con-fondo/':
+        this.fotoFrontalConFondo?.push(result.result);
+        break;
+
+      case '/fondo/':
+        this.imgFondo?.push(result.result);
+        break;
+        
+      case '/firma/':
+        this.imgFirma?.push(result.result);
+        break;
+
+    }
   }
   
   convertFileToBase64(): void{

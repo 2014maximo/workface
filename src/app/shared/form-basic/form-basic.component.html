@@ -14,6 +14,9 @@
                     <li data-target="#carousel-form" data-slide-to="7"></li>
                     <li data-target="#carousel-form" data-slide-to="8"></li>
                     <li data-target="#carousel-form" data-slide-to="9"></li>
+                    <li data-target="#carousel-form" data-slide-to="10"></li>
+                    <li data-target="#carousel-form" data-slide-to="11"></li>
+                    <li data-target="#carousel-form" data-slide-to="12"></li>
                 </ol>
                 <div class="row">
                     <div class="col-md-2"></div>
@@ -22,7 +25,7 @@
                             <div class="carousel-item active">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">01/<span class="fs-12">10</span></h4>
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">01/<span class="fs-12">13 </span></h4>
                                     <!--------------------------------------------------------------------------------->
                                     <!-------------------------------------- NOMBRE ----------------------------------->
                                     <!--------------------------------------------------------------------------------->
@@ -51,11 +54,94 @@
 
                                 <div class="espaciado"></div>
                             </div>
+                            <div class="carousel-item">
+                                <div class="espaciado"></div>
+                                <div class="shadow-two bg-form p-5">
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">02/<span class="fs-12">13</span></h4>
+                                    <!--------------------------------------------------------------------------------->
+                                    <!-------------------------------------- FOTO PERFIL ------------------------------>
+                                    <!--------------------------------------------------------------------------------->
+                                    <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">FOTO PERFIL</h3>
+                                    <div class="p-5">
+                                        <div class="row">
+                                            <div class="col-md-6 text-center">
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" accept=".png" (change)="loadImg('/frontal-sin-fondo/', $event,'fotoFrontalSinFondo')" type="file" id="img-frontal">
+                                                <label class="estiloLabel f-open-sans-c p-1">Foto frontal sin fondo<span class="text-danger">*</span></label><br>
+                                                <label for="img-frontal" class="text-light cursor-p">
+                                                    <img *ngIf="!fotoFrontalSinFondo[0]" src="assets/img/icons/add-file.png" alt="add-file-image" title="Agregar imagen" height="70" width="auto" class="mt-4 drop">
+                                                    <img *ngIf="fotoFrontalSinFondo[0]" src="{{ fotoFrontalSinFondo[0] }}" alt="" height="200" width="auto">
+                                                </label>
+                                            </div>
+                                            <div class="col-md-6 text-center" *ngIf="!fotoFrontalSinFondo[0]">
+                                                <label class="estiloLabel f-open-sans-c p-1">Ejemplo</label><br>
+                                                <img src="assets/img/items/elon musk.png" alt="" height="200" width="auto" class="drop">
+                                            </div>
+                                        </div>
+                                        <div class="espacio"></div>
+                                        <div class="row">
+                                            <div class="col-md-6 text-center">
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" accept=".png, .jpg, .jpeg" (change)="loadImg('/frontal-con-fondo/', $event,'fotoFrontalConFondo')" type="file" id="img-fondo">
+                                                <label class="estiloLabel f-open-sans-c p-1">Foto frontal con fondo<span class="text-danger">*</span></label><br>
+                                                <label for="img-fondo" class="text-light cursor-p">
+                                                    <img *ngIf="!fotoFrontalConFondo[0]" src="assets/img/icons/add-file.png" alt="add-file-image" title="Agregar imagen" height="70" width="auto" class="mt-4 drop">
+                                                    <img *ngIf="fotoFrontalConFondo[0]" src="{{ fotoFrontalConFondo[0] }}" alt="" height="200" width="auto">
+                                                </label>
+                                            </div>
+                                            <div class="col-md-6 text-center" *ngIf="!fotoFrontalConFondo[0]">
+                                                <label class="estiloLabel f-open-sans-c p-1">Ejemplo</label><br>
+                                                <img src="assets/img/items/elon musk.png" alt="" height="200" width="auto" class="drop">
+                                            </div>
+                                        </div>
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="espaciado"></div>
+                                <div class="shadow-two bg-form p-5">
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">03/<span class="fs-12">13</span></h4>
+                                    <!--------------------------------------------------------------------------------->
+                                    <!-------------------------------------- FONDO Y FIRMA ------------------------------>
+                                    <!--------------------------------------------------------------------------------->
+                                    <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">FONDO / FIRMA</h3>
+                                    <div class="p-5">
+                                        <div class="row">
+                                            <div class="col-md-6 text-center">
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" accept=".png, .jpg, .jpeg" (change)="loadImg('/fondo/', $event,'imgFondo')" type="file" id="imgFondo">
+                                                <label class="estiloLabel f-open-sans-c p-1">Imagen para contrastes<span class="text-danger">*</span></label><br>
+                                                <label for="imgFondo" class="text-light cursor-p">
+                                                    <img *ngIf="!imgFondo[0]" src="assets/img/icons/add-file.png" alt="add-file-image" title="Agregar imagen" height="70" width="auto" class="mt-4 drop">
+                                                    <img *ngIf="imgFondo[0]" src="{{ imgFondo[0] }}" alt="" height="200" width="auto">
+                                                </label>
+                                            </div>
+                                            <div class="col-md-6 text-center" *ngIf="!imgFondo[0]">
+                                                <label class="estiloLabel f-open-sans-c p-1">Ejemplo</label><br>
+                                                <img src="assets/img/items/elon musk.png" alt="" height="200" width="auto" class="drop">
+                                            </div>
+                                        </div>
+                                        <div class="espacio"></div>
+                                        <div class="row">
+                                            <div class="col-md-6 text-center">
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" accept=".png" (change)="loadImg('/firma/', $event,'imgFirma')" type="file" id="imgFirma">
+                                                <label class="estiloLabel f-open-sans-c p-1">Firma sin fondo<span class="text-danger">*</span></label><br>
+                                                <label for="imgFirma" class="text-light cursor-p">
+                                                    <img *ngIf="!imgFirma[0]" src="assets/img/icons/add-file.png" alt="add-file-image" title="Agregar imagen" height="70" width="auto" class="mt-4 drop">
+                                                    <img *ngIf="imgFirma[0]" src="{{ imgFirma[0] }}" alt="" height="200" width="auto" class="drop">
+                                                </label>
+                                            </div>
+                                            <div class="col-md-6 text-center" *ngIf="!imgFirma[0]">
+                                                <label class="estiloLabel f-open-sans-c p-1">Ejemplo</label><br>
+                                                <img src="assets/img/items/elon musk.png" alt="" height="200" width="auto" class="drop">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">02/<span class="fs-12">10</span></h4>
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">04/<span class="fs-12">13</span></h4>
                                     <!----------------------------------------------------------------------------------------->
                                     <!-------------------------------------- IDENTIFICACIÓN ----------------------------------->
                                     <!----------------------------------------------------------------------------------------->
@@ -92,7 +178,7 @@
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">03/<span class="fs-12">10</span></h4>
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">05/<span class="fs-12">13</span></h4>
                                     <!------------------------------------------------------------------------------------->
                                     <!-------------------------------------- NACIMIENTO ----------------------------------->
                                     <!------------------------------------------------------------------------------------->
@@ -123,7 +209,7 @@
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">04/<span class="fs-12">10</span></h4>
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">06/<span class="fs-12">13</span></h4>
                                     <!----------------------------------------------------------------------------------->
                                     <!-------------------------------------- CONTACTO ----------------------------------->
                                     <!----------------------------------------------------------------------------------->
@@ -154,17 +240,12 @@
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">05/<span class="fs-12">10</span></h4>
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">07/<span class="fs-12">13</span></h4>
                                     <!----------------------------------------------------------------------------------->
-                                    <!-------------------------------------- CARGO ------------------------------------>
+                                    <!--------------------------------------- CARGO ------------------------------------->
                                     <!----------------------------------------------------------------------------------->
                                     <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">CARGO</h3>
                                     <div class="p-5">
-                                        <label class="estiloLabel f-open-sans-c p-1">Foto sin fondo<span class="text-danger">*</span></label>
-                                        <label> <img [src]="imageUrl" alt="" height="90" width="auto"> </label>
-                                        <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" (change)="onSelectNewFile($event)" type="file" placeholder="">
-                                        <label class="estiloLabel f-open-sans-c p-1">Foto con fondo<span class="text-danger">*</span></label>
-                                        <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="fotoFrontalConFondo">
                                         <label class="estiloLabel f-open-sans-c p-1">Cargo actual<span class="text-danger">*</span></label>
                                         <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="cargoActual">
                                         <label class="estiloLabel f-open-sans-c p-1">A cerca de mí<span class="text-danger">*</span></label>
@@ -183,7 +264,7 @@
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">05/<span class="fs-12">10</span></h4>
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">08/<span class="fs-12">13</span></h4>
                                     <!----------------------------------------------------------------------------------->
                                     <!-------------------------------------- REDES ------------------------------------>
                                     <!----------------------------------------------------------------------------------->
@@ -211,7 +292,7 @@
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">06/<span class="fs-12">10</span></h4>
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">09/<span class="fs-12">13</span></h4>
                                     <!----------------------------------------------------------------------------------->
                                     <!-------------------------------------- ESTUDIOS ----------------------------------->
                                     <!----------------------------------------------------------------------------------->
@@ -259,7 +340,7 @@
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">07/<span class="fs-12">10</span></h4>
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">10/<span class="fs-12">13</span></h4>
                                     <!----------------------------------------------------------------------------------------->
                                     <!-------------------------------------- EXPERIENCIA LABORAL ------------------------------>
                                     <!----------------------------------------------------------------------------------------->
@@ -307,7 +388,7 @@
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">08/<span class="fs-12">10</span></h4>
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">11/<span class="fs-12">13</span></h4>
                                     <!----------------------------------------------------------------------------------------->
                                     <!-------------------------------------- OTROS CONOCIMIENTOS ------------------------------>
                                     <!----------------------------------------------------------------------------------------->
@@ -351,7 +432,7 @@
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">09/<span class="fs-12">10</span></h4>
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">12/<span class="fs-12">13</span></h4>
                                     <!----------------------------------------------------------------------------------------->
                                     <!-------------------------------------- REFERENCIAS PERSONALES --------------------------->
                                     <!----------------------------------------------------------------------------------------->
@@ -397,7 +478,7 @@
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">10/<span class="fs-12">10</span></h4>
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">13/<span class="fs-12">13</span></h4>
                                     <!----------------------------------------------------------------------------------------->
                                     <!-------------------------------------- REFERENCIAS FAMILIARES --------------------------->
                                     <!----------------------------------------------------------------------------------------->
@@ -456,8 +537,8 @@
                     <span class="sr-only">Next</span>
                 </button>
             </div>
-            <div class="text-center">
-                <button class="border bg-transparent text-light pt-1 pb-1 pr-4 pl-4 f-open-sans-c fs-20" (click)="guardar()">Guardar</button>
+            <div class="btn-guardar">
+                <button class="border-0 bg-blue-one text-light pt-1 pb-1 pr-4 pl-4 f-open-sans-c fs-20 shadow-three" (click)="guardar()">Guardar</button>
             </div>
         </form>
     </div>

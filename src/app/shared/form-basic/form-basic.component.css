@@ -32,3 +32,12 @@ background: radial-gradient(ellipse at center, rgba(61,56,61,1) 0%, rgba(26,26,2
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3d383d', endColorstr='#1a1a1a', GradientType=1 );
 
 }
+.btn-guardar{
+    position: fixed;
+    right: 0;
+    left: 25px;
+    bottom: 25px;
+}
+input[type='file']{
+    display: none;
+}
