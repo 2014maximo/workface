@@ -81,6 +81,12 @@ Apache-2.0
 @firebase/remote-config
 Apache-2.0
 
+@firebase/storage
+Apache-2.0
+
+@firebase/storage-compat
+Apache-2.0
+
 @firebase/util
 Apache-2.0
 
@@ -552,6 +558,8 @@ firebase/compat/app
 firebase/compat/auth
 
 firebase/compat/firestore
+
+firebase/compat/storage
 
 firebase/messaging
 
