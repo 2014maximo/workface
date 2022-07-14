@@ -565,6 +565,8 @@ firebase/messaging
 
 firebase/remote-config
 
+firebase/storage
+
 html2canvas
 MIT
 Copyright (c) 2012 Niklas von Hertzen
