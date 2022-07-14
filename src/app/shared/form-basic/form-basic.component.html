@@ -58,84 +58,104 @@
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
                                     <h4 class="text-light f-grape fs-30 text-center text-shadow-one">02/<span class="fs-12">13</span></h4>
-                                    <!--------------------------------------------------------------------------------->
-                                    <!-------------------------------------- FOTO PERFIL ------------------------------>
-                                    <!--------------------------------------------------------------------------------->
-                                    <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">FOTO PERFIL</h3>
-                                    <div class="p-5">
-                                        <div class="row">
-                                            <div class="col-md-6 text-center">
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" accept=".png" (change)="loadImg('/frontal-sin-fondo/', $event,'fotoFrontalSinFondo')" type="file" id="img-frontal">
-                                                <label class="estiloLabel f-open-sans-c p-1">Foto frontal sin fondo<span class="text-danger">*</span></label><br>
-                                                <label for="img-frontal" class="text-light cursor-p">
-                                                    <img *ngIf="!fotoFrontalSinFondo[0]" src="assets/img/icons/add-file.png" alt="add-file-image" title="Agregar imagen" height="70" width="auto" class="mt-4 drop">
-                                                    <img *ngIf="fotoFrontalSinFondo[0]" src="{{ fotoFrontalSinFondo[0] }}" alt="" height="200" width="auto">
-                                                    <img src="assets/img/icons/equis.png" alt="equis" title="eliminar" height="25" width="auto" class="drop cursor-p">
-                                                </label>
-                                            </div>
-                                            <div class="col-md-6 text-center" *ngIf="!fotoFrontalSinFondo[0]">
-                                                <label class="estiloLabel f-open-sans-c p-1">Ejemplo</label><br>
-                                                <img src="assets/img/items/elon musk.png" alt="" height="200" width="auto" class="drop">
-                                            </div>
-                                        </div>
+                                    <!----------------------------------------------------------------------------------->
+                                    <!-------------------------------------- IMAGENES ----------------------------------->
+                                    <!----------------------------------------------------------------------------------->
+                                    <!-- FRONTAL SIN FONDO -->
+                                    <div>
                                         <div class="espacio"></div>
-                                        <div class="row">
-                                            <div class="col-md-6 text-center">
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" accept=".png, .jpg, .jpeg" (change)="loadImg('/frontal-con-fondo/', $event,'fotoFrontalConFondo')" type="file" id="img-fondo">
-                                                <label class="estiloLabel f-open-sans-c p-1">Foto frontal con fondo<span class="text-danger">*</span></label><br>
-                                                <label for="img-fondo" class="text-light cursor-p">
-                                                    <img *ngIf="!fotoFrontalConFondo[0]" src="assets/img/icons/add-file.png" alt="add-file-image" title="Agregar imagen" height="70" width="auto" class="mt-4 drop">
-                                                    <img *ngIf="fotoFrontalConFondo[0]" src="{{ fotoFrontalConFondo[0] }}" alt="" height="200" width="auto">
-                                                </label>
-                                            </div>
-                                            <div class="col-md-6 text-center" *ngIf="!fotoFrontalConFondo[0]">
-                                                <label class="estiloLabel f-open-sans-c p-1">Ejemplo</label><br>
-                                                <img src="assets/img/items/elon musk.png" alt="" height="200" width="auto" class="drop">
-                                            </div>
-                                        </div>
-                                        <br>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="espaciado"></div>
-                                <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">03/<span class="fs-12">13</span></h4>
-                                    <!--------------------------------------------------------------------------------->
-                                    <!-------------------------------------- FONDO Y FIRMA ------------------------------>
-                                    <!--------------------------------------------------------------------------------->
-                                    <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">FONDO / FIRMA</h3>
-                                    <div class="p-5">
-                                        <div class="row">
-                                            <div class="col-md-6 text-center">
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" accept=".png, .jpg, .jpeg" (change)="loadImg('/fondo/', $event,'imgFondo')" type="file" id="imgFondo">
-                                                <label class="estiloLabel f-open-sans-c p-1">Imagen para contrastes<span class="text-danger">*</span></label><br>
-                                                <label for="imgFondo" class="text-light cursor-p">
-                                                    <img *ngIf="!imgFondo[0]" src="assets/img/icons/add-file.png" alt="add-file-image" title="Agregar imagen" height="70" width="auto" class="mt-4 drop">
-                                                    <img *ngIf="imgFondo[0]" src="{{ imgFondo[0] }}" alt="" height="200" width="auto">
-                                                </label>
-                                            </div>
-                                            <div class="col-md-6 text-center" *ngIf="!imgFondo[0]">
-                                                <label class="estiloLabel f-open-sans-c p-1">Ejemplo</label><br>
-                                                <img src="assets/img/items/elon musk.png" alt="" height="200" width="auto" class="drop">
-                                            </div>
-                                        </div>
-                                        <div class="espacio"></div>
-                                        <div class="row">
-                                            <div class="col-md-6 text-center">
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" accept=".png" (change)="loadImg('/firma/', $event,'imgFirma')" type="file" id="imgFirma">
-                                                <label class="estiloLabel f-open-sans-c p-1">Firma sin fondo<span class="text-danger">*</span></label><br>
-                                                <label for="imgFirma" class="text-light cursor-p">
-                                                    <img *ngIf="!imgFirma[0]" src="assets/img/icons/add-file.png" alt="add-file-image" title="Agregar imagen" height="70" width="auto" class="mt-4 drop">
-                                                    <img *ngIf="imgFirma[0]" src="{{ imgFirma[0] }}" alt="" height="200" width="auto" class="drop">
-                                                </label>
-                                            </div>
-                                            <div class="col-md-6 text-center" *ngIf="!imgFirma[0]">
-                                                <label class="estiloLabel f-open-sans-c p-1">Ejemplo</label><br>
-                                                <img src="assets/img/items/elon musk.png" alt="" height="200" width="auto" class="drop">
-                                            </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one mb-5">IMAGEN PERFIL</h3>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col text-center">
+                                            <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" accept=".png" (change)="loadImg('/frontal-sin-fondo/', $event)" type="file" id="img-sin-fondo">
+                                            <label class="estiloLabel f-open-sans-c p-1">Imagen de frente sin fondo<span class="text-danger">*</span></label><br>
+                                            <label for="img-sin-fondo" class="text-light cursor-p">
+                                                <img *ngIf="!fotoFrontalSinFondo[0]" src="assets/img/icons/add-file.png" alt="add-file-image" title="Agregar imagen" height="70" width="auto" class="mt-4 drop">
+                                                <img *ngIf="fotoFrontalSinFondo[0]" src="{{ fotoFrontalSinFondo[0] }}" alt="" height="200" width="auto">
+                                            </label>
+                                            <img *ngIf="fotoFrontalSinFondo[0]" src="assets/img/icons/equis.png" height="40" width="auto" class="drop cursor-p" (click)="eliminarImagen('fotoFrontalSinFondo')">
+                                        </div>
+                                        <div class="col text-center" *ngIf="!fotoFrontalSinFondo[0]">
+                                            <label class="estiloLabel f-open-sans-c p-1">Ejemplo</label><br>
+                                            <img src="assets/img/items/alex-sin-fondo.png" alt="" height="200" width="auto" class="drop">
+                                        </div>
+                                    </div>
+                                    </div>
+
+
+                                    <!-- FRONTAL CON FONDO -->
+                                    <div>
+                                        <div class="espacio"></div>
+
+                                    <div class="row">
+                                        <div class="col text-center">
+                                            <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" accept=".png, .jpg, .jpeg" (change)="loadImg('/frontal-con-fondo/', $event)" type="file" id="img-fondo">
+                                            <label class="estiloLabel f-open-sans-c p-1">Imagen de frente con fondo<span class="text-danger">*</span></label><br>
+                                            <label for="img-fondo" class="text-light cursor-p">
+                                                <img *ngIf="!fotoFrontalConFondo[0]" src="assets/img/icons/add-file.png" alt="add-file-image" title="Agregar imagen" height="70" width="auto" class="mt-4 drop">
+                                                <img *ngIf="fotoFrontalConFondo[0]" src="{{ fotoFrontalConFondo[0] }}" alt="" height="200" width="auto">
+                                            </label>
+                                            <img *ngIf="fotoFrontalConFondo[0]" src="assets/img/icons/equis.png" height="40" width="auto" class="drop cursor-p" (click)="eliminarImagen('fotoFrontalConFondo')">
+                                        </div>
+                                        <div class="col text-center" *ngIf="!fotoFrontalConFondo[0]">
+                                            <label class="estiloLabel f-open-sans-c p-1">Ejemplo</label><br>
+                                            <img src="assets/img/items/alex.jpg" alt="" height="200" width="auto" class="drop">
+                                        </div>
+                                    </div>
+                                    </div>
+                                    
+
+                                    <!-- FONDO -->
+                                    <div>
+                                        <div class="espacio"></div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one mb-5">FONDO / FIRMA</h3>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col text-center">
+                                            <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" accept=".png, .jpg, .jpeg" (change)="loadImg('/fondo/', $event)" type="file" id="fondo">
+                                            <label class="estiloLabel f-open-sans-c p-1">Fondo para contrastes<span class="text-danger">*</span></label><br>
+                                            <label for="fondo" class="text-light cursor-p">
+                                                <img *ngIf="!imgFondo[0]" src="assets/img/icons/add-file.png" alt="add-file-image" title="Agregar imagen" height="70" width="auto" class="mt-4 drop">
+                                                <img *ngIf="imgFondo[0]" src="{{ imgFondo[0] }}" alt="" height="200" width="auto">
+                                            </label>
+                                            <img *ngIf="imgFondo[0]" src="assets/img/icons/equis.png" height="40" width="auto" class="drop cursor-p" (click)="eliminarImagen('imgFondo')">
+                                        </div>
+                                        <div class="col text-center" *ngIf="!imgFondo[0]">
+                                            <label class="estiloLabel f-open-sans-c p-1">Ejemplo</label><br>
+                                            <img src="assets/img/items/fondo.jpg" alt="" height="200" width="auto" class="drop">
+                                        </div>
+                                    </div>
+                                    </div>
+                                    
+                                    <!-- FIRMA -->
+                                    <div>
+                                        <div class="espacio"></div>
+
+                                    <div class="row">
+                                        <div class="col text-center">
+                                            <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" accept=".png, .jpg, .jpeg" (change)="loadImg('/firma/', $event)" type="file" id="firma">
+                                            <label class="estiloLabel f-open-sans-c p-1">Firma sin fondo<span class="text-danger">*</span></label><br>
+                                            <label for="firma" class="text-light cursor-p">
+                                                <img *ngIf="!imgFirma[0]" src="assets/img/icons/add-file.png" alt="add-file-image" title="Agregar imagen" height="70" width="auto" class="mt-4 drop">
+                                                <img *ngIf="imgFirma[0]" src="{{ imgFirma[0] }}" alt="" height="200" width="auto" class="drop">
+                                            </label>
+                                            <img *ngIf="imgFirma[0]" src="assets/img/icons/equis.png" height="40" width="auto" class="drop cursor-p" (click)="eliminarImagen('imgFirma')">
+                                        </div>
+                                        <div class="col text-center" *ngIf="!imgFirma[0]">
+                                            <label class="estiloLabel f-open-sans-c p-1">Ejemplo</label><br>
+                                            <img src="assets/img/items/firma4.png" alt="" height="200" width="auto" class="drop">
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <!-- ---------------------------------------- -->
                                 </div>
                             </div>
                             
@@ -545,4 +565,15 @@
     </div>
     <div class="col-md-1"></div>
 </div>
+<div class="modal fade" id="modalLoader" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-transparent">
+            <div class="text-center">
+                <div class="spinner-border text-warning" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
 <div class="espaciado bg-transparent"></div>

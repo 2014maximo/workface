@@ -6,6 +6,10 @@ import { AuthService } from 'src/app/services/auth.service';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { WebServicesService } from '../../services/web-services.service';
 
+import Swal from 'sweetalert2';
+
+declare var $: any;
+
 @Component({
   selector: 'app-form-basic',
   templateUrl: './form-basic.component.html',
@@ -25,6 +29,7 @@ export class FormBasicComponent implements OnInit {
   public fotoFrontalConFondo: any[]=[];
   public imgFirma: any[]=[];
   public imgFondo: any[]=[];
+  public objImagenes: any[]=[];
 
   constructor(private fb: FormBuilder,
     public webService: WebServicesService,
@@ -47,7 +52,6 @@ export class FormBasicComponent implements OnInit {
       // IMAGEN DE FONDO
       'imgFondo': new FormControl('', Validators.required),
       'imgFirma': new FormControl('', Validators.required),
-
 
       // IDENTIFICACIÓN
       'tipoIdentificacion': new FormControl('', Validators.required),
@@ -117,7 +121,7 @@ export class FormBasicComponent implements OnInit {
           }
         })
       }
-    })
+    });
   }
   cargarImagenes(datosGenerales: any) {
     if(datosGenerales.formBasic.fotoFrontalSinFondo){
@@ -143,7 +147,7 @@ export class FormBasicComponent implements OnInit {
     this.convertFileToBase64();
   }
 
-  loadImg(categoria: string, files: any, campo: string){
+  loadImg(categoria: string, files: any){
     let file = files.target.files;
     let reader = new FileReader();
 
@@ -161,7 +165,20 @@ export class FormBasicComponent implements OnInit {
       }
       // this.selectionImg(categoria, reader);
       this.database.loadImg(categoria, 'img_' + Date.now(), reader.result).then((urlImagen: any) => {
-        this.formBasic.controls[campo].setValue(urlImagen);
+        if(categoria === '/frontal-sin-fondo/'){
+          this.formBasic.get('fotoFrontalSinFondo')?.setValue(urlImagen);
+
+        }else if(categoria === '/frontal-con-fondo/'){
+          this.formBasic.get('fotoFrontalConFondo')?.setValue(urlImagen);
+          
+        }else if(categoria === '/fondo/'){
+          this.formBasic.get('imgFondo')?.setValue(urlImagen);
+          
+        }else if(categoria === '/firma/'){
+          this.formBasic.get('imgFirma')?.setValue(urlImagen);
+          
+        }
+        // console.log(urlImagen.ref.getDownloadURL(), 'URL');
       })
     }
   }
@@ -190,7 +207,6 @@ export class FormBasicComponent implements OnInit {
       case '/firma/':
         this.imgFirma?.push(result.result);
         break;
-
     }
   }
   
@@ -364,7 +380,10 @@ export class FormBasicComponent implements OnInit {
 
   }
 
+
   public guardar(){
+
+
     let usuario:any = {};
     usuario.idUsuario = this.uid? this.uid : '';
     usuario.formBasic = this.formBasic.value;
@@ -375,16 +394,82 @@ export class FormBasicComponent implements OnInit {
 
     if(this.datosGenerales){ 
       this.database.update('form-basic',this.uid, usuario).then( respuesta => {
-        SweetAlert('success','FORMULARIO ACTUALIZADO');
+        if(respuesta){
+          SweetAlert('success','FORMULARIO ACTUALIZADO');
+        }
 
       });
     }else{
       this.database.createUid('form-basic', usuario, usuario.idUsuario).then( res =>{
-        SweetAlert('success','FORMULARIO GUARDADO');
+        if(res){
+          SweetAlert('success','FORMULARIO GUARDADO');
+        }
       }).catch( err => {
         console.error( err);
           SweetAlert('error', 'ERROR GUARDANDO');
       })
+    }
+  }
+
+  eliminarImagen(campo: string){
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    })
+    
+    swalWithBootstrapButtons.fire({
+      title: 'Quiere eliminar la imagen?',
+      text: "Recuerde guardar el cambio!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Si, borrar!',
+      cancelButtonText: 'No, cancelar!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.limpiarContenedor(campo);
+        swalWithBootstrapButtons.fire(
+          'Borrada!',
+          'La imagen ha sido borrada.',
+          'success'
+        )
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Cancelar',
+          'La imagen no se borró',
+          'error'
+        )
+      }
+    })
+  }
+  limpiarContenedor(arg0: string) {
+    switch(arg0){
+      case 'fotoFrontalSinFondo':
+        this.fotoFrontalSinFondo=[];
+        this.formBasic.controls['fotoFrontalSinFondo'].reset();
+        console.log(this.formBasic, 'EL FORMULARIO BASICO');
+        break;
+        
+        case 'fotoFrontalConFondo':
+          this.fotoFrontalConFondo=[];
+          this.formBasic.controls['fotoFrontalConFondo'].reset();
+          break;
+          
+          case 'imgFondo':
+            this.imgFondo=[];
+            this.formBasic.controls['imgFondo'].reset();
+            break;
+            
+            case 'imgFirma':
+              this.imgFirma=[];
+              this.formBasic.controls['imgFirma'].reset();
+        break;
     }
   }
 
