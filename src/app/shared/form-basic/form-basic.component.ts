@@ -182,33 +182,6 @@ export class FormBasicComponent implements OnInit {
       })
     }
   }
-  /**
-   * Estas son carpetas de storage-firebase
-   * van a almacenar muchas imágenes y la 
-   * idea es darles un orden inicial, muy
-   * posiblemente cambie este modo de almacenamiento
-   * @param database 
-   * @param clasificate 
-   */
-  private alertMaxFileSize(categoria: string, result: FileReader){
-    switch(categoria){
-      case '/frontal-sin-fondo/':
-        this.fotoFrontalSinFondo?.push(result.result);
-        break;
-
-      case '/frontal-con-fondo/':
-        this.fotoFrontalConFondo?.push(result.result);
-        break;
-
-      case '/fondo/':
-        this.imgFondo?.push(result.result);
-        break;
-        
-      case '/firma/':
-        this.imgFirma?.push(result.result);
-        break;
-    }
-  }
   
   convertFileToBase64(): void{
     let reader = new FileReader();
@@ -280,7 +253,21 @@ export class FormBasicComponent implements OnInit {
   }
 
   deleteControls(formArray: string, index: number){
-    (<FormArray>this.formBasic.controls[formArray]).removeAt(index);
+    Swal.fire({
+      title: 'Quieres eliminar el formulario?',
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: 'Eliminar',
+      denyButtonText: `No eliminar`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire('Saved!', '', 'success');
+        (<FormArray>this.formBasic.controls[formArray]).removeAt(index);
+      } else if (result.isDenied) {
+        Swal.fire('El formulario no fue borrado', '', 'info')
+      }
+    })
   }
 
   agregarInteres(){
@@ -394,16 +381,13 @@ export class FormBasicComponent implements OnInit {
 
     if(this.datosGenerales){ 
       this.database.update('form-basic',this.uid, usuario).then( respuesta => {
-        if(respuesta){
-          SweetAlert('success','FORMULARIO ACTUALIZADO');
-        }
-
+        SweetAlert('success','FORMULARIO ACTUALIZADO');
+        
       });
     }else{
       this.database.createUid('form-basic', usuario, usuario.idUsuario).then( res =>{
-        if(res){
-          SweetAlert('success','FORMULARIO GUARDADO');
-        }
+        SweetAlert('success','FORMULARIO GUARDADO');
+        
       }).catch( err => {
         console.error( err);
           SweetAlert('error', 'ERROR GUARDANDO');

@@ -77,7 +77,7 @@
                                                 <img *ngIf="!fotoFrontalSinFondo[0]" src="assets/img/icons/add-file.png" alt="add-file-image" title="Agregar imagen" height="70" width="auto" class="mt-4 drop">
                                                 <img *ngIf="fotoFrontalSinFondo[0]" src="{{ fotoFrontalSinFondo[0] }}" alt="" height="200" width="auto">
                                             </label>
-                                            <img *ngIf="fotoFrontalSinFondo[0]" src="assets/img/icons/equis.png" height="40" width="auto" class="drop cursor-p" (click)="eliminarImagen('fotoFrontalSinFondo')">
+                                            <img *ngIf="fotoFrontalSinFondo[0]" src="assets/img/icons/equis.png" height="40" width="auto" class="drop cursor-p" title="Eliminar" (click)="eliminarImagen('fotoFrontalSinFondo')">
                                         </div>
                                         <div class="col text-center" *ngIf="!fotoFrontalSinFondo[0]">
                                             <label class="estiloLabel f-open-sans-c p-1">Ejemplo</label><br>
@@ -99,7 +99,7 @@
                                                 <img *ngIf="!fotoFrontalConFondo[0]" src="assets/img/icons/add-file.png" alt="add-file-image" title="Agregar imagen" height="70" width="auto" class="mt-4 drop">
                                                 <img *ngIf="fotoFrontalConFondo[0]" src="{{ fotoFrontalConFondo[0] }}" alt="" height="200" width="auto">
                                             </label>
-                                            <img *ngIf="fotoFrontalConFondo[0]" src="assets/img/icons/equis.png" height="40" width="auto" class="drop cursor-p" (click)="eliminarImagen('fotoFrontalConFondo')">
+                                            <img *ngIf="fotoFrontalConFondo[0]" src="assets/img/icons/equis.png" height="40" width="auto" class="drop cursor-p" title="Eliminar" (click)="eliminarImagen('fotoFrontalConFondo')">
                                         </div>
                                         <div class="col text-center" *ngIf="!fotoFrontalConFondo[0]">
                                             <label class="estiloLabel f-open-sans-c p-1">Ejemplo</label><br>
@@ -126,7 +126,7 @@
                                                 <img *ngIf="!imgFondo[0]" src="assets/img/icons/add-file.png" alt="add-file-image" title="Agregar imagen" height="70" width="auto" class="mt-4 drop">
                                                 <img *ngIf="imgFondo[0]" src="{{ imgFondo[0] }}" alt="" height="200" width="auto">
                                             </label>
-                                            <img *ngIf="imgFondo[0]" src="assets/img/icons/equis.png" height="40" width="auto" class="drop cursor-p" (click)="eliminarImagen('imgFondo')">
+                                            <img *ngIf="imgFondo[0]" src="assets/img/icons/equis.png" height="40" width="auto" class="drop cursor-p" title="Eliminar" (click)="eliminarImagen('imgFondo')">
                                         </div>
                                         <div class="col text-center" *ngIf="!imgFondo[0]">
                                             <label class="estiloLabel f-open-sans-c p-1">Ejemplo</label><br>
@@ -147,7 +147,7 @@
                                                 <img *ngIf="!imgFirma[0]" src="assets/img/icons/add-file.png" alt="add-file-image" title="Agregar imagen" height="70" width="auto" class="mt-4 drop">
                                                 <img *ngIf="imgFirma[0]" src="{{ imgFirma[0] }}" alt="" height="200" width="auto" class="drop">
                                             </label>
-                                            <img *ngIf="imgFirma[0]" src="assets/img/icons/equis.png" height="40" width="auto" class="drop cursor-p" (click)="eliminarImagen('imgFirma')">
+                                            <img *ngIf="imgFirma[0]" src="assets/img/icons/equis.png" height="40" width="auto" class="drop cursor-p" title="Eliminar" (click)="eliminarImagen('imgFirma')">
                                         </div>
                                         <div class="col text-center" *ngIf="!imgFirma[0]">
                                             <label class="estiloLabel f-open-sans-c p-1">Ejemplo</label><br>
@@ -162,7 +162,7 @@
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">04/<span class="fs-12">13</span></h4>
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">03/<span class="fs-12">13</span></h4>
                                     <!----------------------------------------------------------------------------------------->
                                     <!-------------------------------------- IDENTIFICACIÓN ----------------------------------->
                                     <!----------------------------------------------------------------------------------------->
@@ -199,7 +199,7 @@
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">05/<span class="fs-12">13</span></h4>
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">04/<span class="fs-12">13</span></h4>
                                     <!------------------------------------------------------------------------------------->
                                     <!-------------------------------------- NACIMIENTO ----------------------------------->
                                     <!------------------------------------------------------------------------------------->
@@ -230,7 +230,7 @@
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">06/<span class="fs-12">13</span></h4>
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">05/<span class="fs-12">13</span></h4>
                                     <!----------------------------------------------------------------------------------->
                                     <!-------------------------------------- CONTACTO ----------------------------------->
                                     <!----------------------------------------------------------------------------------->
@@ -261,7 +261,7 @@
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">07/<span class="fs-12">13</span></h4>
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">06/<span class="fs-12">13</span></h4>
                                     <!----------------------------------------------------------------------------------->
                                     <!--------------------------------------- CARGO ------------------------------------->
                                     <!----------------------------------------------------------------------------------->
@@ -270,7 +270,7 @@
                                         <label class="estiloLabel f-open-sans-c p-1">Cargo actual<span class="text-danger">*</span></label>
                                         <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="cargoActual">
                                         <label class="estiloLabel f-open-sans-c p-1">A cerca de mí<span class="text-danger">*</span></label>
-                                        <textarea rows="10"class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="acercaDMi">
+                                        <textarea rows="10"class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" style="height:13rem" type="text" placeholder="" formControlName="acercaDMi">
                                         </textarea>
 
                                         <button (click)="eraseForm(['fotoFrontalSinFondo','fotoFrontalConFondo','cargoActual','acercaDMi'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-right" title="Borrar contenido de campos">
@@ -285,22 +285,28 @@
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">08/<span class="fs-12">13</span></h4>
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">07/<span class="fs-12">13</span></h4>
                                     <!----------------------------------------------------------------------------------->
                                     <!-------------------------------------- REDES ------------------------------------>
                                     <!----------------------------------------------------------------------------------->
                                     <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">REDES</h3>
                                     <div class="p-5">
-                                        <label class="estiloLabel f-open-sans-c p-1">Website<span class="text-danger">*</span></label>
+
+                                        <img src="https://plantillas_dev.gitlab.io/styles/assets/icon/web.png" alt="web" height="30" width="auto" class="drop" title="web">
                                         <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="webSite">
-                                        <label class="estiloLabel f-open-sans-c p-1">Instagram<span class="text-danger">*</span></label>
+
+                                        <img src="https://plantillas_dev.gitlab.io/styles/assets/icon/instagram.png" alt="instagram" height="30" width="auto" class="drop" title="instagram">
                                         <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="instagram">
-                                        <label class="estiloLabel f-open-sans-c p-1">Facebook<span class="text-danger">*</span></label>
+
+                                        <img src="https://plantillas_dev.gitlab.io/styles/assets/icon/facebook.png" alt="facebook" height="30" width="auto" class="drop" title="facebook">
                                         <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="facebook">
-                                        <label class="estiloLabel f-open-sans-c p-1">Twitter<span class="text-danger">*</span></label>
+
+                                        <img src="https://plantillas_dev.gitlab.io/styles/assets/icon/twitter.png" alt="twitter" height="30" width="auto" class="drop" title="twitter">
                                         <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="twitter">
-                                        <label class="estiloLabel f-open-sans-c p-1">Linkedin<span class="text-danger">*</span></label>
+
+                                        <img src="https://plantillas_dev.gitlab.io/styles/assets/icon/linkeding.png" alt="linkeding" height="30" width="auto" class="drop" title="linkeding">
                                         <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="linkedin">
+
                                         <button (click)="eraseForm(['webSite','instagram','facebook','twitter','linkedin'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-right" title="Borrar contenido de campos">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                                                 <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
@@ -313,7 +319,7 @@
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">09/<span class="fs-12">13</span></h4>
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">08/<span class="fs-12">13</span></h4>
                                     <!----------------------------------------------------------------------------------->
                                     <!-------------------------------------- ESTUDIOS ----------------------------------->
                                     <!----------------------------------------------------------------------------------->
@@ -361,7 +367,7 @@
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">10/<span class="fs-12">13</span></h4>
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">9/<span class="fs-12">13</span></h4>
                                     <!----------------------------------------------------------------------------------------->
                                     <!-------------------------------------- EXPERIENCIA LABORAL ------------------------------>
                                     <!----------------------------------------------------------------------------------------->
@@ -409,7 +415,7 @@
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">11/<span class="fs-12">13</span></h4>
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">10/<span class="fs-12">13</span></h4>
                                     <!----------------------------------------------------------------------------------------->
                                     <!-------------------------------------- OTROS CONOCIMIENTOS ------------------------------>
                                     <!----------------------------------------------------------------------------------------->
@@ -453,7 +459,7 @@
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">12/<span class="fs-12">13</span></h4>
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">11/<span class="fs-12">13</span></h4>
                                     <!----------------------------------------------------------------------------------------->
                                     <!-------------------------------------- REFERENCIAS PERSONALES --------------------------->
                                     <!----------------------------------------------------------------------------------------->
@@ -499,7 +505,7 @@
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">13/<span class="fs-12">13</span></h4>
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">12/<span class="fs-12">13</span></h4>
                                     <!----------------------------------------------------------------------------------------->
                                     <!-------------------------------------- REFERENCIAS FAMILIARES --------------------------->
                                     <!----------------------------------------------------------------------------------------->
