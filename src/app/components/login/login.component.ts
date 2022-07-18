@@ -119,7 +119,6 @@ export class LoginComponent implements OnInit {
   public ingresoUsuario(){
 
     if(this.getEmail() && this.getPass()){
-      if(!this.validarGoogle()){
         this.authService.login(this.getEmail(), this.getPass()).then( res =>{
           if(res?.operationType === "signIn"){
             this.route.navigate(['profile']);
@@ -129,13 +128,10 @@ export class LoginComponent implements OnInit {
             setTimeout(()=>{
               this.usuarioIncorrecto = false;
             },5000);
-    
             this.focoEmail();
           }
         });
-      } else {
-        this.ingresoGoogle();
-      }
+
     } else {
       this.toas('error', 'Ingrese correctamente los datos');
     }
@@ -143,8 +139,7 @@ export class LoginComponent implements OnInit {
   }
 
   public registroUsuario(){
-    if(!this.validarGoogle()){
-      if(this.form.valid){
+    if(this.form.valid){
         this.authService.register(this.getEmail(), this.getPass()).then( res => {
           console.log(this.getEmail().value, this.getPass().value, 'EL VALOR QUE SE MANDA');
           if(res?.additionalUserInfo?.isNewUser){
@@ -161,28 +156,23 @@ export class LoginComponent implements OnInit {
         this.resetForm();
         this.focoEmail();
       }
-    } else {
-      this.ingresoGoogle();
-    }
   }
 
   public recordarClave(){
     if(this.getEmail()){
-      if(!this.validarGoogle()){
         this.authService.resetPassword(this.getEmail()).then( res => {
-  
         });
-      } else {
-        this.ingresoGoogle();
-      }
     } else {
       this.toas('error', 'Ingresa correctamente el correo');
     }
   }
 
-  private validarGoogle(): boolean{
+/* En las versiones chrome no permite
+abrir la ventana aparte para loguear con gmail */
+
+/*   private validarGoogle(): boolean{
     return this.getEmail().includes('gmail');
-  }
+  } */
 
 
   public submit(){

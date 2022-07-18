@@ -42,25 +42,20 @@
                 <div  class="row fs-30">
                     <ul class="w-100">
                         <li class="f-shadow-into-l" *ngIf="userLogged|async as user">
-                            <img src="{{user.photoURL}}" alt="" height="80">
+                            <img src="{{user.photoURL}}" alt="" height="80" class="b-r50">
                             <p class="tc-blue-one"><small>{{user.email}}</small></p>
                         </li>
-                        <li  class="f-shadow-into-l">
+                        <li *ngIf="!email && !enLogin" class="f-shadow-into-l">
                             <a href="login">
                                 INGRESAR
                             </a>
                         </li>
-                        <li class="f-shadow-into-l">
-                            <a class="cursor-p" (click)="logout()">
-                                SALIR
-                            </a>
-                        </li>
-                        <li class="f-shadow-into-l">
+                        <li *ngIf="email" class="f-shadow-into-l">
                             <a href="profile">
-                                PERFIL
+                                MI PERFIL
                             </a>
                         </li>
-                        <li class="f-shadow-into-l">
+                        <li *ngIf="email" class="f-shadow-into-l">
                             <a class="tc-yellow-one" href="templates">
                                 PLANTILLAS
                             </a>
@@ -68,6 +63,11 @@
                         <li class="f-shadow-into-l">
                             <a class="" href="templates">
                                 CONTÁCTANOS
+                            </a>
+                        </li>
+                        <li *ngIf="email" class="f-shadow-into-l">
+                            <a class="cursor-p" (click)="logout()">
+                                SALIR
                             </a>
                         </li>
                     </ul>

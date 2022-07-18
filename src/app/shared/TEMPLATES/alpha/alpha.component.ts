@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { FirebaseService } from '../../../services/firebase.service';
 
@@ -11,13 +11,33 @@ import html2canvas from 'html2canvas';
   styleUrls: ['./alpha.component.css']
 })
 export class AlphaComponent implements OnInit {
-
+  
+  name = 'Angular 6';
   public uid?: any;
   public datosGenerales: any;
+
+  @ViewChild('screen') screen?: ElementRef;
+  @ViewChild('canvas') canvas?: ElementRef;
+  @ViewChild('downloadLink') downloadLink?: ElementRef;
 
   constructor(private authService: AuthService,
     private database: FirebaseService) {
       
+    }
+
+  
+    downloadImage(){
+      html2canvas(this.screen?.nativeElement).then(canvas => {
+        if(this.canvas){
+          this.canvas.nativeElement.src = canvas.toDataURL();
+        }
+        if(this.downloadLink){
+          this.downloadLink.nativeElement.href = canvas.toDataURL('image/png');
+          this.downloadLink.nativeElement.download = 'marble-diagram.png';
+          this.downloadLink.nativeElement.click();
+        }
+          
+      });
     }
 
   ngOnInit(): void {
@@ -51,12 +71,30 @@ export class AlphaComponent implements OnInit {
 
       var imgData = canvas.toDataURL('image/png');
 
-      const doc = new jsPDF();
+      const doc = new jsPDF('p', 'pt', 'letter');
 
-      doc.addImage(imgData,0,0,208,500);
+      doc.addImage(imgData,0, 0, 400, 720);
 
       doc.save("image.pdf");
     })
   }
+
+  public guardarImagenTres(){
+    var doc = new jsPDF('p','pt', 'letter');
+    var margin = 10;
+    var scale = (doc.internal.pageSize.width - margin * 2) /
+    document.body.scrollWidth;
+    doc.html(document.body, {
+      x: margin,
+      y: margin,
+      html2canvas: {
+        scale: scale,
+      },
+      callback: function(doc){
+        doc.output('dataurlnewwindow', {filename: 'fichero-pdf.pdf'})
+      }
+    })
+  }
+  
 
 }

@@ -1,13 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 .fuenteBase{
     font-family: 'Russo One', sans-serif;
 }
+.fuenteDos{
+    font-family: 'Montserrat', sans-serif;
+}
+
 .colorBase{
     color: var(--color-base);
 }
 .bgBase{
     background-color: #2d4399 !important;
+}
+.fuenteCuatro {
+    font-family: 'Kanit', sans-serif;
 }
 .anchoBase{
     width: 1200px;
@@ -22,4 +31,38 @@
 .foto{
     border-radius: 50%;
     object-fit: cover;
+}
+.style-background{
+    background-repeat: no-repeat !important;
+    background-position: top left !important;
+}
+.style-cargo{
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-right: 20px;
+    padding-left: 20px;
+    letter-spacing: 1px;
+}
+.flotador-uno{
+    position: absolute;
+    top: 150px;
+    left: 150px;
+}
+.flotador-dos{
+    position: absolute;
+    top: 170px;
+    left: 540px;
+}
+
+.btn-guardar{
+    position: fixed;
+    right: 0;
+    left: 25px;
+    bottom: 25px;
+}
+
+.texto-general{
+    line-height: 1.3;
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 17px;
 }

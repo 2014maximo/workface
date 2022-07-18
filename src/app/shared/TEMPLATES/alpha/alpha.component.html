@@ -1,31 +1,70 @@
 <app-header></app-header>
-<div class="espaciado"></div>
 <div class="">
-    <div class="text-center">
-        <a class="cursor-p border f-open-sans-c text-light p-2" (click)="saveToPdf()">
+    <div class="btn-guardar">
+        <button class="border-0 bgBase text-light pt-1 pb-1 pr-4 pl-4 f-open-sans-c fs-20 shadow-three" (click)="saveToPdf()">
             GUARDAR
-        </a>
+        </button>
     </div>
-    <div class="espacio"></div>
-    <div id="alpha" class="anchoBase bg-dark shadow-one">
-        <div class="row pl-5">
-            <div class="col-md-3 bgBase p-50">
-                <div class="marcofoto">
-                    <img src="{{ this.datosGenerales.formBasic.fotoFrontalConFondo }}" class="foto" alt="" height="200" width="200">
+    <div class="espaciado"></div>
+    <div id="alpha" #screen class="anchoBase bg-dark shadow-one">
+        <div class="row">
+            <div class="col-md-12">
+                <img src="{{this.datosGenerales?.formBasic.imgFondo}}" alt="" class="img-fluid">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-8 p-5">
+                <h3 class="fuenteDos text-light fs-25 mb-3">SOBRE MÍ</h3>
+                <p class="text-light texto-general mb-5">
+                    {{ this.datosGenerales?.formBasic.acercaDMi}}
+                </p>
+
+                <h3 class="fuenteDos text-light fs-25 mt-5 mb-3">HABILIDADES</h3>
+                <p class="text-light m-0 fw-6 fuenteDos fs-15">ILLUSTRATOR</p>
+
+
+            </div>
+        </div>
+        <div class="row m-0">
+            <div class="col-md-3 flotador-uno bgBase">
+                <div class="text-center ">
+                    <img src="{{ this.datosGenerales?.formBasic.fotoFrontalConFondo }}" class="mt-5 mb-4 foto" alt="" height="200" width="200">
                 </div>
-                <div class="espaciado"></div>
-                <p class="text-light m-0 fw-6 f-open-sans fs-15">FN:</p>
-                <p class="text-light f-open-sans fs-15">{{ this.datosGenerales.formBasic.fechaNacimiento }}</p>
+                <div class="p-4">
+                    <p class="text-light m-0 fw-6 fuenteDos fs-15">FN:</p>
+                    <p class="text-light fuenteDos fs-15 mb-4">{{ this.datosGenerales?.formBasic.fechaNacimiento }}</p>
+                    
+                    <p class="text-light m-0 fw-6 fuenteDos fs-15">Dirección:</p>
+                    <p class="text-light fuenteDos mb-4 fs-15">{{ this.datosGenerales?.formBasic.direccionResidencia }}</p>
+
+                    <p class="text-light m-0 fw-6 fuenteDos fs-15">Teléfono:</p>
+                    <p class="text-light fuenteDos mb-4 fs-15">{{ this.datosGenerales?.formBasic.direccionResidencia }}</p>
+
+                    <p class="text-light m-0 fw-6 fuenteDos fs-15">Email:</p>
+                    <p class="text-light fuenteDos mb-4 fs-15">{{ this.datosGenerales?.formBasic.email }}</p>
+
+                    <p class="text-light m-0 fw-6 fuenteDos fs-15">Web:</p>
+                    <p class="text-light fuenteDos mb-4 fs-15">{{ this.datosGenerales?.formBasic.webSite }}</p>
+
+                </div>
+
                 <div class="espaciado"></div>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-9 flotador-dos">
                 <div class="espaciado"></div>
-                <h1 class="fuenteBase fw-6 fs-60 text-light">{{ this.datosGenerales.formBasic.primerNombre }} {{ this.datosGenerales.formBasic.primerApellido }}</h1>
-                <div class="p-2 bgBase d-block">
-                    <p class="text-light m-0">CREATIVE DESIGNER</p>
+                <h1 class="fuenteCuatro text-uppercase fw-8 fs-70 text-light">{{ this.datosGenerales?.formBasic.primerNombre }} {{ this.datosGenerales?.formBasic.primerApellido }}</h1>
+                <div class="d-flex">
+                    <div class="bgBase style-cargo">
+                        <p class="text-light text-uppercase fw-5 fuenteDos fs-25 m-0">{{ this.datosGenerales?.formBasic.cargoActual }}</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="espaciado"></div>
+    <div id="download">
+        <img #canvas>
+        <a #downloadLink></a>
+      </div>
 </div>
