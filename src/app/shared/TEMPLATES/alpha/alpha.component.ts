@@ -5,6 +5,9 @@ import { FirebaseService } from '../../../services/firebase.service';
 import { jsPDF } from "jspdf";
 import html2canvas from 'html2canvas';
 
+import * as htmlToImage from 'html-to-image';
+import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
+
 @Component({
   selector: 'app-alpha',
   templateUrl: './alpha.component.html',
@@ -15,6 +18,8 @@ export class AlphaComponent implements OnInit {
   name = 'Angular 6';
   public uid?: any;
   public datosGenerales: any;
+  imagenCreada:any;
+  imgcreada = false;
 
   @ViewChild('screen') screen?: ElementRef;
   @ViewChild('canvas') canvas?: ElementRef;
@@ -94,6 +99,19 @@ export class AlphaComponent implements OnInit {
         doc.output('dataurlnewwindow', {filename: 'fichero-pdf.pdf'})
       }
     })
+  }
+
+  public guardarImagenCuatro() {
+
+    var element = document.getElementById('alpha');
+
+    htmlToImage.toJpeg(element? element: new HTMLElement, { quality: 1 })
+  .then(function (dataUrl) {
+    var link = document.createElement('a');
+    link.download = 'my-image-name.jpeg';
+    link.href = dataUrl;
+    link.click();
+  });
   }
   
 
