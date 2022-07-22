@@ -7,6 +7,7 @@ import { SliderHomeComponent } from './slider-home/slider-home.component';
 import { AlphaComponent } from './TEMPLATES/alpha/alpha.component';
 import { FormBasicComponent } from './form-basic/form-basic.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BetaComponent } from './TEMPLATES/beta/beta.component';
 
 
 
@@ -17,7 +18,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SliderFrasesHomeComponent,
     SliderHomeComponent,
     AlphaComponent,
-    FormBasicComponent
+    FormBasicComponent,
+    BetaComponent
   ],
   imports: [
     CommonModule,

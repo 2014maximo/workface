@@ -22,7 +22,7 @@ import { GaleriaTemplatesComponent } from './components/galeria-templates/galeri
     HomeComponent,
     LoginComponent,
     ProfileComponent,
-    GaleriaTemplatesComponent
+    GaleriaTemplatesComponent,
   ],
   imports: [
     FormsModule,

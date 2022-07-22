@@ -5,6 +5,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { AngularFireAuthGuard } from '@angular/fire/compat/auth-guard';
 import { AlphaComponent } from "./shared/TEMPLATES/alpha/alpha.component";
 import { GaleriaTemplatesComponent } from "./components/galeria-templates/galeria-templates.component";
+import { BetaComponent } from "./shared/TEMPLATES/beta/beta.component";
 
 export const ROUTES: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'home'},
@@ -17,5 +18,6 @@ export const ROUTES: Routes = [
     
     // TEMPLATES
     { path: 'alpha', component: AlphaComponent, canActivate: [AngularFireAuthGuard] },
+    { path: 'beta', component: BetaComponent, canActivate: [AngularFireAuthGuard] },
 
 ]

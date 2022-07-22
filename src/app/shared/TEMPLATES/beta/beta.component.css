@@ -1,0 +1,11 @@
+#beta{
+    width: 1200px;
+    height:2000px;
+}
+
+.btn-guardar{
+    position: fixed;
+    right: 0;
+    left: 25px;
+    bottom: 25px;
+}
