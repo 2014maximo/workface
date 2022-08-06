@@ -1,12 +1,20 @@
+// CORE
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { AuthService } from '../../../services/auth.service';
-import { FirebaseService } from '../../../services/firebase.service';
 
+// USER
+import { AuthService } from '../../../services/auth.service';
+
+// FIREBASE
+import { FirebaseService } from '../../../services/firebase.service';
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
+
+// CREATE PDF or IMAGE
 import { jsPDF } from "jspdf";
 import html2canvas from 'html2canvas';
-
 import * as htmlToImage from 'html-to-image';
 import * as printJS from 'print-js';
+import { AVATAR } from 'src/app/constants/base64.constant';
+import { FONDO } from '../../../constants/base64.constant';
 
 @Component({
   selector: 'app-alpha',
@@ -25,25 +33,80 @@ export class AlphaComponent implements OnInit {
   imgcreada = false;
   public avatar: string = '';
   public fondo: string = '';
+  public img: any;
+  public wall: any;
+  public url: any;
 
   @ViewChild('screen') screen?: ElementRef;
   /* @ViewChild('canvas') canvas?: ElementRef; */
   @ViewChild('downloadLink') downloadLink?: ElementRef;
-  @ViewChild('canvas') set content(canvas: ElementRef) {
-    if (canvas) {
-      this.canvas = canvas;
-      if (canvas.nativeElement) {
-        this.context = (canvas.nativeElement as HTMLCanvasElement).getContext('2d');
-        this.draw();
+  /*   @ViewChild('canvas') set content(canvas: ElementRef) {
+      if (canvas) {
+        this.canvas = canvas;
+        if (canvas.nativeElement) {
+          this.context = (canvas.nativeElement as HTMLCanvasElement).getContext('2d');
+          this.draw();
+        }
       }
-    }
-  }
+    } */
 
   constructor(private authService: AuthService,
     private database: FirebaseService) {
+    this.getImage();
     this.inicializarVariables();
   }
 
+  public getImage() {
+
+    const storage = getStorage();
+    getDownloadURL(ref(storage, 'fondo/img_1657769247581'))
+      .then((url) => {
+        // `url` is the download URL for 'images/stars.jpg'
+        this.wall = `${url}.jpg`;
+      })
+      .catch((error) => {
+        // Handle any errors
+      });
+
+/*     if (this.url) {
+      console.log(this.url, 'URL')
+    } */
+
+  }
+
+  toBase64() {
+    if (this.url) {
+      this.getBase64FomFile(this.url, function (base64: any) {
+        console.log(base64)
+      });
+    }
+  }
+
+  getBase64FomFile(img: any, callback: any) {
+    let fileReader = new FileReader();
+    fileReader.addEventListener('load', function (evt) {
+      callback(fileReader.result);
+    });
+    fileReader.readAsDataURL(img);
+  }
+
+  urlToBlob() {
+
+      fetch('https://image.shutterstock.com/image-vector/teddy-bear-toy-icon-cartoon-260nw-1412632697.jpg')
+        .then(res => res.blob()) // Gets the response and returns it as a blob
+        .then(blob => {
+          // Here's where you get access to the blob
+          // And you can use it for whatever you want
+          // Like calling ref().put(blob)
+  
+          // Here, I use it to make an image appear on the page
+          let objectURL = URL.createObjectURL(blob);
+          let myImage = new Image();
+          myImage.src = objectURL;
+          document.getElementById('myImg')?.appendChild(myImage);
+        });
+    
+  }
 
   downloadImage() {
     html2canvas(this.screen?.nativeElement).then(canvas => {
@@ -64,6 +127,9 @@ export class AlphaComponent implements OnInit {
   }
   inicializarVariables() {
 
+    this.img = AVATAR;
+    this.wall = '';
+
     this.authService.getUserLogged().subscribe((usuario: any) => {
       if (usuario) {
         this.uid = usuario.multiFactor.user.uid;
@@ -72,7 +138,6 @@ export class AlphaComponent implements OnInit {
             respuesta?.subscribe((formulario: any) => {
               if (formulario) {
                 this.datosGenerales = formulario.data();
-                console.log(this.datosGenerales, 'DATOS GENERALES QUE LLEGAN');
                 this.fondo = this.datosGenerales.formBasic.imgFondo;
                 this.avatar = this.datosGenerales.formBasic.fotoFrontalConFondo;
               }
@@ -119,15 +184,15 @@ export class AlphaComponent implements OnInit {
 
   public guardarImagenCuatro() {
 
-      var element = document.getElementById('alpha');
-  
-      htmlToImage.toJpeg(element ? element : new HTMLElement, { quality: 1 })
-        .then(function (dataUrl) {
-          var link = document.createElement('a');
-          link.download = 'my-image-name.jpeg';
-          link.href = dataUrl;
-          link.click();
-        });
+    var element = document.getElementById('alpha');
+
+    htmlToImage.toJpeg(element ? element : new HTMLElement, { quality: 1 })
+      .then(function (dataUrl) {
+        var link = document.createElement('a');
+        link.download = 'my-image-name.jpeg';
+        link.href = dataUrl;
+        link.click();
+      });
 
   }
 
@@ -155,59 +220,5 @@ export class AlphaComponent implements OnInit {
         console.error('oops, something went wrong!', error);
       })
   }
-
-  public printTable() {
-
-    /**
-     * Convent html into image
-     *
-     * Look at the
-     * {@Link https://github.com/niklasvh/html2canvas}
-     */
-    html2canvas(<HTMLElement>document.querySelector('#alpha')).then(async (canvas: HTMLCanvasElement) => {
-      const toImg = canvas.toDataURL();
-
-      /**
-       * Print image
-       *
-       * Look at the
-       * {@Link https://github.com/crabbly/print.js}
-       */
-      printJS({ printable: `${toImg}`, type: 'image', imageStyle: 'width:100%' });
-    });
-  }
-
-  public printCanvas() {
-
-    /**
-     * Convent html into image
-     *
-     * Look at the
-     * {@Link https://github.com/niklasvh/html2canvas}
-     */
-    html2canvas(<HTMLElement>document.querySelector('#alpha')).then(async (canvas: HTMLCanvasElement) => {
-      const toImg = canvas.toDataURL();
-
-      /**
-       * Print image
-       *
-       * Look at the
-       * {@Link https://github.com/crabbly/print.js}
-       */
-      printJS({ printable: `${toImg}`, type: 'image', imageStyle: 'width:30%' });
-    });
-  }
-
-
-  private draw() {
-    this.context!.font = '30px Arial';
-    this.context!.textAlign = 'center';
-    this.context!.textBaseline = 'middle';
-
-    const y = (this.canvas!.nativeElement as HTMLCanvasElement).height / 2;
-    const x = (this.canvas!.nativeElement as HTMLCanvasElement).width / 2;
-    this.context!.fillText('@sezmars', x, y);
-  }
-
 
 }

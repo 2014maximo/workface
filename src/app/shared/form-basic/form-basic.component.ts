@@ -164,6 +164,7 @@ export class FormBasicComponent implements OnInit {
         this.imgFirma?.push(reader.result);
       }
       // this.selectionImg(categoria, reader);
+      console.log(reader.result, 'READER RESULT');
       this.database.loadImg(categoria, 'img_' + Date.now(), reader.result).then((urlImagen: any) => {
         if(categoria === '/frontal-sin-fondo/'){
           this.formBasic.get('fotoFrontalSinFondo')?.setValue(urlImagen);
