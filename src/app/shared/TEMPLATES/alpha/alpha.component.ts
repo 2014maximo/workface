@@ -12,9 +12,12 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { jsPDF } from "jspdf";
 import html2canvas from 'html2canvas';
 import * as htmlToImage from 'html-to-image';
-import * as printJS from 'print-js';
+import domtoimage from 'dom-to-image';
+
+
+
+
 import { AVATAR } from 'src/app/constants/base64.constant';
-import { FONDO } from '../../../constants/base64.constant';
 
 @Component({
   selector: 'app-alpha',
@@ -219,6 +222,16 @@ export class AlphaComponent implements OnInit {
       .catch(function (error) {
         console.error('oops, something went wrong!', error);
       })
+  }
+
+  public guardarImagenSiete(){
+    domtoimage.toJpeg(<Node>document.getElementById('alpha'), { quality: 0.95 })
+    .then(function (dataUrl) {
+        var link = document.createElement('a');
+        link.download = 'my-image-name.jpeg';
+        link.href = dataUrl;
+        link.click();
+    });
   }
 
 }

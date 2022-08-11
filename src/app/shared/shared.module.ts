@@ -11,6 +11,9 @@ import { BetaComponent } from './TEMPLATES/beta/beta.component';
 
 
 
+
+
+
 @NgModule({
   declarations: [
     FooterComponent,
@@ -25,6 +28,7 @@ import { BetaComponent } from './TEMPLATES/beta/beta.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+
   ],
   exports: [
     FooterComponent,

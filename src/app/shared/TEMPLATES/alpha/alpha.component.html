@@ -12,15 +12,13 @@
             <div id="alpha" #alpha class="anchoBase bg-dark shadow-one">
                 <div class="body-a">
                     <div class="perfil-a ml-4">
-                        <div class="">
-                            <img src="{{ this.img }}" alt="" width="240" height="240" class="avatar">
-                        </div>
+                        <img src="{{ this.avatar }}" alt="Esta es la imagen de presentación del usuario" width="240" height="240" class="avatar">
                     </div>
                     <img id="imgPrueba" src="" alt="">
                 </div>
                 <div class="body-b">
                     <div class="perfil-b ml-4">
-                        <img src="{{this.wall}}" alt="">
+                        <img src="{{this.fondo}}" alt="">
                     </div>
                 </div>
             </div>
@@ -28,16 +26,5 @@
         <div class="col-md-1"></div>
     </div>
     <div class="espaciado"></div>
-    <div class="w-100 text-right">
-        <button class="btn btn-primary" (click)="urlToBlob()">
-            PRUEBA
-        </button>
-    </div>
-    <div class="espaciado"></div>
-    <div id="download">
-        <img #canvas>
-        <a #downloadLink></a>
-      </div>
 
-    <img id="myImg" src="" alt="">
 </div>
