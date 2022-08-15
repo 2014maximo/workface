@@ -1,0 +1,7 @@
+{
+  "/v0/b/workface-f8b36.appspot.com/o/": {
+    "target": "https://firebasestorage.googleapis.com",
+    "secure": false,
+    "changeOrigin": true
+  }
+}

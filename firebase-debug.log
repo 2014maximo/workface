@@ -1,0 +1,37 @@
+[debug] [2022-08-12T04:14:32.210Z] ----------------------------------------------------------------------
+[debug] [2022-08-12T04:14:32.214Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\impri\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2022-08-12T04:14:32.214Z] CLI Version:   10.1.2
+[debug] [2022-08-12T04:14:32.214Z] Platform:      win32
+[debug] [2022-08-12T04:14:32.215Z] Node Version:  v12.20.2
+[debug] [2022-08-12T04:14:32.216Z] Time:          Thu Aug 11 2022 23:14:32 GMT-0500 (GMT-05:00)
+[debug] [2022-08-12T04:14:32.217Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-08-12T04:14:32.312Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-08-12T04:14:32.312Z] > authorizing via signed-in user (alexuriel.777@gmail.com)
+[debug] [2022-08-12T04:14:32.312Z] [iam] checking project workface-f8b36 for permissions ["firebase.projects.get"]
+[debug] [2022-08-12T04:14:32.316Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2022-08-12T04:14:32.316Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2022-08-12T04:14:32.581Z] <<< HTTP RESPONSE 200 {"cache-control":"no-cache, no-store, max-age=0, must-revalidate","expires":"Mon, 01 Jan 1990 00:00:00 GMT","pragma":"no-cache","date":"Fri, 12 Aug 2022 04:14:32 GMT","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2022-08-12T04:14:32.620Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/workface-f8b36:testIamPermissions  
+ {"permissions":["firebase.projects.get"]}
+[debug] [2022-08-12T04:14:33.175Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 12 Aug 2022 04:14:33 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=344","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2022-08-12T04:14:33.180Z] > refreshing access token with scopes: []
+[debug] [2022-08-12T04:14:33.181Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2022-08-12T04:14:33.379Z] <<< HTTP RESPONSE 200 {"cache-control":"no-cache, no-store, max-age=0, must-revalidate","expires":"Mon, 01 Jan 1990 00:00:00 GMT","pragma":"no-cache","date":"Fri, 12 Aug 2022 04:14:33 GMT","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2022-08-12T04:14:33.415Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/workface-f8b36 [none]
+[debug] [2022-08-12T04:14:33.846Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/workface-f8b36 200
+[debug] [2022-08-12T04:14:33.847Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/workface-f8b36 {"projectId":"workface-f8b36","projectNumber":"501844164896","displayName":"workface","name":"projects/workface-f8b36","resources":{"hostingSite":"workface-f8b36","realtimeDatabaseInstance":"workface-f8b36-default-rtdb","storageBucket":"workface-f8b36.appspot.com","locationId":"southamerica-east1"},"state":"ACTIVE","etag":"1_724d504a-b13c-4473-8383-4f4c946c01a1"}
+[info] 
+[info] === Serving from 'C:\Users\impri\Documents\Angular - workspace\workface'...
+[info] 
+[debug] [2022-08-12T04:14:33.850Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/workface-f8b36/sites 
+[debug] [2022-08-12T04:14:34.684Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/workface-f8b36/sites 200
+[debug] [2022-08-12T04:14:34.685Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/workface-f8b36/sites {"sites":[{"name":"projects/workface-f8b36/sites/workface-f8b36","defaultUrl":"https://workface-f8b36.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2022-08-12T04:14:34.685Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/workface-f8b36/webApps/-/config [none]
+[debug] [2022-08-12T04:14:35.236Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/workface-f8b36/webApps/-/config 200
+[debug] [2022-08-12T04:14:35.237Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/workface-f8b36/webApps/-/config {"projectId":"workface-f8b36","databaseURL":"https://workface-f8b36-default-rtdb.firebaseio.com","storageBucket":"workface-f8b36.appspot.com","locationId":"southamerica-east1","apiKey":"AIzaSyBsxM8a6HMUjcgIwB7OgHU-qHg-DUx2f-4","authDomain":"workface-f8b36.firebaseapp.com","messagingSenderId":"501844164896"}
+[info] +  hosting: Local server: http://localhost:5000 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://localhost:5000\u001b[22m\u001b[24m"}}
+[info] i  hosting: 127.0.0.1 - - [12/Aug/2022:04:14:47 +0000] "GET / HTTP/1.1" 404 139 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [12/Aug/2022:04:14:47 +0000] \"GET / HTTP/1.1\" 404 139 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0\""}}
+[info] i  hosting: 127.0.0.1 - - [12/Aug/2022:04:15:02 +0000] "GET / HTTP/1.1" 404 139 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0" {"metadata":{"emulator":{"name":"hosting"},"message":"127.0.0.1 - - [12/Aug/2022:04:15:02 +0000] \"GET / HTTP/1.1\" 404 139 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0\""}}
