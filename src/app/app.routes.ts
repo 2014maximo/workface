@@ -6,6 +6,7 @@ import { AngularFireAuthGuard } from '@angular/fire/compat/auth-guard';
 import { AlphaComponent } from "./shared/TEMPLATES/alpha/alpha.component";
 import { GaleriaTemplatesComponent } from "./components/galeria-templates/galeria-templates.component";
 import { BetaComponent } from "./shared/TEMPLATES/beta/beta.component";
+import { SliderTemplatesComponent } from './components/slider-templates/slider-templates.component';
 
 export const ROUTES: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'home'},
@@ -15,6 +16,7 @@ export const ROUTES: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'profile', component: ProfileComponent, canActivate: [AngularFireAuthGuard] },
     { path: 'templates', component: GaleriaTemplatesComponent, canActivate: [AngularFireAuthGuard] },
+    { path: 'galeria', component: SliderTemplatesComponent, canActivate: [AngularFireAuthGuard] },
     
     // TEMPLATES
     { path: 'alpha', component: AlphaComponent, canActivate: [AngularFireAuthGuard] },

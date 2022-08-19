@@ -75,3 +75,7 @@
     background-color: var(--color-alpha);
     padding: 10px 20px 10px 20px
 }
+.fondoAlpha{
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+}

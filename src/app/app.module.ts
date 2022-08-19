@@ -15,6 +15,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './components/profile/profile.component';
 import { HttpClientModule } from '@angular/common/http';
 import { GaleriaTemplatesComponent } from './components/galeria-templates/galeria-templates.component';
+import { ComponentsModule } from './components/components.module';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -28,11 +31,14 @@ import { GaleriaTemplatesComponent } from './components/galeria-templates/galeri
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    CarouselModule,
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase, 'workface'),
     RouterModule.forRoot (ROUTES),
     SharedModule,
+    ComponentsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

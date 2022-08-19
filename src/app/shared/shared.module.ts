@@ -8,6 +8,7 @@ import { AlphaComponent } from './TEMPLATES/alpha/alpha.component';
 import { FormBasicComponent } from './form-basic/form-basic.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BetaComponent } from './TEMPLATES/beta/beta.component';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 
 
@@ -28,6 +29,7 @@ import { BetaComponent } from './TEMPLATES/beta/beta.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    CarouselModule
 
   ],
   exports: [
