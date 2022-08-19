@@ -28,6 +28,7 @@
     --color-dark-uno: #2a2d3e;
     --color-dark-dos: #002451;
     --color-dark-tres:#3a0000;
+    --color-alpha: #2d4399;
 }
 .fuenteUno {
     font-family: var(--fuente-uno);

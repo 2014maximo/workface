@@ -9,16 +9,31 @@
     <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-10">
-            <div id="alpha" #alpha class="anchoBase bg-dark shadow-one">
-                <div class="body-a">
-                    <div class="perfil-a ml-4">
+            <div id="alpha" #alpha class="anchoBase bg-dark shadow-one" style="background:url({{datosGenerales.formBasic.imgFondo}}); background-repeat: no-repeat; background-size: contain;">
+                <div class="body-a d-flex">
+                    <div class="perfil-a ml-4 d-block">
                         <img src="{{ this.avatar }}" alt="Esta es la imagen de presentación del usuario" width="240" height="240" class="avatar">
+                        <div class="espacio"></div>
+                        <p class="fw-6 text-light m-0">FN:</p>
+                        <p class="text-light">{{ datosGenerales.formBasic.fechaNacimiento }}</p>
                     </div>
-                    <img id="imgPrueba" src="" alt="">
+                    
+                    <div class="nombre p-5">
+                        <div class="espaciado"></div>
+                        <h3 class="text-light fs-80 fw-9">{{ datosGenerales.formBasic.primerNombre }} {{ datosGenerales.formBasic.primerApellido }}</h3>
+                        <div class="d-flex">
+                            <div class="cargo">
+                                <h4 class="text-light text-uppercase m-0">{{ datosGenerales.formBasic.cargoActual }}</h4>
+                            </div>
+                        </div>
+                        <div class="espaciar"></div>
+                        <h3 class="text-light">A CERCA DE MI</h3>
+                        <p class="text-light">{{ datosGenerales.formBasic.acercaDMi }}</p>
+                    </div>
                 </div>
                 <div class="body-b">
                     <div class="perfil-b ml-4">
-                        <img src="{{this.fondo}}" alt="">
+                        
                     </div>
                 </div>
             </div>

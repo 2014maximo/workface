@@ -143,6 +143,7 @@ export class AlphaComponent implements OnInit {
                 this.datosGenerales = formulario.data();
                 this.fondo = this.datosGenerales.formBasic.imgFondo;
                 this.avatar = this.datosGenerales.formBasic.fotoFrontalConFondo;
+                console.log(this.datosGenerales, 'DATOS GENERALES');
               }
 
             })
@@ -232,6 +233,38 @@ export class AlphaComponent implements OnInit {
         link.href = dataUrl;
         link.click();
     });
+  }
+
+  prueba(){
+    const storage = getStorage();
+    const starsRef = ref(storage, 'frontal-con-fondo/img_1657769238874.jpg');
+
+    getDownloadURL(starsRef)
+  .then((url) => {
+    console.log(url, 'LO QUE ESTA DEVOLVIENDO LO DEL CORS');
+  })
+  .catch((error) => {
+    // A full list of error codes is available at
+    // https://firebase.google.com/docs/storage/web/handle-errors
+    switch (error.code) {
+      case 'storage/object-not-found':
+        // File doesn't exist
+        break;
+      case 'storage/unauthorized':
+        // User doesn't have permission to access the object
+        break;
+      case 'storage/canceled':
+        // User canceled the upload
+        break;
+
+      // ...
+
+      case 'storage/unknown':
+        // Unknown error occurred, inspect the server response
+        break;
+    }
+  });
+
   }
 
 }

@@ -76,7 +76,7 @@ export class BetaComponent implements OnInit {
     })
   }
 
-  public getBase64Image(img: any){
+/*   public getBase64Image(img: any){
      var element = document.getElementById('beta');
 
      htmlToImage.toJpeg(element ? element : new HTMLElement, { quality: 1 })
@@ -90,7 +90,7 @@ export class BetaComponent implements OnInit {
           var dataURL = canvas.toDataURL("image/png");
           return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
         });
-  }
+  } */
 
   public getImageBase(){
     const storage = getStorage();
