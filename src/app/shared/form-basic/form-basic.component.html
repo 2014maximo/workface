@@ -4,19 +4,18 @@
         <form [formGroup]="formBasic">
             <div id="carousel-form" class="carousel slide carousel-fade" data-touch="false" data-interval="false">
                 <ol class="carousel-indicators">
-                    <li data-target="#carousel-form" data-slide-to="0" class="active"></li>
-                    <li data-target="#carousel-form" data-slide-to="1"></li>
-                    <li data-target="#carousel-form" data-slide-to="2"></li>
-                    <li data-target="#carousel-form" data-slide-to="3"></li>
-                    <li data-target="#carousel-form" data-slide-to="4"></li>
-                    <li data-target="#carousel-form" data-slide-to="5"></li>
-                    <li data-target="#carousel-form" data-slide-to="6"></li>
-                    <li data-target="#carousel-form" data-slide-to="7"></li>
-                    <li data-target="#carousel-form" data-slide-to="8"></li>
-                    <li data-target="#carousel-form" data-slide-to="9"></li>
-                    <li data-target="#carousel-form" data-slide-to="10"></li>
-                    <li data-target="#carousel-form" data-slide-to="11"></li>
-                    <li data-target="#carousel-form" data-slide-to="12"></li>
+                    <li data-target="#carousel-form" data-slide-to="0" class="active" data-toggle="tooltip" title="NOMBRE COMPLETO"></li>
+                    <li data-target="#carousel-form" data-slide-to="1" data-toggle="tooltip" title="IMAGEN PERFIL / FONDO"></li>
+                    <li data-target="#carousel-form" data-slide-to="2" data-toggle="tooltip" title="IDENTIFICACIÓN"></li>
+                    <li data-target="#carousel-form" data-slide-to="3" data-toggle="tooltip" title="NACIMIENTO"></li>
+                    <li data-target="#carousel-form" data-slide-to="4" data-toggle="tooltip" title="DE CONTACTO"></li>
+                    <li data-target="#carousel-form" data-slide-to="5" data-toggle="tooltip" title="CARGO"></li>
+                    <li data-target="#carousel-form" data-slide-to="6" data-toggle="tooltip" title="REDES"></li>
+                    <li data-target="#carousel-form" data-slide-to="7" data-toggle="tooltip" title="ESTUDIOS"></li>
+                    <li data-target="#carousel-form" data-slide-to="8" data-toggle="tooltip" title="EXPERIENCIA LABORAL"></li>
+                    <li data-target="#carousel-form" data-slide-to="9" data-toggle="tooltip" title="OTROS CONOCIMIENTOS"></li>
+                    <li data-target="#carousel-form" data-slide-to="10" data-toggle="tooltip" title="REFERENCIAS PERSONALES"></li>
+                    <li data-target="#carousel-form" data-slide-to="11" data-toggle="tooltip" title="REFERENCIAS FAMILIARES"></li>
                 </ol>
                 <div class="row">
                     <div class="col-md-2"></div>
@@ -43,7 +42,7 @@
                                         <label class="estiloLabel f-open-sans-c p-1">Segundo apellido</label>
                                         <input class="w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="segundoApellido">
 
-                                        <button (click)="eraseForm(['primerNombre','segundoNombre','primerApellido','segundoApellido'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-right" title="Borrar contenido de campos">
+                                        <button (click)="eraseForm(['primerNombre','segundoNombre','primerApellido','segundoApellido'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-right" data-toggle="tooltip" data-placement="right" title="BORRAR CONTENIDO DE LOS TEXTOS">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                                                 <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
                                             </svg>
@@ -77,7 +76,7 @@
                                                 <img *ngIf="!fotoFrontalSinFondo[0]" src="assets/img/icons/add-file.png" alt="add-file-image" title="Agregar imagen" height="70" width="auto" class="mt-4 drop">
                                                 <img *ngIf="fotoFrontalSinFondo[0]" src="{{ fotoFrontalSinFondo[0] }}" alt="" height="200" width="auto">
                                             </label>
-                                            <img *ngIf="fotoFrontalSinFondo[0]" src="assets/img/icons/equis.png" height="40" width="auto" class="drop cursor-p" title="Eliminar" (click)="eliminarImagen('fotoFrontalSinFondo')">
+                                            <img *ngIf="fotoFrontalSinFondo[0]" src="assets/img/icons/equis.png" height="40" width="auto" class="drop cursor-p" data-toggle="tooltip" title="ELIMINAR" (click)="eliminarImagen('fotoFrontalSinFondo')">
                                         </div>
                                         <div class="col text-center" *ngIf="!fotoFrontalSinFondo[0]">
                                             <label class="estiloLabel f-open-sans-c p-1">Ejemplo</label><br>
@@ -571,15 +570,16 @@
     </div>
     <div class="col-md-1"></div>
 </div>
-<div class="modal fade" id="modalLoader" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content bg-transparent">
-            <div class="text-center">
-                <div class="spinner-border text-warning" style="width: 3rem; height: 3rem;" role="status">
-                    <span class="sr-only">Loading...</span>
+
+    <div class="modal fade" id="modalLoader" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-transparent">
+                <div class="text-center">
+                    <div class="spinner-border text-warning" style="width: 3rem; height: 3rem;" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-  </div>
 <div class="espaciado bg-transparent"></div>

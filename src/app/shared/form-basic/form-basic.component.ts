@@ -30,6 +30,7 @@ export class FormBasicComponent implements OnInit {
   public imgFirma: any[]=[];
   public imgFondo: any[]=[];
   public objImagenes: any[]=[];
+  public cerrarLoader: boolean = false;
 
   constructor(private fb: FormBuilder,
     public webService: WebServicesService,
@@ -99,7 +100,9 @@ export class FormBasicComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();   
+    })
   }
 
   inicializarVariables(){
@@ -149,6 +152,7 @@ export class FormBasicComponent implements OnInit {
 
   loadImg(categoria: string, files: any){
 
+    $("#modalLoader").modal('show');
     let file = files.target.files;
     let reader = new FileReader();
 
@@ -182,8 +186,9 @@ export class FormBasicComponent implements OnInit {
           
         }else if(categoria === '/firma/'){
           this.formBasic.get('imgFirma')?.setValue(urlImagen);
-          
         }
+        SweetAlert('success','IMAGEN SUBIDA AHORA GUARDE PARA ADJUNTAR');
+        $("#modalLoader").modal('hide');
       })
     }
   }
@@ -374,8 +379,8 @@ export class FormBasicComponent implements OnInit {
 
 
   public guardar(){
-
-
+    $("#modalLoader").modal('show');
+    
     let usuario:any = {};
     usuario.idUsuario = this.uid? this.uid : '';
     usuario.formBasic = this.formBasic.value;
@@ -387,11 +392,13 @@ export class FormBasicComponent implements OnInit {
     if(this.datosGenerales){ 
       this.database.update('form-basic',this.uid, usuario).then( respuesta => {
         SweetAlert('success','FORMULARIO ACTUALIZADO');
+        $("#modalLoader").modal('hide');
         
       });
     }else{
       this.database.createUid('form-basic', usuario, usuario.idUsuario).then( res =>{
         SweetAlert('success','FORMULARIO GUARDADO');
+        $("#modalLoader").modal('hide');
         
       }).catch( err => {
         console.error( err);
