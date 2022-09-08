@@ -148,6 +148,7 @@ export class FormBasicComponent implements OnInit {
   }
 
   loadImg(categoria: string, files: any){
+
     let file = files.target.files;
     let reader = new FileReader();
 
@@ -156,6 +157,7 @@ export class FormBasicComponent implements OnInit {
       // this.fotoFrontalSinFondo.push(reader.result);
       if(categoria === '/frontal-sin-fondo/'){
         this.fotoFrontalSinFondo?.push(reader.result);
+        console.log(this.fotoFrontalSinFondo, 'FRONTAL SIN FONDO');
       }else if(categoria === '/frontal-con-fondo/'){
         this.fotoFrontalConFondo?.push(reader.result);
       }else if(categoria === '/fondo/'){
@@ -165,7 +167,10 @@ export class FormBasicComponent implements OnInit {
       }
       // this.selectionImg(categoria, reader);
       console.log(reader.result, 'READER RESULT');
+
+      // this.database.subirBase64(this.fotoFrontalSinFondo, '/frontal-sin-fondo/');
       this.database.loadImg(categoria, 'img_' + Date.now(), reader.result).then((urlImagen: any) => {
+
         if(categoria === '/frontal-sin-fondo/'){
           this.formBasic.get('fotoFrontalSinFondo')?.setValue(urlImagen);
 
@@ -179,7 +184,6 @@ export class FormBasicComponent implements OnInit {
           this.formBasic.get('imgFirma')?.setValue(urlImagen);
           
         }
-        // console.log(urlImagen.ref.getDownloadURL(), 'URL');
       })
     }
   }

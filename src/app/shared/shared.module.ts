@@ -9,6 +9,7 @@ import { FormBasicComponent } from './form-basic/form-basic.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BetaComponent } from './TEMPLATES/beta/beta.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
@@ -29,7 +30,8 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    CarouselModule
+    CarouselModule,
+    BrowserAnimationsModule,
 
   ],
   exports: [
