@@ -21,9 +21,9 @@ export class LoginComponent implements OnInit {
   public registro: boolean;
   public separar: boolean;
 
-  constructor( private fb: FormBuilder,
-               private authService: AuthService,
-               private route: Router ) {
+  constructor(private fb: FormBuilder,
+              private authService: AuthService,
+              private route: Router ) {
     this.mostrarOcultarRecordar = false;             
     this.usuarioIncorrecto = false;
     this.ingreso = true;

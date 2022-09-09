@@ -38,7 +38,7 @@ export class FormBasicComponent implements OnInit {
     private database: FirebaseService,
     private sant:DomSanitizer
     ) {
-
+      
     this.formBasic = new FormGroup({
       // NOMBRE
       'primerNombre': new FormControl('', Validators.required),
@@ -100,7 +100,8 @@ export class FormBasicComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    $(document).ready(function(){
+    $("#modalLoader").modal('show');
+    $(document).ready(function(){ // Permite cargar la función de TOOLTIP
       $('[data-toggle="tooltip"]').tooltip();   
     })
   }
@@ -117,6 +118,7 @@ export class FormBasicComponent implements OnInit {
                 this.setFormBasic(formulario.data());
                 this.loadFormsArray(this.datosGenerales);
                 this.cargarImagenes(this.datosGenerales);
+                $("#modalLoader").modal('hide');
                 console.log(this.datosGenerales, 'DATOS GENERALES');
               }
               

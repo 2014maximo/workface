@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { AuthService } from '../../services/auth.service';
+import { FirebaseService } from '../../services/firebase.service';
 
 @Component({
   selector: 'app-slider-templates',
@@ -8,6 +10,8 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 })
 export class SliderTemplatesComponent implements OnInit {
 
+  public uid?: any;
+  public datosGenerales: any;
   public alpha: boolean = true;
   public templates: any[] = [
     {
@@ -36,37 +40,34 @@ export class SliderTemplatesComponent implements OnInit {
     },
   ];
 
-  constructor() { }
+  constructor(private authService: AuthService,
+              private database: FirebaseService) {
+                this.inicializarVariables();
+              }
 
   ngOnInit(): void {
+    
   }
 
-  customOptions: OwlOptions = {
-    loop: true,
-    mouseDrag: true,
-    touchDrag: true,
-    pullDrag: true,
-    dots: false,
-    navSpeed: 700,
-    navText: ['', ''],
-    responsive: {
-      0: {
-        items: 2
-      },
-      400: {
-        items: 2
-      },
-      740: {
-        items: 2
-      },
-      940: {
-        items: 2
+  private inicializarVariables(){
+    this.authService.getUserLogged().subscribe((usuario: any) => {
+      if (usuario) {
+        this.uid = usuario.multiFactor.user.uid;
+        this.database.getById('form-basic', usuario.multiFactor.user.uid).then(respuesta => {
+          if (respuesta) {
+            respuesta?.subscribe((formulario: any) => {
+              if (formulario) {
+                this.datosGenerales = formulario.data();
+                console.log(this.datosGenerales, 'DATOS GENERALES');
+              }
+
+            })
+          }
+        })
       }
-    },
-    autoplay: true,
-    autoplaySpeed: 2800,
-    autoplayTimeout: 20000,
-    nav: true
+    })
   }
+
+  
 
 }
