@@ -123,14 +123,14 @@
                                             <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" accept=".png, .jpg, .jpeg" (change)="loadImg('/fondo/', $event)" type="file" id="fondo">
                                             <label class="estiloLabel f-open-sans-c p-1">Fondo para contrastes<span class="text-danger">*</span></label><br>
                                             <label for="fondo" class="text-light cursor-p">
-                                                <img *ngIf="!imgFondo[0]" src="assets/img/icons/add-file.png" alt="add-file-image" title="Agregar imagen" height="70" width="auto" class="mt-4 drop">
-                                                <img *ngIf="imgFondo[0]" src="{{ imgFondo[0] }}" alt="" height="200" width="auto">
+                                                <img *ngIf="!imgFondo[0]" src="assets/img/icons/add-file1200x320.png" alt="add-file-image" title="Agregar imagen" height="70" width="auto" class="mt-4 drop">
+                                                <img *ngIf="imgFondo[0]" src="{{ imgFondo[0] }}" alt="" height="200" width="auto" class="img-fluid">
                                             </label>
                                             <img *ngIf="imgFondo[0]" src="assets/img/icons/equis.png" height="40" width="auto" class="drop cursor-p" title="Eliminar" (click)="eliminarImagen('imgFondo')">
                                         </div>
                                         <div class="col text-center" *ngIf="!imgFondo[0]">
                                             <label class="estiloLabel f-open-sans-c p-1">Ejemplo</label><br>
-                                            <img src="assets/img/items/fondo.jpg" alt="" height="200" width="auto" class="drop">
+                                            <img src="assets/img/items/fondohogar3.jpg" alt="" height="200" width="auto" class="drop img-fluid">
                                         </div>
                                     </div>
                                     </div>

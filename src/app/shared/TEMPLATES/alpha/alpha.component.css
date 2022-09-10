@@ -47,7 +47,7 @@
     font-size: 17px;
 }
 .body-a {
-    height:900px;
+    height:840px;
     width: 1200px;
 }
 .body-b {
@@ -63,7 +63,7 @@
 }
 .perfil-b {
     height: 875px;
-    width: 350px;
+    width: 342px;
     background-color: #2d4399;
 }
 .avatar {
@@ -78,4 +78,10 @@
 .fondoAlpha{
     background-repeat: no-repeat !important;
     background-size: contain !important;
+}
+.alturaNombre{
+    height: 125px;
+}
+.experiencia-educacion{
+    
 }
