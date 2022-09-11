@@ -31,7 +31,7 @@ export class FormBasicComponent implements OnInit {
   public imgFondo: any[]=[];
   public objImagenes: any[]=[];
   public cerrarLoader: boolean = false;
-  public interes: Array<any> = []
+  public gustos: Array<any> = []
 
   constructor(private fb: FormBuilder,
     public webService: WebServicesService,
@@ -128,16 +128,7 @@ export class FormBasicComponent implements OnInit {
         })
       }
     });
-    this.interes = [
-      { interes: 'Viajar', ckeched: false },
-      { interes: 'Música', ckeched: false },
-      { interes: 'Cine', ckeched: false },
-      { interes: 'Kayak', ckeched: false },
-      { interes: 'Gimnasio', ckeched: false },
-      { interes: 'Cantar', ckeched: false },
-    ]
-      
-    
+    this.cargarInteresesArray();
   }
   cargarImagenes(datosGenerales: any) {
     if(datosGenerales.formBasic.fotoFrontalSinFondo){
@@ -486,6 +477,26 @@ export class FormBasicComponent implements OnInit {
               this.formBasic.controls['imgFirma'].reset();
         break;
     }
+  }
+
+  public cargarIntereses(e: any){
+    console.log(e, 'LO QUE VIENE');
+    console.log(this.formBasic, 'FOEMULARIO ACTUALMENTE');
+  }
+
+  public cargarInteresesArray(){
+    this.gustos = [
+      { interes: 'Viajar', ckeched: false },
+      { interes: 'Música', ckeched: false },
+      { interes: 'Cine', ckeched: false },
+      { interes: 'Kayak', ckeched: false },
+      { interes: 'Gimnasio', ckeched: false },
+      { interes: 'Cantar', ckeched: false },
+    ]
+
+    this.gustos.forEach( element => {
+      this.agregarInteres();
+    });
   }
 
 }
