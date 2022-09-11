@@ -333,8 +333,14 @@
                                                 <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="nombreInstitucion">
                                                 <label class="estiloLabel f-open-sans-c p-1">Título obtenido<span class="text-danger">*</span></label>
                                                 <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="tituloObtenido">
+                                                <label class="estiloLabel f-open-sans-c p-1">Fecha inicio<span class="text-danger">*</span></label>
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="date" formControlName="fechaInicio">
                                                 <label class="estiloLabel f-open-sans-c p-1">Fecha título<span class="text-danger">*</span></label>
                                                 <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="date" formControlName="fechaTitulo">
+                                                <label class="estiloLabel f-open-sans-c p-1">Ciudad estudio<span class="text-danger">*</span></label>
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="ciudadEstudio">
+                                                <label class="estiloLabel f-open-sans-c p-1">Descripción Estudio<span class="text-danger">*</span></label>
+                                                <textarea rows="10"class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" style="height:13rem" type="text" formControlName="descripcionEstudio"></textarea>
 
                                                 <button (click)="eraseForm(['nombreInstitucion','tituloObtenido','fechaTitulo'], estudio)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-right" title="Borrar contenido de campos">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
@@ -425,13 +431,19 @@
                                                 <label class="estiloLabel f-open-sans-c p-1">Empresa<span class="text-danger">*</span></label>
                                                 <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="nombreEmpresa">
                                                 <label class="estiloLabel f-open-sans-c p-1">Jefe inmediato<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="JefeInmediatoEmpresa">
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="jefeInmediatoEmpresa">
+                                                <label class="estiloLabel f-open-sans-c p-1">Cargo desempeñado<span class="text-danger">*</span></label>
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="cargoEjercido">
+                                                <label class="estiloLabel f-open-sans-c p-1">Describa funciones realizadas<span class="text-danger">*</span></label>
+                                                <textarea rows="10"class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" style="height:13rem" type="text" formControlName="funcionesRealizadas"></textarea>
                                                 <label class="estiloLabel f-open-sans-c p-1">Fecha de inicio<span class="text-danger">*</span></label>
                                                 <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="date" formControlName="fechaInicioEmpresa">
                                                 <label class="estiloLabel f-open-sans-c p-1">Fecha de final actual<span class="text-danger">*</span></label>
                                                 <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="date" formControlName="fechaFinalEmpresa">
                                                 <label class="estiloLabel f-open-sans-c p-1">Número de contacto<span class="text-danger">*</span></label>
                                                 <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="telContactoEmpresa">
+                                                <label class="estiloLabel f-open-sans-c p-1">Ciudad<span class="text-danger">*</span></label>
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="ciudadEmpresa">
     
                                                 <button (click)="eraseForm([], formExpLaboral)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-right" title="Borrar contenido de campos">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">

@@ -100,7 +100,7 @@ export class FormBasicComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    $("#modalLoader").modal('show');
+    // $("#modalLoader").modal('show');
     $(document).ready(function(){ // Permite cargar la función de TOOLTIP
       $('[data-toggle="tooltip"]').tooltip();   
     })
@@ -314,17 +314,23 @@ export class FormBasicComponent implements OnInit {
     (<FormArray>this.formBasic.controls['estudios']).push(new FormGroup({
       'nombreInstitucion': new FormControl('', Validators.required),
       'tituloObtenido': new FormControl('', Validators.required),
-      'fechaTitulo': new FormControl(new Date, Validators.required)
+      'fechaInicio': new FormControl(new Date, Validators.required),
+      'fechaTitulo': new FormControl(new Date, Validators.required),
+      'ciudadEstudio': new FormControl('', Validators.required),
+      'descripcionEstudio': new FormControl('', Validators.required)
     }));
   }
 
   agregarExpLaboral(){
     (<FormArray>this.formBasic.controls['expLaboral']).push(new FormGroup({
       'nombreEmpresa': new FormControl('', Validators.required),
-      'JefeInmediatoEmpresa': new FormControl('', Validators.required),
+      'jefeInmediatoEmpresa': new FormControl('', Validators.required),
+      'cargoEjercido': new FormControl('', Validators.required),
       'fechaInicioEmpresa': new FormControl(new Date, Validators.required),
       'fechaFinalEmpresa':new FormControl(new Date, Validators.required),
+      'funcionesRealizadas':new FormControl('', Validators.required),
       'telContactoEmpresa': new FormControl('', Validators.required),
+      'ciudadEmpresa': new FormControl('', Validators.required),
     }));
   }
   
