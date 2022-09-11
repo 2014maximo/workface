@@ -31,6 +31,7 @@ export class FormBasicComponent implements OnInit {
   public imgFondo: any[]=[];
   public objImagenes: any[]=[];
   public cerrarLoader: boolean = false;
+  public interes: Array<any> = []
 
   constructor(private fb: FormBuilder,
     public webService: WebServicesService,
@@ -127,6 +128,16 @@ export class FormBasicComponent implements OnInit {
         })
       }
     });
+    this.interes = [
+      { interes: 'Viajar', ckeched: false },
+      { interes: 'Música', ckeched: false },
+      { interes: 'Cine', ckeched: false },
+      { interes: 'Kayak', ckeched: false },
+      { interes: 'Gimnasio', ckeched: false },
+      { interes: 'Cantar', ckeched: false },
+    ]
+      
+    
   }
   cargarImagenes(datosGenerales: any) {
     if(datosGenerales.formBasic.fotoFrontalSinFondo){
@@ -282,10 +293,10 @@ export class FormBasicComponent implements OnInit {
     })
   }
 
+  
   agregarInteres(){
     (<FormArray>this.formBasic.controls['intereses']).push(new FormGroup({
-      'interes': new FormControl('', Validators.required),
-      'nivel': new FormControl('', Validators.required)
+      'interes': new FormControl('', Validators.required)
     }));
   }
 

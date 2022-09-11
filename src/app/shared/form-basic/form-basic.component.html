@@ -13,10 +13,11 @@
                     <li data-target="#carousel-form" data-slide-to="6" data-toggle="tooltip" title="REDES"></li>
                     <li data-target="#carousel-form" data-slide-to="7" data-toggle="tooltip" title="ESTUDIOS"></li>
                     <li data-target="#carousel-form" data-slide-to="8" data-toggle="tooltip" title="HABILIDADES"></li>
-                    <li data-target="#carousel-form" data-slide-to="9" data-toggle="tooltip" title="EXPERIENCIA LABORAL"></li>
-                    <li data-target="#carousel-form" data-slide-to="10" data-toggle="tooltip" title="OTROS CONOCIMIENTOS"></li>
-                    <li data-target="#carousel-form" data-slide-to="11" data-toggle="tooltip" title="REFERENCIAS PERSONALES"></li>
-                    <li data-target="#carousel-form" data-slide-to="12" data-toggle="tooltip" title="REFERENCIAS FAMILIARES"></li>
+                    <li data-target="#carousel-form" data-slide-to="9" data-toggle="tooltip" title="INTERESES"></li>
+                    <li data-target="#carousel-form" data-slide-to="10" data-toggle="tooltip" title="EXPERIENCIA LABORAL"></li>
+                    <li data-target="#carousel-form" data-slide-to="11" data-toggle="tooltip" title="OTROS CONOCIMIENTOS"></li>
+                    <li data-target="#carousel-form" data-slide-to="12" data-toggle="tooltip" title="REFERENCIAS PERSONALES"></li>
+                    <li data-target="#carousel-form" data-slide-to="13" data-toggle="tooltip" title="REFERENCIAS FAMILIARES"></li>
                 </ol>
                 <div class="row">
                     <div class="col-md-2"></div>
@@ -407,6 +408,36 @@
                                     </ng-container>
 
                                     <button (click)="agregarHabilidad()" class="mb-5 bg-transparent f-open-sans-c fs-18 text-light cursor-p border-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="espaciado"></div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="espaciado"></div>
+                                <div class="shadow-two bg-form p-5">
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">09/<span class="fs-12">14</span></h4>
+                                    <!----------------------------------------------------------------------------------->
+                                    <!-------------------------------------- INTERESES -------------------------------->
+                                    <!----------------------------------------------------------------------------------->
+                                    <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">INTERESES</h3>
+                                    <ng-container formArrayName="intereses">
+                                        <div class="row p-5">
+                                        <div [formGroupName]="i" *ngFor="let inter of interes; let i = index" class="col">
+                                            <div class="d-flex">
+                                                <input class="f-open-sans-c fw-3 mb-2 pl-2 estilo-input" type="checkbox" formControlName="interes">
+                                                <p class="text-light">{{ inter.interes }}</p>
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <div class="espacio"></div>
+
+                                    </ng-container>
+
+                                    <button (click)="agregarInteres()" class="mb-5 bg-transparent f-open-sans-c fs-18 text-light cursor-p border-0">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
                                             <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                                             <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
