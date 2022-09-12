@@ -7,6 +7,7 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 import { WebServicesService } from '../../services/web-services.service';
 
 import Swal from 'sweetalert2';
+import { INTERESES_GUSTOS } from '../../constants/workface.contants';
 
 declare var $: any;
 
@@ -31,7 +32,7 @@ export class FormBasicComponent implements OnInit {
   public imgFondo: any[]=[];
   public objImagenes: any[]=[];
   public cerrarLoader: boolean = false;
-  public gustos: Array<any> = []
+  public gustos: Array<any> = INTERESES_GUSTOS;
 
   constructor(private fb: FormBuilder,
     public webService: WebServicesService,
@@ -128,7 +129,6 @@ export class FormBasicComponent implements OnInit {
         })
       }
     });
-    this.cargarInteresesArray();
   }
   cargarImagenes(datosGenerales: any) {
     if(datosGenerales.formBasic.fotoFrontalSinFondo){
@@ -287,7 +287,7 @@ export class FormBasicComponent implements OnInit {
   
   agregarInteres(){
     (<FormArray>this.formBasic.controls['intereses']).push(new FormGroup({
-      'interes': new FormControl('', Validators.required)
+      'interes': new FormControl(false, Validators.required)
     }));
   }
 
@@ -376,6 +376,9 @@ export class FormBasicComponent implements OnInit {
 
   setFormBasic(respuesta: any){
     // let form = this.formBasic.get('estudios') as FormArray;
+    if(respuesta.formBasic.intereses.lenght === 1){
+      this.cargarInteresesArray();
+    }
     this.formBasic.patchValue(respuesta.formBasic as FormGroup);
 /*     this.formBasic.controls[1].get('estudios')?.setValue(respuesta.formBasic.estudios[1]);
     this.formBasic.controls[0].get('estudios')?.setValue(respuesta.formBasic.estudios[0]); */
@@ -485,15 +488,6 @@ export class FormBasicComponent implements OnInit {
   }
 
   public cargarInteresesArray(){
-    this.gustos = [
-      { interes: 'Viajar', ckeched: false },
-      { interes: 'Música', ckeched: false },
-      { interes: 'Cine', ckeched: false },
-      { interes: 'Kayak', ckeched: false },
-      { interes: 'Gimnasio', ckeched: false },
-      { interes: 'Cantar', ckeched: false },
-    ]
-
     this.gustos.forEach( element => {
       this.agregarInteres();
     });

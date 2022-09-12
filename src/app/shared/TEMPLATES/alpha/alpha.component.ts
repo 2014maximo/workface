@@ -15,10 +15,6 @@ import * as htmlToImage from 'html-to-image';
 import domtoimage from 'dom-to-image';
 
 
-
-
-import { AVATAR } from 'src/app/constants/base64.constant';
-
 @Component({
   selector: 'app-alpha',
   templateUrl: './alpha.component.html',
@@ -130,7 +126,6 @@ export class AlphaComponent implements OnInit {
   }
   inicializarVariables() {
 
-    this.img = AVATAR;
     this.wall = '';
 
     this.authService.getUserLogged().subscribe((usuario: any) => {
