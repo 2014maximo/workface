@@ -376,9 +376,10 @@ export class FormBasicComponent implements OnInit {
 
   setFormBasic(respuesta: any){
     // let form = this.formBasic.get('estudios') as FormArray;
-    if(respuesta.formBasic.intereses.lenght === 1){
+    if(respuesta.formBasic.intereses.length < 1){
       this.cargarInteresesArray();
-    }
+    } 
+    
     this.formBasic.patchValue(respuesta.formBasic as FormGroup);
 /*     this.formBasic.controls[1].get('estudios')?.setValue(respuesta.formBasic.estudios[1]);
     this.formBasic.controls[0].get('estudios')?.setValue(respuesta.formBasic.estudios[0]); */

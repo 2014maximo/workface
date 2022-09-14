@@ -426,10 +426,10 @@
                                     <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">INTERESES</h3>
                                     <ng-container formArrayName="intereses">
                                         <div class="row p-5">
-                                        <div [formGroupName]="i" *ngFor="let inter of getControls('intereses'); let i = index;" class="col">
+                                        <div [formGroupName]="i" *ngFor="let inter of getControls('intereses'); let i = index;" class="col-3">
                                             <div class="d-flex align-items-center">
                                                 <input class="f-open-sans-c fw-3 mt-0 mb-0 ml-0 mr-2 pl-2 estilo-input" type="checkbox" formControlName="interes" (click)="cargarIntereses($event)">
-                                                <p class="f-open-sans-c text-light m-0">{{ this.gustos[i] }}</p>
+                                                <p class="f-open-sans-c text-light m-0">{{ this.gustos[i].gusto }}</p>
                                             </div>
                                         </div>
                                         </div>

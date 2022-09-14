@@ -56,7 +56,6 @@ export class FirebaseService {
   }
 
   async loadImg(categoria: string, nombre: string, imgBase64: any){
-    console.log(categoria, nombre, imgBase64, 'LO QUE SE ENVIA PARA GUARDAR IMAGEN');
     try{
       let respuesta = await this.storageRef.child(categoria + nombre).putString(imgBase64, 'data_url');
       
