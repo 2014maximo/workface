@@ -99,12 +99,16 @@
                                 </div>
                                 <p class="m-0 text-light">{{ datosGenerales?.formBasic.instagram}}</p>
                             </div>
+                            <div class="espaciado"></div>
                         </div>
                         <div class="hobbies bg-dark">
                             <h5 class="text-light ls-5 fw-6">INTERESES</h5>
                             <div class="row">
-                                <div class="col-4">
-                                    
+                                <div *ngFor="let inter of iconosSeleccionados" class="col-4">
+                                    <div class="text-center mt-4">
+                                        <i class="{{ inter?.icon }} text-primary fs-35"></i>
+                                        <h5 class="text-uppercase fs-15 text-light mt-2">{{ inter?.gusto }}</h5>
+                                    </div>
                                 </div>
                             </div>
                         </div>

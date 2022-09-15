@@ -13,6 +13,7 @@ import { jsPDF } from "jspdf";
 import html2canvas from 'html2canvas';
 import * as htmlToImage from 'html-to-image';
 import domtoimage from 'dom-to-image';
+import { INTERESES_GUSTOS } from 'src/app/constants/workface.contants';
 
 
 @Component({
@@ -31,10 +32,11 @@ export class AlphaComponent implements OnInit {
   imagenCreada: any;
   imgcreada = false;
   public avatar: string = '';
-  public fondo: string = '';
   public img: any;
   public wall: any;
   public url: any;
+  public gustos = INTERESES_GUSTOS;
+  public iconosSeleccionados: any[]=[];
 
   @ViewChild('screen') screen?: ElementRef;
   /* @ViewChild('canvas') canvas?: ElementRef; */
@@ -136,9 +138,11 @@ export class AlphaComponent implements OnInit {
             respuesta?.subscribe((formulario: any) => {
               if (formulario) {
                 this.datosGenerales = formulario.data();
-                this.fondo = this.datosGenerales.formBasic.imgFondo;
                 this.avatar = this.datosGenerales.formBasic.fotoFrontalConFondo;
+                this.iconosDestacados(this.datosGenerales.formBasic.intereses)
                 console.log(this.datosGenerales, 'DATOS GENERALES');
+                console.log(this.iconosSeleccionados, 'ICONOS SELECCIONADOS');
+
               }
 
             })
@@ -260,6 +264,17 @@ export class AlphaComponent implements OnInit {
     }
   });
 
+  }
+
+  public iconosDestacados(datos: any) {
+    this.gustos?.forEach( (item, index) =>{
+      if(datos[index].interes){
+        this.iconosSeleccionados[index] = item;
+      }
+    });
+    if(this.iconosSeleccionados){
+      this.iconosSeleccionados = this.iconosSeleccionados.filter( element => element != null )
+    }
   }
 
 }
