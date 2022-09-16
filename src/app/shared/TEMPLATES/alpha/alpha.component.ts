@@ -37,6 +37,7 @@ export class AlphaComponent implements OnInit {
   public url: any;
   public gustos = INTERESES_GUSTOS;
   public iconosSeleccionados: any[]=[];
+  public color: string = 'one';
 
   @ViewChild('screen') screen?: ElementRef;
   /* @ViewChild('canvas') canvas?: ElementRef; */
@@ -275,6 +276,10 @@ export class AlphaComponent implements OnInit {
     if(this.iconosSeleccionados){
       this.iconosSeleccionados = this.iconosSeleccionados.filter( element => element != null )
     }
+  }
+
+  public cambioColor(color: string){
+    this.color = color;
   }
 
 }
