@@ -12,7 +12,8 @@ export class SliderTemplatesComponent implements OnInit {
 
   public uid?: any;
   public datosGenerales: any;
-  public alpha: boolean = true;
+  public alpha: boolean = false;
+  public beta: boolean = false;
   public templates: any[] = [
     {
       ruta: 'alpha',
@@ -46,7 +47,7 @@ export class SliderTemplatesComponent implements OnInit {
               }
 
   ngOnInit(): void {
-    
+
   }
 
   private inicializarVariables(){
@@ -58,9 +59,8 @@ export class SliderTemplatesComponent implements OnInit {
             respuesta?.subscribe((formulario: any) => {
               if (formulario) {
                 this.datosGenerales = formulario.data();
-                console.log(this.datosGenerales, 'DATOS GENERALES');
+                console.log(this.datosGenerales, 'LOS DATOS GENERALES');
               }
-
             })
           }
         })
@@ -68,6 +68,13 @@ export class SliderTemplatesComponent implements OnInit {
     })
   }
 
-  
+  public cargarAlpha(){
+    this.alpha = true;
+    this.beta = false;
+  }
+  public cargarBeta(){
+    this.beta = true;
+    this.alpha = false;
+  }
 
 }

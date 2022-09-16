@@ -40,6 +40,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SliderFrasesHomeComponent,
     SliderHomeComponent,
     AlphaComponent,
+    BetaComponent,
     FormBasicComponent
   ]
 })

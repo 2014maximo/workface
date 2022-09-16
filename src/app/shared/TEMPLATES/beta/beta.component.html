@@ -1,20 +1,28 @@
-<div class="btn-guardar">
-    <button class="border-0 bgBase text-light pt-1 pb-1 pr-4 pl-4 f-open-sans-c fs-20 shadow-three" (click)="guardarImagenTres()">
-        GUARDAR
-    </button>
-</div>
-<div class="espaciado"></div>
-<div class="row">
-    <div class="col-md-1"></div>
-    <div class="col-md-10">
-        <div id="beta" class="shadow-one">
-            <img id="imageid" src="https://firebasestorage.googleapis.com/v0/b/workface-f8b36.appspot.com/o/frontal-con-fondo%2Fimg_1658470371957?alt=media&token=a06aef78-c88c-443c-8261-57ebc3b91227.jpg" alt="" height="auto" class="w-100">
-
-        </div>
+<div class="">
+    <div class="btn-guardar">
+        <button class="border-0 bgBase text-light pt-1 pb-1 pr-4 pl-4 f-open-sans-c fs-20 shadow-three mb-4" (click)="guardarImagenCuatro()">
+            CAPTURAR IMAGEN
+        </button>
     </div>
-    <div class="col-md-1"></div>
+    <div class="espaciado"></div>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div id="beta" class="anchoBase bgBeta">
+                <div class="body-a">
+                    <div class="content-avatar">
+                        <img src="{{ contenido?.formBasic.fotoFrontalConFondo }}" alt="" width="400" height="300" class="avatar">
+                    </div>
+                    <div class="info-base bg-one">
+                        
+                    </div>
+                
+                </div>
+                <div class="body-b">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
 </div>
-
-<button class="btn btn-primary" (click)="getImageBase()">Prueba</button>
-
-<div class="espaciado"></div>

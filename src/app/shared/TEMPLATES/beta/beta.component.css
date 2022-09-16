@@ -1,11 +1,39 @@
 #beta{
-    width: 1200px;
-    height:2000px;
-}
 
+}
+.anchoBase{
+    width: 1200px;
+    height: 1740px;
+}
 .btn-guardar{
     position: fixed;
     right: 0;
     left: 25px;
     bottom: 25px;
+    z-index: 3
+}
+.bgBase{
+    background-color: #2d4399 !important;
+}
+.bgBeta{
+    background: #000;
+}
+.content-avatar{
+
+}
+.avatar{
+    object-fit: cover;
+}
+.info-base{
+    height: 1440px;
+}
+.body-a{
+    height: 1740px;
+    width: 400px;
+}
+.body-b{
+
+}
+.bg-one{
+    background: #d49e20 !important;
 }

@@ -1,5 +1,5 @@
 // CORE
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 
 // USER
 import { AuthService } from '../../../services/auth.service';
@@ -22,6 +22,8 @@ import { INTERESES_GUSTOS } from 'src/app/constants/workface.contants';
   styleUrls: ['./alpha.component.css']
 })
 export class AlphaComponent implements OnInit {
+  
+  @Input() contenido: any;
 
   public context?: CanvasRenderingContext2D | null;
 
@@ -39,41 +41,19 @@ export class AlphaComponent implements OnInit {
   public iconosSeleccionados: any[]=[];
   public color: string = 'one';
 
-  @ViewChild('screen') screen?: ElementRef;
-  /* @ViewChild('canvas') canvas?: ElementRef; */
-  @ViewChild('downloadLink') downloadLink?: ElementRef;
-  /*   @ViewChild('canvas') set content(canvas: ElementRef) {
-      if (canvas) {
-        this.canvas = canvas;
-        if (canvas.nativeElement) {
-          this.context = (canvas.nativeElement as HTMLCanvasElement).getContext('2d');
-          this.draw();
-        }
-      }
-    } */
+  constructor() {}
 
-  constructor(private authService: AuthService,
-    private database: FirebaseService) {
-    this.getImage();
+  ngOnInit(): void {
     this.inicializarVariables();
   }
 
-  public getImage() {
-
-    const storage = getStorage();
-    getDownloadURL(ref(storage, 'fondo/img_1657769247581'))
-      .then((url) => {
-        // `url` is the download URL for 'images/stars.jpg'
-        this.wall = `${url}.jpg`;
-      })
-      .catch((error) => {
-        // Handle any errors
-      });
-
-/*     if (this.url) {
-      console.log(this.url, 'URL')
-    } */
-
+  inicializarVariables() {
+    this.wall = '';
+    if(this.contenido){
+      this.datosGenerales = this.contenido;
+      this.avatar = this.datosGenerales.formBasic.fotoFrontalConFondo;
+      this.iconosDestacados(this.datosGenerales.formBasic.intereses);
+    }
   }
 
   toBase64() {
@@ -90,67 +70,6 @@ export class AlphaComponent implements OnInit {
       callback(fileReader.result);
     });
     fileReader.readAsDataURL(img);
-  }
-
-  urlToBlob() {
-
-      fetch('https://image.shutterstock.com/image-vector/teddy-bear-toy-icon-cartoon-260nw-1412632697.jpg')
-        .then(res => res.blob()) // Gets the response and returns it as a blob
-        .then(blob => {
-          // Here's where you get access to the blob
-          // And you can use it for whatever you want
-          // Like calling ref().put(blob)
-  
-          // Here, I use it to make an image appear on the page
-          let objectURL = URL.createObjectURL(blob);
-          let myImage = new Image();
-          myImage.src = objectURL;
-          document.getElementById('myImg')?.appendChild(myImage);
-        });
-    
-  }
-
-  downloadImage() {
-    html2canvas(this.screen?.nativeElement).then(canvas => {
-      if (this.canvas) {
-        this.canvas.nativeElement.src = canvas.toDataURL();
-      }
-      if (this.downloadLink) {
-        this.downloadLink.nativeElement.href = canvas.toDataURL('image/png');
-        this.downloadLink.nativeElement.download = 'marble-diagram.png';
-        this.downloadLink.nativeElement.click();
-      }
-
-    });
-  }
-
-  ngOnInit(): void {
-
-  }
-  inicializarVariables() {
-
-    this.wall = '';
-
-    this.authService.getUserLogged().subscribe((usuario: any) => {
-      if (usuario) {
-        this.uid = usuario.multiFactor.user.uid;
-        this.database.getById('form-basic', usuario.multiFactor.user.uid).then(respuesta => {
-          if (respuesta) {
-            respuesta?.subscribe((formulario: any) => {
-              if (formulario) {
-                this.datosGenerales = formulario.data();
-                this.avatar = this.datosGenerales.formBasic.fotoFrontalConFondo;
-                this.iconosDestacados(this.datosGenerales.formBasic.intereses)
-                console.log(this.datosGenerales, 'DATOS GENERALES');
-                console.log(this.iconosSeleccionados, 'ICONOS SELECCIONADOS');
-
-              }
-
-            })
-          }
-        })
-      }
-    })
   }
 
   public saveToPdf() {
