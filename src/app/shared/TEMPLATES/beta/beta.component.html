@@ -8,18 +8,32 @@
     <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-10">
-            <div id="beta" class="anchoBase bgBeta">
+            <div id="beta" class="anchoBase bgBeta d-flex">
                 <div class="body-a">
                     <div class="content-avatar">
                         <img src="{{ contenido?.formBasic.fotoFrontalConFondo }}" alt="" width="400" height="300" class="avatar">
                     </div>
-                    <div class="info-base bg-one">
-                        
+                    <div class="info-base bg-one p-5">
+                        <h3 class="fw-9 fs-50 lh-50 m-0">
+                            {{ contenido?.formBasic.primerNombre }}<br>
+                            {{ contenido?.formBasic.primerApellido }}
+                        </h3>
+                        <p class="">&#10731; &#10731; &#10731; {{ contenido?.formBasic.cargoActual }}</p>
+
+                        <div class="espacio"></div>
+                        <div class="border-bottom">
+                            <p><span class="max max-phone fs-25"></span> +57 {{ contenido?.formBasic.telCel }} </p>
+                        </div>
                     </div>
                 
                 </div>
-                <div class="body-b">
+                <div class="body-b p-5">
+                    <h2 class="txt-one fs-80 fw-8">A CERCA DE MI</h2>
+                    <h5 class="txt-two fw-6">{{ contenido?.formBasic.acercaDMi }}.</h5>
 
+                    <div class="espacio"></div>
+
+                    <h3 class="text-light fw-7 ls-5">EXPERIENCIA</h3>
                 </div>
             </div>
         </div>
