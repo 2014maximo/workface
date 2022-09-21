@@ -1,3 +1,6 @@
 .obj-fit{
     object-fit: cover;
 }
+.bgBase{
+    background-color: #2d4399 !important;
+}

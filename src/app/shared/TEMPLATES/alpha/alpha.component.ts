@@ -50,7 +50,7 @@ export class AlphaComponent implements OnInit {
   inicializarVariables() {
     this.wall = '';
     if(this.contenido){
-      this.datosGenerales = this.contenido;
+      this.datosGenerales = Object.assign([], this.contenido) ;
       this.avatar = this.datosGenerales.formBasic.fotoFrontalConFondo;
       this.iconosDestacados(this.datosGenerales.formBasic.intereses);
     }

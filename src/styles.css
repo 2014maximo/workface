@@ -163,3 +163,7 @@
 @keyframes blink-caret {
     from,to{border-color: transparent;} 50% {border-color: white;}
 }
+
+.bgBase{
+    background-color: #2d4399 !important;
+}

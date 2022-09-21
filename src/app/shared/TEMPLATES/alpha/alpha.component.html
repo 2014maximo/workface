@@ -129,8 +129,9 @@
                                 <div *ngFor="let trabajo of datosGenerales?.formBasic.expLaboral" class="col-6">
                                     <div class="mb-3">
                                         <div class="d-flex">
-                                            <div class="bg-{{ color }} pt-1 pb-1 pr-3 pl-3 mb-2">
-                                                <p class="lh-23 fw-6 txt-inver-{{ color }} ls-3 m-0">{{ trabajo.fechaInicioEmpresa | date:'YYYY' }} a {{ trabajo.fechaFinalEmpresa | date:'YYYY'}}</p>
+                                            <div class="bg-{{ color }} pt-1 pb-1 pr-3 pl-3 mb-2 d-flex">
+                                                <p class="lh-23 fw-6 txt-inver-{{ color }} ls-3 m-0">{{ trabajo.fechaInicioEmpresa | date:'YYYY' }} a</p>
+                                                <p *ngIf="trabajo.fechaFinalEmpresa" class="lh-23 fw-6 txt-inver-{{ color }} ls-3 m-0">{{ trabajo.fechaFinalEmpresa | date:'YYYY'}}</p>
                                             </div>
                                         </div>
                                         <p class="text-uppercase fw-7 fs-18 m-0">{{ trabajo.cargoEjercido }}</p>
