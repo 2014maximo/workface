@@ -3,6 +3,8 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 import { AuthService } from '../../services/auth.service';
 import { FirebaseService } from '../../services/firebase.service';
 
+declare var $: any;
+
 @Component({
   selector: 'app-slider-templates',
   templateUrl: './slider-templates.component.html',
@@ -47,6 +49,7 @@ export class SliderTemplatesComponent implements OnInit {
               }
 
   ngOnInit(): void {
+    $("#modalLoader").modal('show');
 
   }
 
@@ -59,6 +62,8 @@ export class SliderTemplatesComponent implements OnInit {
             respuesta?.subscribe((formulario: any) => {
               if (formulario) {
                 this.datosGenerales = formulario.data();
+                this.alpha = true;
+                $("#modalLoader").modal('hide');
                 console.log(this.datosGenerales, 'LOS DATOS GENERALES');
               }
             })

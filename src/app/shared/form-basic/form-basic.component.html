@@ -3,16 +3,46 @@
     <div class="col-md-10">
         <form [formGroup]="formBasic">
             <div id="carousel-form" class="carousel slide carousel-fade" data-touch="false" data-interval="false">
-                <ol class="carousel-indicators">
+                <ol class="carousel-indicators fixed-bottom" (click)="scrollTo()">
                     <li data-target="#carousel-form" data-slide-to="0" class="active" data-toggle="tooltip" title="NOMBRE COMPLETO"></li>
+                    <p *ngIf="this.formBasic.get('primerNombre')?.valid && this.formBasic.get('primerApellido')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+                    <p *ngIf="!this.formBasic.get('primerNombre')?.valid || !this.formBasic.get('primerApellido')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
+
                     <li data-target="#carousel-form" data-slide-to="1" data-toggle="tooltip" title="IMAGEN PERFIL / FONDO"></li>
+                    <p *ngIf="this.formBasic.get('fotoFrontalSinFondo')?.valid && this.formBasic.get('fotoFrontalConFondo')?.valid && this.formBasic.get('imgFondo')?.valid && this.formBasic.get('imgFirma')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+                    <p *ngIf="!this.formBasic.get('fotoFrontalSinFondo')?.valid || !this.formBasic.get('fotoFrontalConFondo')?.valid || !this.formBasic.get('imgFondo')?.valid || !this.formBasic.get('imgFirma')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
+                    
                     <li data-target="#carousel-form" data-slide-to="2" data-toggle="tooltip" title="IDENTIFICACIÓN"></li>
+                    <p *ngIf="this.formBasic.get('tipoIdentificacion')?.valid && this.formBasic.get('identificacion')?.valid && this.formBasic.get('nacionalidad')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+                    <p *ngIf="!this.formBasic.get('tipoIdentificacion')?.valid || !this.formBasic.get('identificacion')?.valid || !this.formBasic.get('nacionalidad')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
+
                     <li data-target="#carousel-form" data-slide-to="3" data-toggle="tooltip" title="NACIMIENTO"></li>
+                    <p *ngIf="this.formBasic.get('fechaNacimiento')?.valid && this.formBasic.get('ciudadNacimiento')?.valid && this.formBasic.get('genero')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+                    <p *ngIf="!this.formBasic.get('fechaNacimiento')?.valid || !this.formBasic.get('ciudadNacimiento')?.valid || !this.formBasic.get('genero')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
+
+
                     <li data-target="#carousel-form" data-slide-to="4" data-toggle="tooltip" title="DE CONTACTO"></li>
+                    <p *ngIf="this.formBasic.get('direccionResidencia')?.valid && this.formBasic.get('barrioResidencia')?.valid && this.formBasic.get('email')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+                    <p *ngIf="!this.formBasic.get('direccionResidencia')?.valid || !this.formBasic.get('barrioResidencia')?.valid || !this.formBasic.get('email')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
+
                     <li data-target="#carousel-form" data-slide-to="5" data-toggle="tooltip" title="CARGO"></li>
+                    <p *ngIf="this.formBasic.get('cargoActual')?.valid && this.formBasic.get('acercaDMi')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+                    <p *ngIf="!this.formBasic.get('cargoActual')?.valid || !this.formBasic.get('acercaDMi')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
+
+
                     <li data-target="#carousel-form" data-slide-to="6" data-toggle="tooltip" title="REDES"></li>
+                    <p *ngIf="this.formBasic.get('linkedin')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+                    <p *ngIf="!this.formBasic.get('linkedin')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
+
+
                     <li data-target="#carousel-form" data-slide-to="7" data-toggle="tooltip" title="ESTUDIOS"></li>
+                    <p *ngIf="this.formBasic.get('estudios')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+                    <p *ngIf="!this.formBasic.get('estudios')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
+
                     <li data-target="#carousel-form" data-slide-to="8" data-toggle="tooltip" title="HABILIDADES"></li>
+                    <p *ngIf="this.formBasic.get('habilidades')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+                    <p *ngIf="!this.formBasic.get('habilidades')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
+                    
                     <li data-target="#carousel-form" data-slide-to="9" data-toggle="tooltip" title="INTERESES"></li>
                     <li data-target="#carousel-form" data-slide-to="10" data-toggle="tooltip" title="EXPERIENCIA LABORAL"></li>
                     <li data-target="#carousel-form" data-slide-to="11" data-toggle="tooltip" title="OTROS CONOCIMIENTOS"></li>
@@ -637,11 +667,11 @@
                     <div class="col-md-2"></div>
                 </div>
                 
-                <button class="carousel-control-prev border-0 bg-cero" type="button" data-target="#carousel-form" data-slide="prev">
+                <button class="carousel-control-prev border-0 bg-cero" type="button" data-target="#carousel-form" data-slide="prev" (click)="scrollTo()">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
                 </button>
-                <button class="carousel-control-next border-0 bg-cero" type="button" data-target="#carousel-form" data-slide="next">
+                <button class="carousel-control-next border-0 bg-cero" type="button" data-target="#carousel-form" data-slide="next" (click)="scrollTo()">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>
                 </button>

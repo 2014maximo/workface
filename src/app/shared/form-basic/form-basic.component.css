@@ -42,3 +42,16 @@ input[type='file']{
     display: none;
 }
 
+.bg-menu-static{
+    background: rgba(26,26,26,1) ;
+}
+.carousel-indicators li{
+    height: 15px;
+    filter: drop-shadow(0px 3px 1px rgba(0, 0, 0, 0.7));
+}
+
+.icon-navigate {
+    position: relative;
+    left: -25px;
+    top: -30px;
+}

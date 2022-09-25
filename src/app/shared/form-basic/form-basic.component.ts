@@ -76,18 +76,21 @@ export class FormBasicComponent implements OnInit {
       // CARGO
       'cargoActual': new FormControl('', Validators.required),
       'acercaDMi': new FormControl('', Validators.required),
-      'webSite': new FormControl('', Validators.required),
-      'instagram': new FormControl('', Validators.required),
-      'facebook': new FormControl('', Validators.required),
-      'twitter': new FormControl('', Validators.required),
+
+      // REDES
+      'webSite': new FormControl('',),
+      'instagram': new FormControl('',),
+      'facebook': new FormControl('',),
+      'twitter': new FormControl('',),
       'linkedin': new FormControl('', Validators.required),
 
+      // ESTUDIOS
+      'estudios': new FormArray([]),
       
       'idiomas': new FormArray([]),
       'debilidades': new FormArray([]),
       'habilidades': new FormArray([]),
       'intereses': new FormArray([]),
-      'estudios': new FormArray([]),
       'expLaboral': new FormArray([]),
       'conocimientosAdicionales': new FormArray([]),
       'referenciasPersonales': new FormArray([]),
@@ -102,13 +105,15 @@ export class FormBasicComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // $("#modalLoader").modal('show');
+    $("#modalLoader").modal('show');
+
     $(document).ready(function(){ // Permite cargar la función de TOOLTIP
       $('[data-toggle="tooltip"]').tooltip();   
     })
   }
 
   inicializarVariables(){
+    console.log(this.formBasic, 'FORM BASIC');
     this.authService.getUserLogged().subscribe( (usuario: any) => {
       if(usuario){
         this.uid = usuario.multiFactor.user.uid;
@@ -130,6 +135,7 @@ export class FormBasicComponent implements OnInit {
       }
     });
   }
+
   cargarImagenes(datosGenerales: any) {
     if(datosGenerales.formBasic.fotoFrontalSinFondo){
       this.fotoFrontalSinFondo[0] = datosGenerales.formBasic.fotoFrontalSinFondo;
@@ -419,6 +425,7 @@ export class FormBasicComponent implements OnInit {
           SweetAlert('error', 'ERROR GUARDANDO');
       })
     }
+    $("#modalLoader").modal('hide');
   }
 
   eliminarImagen(campo: string){
@@ -492,6 +499,26 @@ export class FormBasicComponent implements OnInit {
     this.gustos.forEach( element => {
       this.agregarInteres();
     });
+  }
+
+  public scrollTo() {
+    window.scroll({ 
+      top: 180, 
+      left: 0, 
+      behavior: 'smooth' 
+    });
+  }
+
+  public formNombre():boolean{
+    let respuesta:any;
+
+    if(this.formBasic.value.primerNombre.isValid || this.formBasic.value.segundoNombre.isValid){
+      respuesta = true;
+    } else {
+      respuesta = false;
+    }
+    
+    return respuesta
   }
 
 }
