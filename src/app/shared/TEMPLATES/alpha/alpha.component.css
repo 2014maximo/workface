@@ -151,3 +151,11 @@
     width: 30px;
     border-radius: 50%;
 }
+.altura-trabajo{
+    height: 200px;
+    overflow: hidden;
+}
+.altura-estudio{
+    height: 200px;
+    overflow: hidden;
+}

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import * as htmlToImage from 'html-to-image';
+import { INTERESES_GUSTOS } from '../../../constants/workface.contants';
 
 
 @Component({
@@ -10,11 +11,16 @@ import * as htmlToImage from 'html-to-image';
 export class BetaComponent implements OnInit {
 
   @Input() contenido: any;
+  public gustos = INTERESES_GUSTOS;
+  public iconosSeleccionados: any[]=[];
 
-  constructor() { }
-
+  constructor() {
+  }
+  
   ngOnInit(): void {
-
+    if(this.contenido){
+      this.iconosDestacados(this.contenido.formBasic.intereses);
+    }
   }
 
   public guardarImagenCuatro() {
@@ -29,6 +35,16 @@ export class BetaComponent implements OnInit {
         link.click();
       });
 
+  }
+  public iconosDestacados(datos: any) {
+    this.gustos?.forEach( (item, index) =>{
+      if(datos[index].interes){
+        this.iconosSeleccionados[index] = item;
+      }
+    });
+    if(this.iconosSeleccionados){
+      this.iconosSeleccionados = this.iconosSeleccionados.filter( element => element != null )
+    }
   }
 
 }

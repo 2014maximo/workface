@@ -28,23 +28,46 @@
                 
                 </div>
                 <div class="body-b p-5">
-                    <h2 class="txt-one fs-80 fw-8">A CERCA DE MI</h2>
+                    <h2 class="txt-one fs-80 fw-8">A CERCA DE MÍ</h2>
                     <h5 class="txt-two fw-6">{{ contenido?.formBasic.acercaDMi }}.</h5>
 
                     <div class="espacio"></div>
 
-                    <h3 class="text-light fw-7 ls-5">EXPERIENCIA</h3>
+                    <h3 class="text-light fw-7 ls-5 mb-4 title-work">EXPERIENCIA</h3>
                     <div class="row">
                         <div *ngFor="let trabajo of contenido?.formBasic.expLaboral" class="col-6">
-                            <div class="bg-two p-3">
-                                <h4 class="txt-two">{{ trabajo.cargoEjercido }}</h4>
-                                <h5>{{ trabajo.ciudadEmpresa }}</h5>
-                                <p>{{ trabajo.fechaFinalEmpresa }}</p>
-
+                            <div class="bg-two p-0 mb-4 altura-work">
+                                <h4 class="txt-two text-uppercase fs-17 m-0">{{ trabajo.cargoEjercido }}</h4>
+                                <h5 class="text-light fs-17 m-0">{{ trabajo.ciudadEmpresa }}</h5>
+                                <p class="text-light fs-17 font-italic fw-3" *ngIf="trabajo.fechaFinalEmpresa">{{ trabajo.fechaFinalEmpresa | date: 'MMM, y' }}</p>
+                                <p class="text-secondary lh-20 fs-15">{{ trabajo.funcionesRealizadas }}</p>
 
                             </div>
                         </div>
                     </div>
+                    <div class="espacio"></div>
+                    <h3 class="text-light fw-7 ls-5 mb-4 title-work">EDUCACIÓN</h3>
+                    <div class="row">
+                        <div *ngFor="let estudio of contenido?.formBasic.estudios" class="col-12 mb-5">
+                            <div class="d-flex">
+                                <h4 class="txt-two text-uppercase fs-17 m-0">{{ estudio.tituloObtenido }}</h4>
+                                <h5 class="text-light fs-17 m-0">, en {{ estudio.ciudadEstudio }}</h5>
+                            </div>
+                            <p class="text-light fs-17 font-italic fw-3">{{ estudio.fechaTitulo | date: 'MMM, y' }}</p>
+                            <p class="text-secondary lh-20 fs-15">{{ estudio.descripcionEstudio }}</p>
+                        </div>
+                    </div>
+                    <div class="espacio"></div>
+                    <h3 class="text-light fw-7 ls-5 mb-4 title-work">AFICIONES</h3>
+                    <div class="d-flex justify-content-start">
+                        <div *ngFor="let inter of iconosSeleccionados" class="mr-4">
+                            <div class="text-center mt-4">
+                                <i class="{{ inter?.icon }} fs-35 txt-two"></i>
+                                <h5 class="text-capitalize fs-15 text-light mt-2">{{ inter?.gusto }}</h5>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

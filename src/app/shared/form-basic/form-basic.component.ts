@@ -325,7 +325,11 @@ export class FormBasicComponent implements OnInit {
       'fechaInicio': new FormControl(new Date, Validators.required),
       'fechaTitulo': new FormControl(new Date, Validators.required),
       'ciudadEstudio': new FormControl('', Validators.required),
-      'descripcionEstudio': new FormControl('', Validators.required)
+      'descripcionEstudio':new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.minLength(40),
+        Validators.maxLength(130)
+      ])),
     }));
   }
 
@@ -335,8 +339,12 @@ export class FormBasicComponent implements OnInit {
       'jefeInmediatoEmpresa': new FormControl('', Validators.required),
       'cargoEjercido': new FormControl('', Validators.required),
       'fechaInicioEmpresa': new FormControl(new Date, Validators.required),
-      'fechaFinalEmpresa':new FormControl(new Date, Validators.required),
-      'funcionesRealizadas':new FormControl('', Validators.required),
+      'fechaFinalEmpresa':new FormControl(new Date),
+      'funcionesRealizadas':new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.minLength(40),
+        Validators.maxLength(130)
+      ])),
       'telContactoEmpresa': new FormControl('', Validators.required),
       'ciudadEmpresa': new FormControl('', Validators.required),
     }));

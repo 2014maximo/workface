@@ -1,8 +1,5 @@
 // CORE
-import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
-
-// USER
-import { AuthService } from '../../../services/auth.service';
+import { Component, OnInit, ElementRef, Input } from '@angular/core';
 
 // FIREBASE
 import { FirebaseService } from '../../../services/firebase.service';
@@ -51,8 +48,8 @@ export class AlphaComponent implements OnInit {
     this.wall = '';
     if(this.contenido){
       this.datosGenerales = Object.assign([], this.contenido) ;
-      this.avatar = this.datosGenerales.formBasic.fotoFrontalConFondo;
-      this.iconosDestacados(this.datosGenerales.formBasic.intereses);
+      this.avatar = this.contenido.formBasic.fotoFrontalConFondo;
+      this.iconosDestacados(this.contenido.formBasic.intereses);
     }
   }
 

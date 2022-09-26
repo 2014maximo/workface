@@ -4,62 +4,78 @@
         <form [formGroup]="formBasic">
             <div id="carousel-form" class="carousel slide carousel-fade" data-touch="false" data-interval="false">
                 <ol class="carousel-indicators fixed-bottom" (click)="scrollTo()">
-                    <li data-target="#carousel-form" data-slide-to="0" class="active" data-toggle="tooltip" title="NOMBRE COMPLETO"></li>
+                    <li data-target="#carousel-form" data-slide-to="0" class="active" data-toggle="tooltip" title="1. NOMBRE COMPLETO"></li>
                     <p *ngIf="this.formBasic.get('primerNombre')?.valid && this.formBasic.get('primerApellido')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
                     <p *ngIf="!this.formBasic.get('primerNombre')?.valid || !this.formBasic.get('primerApellido')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
 
-                    <li data-target="#carousel-form" data-slide-to="1" data-toggle="tooltip" title="IMAGEN PERFIL / FONDO"></li>
+                    <li data-target="#carousel-form" data-slide-to="1" data-toggle="tooltip" title="2. IMAGEN PERFIL / FONDO"></li>
                     <p *ngIf="this.formBasic.get('fotoFrontalSinFondo')?.valid && this.formBasic.get('fotoFrontalConFondo')?.valid && this.formBasic.get('imgFondo')?.valid && this.formBasic.get('imgFirma')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
                     <p *ngIf="!this.formBasic.get('fotoFrontalSinFondo')?.valid || !this.formBasic.get('fotoFrontalConFondo')?.valid || !this.formBasic.get('imgFondo')?.valid || !this.formBasic.get('imgFirma')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
                     
-                    <li data-target="#carousel-form" data-slide-to="2" data-toggle="tooltip" title="IDENTIFICACIÓN"></li>
+                    <li data-target="#carousel-form" data-slide-to="2" data-toggle="tooltip" title="3. IDENTIFICACIÓN"></li>
                     <p *ngIf="this.formBasic.get('tipoIdentificacion')?.valid && this.formBasic.get('identificacion')?.valid && this.formBasic.get('nacionalidad')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
                     <p *ngIf="!this.formBasic.get('tipoIdentificacion')?.valid || !this.formBasic.get('identificacion')?.valid || !this.formBasic.get('nacionalidad')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
 
-                    <li data-target="#carousel-form" data-slide-to="3" data-toggle="tooltip" title="NACIMIENTO"></li>
+                    <li data-target="#carousel-form" data-slide-to="3" data-toggle="tooltip" title="4. NACIMIENTO"></li>
                     <p *ngIf="this.formBasic.get('fechaNacimiento')?.valid && this.formBasic.get('ciudadNacimiento')?.valid && this.formBasic.get('genero')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
                     <p *ngIf="!this.formBasic.get('fechaNacimiento')?.valid || !this.formBasic.get('ciudadNacimiento')?.valid || !this.formBasic.get('genero')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
 
 
-                    <li data-target="#carousel-form" data-slide-to="4" data-toggle="tooltip" title="DE CONTACTO"></li>
+                    <li data-target="#carousel-form" data-slide-to="4" data-toggle="tooltip" title="5. DE CONTACTO"></li>
                     <p *ngIf="this.formBasic.get('direccionResidencia')?.valid && this.formBasic.get('barrioResidencia')?.valid && this.formBasic.get('email')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
                     <p *ngIf="!this.formBasic.get('direccionResidencia')?.valid || !this.formBasic.get('barrioResidencia')?.valid || !this.formBasic.get('email')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
 
-                    <li data-target="#carousel-form" data-slide-to="5" data-toggle="tooltip" title="CARGO"></li>
+                    <li data-target="#carousel-form" data-slide-to="5" data-toggle="tooltip" title="6. CARGO"></li>
                     <p *ngIf="this.formBasic.get('cargoActual')?.valid && this.formBasic.get('acercaDMi')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
                     <p *ngIf="!this.formBasic.get('cargoActual')?.valid || !this.formBasic.get('acercaDMi')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
 
 
-                    <li data-target="#carousel-form" data-slide-to="6" data-toggle="tooltip" title="REDES"></li>
+                    <li data-target="#carousel-form" data-slide-to="6" data-toggle="tooltip" title="7. REDES"></li>
                     <p *ngIf="this.formBasic.get('linkedin')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
                     <p *ngIf="!this.formBasic.get('linkedin')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
 
 
-                    <li data-target="#carousel-form" data-slide-to="7" data-toggle="tooltip" title="ESTUDIOS"></li>
+                    <li data-target="#carousel-form" data-slide-to="7" data-toggle="tooltip" title="8. ESTUDIOS"></li>
                     <p *ngIf="this.formBasic.get('estudios')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
                     <p *ngIf="!this.formBasic.get('estudios')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
 
-                    <li data-target="#carousel-form" data-slide-to="8" data-toggle="tooltip" title="HABILIDADES"></li>
+                    <li data-target="#carousel-form" data-slide-to="8" data-toggle="tooltip" title="9. HABILIDADES"></li>
                     <p *ngIf="this.formBasic.get('habilidades')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
                     <p *ngIf="!this.formBasic.get('habilidades')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
                     
-                    <li data-target="#carousel-form" data-slide-to="9" data-toggle="tooltip" title="INTERESES"></li>
-                    <li data-target="#carousel-form" data-slide-to="10" data-toggle="tooltip" title="EXPERIENCIA LABORAL"></li>
-                    <li data-target="#carousel-form" data-slide-to="11" data-toggle="tooltip" title="OTROS CONOCIMIENTOS"></li>
-                    <li data-target="#carousel-form" data-slide-to="12" data-toggle="tooltip" title="REFERENCIAS PERSONALES"></li>
-                    <li data-target="#carousel-form" data-slide-to="13" data-toggle="tooltip" title="REFERENCIAS FAMILIARES"></li>
+                    <li data-target="#carousel-form" data-slide-to="9" data-toggle="tooltip" title="10. INTERESES"></li>
+                    <p *ngIf="this.formBasic.get('intereses')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+                    <p *ngIf="!this.formBasic.get('intereses')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
+
+                    <li data-target="#carousel-form" data-slide-to="10" data-toggle="tooltip" title="11. EXPERIENCIA LABORAL"></li>
+                    <p *ngIf="this.formBasic.get('expLaboral')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+                    <p *ngIf="!this.formBasic.get('expLaboral')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
+
+                    <li data-target="#carousel-form" data-slide-to="11" data-toggle="tooltip" title="12. OTROS CONOCIMIENTOS"></li>
+                    <p *ngIf="this.formBasic.get('conocimientosAdicionales')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+                    <p *ngIf="!this.formBasic.get('conocimientosAdicionales')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
+
+                    <li data-target="#carousel-form" data-slide-to="12" data-toggle="tooltip" title="13. REFERENCIAS PERSONALES"></li>
+                    <p *ngIf="this.formBasic.get('referenciasPersonales')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+                    <p *ngIf="!this.formBasic.get('referenciasPersonales')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
+
+                    <li data-target="#carousel-form" data-slide-to="13" data-toggle="tooltip" title="14. REFERENCIAS FAMILIARES"></li>
+                    <p *ngIf="this.formBasic.get('referenciasFamiliares')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+                    <p *ngIf="!this.formBasic.get('referenciasFamiliares')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
+
                 </ol>
+                
                 <div class="row">
                     <div class="col-md-2"></div>
                     <div class="col-md-8">
                         <div class="carousel-inner pr-4">
+                            <!--------------------------------------------------------------------------------->
+                            <!-------------------------------------- 1. NOMBRE -------------------------------->
+                            <!--------------------------------------------------------------------------------->
                             <div class="carousel-item active">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">01/<span class="fs-12">13 </span></h4>
-                                    <!--------------------------------------------------------------------------------->
-                                    <!-------------------------------------- NOMBRE ----------------------------------->
-                                    <!--------------------------------------------------------------------------------->
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">01/<span class="fs-12">14 </span></h4>
                                     <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">NOMBRE COMPLETO</h3>
                                     <div class="p-5">
                                         <label class="estiloLabel f-open-sans-c p-1">Primer nombre<span class="text-danger">*</span></label>
@@ -85,13 +101,14 @@
 
                                 <div class="espaciado"></div>
                             </div>
+
+                            <!----------------------------------------------------------------------------------->
+                            <!-------------------------------------- 2. IMAGENES -------------------------------->
+                            <!----------------------------------------------------------------------------------->
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">02/<span class="fs-12">13</span></h4>
-                                    <!----------------------------------------------------------------------------------->
-                                    <!-------------------------------------- IMAGENES ----------------------------------->
-                                    <!----------------------------------------------------------------------------------->
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">02/<span class="fs-12">14</span></h4>
                                     <!-- FRONTAL SIN FONDO -->
                                     <div>
                                         <div class="espacio"></div>
@@ -190,13 +207,13 @@
                                 </div>
                             </div>
                             
+                            <!----------------------------------------------------------------------------------------->
+                            <!-------------------------------------- 3. IDENTIFICACIÓN -------------------------------->
+                            <!----------------------------------------------------------------------------------------->
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">03/<span class="fs-12">13</span></h4>
-                                    <!----------------------------------------------------------------------------------------->
-                                    <!-------------------------------------- IDENTIFICACIÓN ----------------------------------->
-                                    <!----------------------------------------------------------------------------------------->
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">03/<span class="fs-12">14</span></h4>
                                     <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">IDENTIFICACIÓN</h3>
 
                                     <div class="p-5">
@@ -227,13 +244,13 @@
                                 <div class="espaciado"></div>
                             </div>
                             
+                            <!------------------------------------------------------------------------------------->
+                            <!-------------------------------------- 4. NACIMIENTO -------------------------------->
+                            <!------------------------------------------------------------------------------------->
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">04/<span class="fs-12">13</span></h4>
-                                    <!------------------------------------------------------------------------------------->
-                                    <!-------------------------------------- NACIMIENTO ----------------------------------->
-                                    <!------------------------------------------------------------------------------------->
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">04/<span class="fs-12">14</span></h4>
                                     <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">NACIMIENTO</h3>
                                     <div class="p-5">
                                         <label class="estiloLabel f-open-sans-c p-1">Fecha de nacimiento<span class="text-danger">*</span></label>
@@ -258,13 +275,13 @@
                                 <div class="espaciado"></div>
                             </div>
                             
+                            <!----------------------------------------------------------------------------------->
+                            <!-------------------------------------- 5. CONTACTO -------------------------------->
+                            <!----------------------------------------------------------------------------------->
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">05/<span class="fs-12">13</span></h4>
-                                    <!----------------------------------------------------------------------------------->
-                                    <!-------------------------------------- CONTACTO ----------------------------------->
-                                    <!----------------------------------------------------------------------------------->
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">05/<span class="fs-12">14</span></h4>
                                     <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">DE CONTACTO</h3>
                                     <div class="p-5">
                                         <label class="estiloLabel f-open-sans-c p-1">Dirección residencia<span class="text-danger">*</span></label>
@@ -289,13 +306,13 @@
                                 <div class="espaciado"></div>
                             </div>
 
+                            <!----------------------------------------------------------------------------------->
+                            <!--------------------------------------- 6. CARGO ---------------------------------->
+                            <!----------------------------------------------------------------------------------->
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">06/<span class="fs-12">13</span></h4>
-                                    <!----------------------------------------------------------------------------------->
-                                    <!--------------------------------------- CARGO ------------------------------------->
-                                    <!----------------------------------------------------------------------------------->
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">06/<span class="fs-12">14</span></h4>
                                     <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">CARGO</h3>
                                     <div class="p-5">
                                         <label class="estiloLabel f-open-sans-c p-1">Cargo actual<span class="text-danger">*</span></label>
@@ -313,13 +330,13 @@
                                 </div>
                             </div>
 
+                            <!----------------------------------------------------------------------------------->
+                            <!-------------------------------------- 7. REDES ----------------------------------->
+                            <!----------------------------------------------------------------------------------->
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">07/<span class="fs-12">13</span></h4>
-                                    <!----------------------------------------------------------------------------------->
-                                    <!-------------------------------------- REDES ------------------------------------>
-                                    <!----------------------------------------------------------------------------------->
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">07/<span class="fs-12">14</span></h4>
                                     <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">REDES</h3>
                                     <div class="p-5">
 
@@ -347,13 +364,13 @@
                                 </div>
                             </div>
 
+                            <!----------------------------------------------------------------------------------->
+                            <!-------------------------------------- 8. ESTUDIOS -------------------------------->
+                            <!----------------------------------------------------------------------------------->
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">08/<span class="fs-12">13</span></h4>
-                                    <!----------------------------------------------------------------------------------->
-                                    <!-------------------------------------- ESTUDIOS ----------------------------------->
-                                    <!----------------------------------------------------------------------------------->
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">08/<span class="fs-12">14</span></h4>
                                     <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">ESTUDIOS</h3>
                                     <ng-container formArrayName="estudios">
                                         <div [formGroupName]="i" *ngFor="let estudio of getControls('estudios'); let i = index">
@@ -400,13 +417,14 @@
                                 </div>
                                 <div class="espaciado"></div>
                             </div>
+
+                            <!----------------------------------------------------------------------------------->
+                            <!-------------------------------------- 9. HABILIDADES ----------------------------->
+                            <!----------------------------------------------------------------------------------->
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
                                     <h4 class="text-light f-grape fs-30 text-center text-shadow-one">09/<span class="fs-12">14</span></h4>
-                                    <!----------------------------------------------------------------------------------->
-                                    <!-------------------------------------- HABILIDADES -------------------------------->
-                                    <!----------------------------------------------------------------------------------->
                                     <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">HABILIDADES</h3>
                                     <ng-container formArrayName="habilidades">
                                         <div [formGroupName]="i" *ngFor="let habilidad of getControls('habilidades'); let i = index">
@@ -446,13 +464,14 @@
                                 </div>
                                 <div class="espaciado"></div>
                             </div>
+
+                            <!----------------------------------------------------------------------------------->
+                            <!-------------------------------------- 10. INTERESES ------------------------------>
+                            <!----------------------------------------------------------------------------------->
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">09/<span class="fs-12">14</span></h4>
-                                    <!----------------------------------------------------------------------------------->
-                                    <!-------------------------------------- INTERESES -------------------------------->
-                                    <!----------------------------------------------------------------------------------->
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">10/<span class="fs-12">14</span></h4>
                                     <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">INTERESES</h3>
                                     <ng-container formArrayName="intereses">
                                         <div class="row p-5">
@@ -470,13 +489,13 @@
                                 <div class="espaciado"></div>
                             </div>
 
+                            <!----------------------------------------------------------------------------------------->
+                            <!-------------------------------------- 11. EXPERIENCIA LABORAL -------------------------->
+                            <!----------------------------------------------------------------------------------------->
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">9/<span class="fs-12">13</span></h4>
-                                    <!----------------------------------------------------------------------------------------->
-                                    <!-------------------------------------- EXPERIENCIA LABORAL ------------------------------>
-                                    <!----------------------------------------------------------------------------------------->
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">11/<span class="fs-12">14</span></h4>
                                     <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">EXPERIENCIA LABORAL</h3>
                                     <ng-container formArrayName="expLaboral">
                                         <div [formGroupName]="i"  *ngFor="let formExpLaboral of getControls('expLaboral'); let i = index">
@@ -524,13 +543,13 @@
                                 <div class="espaciado"></div>
                             </div>
 
+                            <!----------------------------------------------------------------------------------------->
+                            <!-------------------------------------- 12. OTROS CONOCIMIENTOS -------------------------->
+                            <!----------------------------------------------------------------------------------------->
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">10/<span class="fs-12">13</span></h4>
-                                    <!----------------------------------------------------------------------------------------->
-                                    <!-------------------------------------- OTROS CONOCIMIENTOS ------------------------------>
-                                    <!----------------------------------------------------------------------------------------->
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">12/<span class="fs-12">14</span></h4>
                                     <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">OTROS CONOCIMIENTOS</h3>
 
                                     <ng-container formArrayName="conocimientosAdicionales">
@@ -568,13 +587,13 @@
                                 <div class="espaciado"></div>
                             </div>
 
+                            <!----------------------------------------------------------------------------------------->
+                            <!-------------------------------------- 13. REFERENCIAS PERSONALES ----------------------->
+                            <!----------------------------------------------------------------------------------------->
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">11/<span class="fs-12">13</span></h4>
-                                    <!----------------------------------------------------------------------------------------->
-                                    <!-------------------------------------- REFERENCIAS PERSONALES --------------------------->
-                                    <!----------------------------------------------------------------------------------------->
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">13/<span class="fs-12">14</span></h4>
                                     <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">REFERENCIAS PERSONALES</h3>
 
                                     <ng-container formArrayName="referenciasPersonales">
@@ -614,13 +633,13 @@
                                 <div class="espaciado"></div>
                             </div>
 
+                            <!----------------------------------------------------------------------------------------->
+                            <!-------------------------------------- 14. REFERENCIAS FAMILIARES ----------------------->
+                            <!----------------------------------------------------------------------------------------->
                             <div class="carousel-item">
                                 <div class="espaciado"></div>
                                 <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">12/<span class="fs-12">13</span></h4>
-                                    <!----------------------------------------------------------------------------------------->
-                                    <!-------------------------------------- REFERENCIAS FAMILIARES --------------------------->
-                                    <!----------------------------------------------------------------------------------------->
+                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">14/<span class="fs-12">14</span></h4>
                                     <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">REFERENCIAS FAMILIARES</h3>
 
                                     <ng-container formArrayName="referenciasFamiliares">
