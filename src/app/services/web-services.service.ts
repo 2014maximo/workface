@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class WebServicesService {
 
-  private recursos: string = 'https://plantillas_dev.gitlab.io/styles/assets/json/recursos.json'
+  private recursos: string = 'https://plantillas_dev.gitlab.io/assets/json/recursos.json'
 
   constructor(private http: HttpClient) { }
 
