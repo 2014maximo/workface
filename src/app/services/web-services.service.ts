@@ -14,7 +14,4 @@ export class WebServicesService {
   consultarRecursos(): Observable<any[]> {
     return this.http.get<any[]>(this.recursos);
   }
-
-
-
 }
