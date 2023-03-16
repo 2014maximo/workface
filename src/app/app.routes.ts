@@ -8,6 +8,7 @@ import { GaleriaTemplatesComponent } from "./components/galeria-templates/galeri
 import { BetaComponent } from "./shared/TEMPLATES/beta/beta.component";
 import { SliderTemplatesComponent } from './components/slider-templates/slider-templates.component';
 import { FormContactComponent } from './components/form-contact/form-contact.component';
+import { CurriculumsComponent } from './shared/components/curriculus/curriculums.component';
 
 export const ROUTES: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'home'},
@@ -23,5 +24,9 @@ export const ROUTES: Routes = [
     // TEMPLATES
     { path: 'alpha', component: AlphaComponent, canActivate: [AngularFireAuthGuard] },
     { path: 'beta', component: BetaComponent, canActivate: [AngularFireAuthGuard] },
+    
+    // SHARED
+    { path: 'curriculums', component: CurriculumsComponent },
+
 
 ]

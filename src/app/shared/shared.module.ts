@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BetaComponent } from './TEMPLATES/beta/beta.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CurriculumsComponent } from './components/curriculus/curriculums.component';
 
 
 
@@ -24,7 +25,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SliderHomeComponent,
     AlphaComponent,
     FormBasicComponent,
-    BetaComponent
+    BetaComponent,
+    CurriculumsComponent
   ],
   imports: [
     CommonModule,

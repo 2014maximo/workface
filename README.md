@@ -32,9 +32,13 @@ PROCESO GITHUB-PAGES
 
 4. Verificar en github en settings - pages - source que la rama este marcada como gh-pages, sino le damos save.
 
+
 5. Se crea la carpeta 'build' compilada del proyecto ejecuntado este comando:
    ng build --prod --base-href="./"
 
 6. Se sube el proyecto y se deploya de una vez con el comando:
    npx angular-cli-ghpages – dir=dist
 
+SUBIR CAMBIOS A GITHUB(última versión)
+ng build --prod --base-href https://2014maximo.github.io/workface/
+npx angular-cli-ghpages --branch gh-pages
