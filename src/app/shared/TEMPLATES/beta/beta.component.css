@@ -26,7 +26,10 @@
     color: #3a3a3a;
 }
 .txt-two{
-    color:  #cac73c !important;
+    color: #edb519 !important;
+}
+.txt-three{
+    color: #e0d81d;
 }
 .content-avatar{
 
@@ -43,7 +46,7 @@
     width: 400px;
 }
 .body-b{
-
+    background: #292220;
 }
 .bg-one{
     background: #d49e20 !important;

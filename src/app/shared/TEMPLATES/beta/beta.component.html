@@ -13,8 +13,8 @@
                     <div class="content-avatar">
                         <img src="{{ contenido?.formBasic.fotoFrontalConFondo }}" alt="" width="400" height="300" class="avatar">
                     </div>
-                    <div class="info-base bg-one p-5">
-                        <h3 class="fw-9 fs-50 lh-50 m-0">
+                    <div class="info-base bg-one pl-4 pr-4 pt-5 pb-5">
+                        <h3 class="fw-9 fs-70 lh-50 m-0">
                             {{ contenido?.formBasic.primerNombre }}<br>
                             {{ contenido?.formBasic.primerApellido }}
                         </h3>
@@ -47,7 +47,7 @@
                 
                 </div>
                 <div class="body-b p-5">
-                    <h2 class="txt-one fs-80 fw-8">A CERCA DE MÍ</h2>
+                    <h2 class="txt-one fs-90 fw-9">A CERCA DE MÍ</h2>
                     <h5 class="txt-two fw-6">{{ contenido?.formBasic.acercaDMi }}.</h5>
 
                     <div class="espacio"></div>
@@ -56,7 +56,7 @@
                     <div class="row">
                         <div *ngFor="let trabajo of contenido?.formBasic.expLaboral" class="col-6">
                             <div class="bg-two p-0 mb-4 altura-work">
-                                <h4 class="txt-two text-uppercase fs-17 m-0">{{ trabajo.cargoEjercido }}</h4>
+                                <h4 class="txt-three text-uppercase fs-17 m-0">{{ trabajo.cargoEjercido }}</h4>
                                 <h5 class="text-light fs-17 m-0">{{ trabajo.ciudadEmpresa }}</h5>
                                 <p class="text-light fs-17 font-italic fw-3" *ngIf="trabajo.fechaFinalEmpresa">{{ trabajo.fechaFinalEmpresa | date: 'MMM, y' }}</p>
                                 <p class="text-secondary lh-20 fs-15">{{ trabajo.funcionesRealizadas }}</p>
