@@ -51,7 +51,7 @@
                         <div class="alturaNombre"></div>
 
                         <h3 class="text-light fw-7 ls-5">A CERCA DE MI</h3>
-                        <p class="text-light lh-23">{{ contenido?.formBasic.acercaDMi }}</p>
+                        <p class="text-light lh-23 text-justify">{{ contenido?.formBasic.acercaDMi }}</p>
                         <div class="espacio"></div>
 
                         <h3 class="text-light fw-7 ls-5 mb-3">MIS HABILIDADES</h3>
@@ -126,12 +126,12 @@
                         <h3 class="fw-7 ls-5 mb-3">EXPERIENCIA</h3>
                         <div class="d-block">
                             <div class="row">
-                                <div *ngFor="let trabajo of contenido?.formBasic.expLaboral" class="col-6">
+                                <div *ngFor="let trabajo of contenido?.formBasic.expLaboral.reverse()" class="col-6">
                                     <div class="mb-4 altura-trabajo">
                                         <div class="d-flex">
                                             <div class="bg-{{ color }} pt-1 pb-1 pr-3 pl-3 mb-2 d-flex">
-                                                <p class="lh-23 fw-6 txt-inver-{{ color }} ls-3 m-0">{{ trabajo.fechaInicioEmpresa | date:'YYYY' }} a</p>
-                                                <p *ngIf="trabajo.fechaFinalEmpresa" class="lh-23 fw-6 txt-inver-{{ color }} ls-3 m-0">{{ trabajo.fechaFinalEmpresa | date:'YYYY'}}</p>
+                                                <p class="lh-23 fw-6 txt-inver-{{ color }} ls-3 m-0">{{ trabajo.fechaInicioEmpresa | date:'YYYY' }} a </p>
+                                                <p *ngIf="trabajo.fechaFinalEmpresa" class="lh-23 fw-6 txt-inver-{{ color }} ls-3 m-0"> {{ trabajo.fechaFinalEmpresa | date:'YYYY'}}</p>
                                             </div>
                                         </div>
                                         <p class="text-uppercase fw-7 fs-18 m-0">{{ trabajo.cargoEjercido }}</p>
@@ -141,7 +141,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="espacio"></div>
                         <h3 class="fw-7 ls-5 mb-3">EDUCACIÓN</h3>
                         <div class="row">
                             <div *ngFor="let estudio of contenido?.formBasic.estudios" class="col-6 altura-estudio">
