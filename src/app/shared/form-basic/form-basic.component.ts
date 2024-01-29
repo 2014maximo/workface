@@ -137,18 +137,21 @@ export class FormBasicComponent implements OnInit {
   }
 
   cargarImagenes(datosGenerales: any) {
-    if(datosGenerales.formBasic.fotoFrontalSinFondo){
-      this.fotoFrontalSinFondo[0] = datosGenerales.formBasic.fotoFrontalSinFondo;
-    } 
-    if(datosGenerales.formBasic.fotoFrontalConFondo){
-      this.fotoFrontalConFondo[0] = datosGenerales.formBasic.fotoFrontalConFondo;
+    if(datosGenerales.formBasic){
+      if(datosGenerales.formBasic.fotoFrontalSinFondo){
+        this.fotoFrontalSinFondo[0] = datosGenerales.formBasic.fotoFrontalSinFondo;
+      } 
+      if(datosGenerales.formBasic.fotoFrontalConFondo){
+        this.fotoFrontalConFondo[0] = datosGenerales.formBasic.fotoFrontalConFondo;
+      }
+      if(datosGenerales.formBasic.imgFondo){
+        this.imgFondo[0] = datosGenerales.formBasic.imgFondo;
+      }
+      if(datosGenerales.formBasic.imgFirma){
+        this.imgFirma[0] = datosGenerales.formBasic.imgFirma;
+      }
     }
-    if(datosGenerales.formBasic.imgFondo){
-      this.imgFondo[0] = datosGenerales.formBasic.imgFondo;
-    }
-    if(datosGenerales.formBasic.imgFirma){
-      this.imgFirma[0] = datosGenerales.formBasic.imgFirma;
-    }
+
   }
   
   onSelectNewFile(files: any): void{
@@ -214,50 +217,52 @@ export class FormBasicComponent implements OnInit {
   
   loadFormsArray(formularios: any){
 
-    formularios.formBasic.intereses?.forEach((staff: any, index: number, form: any) => {
-      this.agregarInteres();
-      (<FormArray>this.formBasic.get('intereses')).at(index).setValue(staff);
-    });
-
-    formularios.formBasic.habilidades?.forEach((staff: any, index: number, form: any) => {
-      this.agregarHabilidad();
-      (<FormArray>this.formBasic.get('habilidades')).at(index).setValue(staff);
-    });
-
-    formularios.formBasic.debilidades?.forEach((staff: any, index: number, form: any) => {
-      this.agregarDebilidad();
-      (<FormArray>this.formBasic.get('debilidades')).at(index).setValue(staff);
-    });
-
-    formularios.formBasic.idiomas?.forEach((staff: any, index: number, form: any) => {
-      this.agregarIdioma();
-      (<FormArray>this.formBasic.get('idiomas')).at(index).setValue(staff);
-    });
-
-    formularios.formBasic.estudios.forEach((staff: any, index: number, form: any) => {
-      this.agregarEstudio();
-      (<FormArray>this.formBasic.get('estudios')).at(index).setValue(staff);
-    });
-
-    formularios.formBasic.expLaboral.forEach((staff: any, index: number, form: any) => {
-      this.agregarExpLaboral();
-      (<FormArray>this.formBasic.get('expLaboral')).at(index).setValue(staff);
-    });
-
-    formularios.formBasic.conocimientosAdicionales.forEach((staff: any, index: number, form: any) => {
-      this.agregarConocimientos();
-      (<FormArray>this.formBasic.get('conocimientosAdicionales')).at(index).setValue(staff);
-    });
-
-    formularios.formBasic.referenciasPersonales.forEach((staff: any, index: number, form: any) => {
-      this.agregarReferenciaPersonal();
-      (<FormArray>this.formBasic.get('referenciasPersonales')).at(index).setValue(staff);
-    });
-
-    formularios.formBasic.referenciasFamiliares.forEach((staff: any, index: number, form: any) => {
-      this.agregarReferenciaFamiliar();
-      (<FormArray>this.formBasic.get('referenciasFamiliares')).at(index).setValue(staff);
-    });
+    if(formularios.formBasic){
+      formularios.formBasic.intereses?.forEach((staff: any, index: number, form: any) => {
+        this.agregarInteres();
+        (<FormArray>this.formBasic.get('intereses')).at(index).setValue(staff);
+      });
+  
+      formularios.formBasic.habilidades?.forEach((staff: any, index: number, form: any) => {
+        this.agregarHabilidad();
+        (<FormArray>this.formBasic.get('habilidades')).at(index).setValue(staff);
+      });
+  
+      formularios.formBasic.debilidades?.forEach((staff: any, index: number, form: any) => {
+        this.agregarDebilidad();
+        (<FormArray>this.formBasic.get('debilidades')).at(index).setValue(staff);
+      });
+  
+      formularios.formBasic.idiomas?.forEach((staff: any, index: number, form: any) => {
+        this.agregarIdioma();
+        (<FormArray>this.formBasic.get('idiomas')).at(index).setValue(staff);
+      });
+  
+      formularios.formBasic.estudios.forEach((staff: any, index: number, form: any) => {
+        this.agregarEstudio();
+        (<FormArray>this.formBasic.get('estudios')).at(index).setValue(staff);
+      });
+  
+      formularios.formBasic.expLaboral.forEach((staff: any, index: number, form: any) => {
+        this.agregarExpLaboral();
+        (<FormArray>this.formBasic.get('expLaboral')).at(index).setValue(staff);
+      });
+  
+      formularios.formBasic.conocimientosAdicionales.forEach((staff: any, index: number, form: any) => {
+        this.agregarConocimientos();
+        (<FormArray>this.formBasic.get('conocimientosAdicionales')).at(index).setValue(staff);
+      });
+  
+      formularios.formBasic.referenciasPersonales.forEach((staff: any, index: number, form: any) => {
+        this.agregarReferenciaPersonal();
+        (<FormArray>this.formBasic.get('referenciasPersonales')).at(index).setValue(staff);
+      });
+  
+      formularios.formBasic.referenciasFamiliares.forEach((staff: any, index: number, form: any) => {
+        this.agregarReferenciaFamiliar();
+        (<FormArray>this.formBasic.get('referenciasFamiliares')).at(index).setValue(staff);
+      });
+    }
   }
   
   getControls(formArray: string){
@@ -390,11 +395,12 @@ export class FormBasicComponent implements OnInit {
 
   setFormBasic(respuesta: any){
     // let form = this.formBasic.get('estudios') as FormArray;
-    if(respuesta.formBasic.intereses.length < 1){
+
+    if(respuesta && respuesta.formBasic && respuesta.formBasic.intereses.length > 1){
       this.cargarInteresesArray();
+      this.formBasic.patchValue(respuesta.formBasic as FormGroup);
     } 
     
-    this.formBasic.patchValue(respuesta.formBasic as FormGroup);
 /*     this.formBasic.controls[1].get('estudios')?.setValue(respuesta.formBasic.estudios[1]);
     this.formBasic.controls[0].get('estudios')?.setValue(respuesta.formBasic.estudios[0]); */
     // this.formBasic.setControl('estudios',  new FormControl(respuesta.formBasic.estudios));
