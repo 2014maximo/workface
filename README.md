@@ -42,3 +42,7 @@ PROCESO GITHUB-PAGES
 SUBIR CAMBIOS A GITHUB(última versión)
 ng build --prod --base-href https://2014maximo.github.io/workface/
 npx angular-cli-ghpages --branch gh-pages
+
+
+SUGERENCIA DE COMPILACION
+nvm version 14 (node 14)

@@ -3,6 +3,8 @@
     <div class="col-md-10">
         <form [formGroup]="formBasic">
             <div id="carousel-form" class="carousel slide carousel-fade" data-touch="false" data-interval="false">
+                <p>{{ this.formBasic.get('fotoFrontalConFondo')?.valid }}</p>
+
                 <ol class="carousel-indicators fixed-bottom" (click)="scrollTo()">
                     <li data-target="#carousel-form" data-slide-to="0" class="active" data-toggle="tooltip" title="1. NOMBRE COMPLETO"></li>
                     <p *ngIf="this.formBasic.get('primerNombre')?.valid && this.formBasic.get('primerApellido')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
@@ -36,32 +38,32 @@
 
 
                     <li data-target="#carousel-form" data-slide-to="7" data-toggle="tooltip" title="8. ESTUDIOS"></li>
-                    <p *ngIf="this.formBasic.get('estudios')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
-                    <p *ngIf="!this.formBasic.get('estudios')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
+                    <p *ngIf="this.formBasic.get('estudios')?.value.length > 0" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+                    <p *ngIf="this.formBasic.get('estudios')?.value.length === 0" class="text-light fs-30 icon-navigate tc-red-one">x</p>
 
                     <li data-target="#carousel-form" data-slide-to="8" data-toggle="tooltip" title="9. HABILIDADES"></li>
-                    <p *ngIf="this.formBasic.get('habilidades')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
-                    <p *ngIf="!this.formBasic.get('habilidades')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
+                    <p *ngIf="this.formBasic.get('habilidades')?.value.length > 0" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+                    <p *ngIf="this.formBasic.get('habilidades')?.value.length === 0" class="text-light fs-30 icon-navigate tc-red-one">x</p>
                     
                     <li data-target="#carousel-form" data-slide-to="9" data-toggle="tooltip" title="10. INTERESES"></li>
-                    <p *ngIf="this.formBasic.get('intereses')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
-                    <p *ngIf="!this.formBasic.get('intereses')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
+                    <p *ngIf="algunInteres" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+                    <p *ngIf="!algunInteres" class="text-light fs-30 icon-navigate tc-red-one">x</p>
 
                     <li data-target="#carousel-form" data-slide-to="10" data-toggle="tooltip" title="11. EXPERIENCIA LABORAL"></li>
-                    <p *ngIf="this.formBasic.get('expLaboral')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
-                    <p *ngIf="!this.formBasic.get('expLaboral')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
+                    <p *ngIf="this.formBasic.get('expLaboral')?.value.length > 0" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+                    <p *ngIf="this.formBasic.get('expLaboral')?.value.length === 0" class="text-light fs-30 icon-navigate tc-red-one">x</p>
 
                     <li data-target="#carousel-form" data-slide-to="11" data-toggle="tooltip" title="12. OTROS CONOCIMIENTOS"></li>
-                    <p *ngIf="this.formBasic.get('conocimientosAdicionales')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
-                    <p *ngIf="!this.formBasic.get('conocimientosAdicionales')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
+                    <p *ngIf="this.formBasic.get('conocimientosAdicionales')?.value.length > 0" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+                    <p *ngIf="this.formBasic.get('conocimientosAdicionales')?.value.length === 0" class="text-light fs-30 icon-navigate tc-red-one">x</p>
 
                     <li data-target="#carousel-form" data-slide-to="12" data-toggle="tooltip" title="13. REFERENCIAS PERSONALES"></li>
-                    <p *ngIf="this.formBasic.get('referenciasPersonales')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
-                    <p *ngIf="!this.formBasic.get('referenciasPersonales')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
+                    <p *ngIf="this.formBasic.get('referenciasPersonales')?.value.length > 0" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+                    <p *ngIf="this.formBasic.get('referenciasPersonales')?.value.length === 0" class="text-light fs-30 icon-navigate tc-red-one">x</p>
 
                     <li data-target="#carousel-form" data-slide-to="13" data-toggle="tooltip" title="14. REFERENCIAS FAMILIARES"></li>
-                    <p *ngIf="this.formBasic.get('referenciasFamiliares')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
-                    <p *ngIf="!this.formBasic.get('referenciasFamiliares')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
+                    <p *ngIf="this.formBasic.get('referenciasFamiliares')?.value.length > 0" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+                    <p *ngIf="this.formBasic.get('referenciasFamiliares')?.value.length === 0" class="text-light fs-30 icon-navigate tc-red-one">x</p>
 
                 </ol>
                 
@@ -476,7 +478,7 @@
                                     <ng-container formArrayName="intereses">
                                         <div class="row p-5">
                                         <div [formGroupName]="i" *ngFor="let inter of getControls('intereses'); let i = index;" class="col-3">
-                                            <div class="d-flex align-items-center">
+                                            <div class="d-flex align-items-center" (click)="validarIntereses(1)">
                                                 <input class="f-open-sans-c fw-3 mt-0 mb-0 ml-0 mr-2 pl-2 estilo-input" type="checkbox" formControlName="interes" (click)="cargarIntereses($event)">
                                                 <p class="f-open-sans-c text-light m-0">{{ this.gustos[i].gusto }}</p>
                                             </div>
@@ -696,7 +698,7 @@
                 </button>
             </div>
             <div class="btn-guardar">
-                <button class="border-0 bg-blue-one text-light pt-1 pb-1 pr-4 pl-4 f-open-sans-c fs-20 shadow-three" (click)="guardar()">Guardar</button>
+                <button class="border-0 {{btnHabilitar}} text-light pt-1 pb-1 pr-4 pl-4 f-open-sans-c fs-20 shadow-three" (click)="guardar()" [disabled]="habilitarGuardar">Guardar</button>
             </div>
         </form>
     </div>

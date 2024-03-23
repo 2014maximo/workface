@@ -8,6 +8,7 @@ import { WebServicesService } from '../../services/web-services.service';
 
 import Swal from 'sweetalert2';
 import { INTERESES_GUSTOS } from '../../constants/workface.contants';
+import { Observable } from 'rxjs';
 
 declare var $: any;
 
@@ -33,6 +34,9 @@ export class FormBasicComponent implements OnInit {
   public objImagenes: any[]=[];
   public cerrarLoader: boolean = false;
   public gustos: Array<any> = INTERESES_GUSTOS;
+  public algunInteres:boolean = false;
+  public habilitarGuardar: boolean = false;
+  public btnHabilitar:string = 'bg-blue-one'
 
   constructor(private fb: FormBuilder,
     public webService: WebServicesService,
@@ -40,6 +44,8 @@ export class FormBasicComponent implements OnInit {
     private database: FirebaseService,
     private sant:DomSanitizer
     ) {
+
+      
       
     this.formBasic = new FormGroup({
       // NOMBRE
@@ -98,37 +104,38 @@ export class FormBasicComponent implements OnInit {
 
     });
 
+
     this.listaTipoIdentificacion = [];
     this.paises = [];
     this.cargarTipoIdentificacion();
     this.inicializarVariables();
+
   }
 
   ngOnInit(): void {
-    $("#modalLoader").modal('show');
 
     $(document).ready(function(){ // Permite cargar la función de TOOLTIP
       $('[data-toggle="tooltip"]').tooltip();   
-    })
+    });
+    console.log(this, 'THIS');
+
   }
 
   inicializarVariables(){
-    console.log(this.formBasic, 'FORM BASIC');
     this.authService.getUserLogged().subscribe( (usuario: any) => {
       if(usuario){
         this.uid = usuario.multiFactor.user.uid;
+        // $("#modalLoader").modal('show');
         this.database.getById('form-basic', usuario.multiFactor.user.uid).then( respuesta => {
           if(respuesta){
             respuesta?.subscribe( (formulario:any) => {
-              if(formulario){
+              if(formulario && formulario.data()){
                 this.datosGenerales = formulario.data();
                 this.setFormBasic(formulario.data());
                 this.loadFormsArray(this.datosGenerales);
                 this.cargarImagenes(this.datosGenerales);
                 $("#modalLoader").modal('hide');
-                console.log(this.datosGenerales, 'DATOS GENERALES');
               }
-              
             })
           }
         })
@@ -423,6 +430,17 @@ export class FormBasicComponent implements OnInit {
         $("#modalLoader").modal('hide');
         
       });
+      this.habilitarGuardar = true;
+
+      setTimeout(()=>{
+        this.formBasic.valueChanges.subscribe({
+          next:(resp) => {
+            console.log('EL DE luego de guardar');
+            this.habilitarGuardar = false;
+            this.btnHabilitar = 'bg-blue-one'
+          }
+        })
+      },2000)
     }else{
       this.database.createUid('form-basic', usuario, usuario.idUsuario).then( res =>{
         SweetAlert('success','FORMULARIO GUARDADO');
@@ -434,6 +452,18 @@ export class FormBasicComponent implements OnInit {
       })
     }
     $("#modalLoader").modal('hide');
+    this.habilitarGuardar = true;
+    this.btnHabilitar = 'bg-dark'
+
+    setTimeout(()=>{
+      this.formBasic.valueChanges.subscribe({
+        next:(resp) => {
+          console.log('EL DE luego de guardar');
+          this.habilitarGuardar = false;
+          this.btnHabilitar = 'bg-blue-one'
+        }
+      })
+    },2000)
   }
 
   eliminarImagen(campo: string){
@@ -527,6 +557,16 @@ export class FormBasicComponent implements OnInit {
     }
     
     return respuesta
+  }
+
+  public validarIntereses(caso?:number){
+    caso? this.algunInteres = false: this.algunInteres;
+    this.aprobarInteres();
+  }
+  
+  public aprobarInteres(){
+    let formu = this.formBasic.get('intereses')?.value;
+    this.algunInteres = formu.some((control:any) => control.interes === true);
   }
 
 }
