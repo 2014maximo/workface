@@ -8,7 +8,6 @@ import { AlphaComponent } from './TEMPLATES/alpha/alpha.component';
 import { FormBasicComponent } from './form-basic/form-basic.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BetaComponent } from './TEMPLATES/beta/beta.component';
-import { CarouselModule } from 'ngx-owl-carousel-o';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CurriculumsComponent } from './components/curriculus/curriculums.component';
 
@@ -32,7 +31,6 @@ import { CurriculumsComponent } from './components/curriculus/curriculums.compon
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    CarouselModule,
     BrowserAnimationsModule,
 
   ],

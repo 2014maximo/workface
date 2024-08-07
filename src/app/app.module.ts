@@ -16,7 +16,6 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { GaleriaTemplatesComponent } from './components/galeria-templates/galeria-templates.component';
 import { ComponentsModule } from './components/components.module';
-import { CarouselModule } from 'ngx-owl-carousel-o';
 
 
 @NgModule({
@@ -31,7 +30,6 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    CarouselModule,
     BrowserModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase, 'workface'),

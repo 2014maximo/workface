@@ -1,7 +1,10 @@
 <div class="">
     <div class="btn-guardar">
-        <button class="border-0 bgBase text-light pt-1 pb-1 pr-4 pl-4 f-open-sans-c fs-20 shadow-three mb-4" (click)="guardarImagenCuatro()">
-            CAPTURAR IMAGEN
+        <button class="border-0 bgBase text-light pt-1 pb-1 pr-4 pl-4 f-open-sans-c fs-20 shadow-three mb-4 ml-2" (click)="guardarImagenCuatro()">
+            DESCARGAR PNG
+        </button>
+        <button class="border-0 bgBase text-light pt-1 pb-1 pr-4 pl-4 f-open-sans-c fs-20 shadow-three mb-4" (click)="guardarImagenTres()">
+            DESCARGAR PDF
         </button>
         <br>
 <!--         <p class="text-light m-0 f-open-sans-c fs-20">CAMBIA EL COLOR</p> -->
@@ -143,7 +146,7 @@
                         </div>
                         <h3 class="fw-7 ls-5 mb-3">EDUCACIÓN</h3>
                         <div class="row">
-                            <div *ngFor="let estudio of contenido?.formBasic.estudios" class="col-6 altura-estudio">
+                            <div *ngFor="let estudio of contenido?.formBasic.estudios.reverse()" class="col-6 altura-estudio">
                                 <div class="d-flex">
                                     <div class="bg-{{ color }} pt-1 pb-1 pr-3 pl-3 mb-2">
                                         <p class="lh-23 fw-6 txt-inver-{{ color }} ls-3 m-0">{{ estudio.fechaInicio | date:'YYYY' }} a {{ estudio.fechaTitulo | date:'YYYY'}}</p>

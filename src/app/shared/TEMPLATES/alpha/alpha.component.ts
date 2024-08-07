@@ -1,17 +1,21 @@
 // CORE
 import { Component, OnInit, ElementRef, Input } from '@angular/core';
-
 // FIREBASE
 import { FirebaseService } from '../../../services/firebase.service';
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+
+
 // CREATE PDF or IMAGE
-import { jsPDF } from "jspdf";
 import html2canvas from 'html2canvas';
 import * as htmlToImage from 'html-to-image';
 import domtoimage from 'dom-to-image';
 import { INTERESES_GUSTOS } from 'src/app/constants/workface.contants';
+import { ConvertImageService } from 'src/app/services/convert-image.service';
 
+(<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-alpha',
@@ -38,7 +42,7 @@ export class AlphaComponent implements OnInit {
   public iconosSeleccionados: any[]=[];
   public color: string = 'one';
 
-  constructor() {}
+  constructor(private convertImg: ConvertImageService) {}
 
   ngOnInit(): void {
     this.inicializarVariables();
@@ -47,8 +51,13 @@ export class AlphaComponent implements OnInit {
   inicializarVariables() {
     this.wall = '';
     if(this.contenido){
-      this.datosGenerales = Object.assign([], this.contenido) ;
-      this.avatar = this.contenido.formBasic.fotoFrontalConFondo;
+      this.datosGenerales = Object.assign([], this.contenido);
+      this.convertImg.fetchImage(this.contenido.formBasic.fotoFrontalConFondo).subscribe({
+        next:(resp)=>{
+          this.avatar = resp;
+          console.log(this.avatar, 'AVATAR');
+        }
+      });
       this.iconosDestacados(this.contenido.formBasic.intereses);
     }
   }
@@ -70,36 +79,42 @@ export class AlphaComponent implements OnInit {
   }
 
   public saveToPdf() {
-    var element = document.getElementById('alpha');
-
-    html2canvas(element ? element : new HTMLElement).then((canvas) => {
-      console.log(canvas);
-
-      var imgData = canvas.toDataURL('image/png');
-
-      const doc = new jsPDF('p', 'pt', 'letter');
-
-      doc.addImage(imgData, 0, 0, 400, 720);
-
-      doc.save("image.pdf");
-    })
+    
   }
 
   public guardarImagenTres() {
-    var doc = new jsPDF('p', 'pt', 'letter');
-    var margin = 0;
-    var scale = (doc.internal.pageSize.width - margin * 2) /
-      document.body.scrollWidth;
-    doc.html(<HTMLElement>document.querySelector('#alpha'), {
-      x: margin,
-      y: margin,
-      html2canvas: {
-        scale: scale,
-      },
-      callback: function (doc) {
-        doc.output('dataurlnewwindow', { filename: 'fichero-pdf.pdf' })
-      }
-    })
+    var htmlToPdfmake = require("html-to-pdfmake");
+    var element = document.getElementById('alpha');
+    const elementString = element!!.outerHTML; // Use outerHTML for the entire element
+    const elementContentString = element!!.innerHTML;
+
+    console.log(elementContentString, 'ELEMENT sTRING');
+
+    var html = htmlToPdfmake(elementString);
+    const pdfDefinition: any = {
+      content: [
+        {
+          table: {
+            
+            // Headers are automatically repeated if the table spans over multiple pages
+            // You can declare how many rows should be treated as headers
+            headerRows: 1,
+            widths: [ '*', 'auto', 100, '*' ],
+  
+            body: [
+              [ 'Heading 1', 'Heading 2', 'Heading 3', 'Heading 4' ],
+              [ 'Value 1', 'Value 2', 'Value 3', 'Value 4' ],
+              [ { text: 'Bold value', bold: true }, 'Val 2', 'Val 3', 'Val 4' ]
+            ]
+          }
+        }
+      ]
+    }
+ 
+    var dd = {content:html};
+    pdfMake.createPdf(dd).download();
+/*     const pdf = pdfMake.createPdf(pdfDefinition);
+    pdf.open(); */
   }
 
   public guardarImagenCuatro() {
@@ -197,5 +212,7 @@ export class AlphaComponent implements OnInit {
   public cambioColor(color: string){
     this.color = color;
   }
+
+
 
 }
