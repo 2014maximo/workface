@@ -4,3 +4,43 @@
 .bgBase{
     background-color: #2d4399 !important;
 }
+
+.wrappers{
+    position: relative;
+    height: 40px;
+    width: 40px;
+    display: block;
+    background: #fff;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 50%;
+    color: #000;
+    z-index: 2;
+    box-shadow: 0 10px 10px rgba(0,0,0,0.1);
+    font-size: 25px;
+    line-height: 40px;
+}
+.wrappers:hover{
+    color: #fff;
+}
+.linkedin:hover{
+    background: #0a66c2;
+}
+.github:hover{
+    background: #000;
+}
+.trucos{
+    text-decoration: none;
+}
+.trucos h3:hover{
+    color: #FFEF27 !important;
+}
+/* Las columnas del footer se apilan por debajo de md */
+@media (max-width: 767.98px) {
+    .footer{
+        text-align: center;
+    }
+    .footer-icons{
+        justify-content: center;
+    }
+}
