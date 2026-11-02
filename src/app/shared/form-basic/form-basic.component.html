@@ -1,717 +1,805 @@
 <div class="row">
-    <div class="col-md-1"></div>
-    <div class="col-md-10">
-        <form [formGroup]="formBasic">
-            <div id="carousel-form" class="carousel slide carousel-fade" data-bs-touch="false" data-bs-interval="false">
-                <ol class="carousel-indicators fixed-bottom" (click)="scrollTo()">
-                    <li data-bs-target="#carousel-form" data-bs-slide-to="0" class="active" data-bs-toggle="tooltip" title="1. NOMBRE COMPLETO"></li>
-                    <p *ngIf="this.formBasic.get('primerNombre')?.valid && this.formBasic.get('primerApellido')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
-                    <p *ngIf="!this.formBasic.get('primerNombre')?.valid || !this.formBasic.get('primerApellido')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
+  <div class="col-md-1"></div>
+  <div class="col-md-10">
+    <form [formGroup]="formBasic">
+      <div id="carousel-form" class="carousel slide carousel-fade" data-bs-touch="false" data-bs-interval="false">
+        <ol class="carousel-indicators fixed-bottom" (click)="scrollTo()">
+          <li data-bs-target="#carousel-form" data-bs-slide-to="0" class="active" data-bs-toggle="tooltip" title="1. NOMBRE COMPLETO"></li>
+          @if (this.formBasic.get('primerNombre')?.valid && this.formBasic.get('primerApellido')?.valid) {
+            <p class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+          }
+          @if (!this.formBasic.get('primerNombre')?.valid || !this.formBasic.get('primerApellido')?.valid) {
+            <p class="text-light fs-30 icon-navigate tc-red-one">x</p>
+          }
 
-                    <li data-bs-target="#carousel-form" data-bs-slide-to="1" data-bs-toggle="tooltip" title="2. IMAGEN PERFIL / FONDO"></li>
-                    <p *ngIf="this.formBasic.get('fotoFrontalSinFondo')?.valid && this.formBasic.get('fotoFrontalConFondo')?.valid && this.formBasic.get('imgFondo')?.valid && this.formBasic.get('imgFirma')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
-                    <p *ngIf="!this.formBasic.get('fotoFrontalSinFondo')?.valid || !this.formBasic.get('fotoFrontalConFondo')?.valid || !this.formBasic.get('imgFondo')?.valid || !this.formBasic.get('imgFirma')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
-                    
-                    <li data-bs-target="#carousel-form" data-bs-slide-to="2" data-bs-toggle="tooltip" title="3. IDENTIFICACIÓN"></li>
-                    <p *ngIf="this.formBasic.get('tipoIdentificacion')?.valid && this.formBasic.get('identificacion')?.valid && this.formBasic.get('nacionalidad')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
-                    <p *ngIf="!this.formBasic.get('tipoIdentificacion')?.valid || !this.formBasic.get('identificacion')?.valid || !this.formBasic.get('nacionalidad')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
+          <li data-bs-target="#carousel-form" data-bs-slide-to="1" data-bs-toggle="tooltip" title="2. IMAGEN PERFIL / FONDO"></li>
+          @if (this.formBasic.get('fotoFrontalSinFondo')?.valid && this.formBasic.get('fotoFrontalConFondo')?.valid && this.formBasic.get('imgFondo')?.valid && this.formBasic.get('imgFirma')?.valid) {
+            <p class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+          }
+          @if (!this.formBasic.get('fotoFrontalSinFondo')?.valid || !this.formBasic.get('fotoFrontalConFondo')?.valid || !this.formBasic.get('imgFondo')?.valid || !this.formBasic.get('imgFirma')?.valid) {
+            <p class="text-light fs-30 icon-navigate tc-red-one">x</p>
+          }
 
-                    <li data-bs-target="#carousel-form" data-bs-slide-to="3" data-bs-toggle="tooltip" title="4. NACIMIENTO"></li>
-                    <p *ngIf="this.formBasic.get('fechaNacimiento')?.valid && this.formBasic.get('ciudadNacimiento')?.valid && this.formBasic.get('genero')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
-                    <p *ngIf="!this.formBasic.get('fechaNacimiento')?.valid || !this.formBasic.get('ciudadNacimiento')?.valid || !this.formBasic.get('genero')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
+          <li data-bs-target="#carousel-form" data-bs-slide-to="2" data-bs-toggle="tooltip" title="3. IDENTIFICACIÓN"></li>
+          @if (this.formBasic.get('tipoIdentificacion')?.valid && this.formBasic.get('identificacion')?.valid && this.formBasic.get('nacionalidad')?.valid) {
+            <p class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+          }
+          @if (!this.formBasic.get('tipoIdentificacion')?.valid || !this.formBasic.get('identificacion')?.valid || !this.formBasic.get('nacionalidad')?.valid) {
+            <p class="text-light fs-30 icon-navigate tc-red-one">x</p>
+          }
 
-
-                    <li data-bs-target="#carousel-form" data-bs-slide-to="4" data-bs-toggle="tooltip" title="5. DE CONTACTO"></li>
-                    <p *ngIf="this.formBasic.get('direccionResidencia')?.valid && this.formBasic.get('barrioResidencia')?.valid && this.formBasic.get('email')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
-                    <p *ngIf="!this.formBasic.get('direccionResidencia')?.valid || !this.formBasic.get('barrioResidencia')?.valid || !this.formBasic.get('email')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
-
-                    <li data-bs-target="#carousel-form" data-bs-slide-to="5" data-bs-toggle="tooltip" title="6. CARGO"></li>
-                    <p *ngIf="this.formBasic.get('cargoActual')?.valid && this.formBasic.get('acercaDMi')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
-                    <p *ngIf="!this.formBasic.get('cargoActual')?.valid || !this.formBasic.get('acercaDMi')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
-
-
-                    <li data-bs-target="#carousel-form" data-bs-slide-to="6" data-bs-toggle="tooltip" title="7. REDES"></li>
-                    <p *ngIf="this.formBasic.get('linkedin')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
-                    <p *ngIf="!this.formBasic.get('linkedin')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
-
-
-                    <li data-bs-target="#carousel-form" data-bs-slide-to="7" data-bs-toggle="tooltip" title="8. ESTUDIOS"></li>
-                    <p *ngIf="this.formBasic.get('estudios')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
-                    <p *ngIf="!this.formBasic.get('estudios')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
-
-                    <li data-bs-target="#carousel-form" data-bs-slide-to="8" data-bs-toggle="tooltip" title="9. HABILIDADES"></li>
-                    <p *ngIf="this.formBasic.get('habilidades')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
-                    <p *ngIf="!this.formBasic.get('habilidades')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
-                    
-                    <li data-bs-target="#carousel-form" data-bs-slide-to="9" data-bs-toggle="tooltip" title="10. INTERESES"></li>
-                    <p *ngIf="this.formBasic.get('intereses')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
-                    <p *ngIf="!this.formBasic.get('intereses')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
-
-                    <li data-bs-target="#carousel-form" data-bs-slide-to="10" data-bs-toggle="tooltip" title="11. EXPERIENCIA LABORAL"></li>
-                    <p *ngIf="this.formBasic.get('expLaboral')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
-                    <p *ngIf="!this.formBasic.get('expLaboral')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
-
-                    <li data-bs-target="#carousel-form" data-bs-slide-to="11" data-bs-toggle="tooltip" title="12. OTROS CONOCIMIENTOS"></li>
-                    <p *ngIf="this.formBasic.get('conocimientosAdicionales')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
-                    <p *ngIf="!this.formBasic.get('conocimientosAdicionales')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
-
-                    <li data-bs-target="#carousel-form" data-bs-slide-to="12" data-bs-toggle="tooltip" title="13. REFERENCIAS PERSONALES"></li>
-                    <p *ngIf="this.formBasic.get('referenciasPersonales')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
-                    <p *ngIf="!this.formBasic.get('referenciasPersonales')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
-
-                    <li data-bs-target="#carousel-form" data-bs-slide-to="13" data-bs-toggle="tooltip" title="14. REFERENCIAS FAMILIARES"></li>
-                    <p *ngIf="this.formBasic.get('referenciasFamiliares')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
-                    <p *ngIf="!this.formBasic.get('referenciasFamiliares')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
-
-                </ol>
-                
-                <div class="row">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-8">
-                        <div class="carousel-inner pe-4">
-                            <!--------------------------------------------------------------------------------->
-                            <!-------------------------------------- 1. NOMBRE -------------------------------->
-                            <!--------------------------------------------------------------------------------->
-                            <div class="carousel-item active">
-                                <div class="espaciado"></div>
-                                <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">01/<span class="fs-12">14 </span></h4>
-                                    <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">NOMBRE COMPLETO</h3>
-                                    <div class="p-5">
-                                        <label class="estiloLabel f-open-sans-c p-1">Primer nombre<span class="text-danger">*</span></label>
-                                        <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="primerNombre">
-    
-                                        <label class="estiloLabel f-open-sans-c p-1">Segundo nombre</label>
-                                        <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="text"formControlName="segundoNombre">
-    
-                                        <label class="estiloLabel f-open-sans-c p-1">Primer apellido<span class="text-danger">*</span></label>
-                                        <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="primerApellido">
-    
-                                        <label class="estiloLabel f-open-sans-c p-1">Segundo apellido</label>
-                                        <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="segundoApellido">
-
-                                        <button (click)="eraseForm(['primerNombre','segundoNombre','primerApellido','segundoApellido'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" data-bs-toggle="tooltip" data-bs-placement="right" title="BORRAR CONTENIDO DE LOS TEXTOS">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
-                                                <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                    
-                                </div>
-
-                                <div class="espaciado"></div>
-                            </div>
-
-                            <!----------------------------------------------------------------------------------->
-                            <!-------------------------------------- 2. IMAGENES -------------------------------->
-                            <!----------------------------------------------------------------------------------->
-                            <div class="carousel-item">
-                                <div class="espaciado"></div>
-                                <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">02/<span class="fs-12">14</span></h4>
-                                    <!-- FRONTAL SIN FONDO -->
-                                    <div>
-                                        <div class="espacio"></div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one mb-5">IMAGEN PERFIL</h3>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col text-center">
-                                            <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" accept=".png" (change)="loadImg('/frontal-sin-fondo/', $event)" type="file" id="img-sin-fondo">
-                                            <label class="estiloLabel f-open-sans-c p-1">Imagen de frente sin fondo<span class="text-danger">*</span></label><br>
-                                            <label for="img-sin-fondo" class="text-light cursor-p">
-                                                <img *ngIf="!fotoFrontalSinFondo[0]" src="assets/img/icons/add-file.png" alt="add-file-image" title="Agregar imagen" height="70" width="auto" class="mt-4 drop">
-                                                <img *ngIf="fotoFrontalSinFondo[0]" src="{{ fotoFrontalSinFondo[0] }}" alt="" height="200" width="auto">
-                                            </label>
-                                            <img *ngIf="fotoFrontalSinFondo[0]" src="assets/img/icons/equis.png" height="40" width="auto" class="drop cursor-p" data-bs-toggle="tooltip" title="ELIMINAR" (click)="eliminarImagen('fotoFrontalSinFondo')">
-                                        </div>
-                                        <div class="col text-center" *ngIf="!fotoFrontalSinFondo[0]">
-                                            <label class="estiloLabel f-open-sans-c p-1">Ejemplo</label><br>
-                                            <img src="assets/img/items/alex-sin-fondo.png" alt="" height="200" width="auto" class="drop">
-                                        </div>
-                                    </div>
-                                    </div>
+          <li data-bs-target="#carousel-form" data-bs-slide-to="3" data-bs-toggle="tooltip" title="4. NACIMIENTO"></li>
+          @if (this.formBasic.get('fechaNacimiento')?.valid && this.formBasic.get('ciudadNacimiento')?.valid && this.formBasic.get('genero')?.valid) {
+            <p class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+          }
+          @if (!this.formBasic.get('fechaNacimiento')?.valid || !this.formBasic.get('ciudadNacimiento')?.valid || !this.formBasic.get('genero')?.valid) {
+            <p class="text-light fs-30 icon-navigate tc-red-one">x</p>
+          }
 
 
-                                    <!-- FRONTAL CON FONDO -->
-                                    <div>
-                                        <div class="espacio"></div>
+          <li data-bs-target="#carousel-form" data-bs-slide-to="4" data-bs-toggle="tooltip" title="5. DE CONTACTO"></li>
+          @if (this.formBasic.get('direccionResidencia')?.valid && this.formBasic.get('barrioResidencia')?.valid && this.formBasic.get('email')?.valid) {
+            <p class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+          }
+          @if (!this.formBasic.get('direccionResidencia')?.valid || !this.formBasic.get('barrioResidencia')?.valid || !this.formBasic.get('email')?.valid) {
+            <p class="text-light fs-30 icon-navigate tc-red-one">x</p>
+          }
 
-                                    <div class="row">
-                                        <div class="col text-center">
-                                            <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" accept=".png, .jpg, .jpeg" (change)="loadImg('/frontal-con-fondo/', $event)" type="file" id="img-fondo">
-                                            <label class="estiloLabel f-open-sans-c p-1">Imagen de frente con fondo<span class="text-danger">*</span></label><br>
-                                            <label for="img-fondo" class="text-light cursor-p">
-                                                <img *ngIf="!fotoFrontalConFondo[0]" src="assets/img/icons/add-file.png" alt="add-file-image" title="Agregar imagen" height="70" width="auto" class="mt-4 drop">
-                                                <img *ngIf="fotoFrontalConFondo[0]" src="{{ fotoFrontalConFondo[0] }}" alt="" height="200" width="auto">
-                                            </label>
-                                            <img *ngIf="fotoFrontalConFondo[0]" src="assets/img/icons/equis.png" height="40" width="auto" class="drop cursor-p" title="Eliminar" (click)="eliminarImagen('fotoFrontalConFondo')">
-                                        </div>
-                                        <div class="col text-center" *ngIf="!fotoFrontalConFondo[0]">
-                                            <label class="estiloLabel f-open-sans-c p-1">Ejemplo</label><br>
-                                            <img src="assets/img/items/alex.jpg" alt="" height="200" width="auto" class="drop">
-                                        </div>
-                                    </div>
-                                    </div>
-                                    
+          <li data-bs-target="#carousel-form" data-bs-slide-to="5" data-bs-toggle="tooltip" title="6. CARGO"></li>
+          @if (this.formBasic.get('cargoActual')?.valid && this.formBasic.get('acercaDMi')?.valid) {
+            <p class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+          }
+          @if (!this.formBasic.get('cargoActual')?.valid || !this.formBasic.get('acercaDMi')?.valid) {
+            <p class="text-light fs-30 icon-navigate tc-red-one">x</p>
+          }
 
-                                    <!-- FONDO -->
-                                    <div>
-                                        <div class="espacio"></div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one mb-5">FONDO / FIRMA</h3>
 
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col text-center">
-                                            <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" accept=".png, .jpg, .jpeg" (change)="loadImg('/fondo/', $event)" type="file" id="fondo">
-                                            <label class="estiloLabel f-open-sans-c p-1">Fondo para contrastes<span class="text-danger">*</span></label><br>
-                                            <label for="fondo" class="text-light cursor-p">
-                                                <img *ngIf="!imgFondo[0]" src="assets/img/icons/add-file1200x320.png" alt="add-file-image" title="Agregar imagen" height="70" width="auto" class="mt-4 drop">
-                                                <img *ngIf="imgFondo[0]" src="{{ imgFondo[0] }}" alt="" height="200" width="auto" class="img-fluid">
-                                            </label>
-                                            <img *ngIf="imgFondo[0]" src="assets/img/icons/equis.png" height="40" width="auto" class="drop cursor-p" title="Eliminar" (click)="eliminarImagen('imgFondo')">
-                                        </div>
-                                        <div class="col text-center" *ngIf="!imgFondo[0]">
-                                            <label class="estiloLabel f-open-sans-c p-1">Ejemplo</label><br>
-                                            <img src="assets/img/items/fondohogar3.jpg" alt="" height="200" width="auto" class="drop img-fluid">
-                                        </div>
-                                    </div>
-                                    </div>
-                                    
-                                    <!-- FIRMA -->
-                                    <div>
-                                        <div class="espacio"></div>
+          <li data-bs-target="#carousel-form" data-bs-slide-to="6" data-bs-toggle="tooltip" title="7. REDES"></li>
+          @if (this.formBasic.get('linkedin')?.valid) {
+            <p class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+          }
+          @if (!this.formBasic.get('linkedin')?.valid) {
+            <p class="text-light fs-30 icon-navigate tc-red-one">x</p>
+          }
 
-                                    <div class="row">
-                                        <div class="col text-center">
-                                            <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" accept=".png, .jpg, .jpeg" (change)="loadImg('/firma/', $event)" type="file" id="firma">
-                                            <label class="estiloLabel f-open-sans-c p-1">Firma sin fondo<span class="text-danger">*</span></label><br>
-                                            <label for="firma" class="text-light cursor-p">
-                                                <img *ngIf="!imgFirma[0]" src="assets/img/icons/add-file.png" alt="add-file-image" title="Agregar imagen" height="70" width="auto" class="mt-4 drop">
-                                                <img *ngIf="imgFirma[0]" src="{{ imgFirma[0] }}" alt="" height="200" width="auto" class="drop">
-                                            </label>
-                                            <img *ngIf="imgFirma[0]" src="assets/img/icons/equis.png" height="40" width="auto" class="drop cursor-p" title="Eliminar" (click)="eliminarImagen('imgFirma')">
-                                        </div>
-                                        <div class="col text-center" *ngIf="!imgFirma[0]">
-                                            <label class="estiloLabel f-open-sans-c p-1">Ejemplo</label><br>
-                                            <img src="assets/img/items/firma4.png" alt="" height="200" width="auto" class="drop">
-                                        </div>
-                                    </div>
-                                    </div>
-                                    <!-- ---------------------------------------- -->
-                                </div>
-                            </div>
-                            
-                            <!----------------------------------------------------------------------------------------->
-                            <!-------------------------------------- 3. IDENTIFICACIÓN -------------------------------->
-                            <!----------------------------------------------------------------------------------------->
-                            <div class="carousel-item">
-                                <div class="espaciado"></div>
-                                <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">03/<span class="fs-12">14</span></h4>
-                                    <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">IDENTIFICACIÓN</h3>
 
-                                    <div class="p-5">
-                                        <label class="estiloLabel f-open-sans-c p-1">Tipo documento<span class="text-danger">*</span></label>
-                                        <select class="w-100 estilo-input bg-transparent-one mb-2" name="state" formControlName="tipoIdentificacion">
-                                            <option value="">---Seleccione---</option>
-                                            <option *ngFor="let tipoIden of listaTipoIdentificacion" [value]="tipoIden.label" class="f-grape">{{ tipoIden.label}}</option>
-                                        </select>
-                                        
-                                        <label class="estiloLabel f-open-sans-c p-1">Identificación<span class="text-danger">*</span></label>
-                                        <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="identificacion">
-                                        
-                                        
-                                        <label class="estiloLabel f-open-sans-c p-1">Nacionalidad<span class="text-danger">*</span></label>
-                                        <select class="w-100 estilo-input bg-transparent-one" name="state" formControlName="nacionalidad">
-                                            <option value="">---Seleccione---</option>
-                                            <option *ngFor="let pais of paises" [value]="pais.pais">{{ pais.pais}}</option>
-                                        </select>
+          <li data-bs-target="#carousel-form" data-bs-slide-to="7" data-bs-toggle="tooltip" title="8. ESTUDIOS"></li>
+          @if (this.formBasic.get('estudios')?.valid) {
+            <p class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+          }
+          @if (!this.formBasic.get('estudios')?.valid) {
+            <p class="text-light fs-30 icon-navigate tc-red-one">x</p>
+          }
 
-                                        <button (click)="eraseForm(['tipoIdentificacion','identificacion','nacionalidad'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
-                                                <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                    
-                                </div>
-                                <div class="espaciado"></div>
-                            </div>
-                            
-                            <!------------------------------------------------------------------------------------->
-                            <!-------------------------------------- 4. NACIMIENTO -------------------------------->
-                            <!------------------------------------------------------------------------------------->
-                            <div class="carousel-item">
-                                <div class="espaciado"></div>
-                                <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">04/<span class="fs-12">14</span></h4>
-                                    <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">NACIMIENTO</h3>
-                                    <div class="p-5">
-                                        <label class="estiloLabel f-open-sans-c p-1">Fecha de nacimiento<span class="text-danger">*</span></label>
-                                        <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="date" formControlName="fechaNacimiento">
-                                        <label class="estiloLabel f-open-sans-c p-1">Lugar de nacimiento<span class="text-danger">*</span></label>
-                                        <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="ciudadNacimiento">
-                                        <label class="estiloLabel f-open-sans-c p-1">Género<span class="text-danger">*</span></label>
-                                        <select class="w-100 tc-yellow-one estilo-input bg-black" name="state" formControlName="genero">
-                                            <option value="">---Seleccione---</option>
-                                            <option value="Femenino">Femenino</option>
-                                            <option value="Masculino">Masculino</option>
-                                            <option value="Transgénero">Transgénero</option>
-                                        </select>
+          <li data-bs-target="#carousel-form" data-bs-slide-to="8" data-bs-toggle="tooltip" title="9. HABILIDADES"></li>
+          @if (this.formBasic.get('habilidades')?.valid) {
+            <p class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+          }
+          @if (!this.formBasic.get('habilidades')?.valid) {
+            <p class="text-light fs-30 icon-navigate tc-red-one">x</p>
+          }
 
-                                        <button (click)="eraseForm(['fechaNacimiento','ciudadNacimiento','genero'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
-                                                <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="espaciado"></div>
-                            </div>
-                            
-                            <!----------------------------------------------------------------------------------->
-                            <!-------------------------------------- 5. CONTACTO -------------------------------->
-                            <!----------------------------------------------------------------------------------->
-                            <div class="carousel-item">
-                                <div class="espaciado"></div>
-                                <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">05/<span class="fs-12">14</span></h4>
-                                    <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">DE CONTACTO</h3>
-                                    <div class="p-5">
-                                        <label class="estiloLabel f-open-sans-c p-1">Dirección residencia<span class="text-danger">*</span></label>
-                                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="direccionResidencia">
-                                        <label class="estiloLabel f-open-sans-c p-1">Barrio residencia<span class="text-danger">*</span></label>
-                                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="barrioResidencia">
-                                        <label class="estiloLabel f-open-sans-c p-1">Número fijo<span class="text-danger">*</span></label>
-                                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="telFijo">
-                                        <label class="estiloLabel f-open-sans-c p-1">Número móvil<span class="text-danger">*</span></label>
-                                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="telCel">
-                                        <label class="estiloLabel f-open-sans-c p-1">Email<span class="text-danger">*</span></label>
-                                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="email">
+          <li data-bs-target="#carousel-form" data-bs-slide-to="9" data-bs-toggle="tooltip" title="10. INTERESES"></li>
+          @if (this.formBasic.get('intereses')?.valid) {
+            <p class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+          }
+          @if (!this.formBasic.get('intereses')?.valid) {
+            <p class="text-light fs-30 icon-navigate tc-red-one">x</p>
+          }
 
-                                        <button (click)="eraseForm(['direccionResidencia','barrioResidencia','telFijo','telCel','email'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
-                                                <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
-                                
-                                <div class="espaciado"></div>
-                            </div>
+          <li data-bs-target="#carousel-form" data-bs-slide-to="10" data-bs-toggle="tooltip" title="11. EXPERIENCIA LABORAL"></li>
+          @if (this.formBasic.get('expLaboral')?.valid) {
+            <p class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+          }
+          @if (!this.formBasic.get('expLaboral')?.valid) {
+            <p class="text-light fs-30 icon-navigate tc-red-one">x</p>
+          }
 
-                            <!----------------------------------------------------------------------------------->
-                            <!--------------------------------------- 6. CARGO ---------------------------------->
-                            <!----------------------------------------------------------------------------------->
-                            <div class="carousel-item">
-                                <div class="espaciado"></div>
-                                <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">06/<span class="fs-12">14</span></h4>
-                                    <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">CARGO</h3>
-                                    <div class="p-5">
-                                        <label class="estiloLabel f-open-sans-c p-1">Cargo actual<span class="text-danger">*</span></label>
-                                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="cargoActual">
-                                        <label class="estiloLabel f-open-sans-c p-1">A cerca de mí<span class="text-danger">*</span></label>
-                                        <textarea rows="10"class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" style="height:13rem" type="text" placeholder="" formControlName="acercaDMi">
-                                        </textarea>
+          <li data-bs-target="#carousel-form" data-bs-slide-to="11" data-bs-toggle="tooltip" title="12. OTROS CONOCIMIENTOS"></li>
+          @if (this.formBasic.get('conocimientosAdicionales')?.valid) {
+            <p class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+          }
+          @if (!this.formBasic.get('conocimientosAdicionales')?.valid) {
+            <p class="text-light fs-30 icon-navigate tc-red-one">x</p>
+          }
 
-                                        <button (click)="eraseForm(['fotoFrontalSinFondo','fotoFrontalConFondo','cargoActual','acercaDMi'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
-                                                <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+          <li data-bs-target="#carousel-form" data-bs-slide-to="12" data-bs-toggle="tooltip" title="13. REFERENCIAS PERSONALES"></li>
+          @if (this.formBasic.get('referenciasPersonales')?.valid) {
+            <p class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+          }
+          @if (!this.formBasic.get('referenciasPersonales')?.valid) {
+            <p class="text-light fs-30 icon-navigate tc-red-one">x</p>
+          }
 
-                            <!----------------------------------------------------------------------------------->
-                            <!-------------------------------------- 7. REDES ----------------------------------->
-                            <!----------------------------------------------------------------------------------->
-                            <div class="carousel-item">
-                                <div class="espaciado"></div>
-                                <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">07/<span class="fs-12">14</span></h4>
-                                    <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">REDES</h3>
-                                    <div class="p-5">
+          <li data-bs-target="#carousel-form" data-bs-slide-to="13" data-bs-toggle="tooltip" title="14. REFERENCIAS FAMILIARES"></li>
+          @if (this.formBasic.get('referenciasFamiliares')?.valid) {
+            <p class="text-light fs-30 icon-navigate tc-green-one">✓</p>
+          }
+          @if (!this.formBasic.get('referenciasFamiliares')?.valid) {
+            <p class="text-light fs-30 icon-navigate tc-red-one">x</p>
+          }
 
-                                        <img src="https://plantillas_dev.gitlab.io/styles/assets/icon/web.png" alt="web" height="30" width="auto" class="drop" title="web">
-                                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="webSite">
+        </ol>
 
-                                        <img src="https://plantillas_dev.gitlab.io/styles/assets/icon/instagram.png" alt="instagram" height="30" width="auto" class="drop" title="instagram">
-                                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="instagram">
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-8">
+            <div class="carousel-inner pe-4">
+              <!--------------------------------------------------------------------------------->
+              <!-------------------------------------- 1. NOMBRE -------------------------------->
+              <!--------------------------------------------------------------------------------->
+              <div class="carousel-item active">
+                <div class="espaciado"></div>
+                <div class="shadow-two bg-form p-5">
+                  <h4 class="text-light f-grape fs-30 text-center text-shadow-one">01/<span class="fs-12">14 </span></h4>
+                  <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">NOMBRE COMPLETO</h3>
+                  <div class="p-5">
+                    <label class="estiloLabel f-open-sans-c p-1">Primer nombre<span class="text-danger">*</span></label>
+                    <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="primerNombre">
 
-                                        <img src="https://plantillas_dev.gitlab.io/styles/assets/icon/facebook.png" alt="facebook" height="30" width="auto" class="drop" title="facebook">
-                                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="facebook">
+                    <label class="estiloLabel f-open-sans-c p-1">Segundo nombre</label>
+                    <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="text"formControlName="segundoNombre">
 
-                                        <img src="https://plantillas_dev.gitlab.io/styles/assets/icon/twitter.png" alt="twitter" height="30" width="auto" class="drop" title="twitter">
-                                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="twitter">
+                    <label class="estiloLabel f-open-sans-c p-1">Primer apellido<span class="text-danger">*</span></label>
+                    <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="primerApellido">
 
-                                        <img src="https://plantillas_dev.gitlab.io/styles/assets/icon/linkeding.png" alt="linkeding" height="30" width="auto" class="drop" title="linkeding">
-                                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="linkedin">
+                    <label class="estiloLabel f-open-sans-c p-1">Segundo apellido</label>
+                    <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="segundoApellido">
 
-                                        <button (click)="eraseForm(['webSite','instagram','facebook','twitter','linkedin'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
-                                                <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                    <button (click)="eraseForm(['primerNombre','segundoNombre','primerApellido','segundoApellido'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" data-bs-toggle="tooltip" data-bs-placement="right" title="BORRAR CONTENIDO DE LOS TEXTOS">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
+                        <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
+                      </svg>
+                    </button>
+                  </div>
 
-                            <!----------------------------------------------------------------------------------->
-                            <!-------------------------------------- 8. ESTUDIOS -------------------------------->
-                            <!----------------------------------------------------------------------------------->
-                            <div class="carousel-item">
-                                <div class="espaciado"></div>
-                                <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">08/<span class="fs-12">14</span></h4>
-                                    <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">ESTUDIOS</h3>
-                                    <ng-container formArrayName="estudios">
-                                        <div [formGroupName]="i" *ngFor="let estudio of getControls('estudios'); let i = index">
-
-                                            <div class="p-5">
-                                                <h4 class="f-grape tc-blue-two fs-17 text-shadow-one">Estudio {{i + 1}}</h4>
-                                                <label class="estiloLabel f-open-sans-c p-1">Nombre institución<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="nombreInstitucion">
-                                                <label class="estiloLabel f-open-sans-c p-1">Título obtenido<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="tituloObtenido">
-                                                <label class="estiloLabel f-open-sans-c p-1">Fecha inicio<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="date" formControlName="fechaInicio">
-                                                <label class="estiloLabel f-open-sans-c p-1">Fecha título<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="date" formControlName="fechaTitulo">
-                                                <label class="estiloLabel f-open-sans-c p-1">Ciudad estudio<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="ciudadEstudio">
-                                                <label class="estiloLabel f-open-sans-c p-1">Descripción Estudio<span class="text-danger">*</span></label>
-                                                <textarea rows="10"class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" style="height:13rem" type="text" formControlName="descripcionEstudio"></textarea>
-
-                                                <button (click)="eraseForm(['nombreInstitucion','tituloObtenido','fechaTitulo'], estudio)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
-                                                        <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
-                                                    </svg>
-                                                </button>
-    
-                                                <button (click)="deleteControls('estudios', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-end">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill drop" viewBox="0 0 16 16">
-                                                        <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
-                                                    </svg>
-                                                </button>
-                                            </div>
-
-                                        </div>
-                                        <div class="espacio"></div>
-
-                                    </ng-container>
-
-                                    <button (click)="agregarEstudio()" class="mb-5 bg-transparent f-open-sans-c fs-18 text-light cursor-p border-0">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-                                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div class="espaciado"></div>
-                            </div>
-
-                            <!----------------------------------------------------------------------------------->
-                            <!-------------------------------------- 9. HABILIDADES ----------------------------->
-                            <!----------------------------------------------------------------------------------->
-                            <div class="carousel-item">
-                                <div class="espaciado"></div>
-                                <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">09/<span class="fs-12">14</span></h4>
-                                    <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">HABILIDADES</h3>
-                                    <ng-container formArrayName="habilidades">
-                                        <div [formGroupName]="i" *ngFor="let habilidad of getControls('habilidades'); let i = index">
-
-                                            <div class="p-5">
-                                                <h4 class="f-grape tc-blue-two fs-17 text-shadow-one">Habilidad {{i + 1}}</h4>
-                                                <label class="estiloLabel f-open-sans-c p-1">Nombre habilidad<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="habilidad">
-                                                <label class="estiloLabel f-open-sans-c p-1">Nivel<span class="text-danger">*</span></label>
-                                                <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="range" formControlName="nivel">
-                                                <p class="text-light text-center f-shadow-into-l tc-yellow-one fs-50">{{ this.formBasic.value.habilidades[i].nivel }}%</p>
-
-                                                <button (click)="eraseForm(['habilidad','nivel'], habilidad)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
-                                                        <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
-                                                    </svg>
-                                                </button>
-    
-                                                <button (click)="deleteControls('habilidades', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-end">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill drop" viewBox="0 0 16 16">
-                                                        <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
-                                                    </svg>
-                                                </button>
-                                            </div>
-
-                                        </div>
-                                        <div class="espacio"></div>
-
-                                    </ng-container>
-
-                                    <button (click)="agregarHabilidad()" class="mb-5 bg-transparent f-open-sans-c fs-18 text-light cursor-p border-0">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-                                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div class="espaciado"></div>
-                            </div>
-
-                            <!----------------------------------------------------------------------------------->
-                            <!-------------------------------------- 10. INTERESES ------------------------------>
-                            <!----------------------------------------------------------------------------------->
-                            <div class="carousel-item">
-                                <div class="espaciado"></div>
-                                <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">10/<span class="fs-12">14</span></h4>
-                                    <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">INTERESES</h3>
-                                    <ng-container formArrayName="intereses">
-                                        <div class="row p-5">
-                                        <div [formGroupName]="i" *ngFor="let inter of getControls('intereses'); let i = index;" class="col-3">
-                                            <div class="d-flex align-items-center">
-                                                <input class="f-open-sans-c fw-3 mt-0 mb-0 ms-0 me-2 ps-2 estilo-input" type="checkbox" formControlName="interes" (click)="cargarIntereses($event)">
-                                                <p class="f-open-sans-c text-light m-0">{{ this.gustos[i].gusto }}</p>
-                                            </div>
-                                        </div>
-                                        </div>
-                                        <div class="espacio"></div>
-
-                                    </ng-container>
-                                </div>
-                                <div class="espaciado"></div>
-                            </div>
-
-                            <!----------------------------------------------------------------------------------------->
-                            <!-------------------------------------- 11. EXPERIENCIA LABORAL -------------------------->
-                            <!----------------------------------------------------------------------------------------->
-                            <div class="carousel-item">
-                                <div class="espaciado"></div>
-                                <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">11/<span class="fs-12">14</span></h4>
-                                    <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">EXPERIENCIA LABORAL</h3>
-                                    <ng-container formArrayName="expLaboral">
-                                        <div [formGroupName]="i"  *ngFor="let formExpLaboral of getControls('expLaboral'); let i = index">
-                                            <div class="p-5">
-                                                <h4 class="f-grape tc-blue-two fs-17 text-shadow-one">Empresa {{i + 1}}</h4>
-                                                <label class="estiloLabel f-open-sans-c p-1">Empresa<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="nombreEmpresa">
-                                                <label class="estiloLabel f-open-sans-c p-1">Jefe inmediato<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="jefeInmediatoEmpresa">
-                                                <label class="estiloLabel f-open-sans-c p-1">Cargo desempeñado<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="cargoEjercido">
-                                                <label class="estiloLabel f-open-sans-c p-1">Describa funciones realizadas<span class="text-danger">*</span></label>
-                                                <textarea rows="10"class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" style="height:13rem" type="text" formControlName="funcionesRealizadas"></textarea>
-                                                <label class="estiloLabel f-open-sans-c p-1">Fecha de inicio<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="date" formControlName="fechaInicioEmpresa">
-                                                <label class="estiloLabel f-open-sans-c p-1">Fecha de final actual<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="date" formControlName="fechaFinalEmpresa">
-                                                <label class="estiloLabel f-open-sans-c p-1">Número de contacto<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="telContactoEmpresa">
-                                                <label class="estiloLabel f-open-sans-c p-1">Ciudad<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="ciudadEmpresa">
-    
-                                                <button (click)="eraseForm([], formExpLaboral)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
-                                                        <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
-                                                    </svg>
-                                                </button>
-
-                                                <button (click)="deleteControls('expLaboral', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-end">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill drop" viewBox="0 0 16 16">
-                                                        <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
-                                                    </svg>
-                                                </button>
-
-                                            </div>
-                                        </div>
-                                    </ng-container>
-                                    <button (click)="agregarExpLaboral()" class="mb-5 bg-transparent f-open-sans-c fs-18 text-light cursor-p border-0">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-                                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div class="espaciado"></div>
-                            </div>
-
-                            <!----------------------------------------------------------------------------------------->
-                            <!-------------------------------------- 12. OTROS CONOCIMIENTOS -------------------------->
-                            <!----------------------------------------------------------------------------------------->
-                            <div class="carousel-item">
-                                <div class="espaciado"></div>
-                                <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">12/<span class="fs-12">14</span></h4>
-                                    <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">OTROS CONOCIMIENTOS</h3>
-
-                                    <ng-container formArrayName="conocimientosAdicionales">
-                                        <div [formGroupName]="i"  *ngFor="let conocimientos of getControls('conocimientosAdicionales'); let i = index">
-                                            <div class="p-5">
-                                                <h4 class="f-grape tc-blue-two fs-17 text-shadow-one">Conocimiento {{i + 1}}</h4>
-                                                <label class="estiloLabel f-open-sans-c p-1">Conocimiento<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="nombreConocimiento">
-                                                <label class="estiloLabel f-open-sans-c p-1">Duración<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="duracion">
-                                                <label class="estiloLabel f-open-sans-c p-1">Fecha Finalización<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="date" formControlName="fechaFinalizacion">
-    
-                                                <button (click)="eraseForm([], conocimientos)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
-                                                        <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
-                                                    </svg>
-                                                </button>
-    
-                                                <button (click)="deleteControls('conocimientosAdicionales', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-end">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill drop" viewBox="0 0 16 16">
-                                                        <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </ng-container>
-                                    <button (click)="agregarConocimientos()" title="Agregar otro conocimiento" class="mb-5 bg-transparent f-open-sans-c fs-18 text-light cursor-p border-0">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-                                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div class="espaciado"></div>
-                            </div>
-
-                            <!----------------------------------------------------------------------------------------->
-                            <!-------------------------------------- 13. REFERENCIAS PERSONALES ----------------------->
-                            <!----------------------------------------------------------------------------------------->
-                            <div class="carousel-item">
-                                <div class="espaciado"></div>
-                                <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">13/<span class="fs-12">14</span></h4>
-                                    <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">REFERENCIAS PERSONALES</h3>
-
-                                    <ng-container formArrayName="referenciasPersonales">
-                                        <div [formGroupName]="i"  *ngFor="let referenciasPersonales of getControls('referenciasPersonales'); let i = index">
-                                            <div class="p-5">
-                                                <h4 class="f-grape tc-blue-two fs-17 text-shadow-one">Persona {{i + 1}}</h4>
-                                                <label class="estiloLabel f-open-sans-c p-1">Nombre Completo<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="nombreCompleto">
-                                                <label class="estiloLabel f-open-sans-c p-1">Ocupación - Cargo<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="ocupacion">
-                                                <label class="estiloLabel f-open-sans-c p-1">Teléfono<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="telefono">
-                                                <label class="estiloLabel f-open-sans-c p-1">Empresa<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="empresa">
-    
-                                                <button (click)="eraseForm([], referenciasPersonales)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
-                                                        <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
-                                                    </svg>
-                                                </button>
-    
-                                                <button (click)="deleteControls('referenciasPersonales', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-end">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill drop" viewBox="0 0 16 16">
-                                                        <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </ng-container>
-                                    <button (click)="agregarReferenciaPersonal()" title="Agregar referencia personal" class="mb-5 bg-transparent f-open-sans-c fs-18 text-light cursor-p border-0">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-                                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div class="espaciado"></div>
-                            </div>
-
-                            <!----------------------------------------------------------------------------------------->
-                            <!-------------------------------------- 14. REFERENCIAS FAMILIARES ----------------------->
-                            <!----------------------------------------------------------------------------------------->
-                            <div class="carousel-item">
-                                <div class="espaciado"></div>
-                                <div class="shadow-two bg-form p-5">
-                                    <h4 class="text-light f-grape fs-30 text-center text-shadow-one">14/<span class="fs-12">14</span></h4>
-                                    <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">REFERENCIAS FAMILIARES</h3>
-
-                                    <ng-container formArrayName="referenciasFamiliares">
-                                        <div [formGroupName]="i"  *ngFor="let referenciasFamiliares of getControls('referenciasFamiliares'); let i = index">
-                                            <div class="p-5">
-                                                <h4 class="f-grape tc-blue-two fs-17 text-shadow-one">Familiar {{i + 1}}</h4>
-                                                <label class="estiloLabel f-open-sans-c p-1">Nombre Completo<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="nombreCompleto">
-                                                <label class="estiloLabel f-open-sans-c p-1">Ocupación<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="ocupacion">
-                                                <label class="estiloLabel f-open-sans-c p-1">Teléfono<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="telefono">
-                                                <label class="estiloLabel f-open-sans-c p-1">Parentesco<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="parentesco">
-                                                <label class="estiloLabel f-open-sans-c p-1">Empresa<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="empresa">
-                                            
-                                                
-                                                <button (click)="eraseForm([], referenciasFamiliares)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
-                                                        <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
-                                                    </svg>
-                                                </button>
-    
-                                                <button (click)="deleteControls('referenciasFamiliares', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-end">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill drop" viewBox="0 0 16 16">
-                                                        <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                        </div> 
-                                    </ng-container>
-                                    <button (click)="agregarReferenciaFamiliar()" title="Agregar referencia personal" class="mb-5 bg-transparent f-open-sans-c fs-18 text-light cursor-p border-0">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-                                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div class="espaciado"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2"></div>
                 </div>
-                
-                <button class="carousel-control-prev border-0 bg-cero" type="button" data-bs-target="#carousel-form" data-bs-slide="prev" (click)="scrollTo()">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next border-0 bg-cero" type="button" data-bs-target="#carousel-form" data-bs-slide="next" (click)="scrollTo()">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
+
+                <div class="espaciado"></div>
+              </div>
+
+              <!----------------------------------------------------------------------------------->
+              <!-------------------------------------- 2. IMAGENES -------------------------------->
+              <!----------------------------------------------------------------------------------->
+              <div class="carousel-item">
+                <div class="espaciado"></div>
+                <div class="shadow-two bg-form p-5">
+                  <h4 class="text-light f-grape fs-30 text-center text-shadow-one">02/<span class="fs-12">14</span></h4>
+                  <!-- FRONTAL SIN FONDO -->
+                  <div>
+                    <div class="espacio"></div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one mb-5">IMAGEN PERFIL</h3>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col text-center">
+                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" accept=".png" (change)="loadImg('/frontal-sin-fondo/', $event)" type="file" id="img-sin-fondo">
+                        <label class="estiloLabel f-open-sans-c p-1">Imagen de frente sin fondo<span class="text-danger">*</span></label><br>
+                        <label for="img-sin-fondo" class="text-light cursor-p">
+                          @if (!fotoFrontalSinFondo[0]) {
+                            <img src="assets/img/icons/add-file.png" alt="add-file-image" title="Agregar imagen" height="70" width="auto" class="mt-4 drop">
+                          }
+                          @if (fotoFrontalSinFondo[0]) {
+                            <img src="{{ fotoFrontalSinFondo[0] }}" alt="" height="200" width="auto">
+                          }
+                        </label>
+                        @if (fotoFrontalSinFondo[0]) {
+                          <img src="assets/img/icons/equis.png" height="40" width="auto" class="drop cursor-p" data-bs-toggle="tooltip" title="ELIMINAR" (click)="eliminarImagen('fotoFrontalSinFondo')">
+                        }
+                      </div>
+                      @if (!fotoFrontalSinFondo[0]) {
+                        <div class="col text-center">
+                          <label class="estiloLabel f-open-sans-c p-1">Ejemplo</label><br>
+                          <img src="assets/img/items/alex-sin-fondo.png" alt="" height="200" width="auto" class="drop">
+                        </div>
+                      }
+                    </div>
+                  </div>
+
+
+                  <!-- FRONTAL CON FONDO -->
+                  <div>
+                    <div class="espacio"></div>
+
+                    <div class="row">
+                      <div class="col text-center">
+                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" accept=".png, .jpg, .jpeg" (change)="loadImg('/frontal-con-fondo/', $event)" type="file" id="img-fondo">
+                        <label class="estiloLabel f-open-sans-c p-1">Imagen de frente con fondo<span class="text-danger">*</span></label><br>
+                        <label for="img-fondo" class="text-light cursor-p">
+                          @if (!fotoFrontalConFondo[0]) {
+                            <img src="assets/img/icons/add-file.png" alt="add-file-image" title="Agregar imagen" height="70" width="auto" class="mt-4 drop">
+                          }
+                          @if (fotoFrontalConFondo[0]) {
+                            <img src="{{ fotoFrontalConFondo[0] }}" alt="" height="200" width="auto">
+                          }
+                        </label>
+                        @if (fotoFrontalConFondo[0]) {
+                          <img src="assets/img/icons/equis.png" height="40" width="auto" class="drop cursor-p" title="Eliminar" (click)="eliminarImagen('fotoFrontalConFondo')">
+                        }
+                      </div>
+                      @if (!fotoFrontalConFondo[0]) {
+                        <div class="col text-center">
+                          <label class="estiloLabel f-open-sans-c p-1">Ejemplo</label><br>
+                          <img src="assets/img/items/alex.jpg" alt="" height="200" width="auto" class="drop">
+                        </div>
+                      }
+                    </div>
+                  </div>
+
+
+                  <!-- FONDO -->
+                  <div>
+                    <div class="espacio"></div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one mb-5">FONDO / FIRMA</h3>
+
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col text-center">
+                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" accept=".png, .jpg, .jpeg" (change)="loadImg('/fondo/', $event)" type="file" id="fondo">
+                        <label class="estiloLabel f-open-sans-c p-1">Fondo para contrastes<span class="text-danger">*</span></label><br>
+                        <label for="fondo" class="text-light cursor-p">
+                          @if (!imgFondo[0]) {
+                            <img src="assets/img/icons/add-file1200x320.png" alt="add-file-image" title="Agregar imagen" height="70" width="auto" class="mt-4 drop">
+                          }
+                          @if (imgFondo[0]) {
+                            <img src="{{ imgFondo[0] }}" alt="" height="200" width="auto" class="img-fluid">
+                          }
+                        </label>
+                        @if (imgFondo[0]) {
+                          <img src="assets/img/icons/equis.png" height="40" width="auto" class="drop cursor-p" title="Eliminar" (click)="eliminarImagen('imgFondo')">
+                        }
+                      </div>
+                      @if (!imgFondo[0]) {
+                        <div class="col text-center">
+                          <label class="estiloLabel f-open-sans-c p-1">Ejemplo</label><br>
+                          <img src="assets/img/items/fondohogar3.jpg" alt="" height="200" width="auto" class="drop img-fluid">
+                        </div>
+                      }
+                    </div>
+                  </div>
+
+                  <!-- FIRMA -->
+                  <div>
+                    <div class="espacio"></div>
+
+                    <div class="row">
+                      <div class="col text-center">
+                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" accept=".png, .jpg, .jpeg" (change)="loadImg('/firma/', $event)" type="file" id="firma">
+                        <label class="estiloLabel f-open-sans-c p-1">Firma sin fondo<span class="text-danger">*</span></label><br>
+                        <label for="firma" class="text-light cursor-p">
+                          @if (!imgFirma[0]) {
+                            <img src="assets/img/icons/add-file.png" alt="add-file-image" title="Agregar imagen" height="70" width="auto" class="mt-4 drop">
+                          }
+                          @if (imgFirma[0]) {
+                            <img src="{{ imgFirma[0] }}" alt="" height="200" width="auto" class="drop">
+                          }
+                        </label>
+                        @if (imgFirma[0]) {
+                          <img src="assets/img/icons/equis.png" height="40" width="auto" class="drop cursor-p" title="Eliminar" (click)="eliminarImagen('imgFirma')">
+                        }
+                      </div>
+                      @if (!imgFirma[0]) {
+                        <div class="col text-center">
+                          <label class="estiloLabel f-open-sans-c p-1">Ejemplo</label><br>
+                          <img src="assets/img/items/firma4.png" alt="" height="200" width="auto" class="drop">
+                        </div>
+                      }
+                    </div>
+                  </div>
+                  <!-- ---------------------------------------- -->
+                </div>
+              </div>
+
+              <!----------------------------------------------------------------------------------------->
+              <!-------------------------------------- 3. IDENTIFICACIÓN -------------------------------->
+              <!----------------------------------------------------------------------------------------->
+              <div class="carousel-item">
+                <div class="espaciado"></div>
+                <div class="shadow-two bg-form p-5">
+                  <h4 class="text-light f-grape fs-30 text-center text-shadow-one">03/<span class="fs-12">14</span></h4>
+                  <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">IDENTIFICACIÓN</h3>
+
+                  <div class="p-5">
+                    <label class="estiloLabel f-open-sans-c p-1">Tipo documento<span class="text-danger">*</span></label>
+                    <select class="w-100 estilo-input bg-transparent-one mb-2" name="state" formControlName="tipoIdentificacion">
+                      <option value="">---Seleccione---</option>
+                      @for (tipoIden of listaTipoIdentificacion; track tipoIden) {
+                        <option [value]="tipoIden.label" class="f-grape">{{ tipoIden.label}}</option>
+                      }
+                    </select>
+
+                    <label class="estiloLabel f-open-sans-c p-1">Identificación<span class="text-danger">*</span></label>
+                    <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="identificacion">
+
+
+                    <label class="estiloLabel f-open-sans-c p-1">Nacionalidad<span class="text-danger">*</span></label>
+                    <select class="w-100 estilo-input bg-transparent-one" name="state" formControlName="nacionalidad">
+                      <option value="">---Seleccione---</option>
+                      @for (pais of paises; track pais) {
+                        <option [value]="pais.pais">{{ pais.pais}}</option>
+                      }
+                    </select>
+
+                    <button (click)="eraseForm(['tipoIdentificacion','identificacion','nacionalidad'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
+                        <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
+                      </svg>
+                    </button>
+                  </div>
+
+                </div>
+                <div class="espaciado"></div>
+              </div>
+
+              <!------------------------------------------------------------------------------------->
+              <!-------------------------------------- 4. NACIMIENTO -------------------------------->
+              <!------------------------------------------------------------------------------------->
+              <div class="carousel-item">
+                <div class="espaciado"></div>
+                <div class="shadow-two bg-form p-5">
+                  <h4 class="text-light f-grape fs-30 text-center text-shadow-one">04/<span class="fs-12">14</span></h4>
+                  <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">NACIMIENTO</h3>
+                  <div class="p-5">
+                    <label class="estiloLabel f-open-sans-c p-1">Fecha de nacimiento<span class="text-danger">*</span></label>
+                    <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="date" formControlName="fechaNacimiento">
+                    <label class="estiloLabel f-open-sans-c p-1">Lugar de nacimiento<span class="text-danger">*</span></label>
+                    <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="ciudadNacimiento">
+                    <label class="estiloLabel f-open-sans-c p-1">Género<span class="text-danger">*</span></label>
+                    <select class="w-100 tc-yellow-one estilo-input bg-black" name="state" formControlName="genero">
+                      <option value="">---Seleccione---</option>
+                      <option value="Femenino">Femenino</option>
+                      <option value="Masculino">Masculino</option>
+                      <option value="Transgénero">Transgénero</option>
+                    </select>
+
+                    <button (click)="eraseForm(['fechaNacimiento','ciudadNacimiento','genero'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
+                        <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <div class="espaciado"></div>
+              </div>
+
+              <!----------------------------------------------------------------------------------->
+              <!-------------------------------------- 5. CONTACTO -------------------------------->
+              <!----------------------------------------------------------------------------------->
+              <div class="carousel-item">
+                <div class="espaciado"></div>
+                <div class="shadow-two bg-form p-5">
+                  <h4 class="text-light f-grape fs-30 text-center text-shadow-one">05/<span class="fs-12">14</span></h4>
+                  <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">DE CONTACTO</h3>
+                  <div class="p-5">
+                    <label class="estiloLabel f-open-sans-c p-1">Dirección residencia<span class="text-danger">*</span></label>
+                    <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="direccionResidencia">
+                    <label class="estiloLabel f-open-sans-c p-1">Barrio residencia<span class="text-danger">*</span></label>
+                    <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="barrioResidencia">
+                    <label class="estiloLabel f-open-sans-c p-1">Número fijo<span class="text-danger">*</span></label>
+                    <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="telFijo">
+                    <label class="estiloLabel f-open-sans-c p-1">Número móvil<span class="text-danger">*</span></label>
+                    <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="telCel">
+                    <label class="estiloLabel f-open-sans-c p-1">Email<span class="text-danger">*</span></label>
+                    <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="email">
+
+                    <button (click)="eraseForm(['direccionResidencia','barrioResidencia','telFijo','telCel','email'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
+                        <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="espaciado"></div>
+              </div>
+
+              <!----------------------------------------------------------------------------------->
+              <!--------------------------------------- 6. CARGO ---------------------------------->
+              <!----------------------------------------------------------------------------------->
+              <div class="carousel-item">
+                <div class="espaciado"></div>
+                <div class="shadow-two bg-form p-5">
+                  <h4 class="text-light f-grape fs-30 text-center text-shadow-one">06/<span class="fs-12">14</span></h4>
+                  <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">CARGO</h3>
+                  <div class="p-5">
+                    <label class="estiloLabel f-open-sans-c p-1">Cargo actual<span class="text-danger">*</span></label>
+                    <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="cargoActual">
+                    <label class="estiloLabel f-open-sans-c p-1">A cerca de mí<span class="text-danger">*</span></label>
+                    <textarea rows="10"class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" style="height:13rem" type="text" placeholder="" formControlName="acercaDMi">
+                    </textarea>
+
+                    <button (click)="eraseForm(['fotoFrontalSinFondo','fotoFrontalConFondo','cargoActual','acercaDMi'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
+                        <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!----------------------------------------------------------------------------------->
+              <!-------------------------------------- 7. REDES ----------------------------------->
+              <!----------------------------------------------------------------------------------->
+              <div class="carousel-item">
+                <div class="espaciado"></div>
+                <div class="shadow-two bg-form p-5">
+                  <h4 class="text-light f-grape fs-30 text-center text-shadow-one">07/<span class="fs-12">14</span></h4>
+                  <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">REDES</h3>
+                  <div class="p-5">
+
+                    <img src="https://plantillas_dev.gitlab.io/styles/assets/icon/web.png" alt="web" height="30" width="auto" class="drop" title="web">
+                    <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="webSite">
+
+                    <img src="https://plantillas_dev.gitlab.io/styles/assets/icon/instagram.png" alt="instagram" height="30" width="auto" class="drop" title="instagram">
+                    <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="instagram">
+
+                    <img src="https://plantillas_dev.gitlab.io/styles/assets/icon/facebook.png" alt="facebook" height="30" width="auto" class="drop" title="facebook">
+                    <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="facebook">
+
+                    <img src="https://plantillas_dev.gitlab.io/styles/assets/icon/twitter.png" alt="twitter" height="30" width="auto" class="drop" title="twitter">
+                    <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="twitter">
+
+                    <img src="https://plantillas_dev.gitlab.io/styles/assets/icon/linkeding.png" alt="linkeding" height="30" width="auto" class="drop" title="linkeding">
+                    <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="linkedin">
+
+                    <button (click)="eraseForm(['webSite','instagram','facebook','twitter','linkedin'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
+                        <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!----------------------------------------------------------------------------------->
+              <!-------------------------------------- 8. ESTUDIOS -------------------------------->
+              <!----------------------------------------------------------------------------------->
+              <div class="carousel-item">
+                <div class="espaciado"></div>
+                <div class="shadow-two bg-form p-5">
+                  <h4 class="text-light f-grape fs-30 text-center text-shadow-one">08/<span class="fs-12">14</span></h4>
+                  <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">ESTUDIOS</h3>
+                  <ng-container formArrayName="estudios">
+                    @for (estudio of getControls('estudios'); track estudio; let i = $index) {
+                      <div [formGroupName]="i">
+                        <div class="p-5">
+                          <h4 class="f-grape tc-blue-two fs-17 text-shadow-one">Estudio {{i + 1}}</h4>
+                          <label class="estiloLabel f-open-sans-c p-1">Nombre institución<span class="text-danger">*</span></label>
+                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="nombreInstitucion">
+                          <label class="estiloLabel f-open-sans-c p-1">Título obtenido<span class="text-danger">*</span></label>
+                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="tituloObtenido">
+                          <label class="estiloLabel f-open-sans-c p-1">Fecha inicio<span class="text-danger">*</span></label>
+                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="date" formControlName="fechaInicio">
+                          <label class="estiloLabel f-open-sans-c p-1">Fecha título<span class="text-danger">*</span></label>
+                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="date" formControlName="fechaTitulo">
+                          <label class="estiloLabel f-open-sans-c p-1">Ciudad estudio<span class="text-danger">*</span></label>
+                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="ciudadEstudio">
+                          <label class="estiloLabel f-open-sans-c p-1">Descripción Estudio<span class="text-danger">*</span></label>
+                          <textarea rows="10"class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" style="height:13rem" type="text" formControlName="descripcionEstudio"></textarea>
+                          <button (click)="eraseForm(['nombreInstitucion','tituloObtenido','fechaTitulo'], estudio)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
+                              <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
+                            </svg>
+                          </button>
+                          <button (click)="deleteControls('estudios', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-end">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill drop" viewBox="0 0 16 16">
+                              <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                    }
+                    <div class="espacio"></div>
+
+                  </ng-container>
+
+                  <button (click)="agregarEstudio()" class="mb-5 bg-transparent f-open-sans-c fs-18 text-light cursor-p border-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                      <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                      <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="espaciado"></div>
+              </div>
+
+              <!----------------------------------------------------------------------------------->
+              <!-------------------------------------- 9. HABILIDADES ----------------------------->
+              <!----------------------------------------------------------------------------------->
+              <div class="carousel-item">
+                <div class="espaciado"></div>
+                <div class="shadow-two bg-form p-5">
+                  <h4 class="text-light f-grape fs-30 text-center text-shadow-one">09/<span class="fs-12">14</span></h4>
+                  <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">HABILIDADES</h3>
+                  <ng-container formArrayName="habilidades">
+                    @for (habilidad of getControls('habilidades'); track habilidad; let i = $index) {
+                      <div [formGroupName]="i">
+                        <div class="p-5">
+                          <h4 class="f-grape tc-blue-two fs-17 text-shadow-one">Habilidad {{i + 1}}</h4>
+                          <label class="estiloLabel f-open-sans-c p-1">Nombre habilidad<span class="text-danger">*</span></label>
+                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="habilidad">
+                          <label class="estiloLabel f-open-sans-c p-1">Nivel<span class="text-danger">*</span></label>
+                          <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="range" formControlName="nivel">
+                          <p class="text-light text-center f-shadow-into-l tc-yellow-one fs-50">{{ this.formBasic.value.habilidades[i].nivel }}%</p>
+                          <button (click)="eraseForm(['habilidad','nivel'], habilidad)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
+                              <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
+                            </svg>
+                          </button>
+                          <button (click)="deleteControls('habilidades', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-end">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill drop" viewBox="0 0 16 16">
+                              <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                    }
+                    <div class="espacio"></div>
+
+                  </ng-container>
+
+                  <button (click)="agregarHabilidad()" class="mb-5 bg-transparent f-open-sans-c fs-18 text-light cursor-p border-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                      <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                      <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="espaciado"></div>
+              </div>
+
+              <!----------------------------------------------------------------------------------->
+              <!-------------------------------------- 10. INTERESES ------------------------------>
+              <!----------------------------------------------------------------------------------->
+              <div class="carousel-item">
+                <div class="espaciado"></div>
+                <div class="shadow-two bg-form p-5">
+                  <h4 class="text-light f-grape fs-30 text-center text-shadow-one">10/<span class="fs-12">14</span></h4>
+                  <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">INTERESES</h3>
+                  <ng-container formArrayName="intereses">
+                    <div class="row p-5">
+                      @for (inter of getControls('intereses'); track inter; let i = $index) {
+                        <div [formGroupName]="i" class="col-3">
+                          <div class="d-flex align-items-center">
+                            <input class="f-open-sans-c fw-3 mt-0 mb-0 ms-0 me-2 ps-2 estilo-input" type="checkbox" formControlName="interes" (click)="cargarIntereses($event)">
+                            <p class="f-open-sans-c text-light m-0">{{ this.gustos[i].gusto }}</p>
+                          </div>
+                        </div>
+                      }
+                    </div>
+                    <div class="espacio"></div>
+
+                  </ng-container>
+                </div>
+                <div class="espaciado"></div>
+              </div>
+
+              <!----------------------------------------------------------------------------------------->
+              <!-------------------------------------- 11. EXPERIENCIA LABORAL -------------------------->
+              <!----------------------------------------------------------------------------------------->
+              <div class="carousel-item">
+                <div class="espaciado"></div>
+                <div class="shadow-two bg-form p-5">
+                  <h4 class="text-light f-grape fs-30 text-center text-shadow-one">11/<span class="fs-12">14</span></h4>
+                  <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">EXPERIENCIA LABORAL</h3>
+                  <ng-container formArrayName="expLaboral">
+                    @for (formExpLaboral of getControls('expLaboral'); track formExpLaboral; let i = $index) {
+                      <div [formGroupName]="i" >
+                        <div class="p-5">
+                          <h4 class="f-grape tc-blue-two fs-17 text-shadow-one">Empresa {{i + 1}}</h4>
+                          <label class="estiloLabel f-open-sans-c p-1">Empresa<span class="text-danger">*</span></label>
+                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="nombreEmpresa">
+                          <label class="estiloLabel f-open-sans-c p-1">Jefe inmediato<span class="text-danger">*</span></label>
+                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="jefeInmediatoEmpresa">
+                          <label class="estiloLabel f-open-sans-c p-1">Cargo desempeñado<span class="text-danger">*</span></label>
+                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="cargoEjercido">
+                          <label class="estiloLabel f-open-sans-c p-1">Describa funciones realizadas<span class="text-danger">*</span></label>
+                          <textarea rows="10"class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" style="height:13rem" type="text" formControlName="funcionesRealizadas"></textarea>
+                          <label class="estiloLabel f-open-sans-c p-1">Fecha de inicio<span class="text-danger">*</span></label>
+                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="date" formControlName="fechaInicioEmpresa">
+                          <label class="estiloLabel f-open-sans-c p-1">Fecha de final actual<span class="text-danger">*</span></label>
+                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="date" formControlName="fechaFinalEmpresa">
+                          <label class="estiloLabel f-open-sans-c p-1">Número de contacto<span class="text-danger">*</span></label>
+                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="telContactoEmpresa">
+                          <label class="estiloLabel f-open-sans-c p-1">Ciudad<span class="text-danger">*</span></label>
+                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="ciudadEmpresa">
+                          <button (click)="eraseForm([], formExpLaboral)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
+                              <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
+                            </svg>
+                          </button>
+                          <button (click)="deleteControls('expLaboral', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-end">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill drop" viewBox="0 0 16 16">
+                              <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                    }
+                  </ng-container>
+                  <button (click)="agregarExpLaboral()" class="mb-5 bg-transparent f-open-sans-c fs-18 text-light cursor-p border-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                      <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                      <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="espaciado"></div>
+              </div>
+
+              <!----------------------------------------------------------------------------------------->
+              <!-------------------------------------- 12. OTROS CONOCIMIENTOS -------------------------->
+              <!----------------------------------------------------------------------------------------->
+              <div class="carousel-item">
+                <div class="espaciado"></div>
+                <div class="shadow-two bg-form p-5">
+                  <h4 class="text-light f-grape fs-30 text-center text-shadow-one">12/<span class="fs-12">14</span></h4>
+                  <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">OTROS CONOCIMIENTOS</h3>
+
+                  <ng-container formArrayName="conocimientosAdicionales">
+                    @for (conocimientos of getControls('conocimientosAdicionales'); track conocimientos; let i = $index) {
+                      <div [formGroupName]="i" >
+                        <div class="p-5">
+                          <h4 class="f-grape tc-blue-two fs-17 text-shadow-one">Conocimiento {{i + 1}}</h4>
+                          <label class="estiloLabel f-open-sans-c p-1">Conocimiento<span class="text-danger">*</span></label>
+                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="nombreConocimiento">
+                          <label class="estiloLabel f-open-sans-c p-1">Duración<span class="text-danger">*</span></label>
+                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="duracion">
+                          <label class="estiloLabel f-open-sans-c p-1">Fecha Finalización<span class="text-danger">*</span></label>
+                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="date" formControlName="fechaFinalizacion">
+                          <button (click)="eraseForm([], conocimientos)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
+                              <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
+                            </svg>
+                          </button>
+                          <button (click)="deleteControls('conocimientosAdicionales', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-end">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill drop" viewBox="0 0 16 16">
+                              <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                    }
+                  </ng-container>
+                  <button (click)="agregarConocimientos()" title="Agregar otro conocimiento" class="mb-5 bg-transparent f-open-sans-c fs-18 text-light cursor-p border-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                      <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                      <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="espaciado"></div>
+              </div>
+
+              <!----------------------------------------------------------------------------------------->
+              <!-------------------------------------- 13. REFERENCIAS PERSONALES ----------------------->
+              <!----------------------------------------------------------------------------------------->
+              <div class="carousel-item">
+                <div class="espaciado"></div>
+                <div class="shadow-two bg-form p-5">
+                  <h4 class="text-light f-grape fs-30 text-center text-shadow-one">13/<span class="fs-12">14</span></h4>
+                  <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">REFERENCIAS PERSONALES</h3>
+
+                  <ng-container formArrayName="referenciasPersonales">
+                    @for (referenciasPersonales of getControls('referenciasPersonales'); track referenciasPersonales; let i = $index) {
+                      <div [formGroupName]="i" >
+                        <div class="p-5">
+                          <h4 class="f-grape tc-blue-two fs-17 text-shadow-one">Persona {{i + 1}}</h4>
+                          <label class="estiloLabel f-open-sans-c p-1">Nombre Completo<span class="text-danger">*</span></label>
+                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="nombreCompleto">
+                          <label class="estiloLabel f-open-sans-c p-1">Ocupación - Cargo<span class="text-danger">*</span></label>
+                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="ocupacion">
+                          <label class="estiloLabel f-open-sans-c p-1">Teléfono<span class="text-danger">*</span></label>
+                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="telefono">
+                          <label class="estiloLabel f-open-sans-c p-1">Empresa<span class="text-danger">*</span></label>
+                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="empresa">
+                          <button (click)="eraseForm([], referenciasPersonales)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
+                              <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
+                            </svg>
+                          </button>
+                          <button (click)="deleteControls('referenciasPersonales', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-end">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill drop" viewBox="0 0 16 16">
+                              <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                    }
+                  </ng-container>
+                  <button (click)="agregarReferenciaPersonal()" title="Agregar referencia personal" class="mb-5 bg-transparent f-open-sans-c fs-18 text-light cursor-p border-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                      <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                      <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="espaciado"></div>
+              </div>
+
+              <!----------------------------------------------------------------------------------------->
+              <!-------------------------------------- 14. REFERENCIAS FAMILIARES ----------------------->
+              <!----------------------------------------------------------------------------------------->
+              <div class="carousel-item">
+                <div class="espaciado"></div>
+                <div class="shadow-two bg-form p-5">
+                  <h4 class="text-light f-grape fs-30 text-center text-shadow-one">14/<span class="fs-12">14</span></h4>
+                  <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">REFERENCIAS FAMILIARES</h3>
+
+                  <ng-container formArrayName="referenciasFamiliares">
+                    @for (referenciasFamiliares of getControls('referenciasFamiliares'); track referenciasFamiliares; let i = $index) {
+                      <div [formGroupName]="i" >
+                        <div class="p-5">
+                          <h4 class="f-grape tc-blue-two fs-17 text-shadow-one">Familiar {{i + 1}}</h4>
+                          <label class="estiloLabel f-open-sans-c p-1">Nombre Completo<span class="text-danger">*</span></label>
+                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="nombreCompleto">
+                          <label class="estiloLabel f-open-sans-c p-1">Ocupación<span class="text-danger">*</span></label>
+                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="ocupacion">
+                          <label class="estiloLabel f-open-sans-c p-1">Teléfono<span class="text-danger">*</span></label>
+                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="telefono">
+                          <label class="estiloLabel f-open-sans-c p-1">Parentesco<span class="text-danger">*</span></label>
+                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="parentesco">
+                          <label class="estiloLabel f-open-sans-c p-1">Empresa<span class="text-danger">*</span></label>
+                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="empresa">
+                          <button (click)="eraseForm([], referenciasFamiliares)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
+                              <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
+                            </svg>
+                          </button>
+                          <button (click)="deleteControls('referenciasFamiliares', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-end">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill drop" viewBox="0 0 16 16">
+                              <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                    }
+                  </ng-container>
+                  <button (click)="agregarReferenciaFamiliar()" title="Agregar referencia personal" class="mb-5 bg-transparent f-open-sans-c fs-18 text-light cursor-p border-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                      <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                      <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="espaciado"></div>
+              </div>
             </div>
-            <div class="btn-guardar">
-                <button class="border-0 bg-blue-one text-light pt-1 pb-1 pe-4 ps-4 f-open-sans-c fs-20 shadow-three" (click)="guardar()">Guardar</button>
-            </div>
-        </form>
-    </div>
-    <div class="col-md-1"></div>
+          </div>
+          <div class="col-md-2"></div>
+        </div>
+
+        <button class="carousel-control-prev border-0 bg-cero" type="button" data-bs-target="#carousel-form" data-bs-slide="prev" (click)="scrollTo()">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next border-0 bg-cero" type="button" data-bs-target="#carousel-form" data-bs-slide="next" (click)="scrollTo()">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+      <div class="btn-guardar">
+        <button class="border-0 bg-blue-one text-light pt-1 pb-1 pe-4 ps-4 f-open-sans-c fs-20 shadow-three" (click)="guardar()">Guardar</button>
+      </div>
+    </form>
+  </div>
+  <div class="col-md-1"></div>
 </div>
 
-    <div class="modal" id="modalLoader" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content bg-transparent">
-                <div class="text-center">
-                    <div class="spinner-border text-warning" style="width: 3rem; height: 3rem;" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                </div>
-            </div>
+<div class="modal" id="modalLoader" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-transparent">
+      <div class="text-center">
+        <div class="spinner-border text-warning" style="width: 3rem; height: 3rem;" role="status">
+          <span class="visually-hidden">Loading...</span>
         </div>
+      </div>
     </div>
+  </div>
+</div>
 <div class="espaciado bg-transparent"></div>

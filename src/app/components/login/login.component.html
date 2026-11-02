@@ -1,43 +1,62 @@
 <div>
-    <app-header></app-header>
-    <div class="espaciado"></div>
-    <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
-            <div class="row">
-                <div class="col-md-8">
-    
-                </div>
-                <div class="col-md-4">
-                    <div class="p-5 text-center sombraUno">
-                        <div class="p-5">
-                            <img src="assets/img/icons/WORKFACE - blue.png" alt="" class="img-fluid drop">
-                        </div>
-                            <form [formGroup]="form" autocomplete="off">
-                                <h3 *ngIf="ingreso" class="text-light f-shadow-into-l fs-30">INGRESAR</h3>
-                                <h3 *ngIf="registro" class="text-light f-shadow-into-l fs-30">REGISTRAR</h3>
-                                <h3 *ngIf="recordar" class="text-light f-shadow-into-l fs-30">RECORDAR CLAVE</h3>
-                                <input class="f-open-sans-c text-light fw-3 w-100 mb-2 ps-2 bg-transparent" autocomplete="off" id="email" type="text" placeholder="Email" formControlName="email">
-                                <input *ngIf="ingreso || registro" class="f-open-sans-c fw-3 w-100 mb-2 ps-2 text-light bg-transparent" autocomplete="off" type="password" placeholder="Clave"  formControlName="password">
-                                <input *ngIf="registro" class="f-open-sans-c fw-3 w-100 mb-3 ps-2 text-light bg-transparent" type="password" placeholder="Confirmar clave" formControlName="confirmPassword">
-                                <button class="tc-yellow-one bg-transparent border-0 mb-4 f-open-sans-c fw-3" (click)="submit()">ENVIAR</button><br>
-                                
+  <app-header></app-header>
+  <div class="espaciado"></div>
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+      <div class="row">
+        <div class="col-md-8">
 
-                                <a class="text-light f-open-sans-c fw-3 cursor-p" *ngIf="!ingreso" (click)="ajustesIngresar()">INGRESAR </a>
-                                <span *ngIf="separar" class="text-light f-open-sans-c">/</span>
-                                <a class="tc-blue-one f-open-sans-c fw-3 cursor-p" *ngIf="!registro" (click)="ajustesRegistrar()"> REGISTRAR</a><br>
-                                <a href="http://" class="fuenteUno t3 fw-3" *ngIf="!recordar" (click)="ajustesRecordarClave()">RECORDAR CONTRASEÑA</a>
-                                <button *ngIf="camposRegistrar" class="w-100">REGISTRAR</button>
-
-                            </form>
-                    </div>
-                </div>
-            </div>
         </div>
-        <div class="col-md-1"></div>
+        <div class="col-md-4">
+          <div class="p-5 text-center sombraUno">
+            <div class="p-5">
+              <img src="assets/img/icons/WORKFACE - blue.png" alt="" class="img-fluid drop">
+            </div>
+            <form [formGroup]="form" autocomplete="off">
+              @if (ingreso) {
+                <h3 class="text-light f-shadow-into-l fs-30">INGRESAR</h3>
+              }
+              @if (registro) {
+                <h3 class="text-light f-shadow-into-l fs-30">REGISTRAR</h3>
+              }
+              @if (recordar) {
+                <h3 class="text-light f-shadow-into-l fs-30">RECORDAR CLAVE</h3>
+              }
+              <input class="f-open-sans-c text-light fw-3 w-100 mb-2 ps-2 bg-transparent" autocomplete="off" id="email" type="text" placeholder="Email" formControlName="email">
+              @if (ingreso || registro) {
+                <input class="f-open-sans-c fw-3 w-100 mb-2 ps-2 text-light bg-transparent" autocomplete="off" type="password" placeholder="Clave"  formControlName="password">
+              }
+              @if (registro) {
+                <input class="f-open-sans-c fw-3 w-100 mb-3 ps-2 text-light bg-transparent" type="password" placeholder="Confirmar clave" formControlName="confirmPassword">
+              }
+              <button class="tc-yellow-one bg-transparent border-0 mb-4 f-open-sans-c fw-3" (click)="submit()">ENVIAR</button><br>
+
+
+              @if (!ingreso) {
+                <a class="text-light f-open-sans-c fw-3 cursor-p" (click)="ajustesIngresar()">INGRESAR </a>
+              }
+              @if (separar) {
+                <span class="text-light f-open-sans-c">/</span>
+              }
+              @if (!registro) {
+                <a class="tc-blue-one f-open-sans-c fw-3 cursor-p" (click)="ajustesRegistrar()"> REGISTRAR</a>
+                }<br>
+                @if (!recordar) {
+                  <a href="http://" class="fuenteUno t3 fw-3" (click)="ajustesRecordarClave()">RECORDAR CONTRASEÑA</a>
+                }
+                @if (camposRegistrar) {
+                  <button class="w-100">REGISTRAR</button>
+                }
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-1"></div>
     </div>
     <div class="espaciado"></div>
     <div class="espaciado"></div>
-    </div>
-    
-    
+  </div>
+

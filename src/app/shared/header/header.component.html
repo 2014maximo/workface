@@ -1,79 +1,97 @@
 <div id="head" class="fixed-top transparenciaUno d-none d-md-block">
-    <div class="row">
-        <div class="col-md-1">
+  <div class="row">
+    <div class="col-md-1">
 
-        </div>
-        <div class="col-md-10">
-            <div class="row">
-                <div class="col-md-2 p-3">
-                    <img *ngIf="!returnHome" src="assets/img/icons/logo-workface-white.png" alt="" height="80" width="auto" class="drop">
-                    <a *ngIf="returnHome" href="{{ returnHome }}">
-                        <img src="assets/img/icons/logo-workface-white.png" alt="" height="80" width="auto" class="drop">
-                    </a>
-                </div>
-                <div class="col-md-8"></div>
-                <div class="col-md-2">
-                    <i *ngIf="iconAbrir" class="btn-menu-catego" (click)="abreMenu()">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
-                        </svg>
-                    </i>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-1">
-
-        </div>
     </div>
+    <div class="col-md-10">
+      <div class="row">
+        <div class="col-md-2 p-3">
+          @if (!returnHome) {
+            <img src="assets/img/icons/logo-workface-white.png" alt="" height="80" width="auto" class="drop">
+          }
+          @if (returnHome) {
+            <a href="{{ returnHome }}">
+              <img src="assets/img/icons/logo-workface-white.png" alt="" height="80" width="auto" class="drop">
+            </a>
+          }
+        </div>
+        <div class="col-md-8"></div>
+        <div class="col-md-2">
+          @if (iconAbrir) {
+            <i class="btn-menu-catego" (click)="abreMenu()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+              </svg>
+            </i>
+          }
+        </div>
+      </div>
+    </div>
+    <div class="col-md-1">
+
+    </div>
+  </div>
 </div>
 <div class="row {{abrirMenu }} sidenav">
-    <div class="col-md-12">
-        <div class="text-end">
-            <i *ngIf="!iconAbrir" class="btn-menu-catego" (click)="cierreMenu()">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-                </svg>
-            </i>
-        </div>
-        <div class="espacio"></div>
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-10 text-center">
-                <div  class="row fs-30">
-                    <ul class="w-100">
-                        <li class="f-shadow-into-l" *ngIf="userLogged|async as user">
-                            <img src="{{user.photoURL}}" alt="" height="130" class="b-r50">
-                            <p class="tc-blue-one"><small>{{user.email}}</small></p>
-                        </li>
-                        <li *ngIf="!email && !enLogin" class="f-shadow-into-l">
-                            <a href="login">
-                                INGRESAR
-                            </a>
-                        </li>
-                        <li *ngIf="email" class="f-shadow-into-l">
-                            <a href="profile">
-                                MI PERFIL
-                            </a>
-                        </li>
-                        <li *ngIf="email" class="f-shadow-into-l">
-                            <a class="tc-yellow-one" href="galeria">
-                                GALERÍA
-                            </a>
-                        </li>
-                        <li class="f-shadow-into-l">
-                            <a class="" href="contacto">
-                                CONTÁCTANOS
-                            </a>
-                        </li>
-                        <li *ngIf="email" class="f-shadow-into-l">
-                            <a class="cursor-p" (click)="logout()">
-                                SALIR
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-1"></div>
-        </div>
+  <div class="col-md-12">
+    <div class="text-end">
+      @if (!iconAbrir) {
+        <i class="btn-menu-catego" (click)="cierreMenu()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+          </svg>
+        </i>
+      }
     </div>
+    <div class="espacio"></div>
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-10 text-center">
+        <div  class="row fs-30">
+          <ul class="w-100">
+            @if (userLogged|async; as user) {
+              <li class="f-shadow-into-l">
+                <img src="{{user.photoURL}}" alt="" height="130" class="b-r50">
+                <p class="tc-blue-one"><small>{{user.email}}</small></p>
+              </li>
+            }
+            @if (!email && !enLogin) {
+              <li class="f-shadow-into-l">
+                <a href="login">
+                  INGRESAR
+                </a>
+              </li>
+            }
+            @if (email) {
+              <li class="f-shadow-into-l">
+                <a href="profile">
+                  MI PERFIL
+                </a>
+              </li>
+            }
+            @if (email) {
+              <li class="f-shadow-into-l">
+                <a class="tc-yellow-one" href="galeria">
+                  GALERÍA
+                </a>
+              </li>
+            }
+            <li class="f-shadow-into-l">
+              <a class="" href="contacto">
+                CONTÁCTANOS
+              </a>
+            </li>
+            @if (email) {
+              <li class="f-shadow-into-l">
+                <a class="cursor-p" (click)="logout()">
+                  SALIR
+                </a>
+              </li>
+            }
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+  </div>
 </div>
