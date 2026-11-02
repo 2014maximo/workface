@@ -97,12 +97,14 @@ Después de publicar, comprueba lo siguiente:
 
 ## Reglas de Firebase
 
-Las reglas de Firestore están en `firestore.rules`. Para aplicar cambios:
+Las reglas están en `firestore.rules` y `storage.rules`: cada usuario solo accede a sus propios datos. En Storage, los archivos deben ir dentro de `usuarios/{uid}/`, y solo se permiten imágenes de hasta 5 MB.
+
+Para aplicar cambios:
 
 ```bash
 npm install -g firebase-tools
 firebase login
-firebase deploy --only firestore:rules
+firebase deploy --only firestore:rules,storage
 ```
 
 Documentación: [Firebase Storage para web](https://firebase.google.com/docs/storage/web/start?hl=es).

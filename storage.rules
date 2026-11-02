@@ -1,0 +1,19 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Cada usuario solo accede a su carpeta. Cualquier otra ruta queda denegada
+    // porque no tiene una regla que la permita.
+    match /usuarios/{uid}/{archivo=**} {
+      function esDueno() {
+        return request.auth != null && request.auth.uid == uid;
+      }
+
+      allow read, delete: if esDueno();
+
+      // Limita las subidas a imagenes de hasta 5 MB.
+      allow create, update: if esDueno()
+        && request.resource.size <= 5 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+    }
+  }
+}
