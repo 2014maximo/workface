@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import * as htmlToImage from 'html-to-image';
+import { descargarCv } from '../../../constants/functions.constants';
 import { INTERESES_GUSTOS } from '../../../constants/workface.contants';
 
 
@@ -24,19 +24,14 @@ export class BetaComponent implements OnInit {
     }
   }
 
-  public guardarImagenCuatro() {
-
-    var element = document.getElementById('beta');
-
-    htmlToImage.toJpeg(element ? element : new HTMLElement, { quality: 1 })
-      .then(function (dataUrl) {
-        var link = document.createElement('a');
-        link.download = 'my-image-name.jpeg';
-        link.href = dataUrl;
-        link.click();
-      });
-
+  public descargarImagen() {
+    descargarCv('beta', 'jpeg');
   }
+
+  public descargarPdf() {
+    descargarCv('beta', 'pdf');
+  }
+
   public iconosDestacados(datos: any) {
     this.gustos?.forEach( (item, index) =>{
       if(datos?.[index]?.interes){

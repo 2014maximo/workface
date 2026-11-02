@@ -17,9 +17,9 @@
                                 <h3 *ngIf="ingreso" class="text-light f-shadow-into-l fs-30">INGRESAR</h3>
                                 <h3 *ngIf="registro" class="text-light f-shadow-into-l fs-30">REGISTRAR</h3>
                                 <h3 *ngIf="recordar" class="text-light f-shadow-into-l fs-30">RECORDAR CLAVE</h3>
-                                <input class="f-open-sans-c text-light fw-3 w-100 mb-2 pl-2 bg-transparent" autocomplete="off" id="email" type="text" placeholder="Email" formControlName="email">
-                                <input *ngIf="ingreso || registro" class="f-open-sans-c fw-3 w-100 mb-2 pl-2 text-light bg-transparent" autocomplete="off" type="password" placeholder="Clave"  formControlName="password">
-                                <input *ngIf="registro" class="f-open-sans-c fw-3 w-100 mb-3 pl-2 text-light bg-transparent" type="password" placeholder="Confirmar clave" formControlName="confirmPassword">
+                                <input class="f-open-sans-c text-light fw-3 w-100 mb-2 ps-2 bg-transparent" autocomplete="off" id="email" type="text" placeholder="Email" formControlName="email">
+                                <input *ngIf="ingreso || registro" class="f-open-sans-c fw-3 w-100 mb-2 ps-2 text-light bg-transparent" autocomplete="off" type="password" placeholder="Clave"  formControlName="password">
+                                <input *ngIf="registro" class="f-open-sans-c fw-3 w-100 mb-3 ps-2 text-light bg-transparent" type="password" placeholder="Confirmar clave" formControlName="confirmPassword">
                                 <button class="tc-yellow-one bg-transparent border-0 mb-4 f-open-sans-c fw-3" (click)="submit()">ENVIAR</button><br>
                                 
 

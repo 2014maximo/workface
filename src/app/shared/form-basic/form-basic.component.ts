@@ -110,7 +110,7 @@ export class FormBasicComponent implements OnInit {
     $("#modalLoader").modal('show');
 
     $(document).ready(function(){ // Permite cargar la función de TOOLTIP
-      $('[data-toggle="tooltip"]').tooltip();   
+      $('[data-bs-toggle="tooltip"]').tooltip();   
     })
   }
 

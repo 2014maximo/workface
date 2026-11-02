@@ -2,64 +2,64 @@
     <div class="col-md-1"></div>
     <div class="col-md-10">
         <form [formGroup]="formBasic">
-            <div id="carousel-form" class="carousel slide carousel-fade" data-touch="false" data-interval="false">
+            <div id="carousel-form" class="carousel slide carousel-fade" data-bs-touch="false" data-bs-interval="false">
                 <ol class="carousel-indicators fixed-bottom" (click)="scrollTo()">
-                    <li data-target="#carousel-form" data-slide-to="0" class="active" data-toggle="tooltip" title="1. NOMBRE COMPLETO"></li>
+                    <li data-bs-target="#carousel-form" data-bs-slide-to="0" class="active" data-bs-toggle="tooltip" title="1. NOMBRE COMPLETO"></li>
                     <p *ngIf="this.formBasic.get('primerNombre')?.valid && this.formBasic.get('primerApellido')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
                     <p *ngIf="!this.formBasic.get('primerNombre')?.valid || !this.formBasic.get('primerApellido')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
 
-                    <li data-target="#carousel-form" data-slide-to="1" data-toggle="tooltip" title="2. IMAGEN PERFIL / FONDO"></li>
+                    <li data-bs-target="#carousel-form" data-bs-slide-to="1" data-bs-toggle="tooltip" title="2. IMAGEN PERFIL / FONDO"></li>
                     <p *ngIf="this.formBasic.get('fotoFrontalSinFondo')?.valid && this.formBasic.get('fotoFrontalConFondo')?.valid && this.formBasic.get('imgFondo')?.valid && this.formBasic.get('imgFirma')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
                     <p *ngIf="!this.formBasic.get('fotoFrontalSinFondo')?.valid || !this.formBasic.get('fotoFrontalConFondo')?.valid || !this.formBasic.get('imgFondo')?.valid || !this.formBasic.get('imgFirma')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
                     
-                    <li data-target="#carousel-form" data-slide-to="2" data-toggle="tooltip" title="3. IDENTIFICACIÓN"></li>
+                    <li data-bs-target="#carousel-form" data-bs-slide-to="2" data-bs-toggle="tooltip" title="3. IDENTIFICACIÓN"></li>
                     <p *ngIf="this.formBasic.get('tipoIdentificacion')?.valid && this.formBasic.get('identificacion')?.valid && this.formBasic.get('nacionalidad')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
                     <p *ngIf="!this.formBasic.get('tipoIdentificacion')?.valid || !this.formBasic.get('identificacion')?.valid || !this.formBasic.get('nacionalidad')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
 
-                    <li data-target="#carousel-form" data-slide-to="3" data-toggle="tooltip" title="4. NACIMIENTO"></li>
+                    <li data-bs-target="#carousel-form" data-bs-slide-to="3" data-bs-toggle="tooltip" title="4. NACIMIENTO"></li>
                     <p *ngIf="this.formBasic.get('fechaNacimiento')?.valid && this.formBasic.get('ciudadNacimiento')?.valid && this.formBasic.get('genero')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
                     <p *ngIf="!this.formBasic.get('fechaNacimiento')?.valid || !this.formBasic.get('ciudadNacimiento')?.valid || !this.formBasic.get('genero')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
 
 
-                    <li data-target="#carousel-form" data-slide-to="4" data-toggle="tooltip" title="5. DE CONTACTO"></li>
+                    <li data-bs-target="#carousel-form" data-bs-slide-to="4" data-bs-toggle="tooltip" title="5. DE CONTACTO"></li>
                     <p *ngIf="this.formBasic.get('direccionResidencia')?.valid && this.formBasic.get('barrioResidencia')?.valid && this.formBasic.get('email')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
                     <p *ngIf="!this.formBasic.get('direccionResidencia')?.valid || !this.formBasic.get('barrioResidencia')?.valid || !this.formBasic.get('email')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
 
-                    <li data-target="#carousel-form" data-slide-to="5" data-toggle="tooltip" title="6. CARGO"></li>
+                    <li data-bs-target="#carousel-form" data-bs-slide-to="5" data-bs-toggle="tooltip" title="6. CARGO"></li>
                     <p *ngIf="this.formBasic.get('cargoActual')?.valid && this.formBasic.get('acercaDMi')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
                     <p *ngIf="!this.formBasic.get('cargoActual')?.valid || !this.formBasic.get('acercaDMi')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
 
 
-                    <li data-target="#carousel-form" data-slide-to="6" data-toggle="tooltip" title="7. REDES"></li>
+                    <li data-bs-target="#carousel-form" data-bs-slide-to="6" data-bs-toggle="tooltip" title="7. REDES"></li>
                     <p *ngIf="this.formBasic.get('linkedin')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
                     <p *ngIf="!this.formBasic.get('linkedin')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
 
 
-                    <li data-target="#carousel-form" data-slide-to="7" data-toggle="tooltip" title="8. ESTUDIOS"></li>
+                    <li data-bs-target="#carousel-form" data-bs-slide-to="7" data-bs-toggle="tooltip" title="8. ESTUDIOS"></li>
                     <p *ngIf="this.formBasic.get('estudios')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
                     <p *ngIf="!this.formBasic.get('estudios')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
 
-                    <li data-target="#carousel-form" data-slide-to="8" data-toggle="tooltip" title="9. HABILIDADES"></li>
+                    <li data-bs-target="#carousel-form" data-bs-slide-to="8" data-bs-toggle="tooltip" title="9. HABILIDADES"></li>
                     <p *ngIf="this.formBasic.get('habilidades')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
                     <p *ngIf="!this.formBasic.get('habilidades')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
                     
-                    <li data-target="#carousel-form" data-slide-to="9" data-toggle="tooltip" title="10. INTERESES"></li>
+                    <li data-bs-target="#carousel-form" data-bs-slide-to="9" data-bs-toggle="tooltip" title="10. INTERESES"></li>
                     <p *ngIf="this.formBasic.get('intereses')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
                     <p *ngIf="!this.formBasic.get('intereses')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
 
-                    <li data-target="#carousel-form" data-slide-to="10" data-toggle="tooltip" title="11. EXPERIENCIA LABORAL"></li>
+                    <li data-bs-target="#carousel-form" data-bs-slide-to="10" data-bs-toggle="tooltip" title="11. EXPERIENCIA LABORAL"></li>
                     <p *ngIf="this.formBasic.get('expLaboral')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
                     <p *ngIf="!this.formBasic.get('expLaboral')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
 
-                    <li data-target="#carousel-form" data-slide-to="11" data-toggle="tooltip" title="12. OTROS CONOCIMIENTOS"></li>
+                    <li data-bs-target="#carousel-form" data-bs-slide-to="11" data-bs-toggle="tooltip" title="12. OTROS CONOCIMIENTOS"></li>
                     <p *ngIf="this.formBasic.get('conocimientosAdicionales')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
                     <p *ngIf="!this.formBasic.get('conocimientosAdicionales')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
 
-                    <li data-target="#carousel-form" data-slide-to="12" data-toggle="tooltip" title="13. REFERENCIAS PERSONALES"></li>
+                    <li data-bs-target="#carousel-form" data-bs-slide-to="12" data-bs-toggle="tooltip" title="13. REFERENCIAS PERSONALES"></li>
                     <p *ngIf="this.formBasic.get('referenciasPersonales')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
                     <p *ngIf="!this.formBasic.get('referenciasPersonales')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
 
-                    <li data-target="#carousel-form" data-slide-to="13" data-toggle="tooltip" title="14. REFERENCIAS FAMILIARES"></li>
+                    <li data-bs-target="#carousel-form" data-bs-slide-to="13" data-bs-toggle="tooltip" title="14. REFERENCIAS FAMILIARES"></li>
                     <p *ngIf="this.formBasic.get('referenciasFamiliares')?.valid" class="text-light fs-30 icon-navigate tc-green-one">✓</p>
                     <p *ngIf="!this.formBasic.get('referenciasFamiliares')?.valid" class="text-light fs-30 icon-navigate tc-red-one">x</p>
 
@@ -68,7 +68,7 @@
                 <div class="row">
                     <div class="col-md-2"></div>
                     <div class="col-md-8">
-                        <div class="carousel-inner pr-4">
+                        <div class="carousel-inner pe-4">
                             <!--------------------------------------------------------------------------------->
                             <!-------------------------------------- 1. NOMBRE -------------------------------->
                             <!--------------------------------------------------------------------------------->
@@ -79,18 +79,18 @@
                                     <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">NOMBRE COMPLETO</h3>
                                     <div class="p-5">
                                         <label class="estiloLabel f-open-sans-c p-1">Primer nombre<span class="text-danger">*</span></label>
-                                        <input class="w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="primerNombre">
+                                        <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="primerNombre">
     
                                         <label class="estiloLabel f-open-sans-c p-1">Segundo nombre</label>
-                                        <input class="w-100 fw-3 mb-2 pl-2 estilo-input" type="text"formControlName="segundoNombre">
+                                        <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="text"formControlName="segundoNombre">
     
                                         <label class="estiloLabel f-open-sans-c p-1">Primer apellido<span class="text-danger">*</span></label>
-                                        <input class="w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="primerApellido">
+                                        <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="primerApellido">
     
                                         <label class="estiloLabel f-open-sans-c p-1">Segundo apellido</label>
-                                        <input class="w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="segundoApellido">
+                                        <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="segundoApellido">
 
-                                        <button (click)="eraseForm(['primerNombre','segundoNombre','primerApellido','segundoApellido'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-right" data-toggle="tooltip" data-placement="right" title="BORRAR CONTENIDO DE LOS TEXTOS">
+                                        <button (click)="eraseForm(['primerNombre','segundoNombre','primerApellido','segundoApellido'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" data-bs-toggle="tooltip" data-bs-placement="right" title="BORRAR CONTENIDO DE LOS TEXTOS">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                                                 <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
                                             </svg>
@@ -119,13 +119,13 @@
                                     </div>
                                     <div class="row">
                                         <div class="col text-center">
-                                            <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" accept=".png" (change)="loadImg('/frontal-sin-fondo/', $event)" type="file" id="img-sin-fondo">
+                                            <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" accept=".png" (change)="loadImg('/frontal-sin-fondo/', $event)" type="file" id="img-sin-fondo">
                                             <label class="estiloLabel f-open-sans-c p-1">Imagen de frente sin fondo<span class="text-danger">*</span></label><br>
                                             <label for="img-sin-fondo" class="text-light cursor-p">
                                                 <img *ngIf="!fotoFrontalSinFondo[0]" src="assets/img/icons/add-file.png" alt="add-file-image" title="Agregar imagen" height="70" width="auto" class="mt-4 drop">
                                                 <img *ngIf="fotoFrontalSinFondo[0]" src="{{ fotoFrontalSinFondo[0] }}" alt="" height="200" width="auto">
                                             </label>
-                                            <img *ngIf="fotoFrontalSinFondo[0]" src="assets/img/icons/equis.png" height="40" width="auto" class="drop cursor-p" data-toggle="tooltip" title="ELIMINAR" (click)="eliminarImagen('fotoFrontalSinFondo')">
+                                            <img *ngIf="fotoFrontalSinFondo[0]" src="assets/img/icons/equis.png" height="40" width="auto" class="drop cursor-p" data-bs-toggle="tooltip" title="ELIMINAR" (click)="eliminarImagen('fotoFrontalSinFondo')">
                                         </div>
                                         <div class="col text-center" *ngIf="!fotoFrontalSinFondo[0]">
                                             <label class="estiloLabel f-open-sans-c p-1">Ejemplo</label><br>
@@ -141,7 +141,7 @@
 
                                     <div class="row">
                                         <div class="col text-center">
-                                            <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" accept=".png, .jpg, .jpeg" (change)="loadImg('/frontal-con-fondo/', $event)" type="file" id="img-fondo">
+                                            <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" accept=".png, .jpg, .jpeg" (change)="loadImg('/frontal-con-fondo/', $event)" type="file" id="img-fondo">
                                             <label class="estiloLabel f-open-sans-c p-1">Imagen de frente con fondo<span class="text-danger">*</span></label><br>
                                             <label for="img-fondo" class="text-light cursor-p">
                                                 <img *ngIf="!fotoFrontalConFondo[0]" src="assets/img/icons/add-file.png" alt="add-file-image" title="Agregar imagen" height="70" width="auto" class="mt-4 drop">
@@ -168,7 +168,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col text-center">
-                                            <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" accept=".png, .jpg, .jpeg" (change)="loadImg('/fondo/', $event)" type="file" id="fondo">
+                                            <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" accept=".png, .jpg, .jpeg" (change)="loadImg('/fondo/', $event)" type="file" id="fondo">
                                             <label class="estiloLabel f-open-sans-c p-1">Fondo para contrastes<span class="text-danger">*</span></label><br>
                                             <label for="fondo" class="text-light cursor-p">
                                                 <img *ngIf="!imgFondo[0]" src="assets/img/icons/add-file1200x320.png" alt="add-file-image" title="Agregar imagen" height="70" width="auto" class="mt-4 drop">
@@ -189,7 +189,7 @@
 
                                     <div class="row">
                                         <div class="col text-center">
-                                            <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" accept=".png, .jpg, .jpeg" (change)="loadImg('/firma/', $event)" type="file" id="firma">
+                                            <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" accept=".png, .jpg, .jpeg" (change)="loadImg('/firma/', $event)" type="file" id="firma">
                                             <label class="estiloLabel f-open-sans-c p-1">Firma sin fondo<span class="text-danger">*</span></label><br>
                                             <label for="firma" class="text-light cursor-p">
                                                 <img *ngIf="!imgFirma[0]" src="assets/img/icons/add-file.png" alt="add-file-image" title="Agregar imagen" height="70" width="auto" class="mt-4 drop">
@@ -224,7 +224,7 @@
                                         </select>
                                         
                                         <label class="estiloLabel f-open-sans-c p-1">Identificación<span class="text-danger">*</span></label>
-                                        <input class="w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="identificacion">
+                                        <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="identificacion">
                                         
                                         
                                         <label class="estiloLabel f-open-sans-c p-1">Nacionalidad<span class="text-danger">*</span></label>
@@ -233,7 +233,7 @@
                                             <option *ngFor="let pais of paises" [value]="pais.pais">{{ pais.pais}}</option>
                                         </select>
 
-                                        <button (click)="eraseForm(['tipoIdentificacion','identificacion','nacionalidad'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-right" title="Borrar contenido de campos">
+                                        <button (click)="eraseForm(['tipoIdentificacion','identificacion','nacionalidad'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                                                 <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
                                             </svg>
@@ -254,9 +254,9 @@
                                     <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">NACIMIENTO</h3>
                                     <div class="p-5">
                                         <label class="estiloLabel f-open-sans-c p-1">Fecha de nacimiento<span class="text-danger">*</span></label>
-                                        <input class="w-100 fw-3 mb-2 pl-2 estilo-input" type="date" formControlName="fechaNacimiento">
+                                        <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="date" formControlName="fechaNacimiento">
                                         <label class="estiloLabel f-open-sans-c p-1">Lugar de nacimiento<span class="text-danger">*</span></label>
-                                        <input class="w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="ciudadNacimiento">
+                                        <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="ciudadNacimiento">
                                         <label class="estiloLabel f-open-sans-c p-1">Género<span class="text-danger">*</span></label>
                                         <select class="w-100 tc-yellow-one estilo-input bg-black" name="state" formControlName="genero">
                                             <option value="">---Seleccione---</option>
@@ -265,7 +265,7 @@
                                             <option value="Transgénero">Transgénero</option>
                                         </select>
 
-                                        <button (click)="eraseForm(['fechaNacimiento','ciudadNacimiento','genero'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-right" title="Borrar contenido de campos">
+                                        <button (click)="eraseForm(['fechaNacimiento','ciudadNacimiento','genero'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                                                 <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
                                             </svg>
@@ -285,17 +285,17 @@
                                     <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">DE CONTACTO</h3>
                                     <div class="p-5">
                                         <label class="estiloLabel f-open-sans-c p-1">Dirección residencia<span class="text-danger">*</span></label>
-                                        <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="direccionResidencia">
+                                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="direccionResidencia">
                                         <label class="estiloLabel f-open-sans-c p-1">Barrio residencia<span class="text-danger">*</span></label>
-                                        <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="barrioResidencia">
+                                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="barrioResidencia">
                                         <label class="estiloLabel f-open-sans-c p-1">Número fijo<span class="text-danger">*</span></label>
-                                        <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="telFijo">
+                                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="telFijo">
                                         <label class="estiloLabel f-open-sans-c p-1">Número móvil<span class="text-danger">*</span></label>
-                                        <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="telCel">
+                                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="telCel">
                                         <label class="estiloLabel f-open-sans-c p-1">Email<span class="text-danger">*</span></label>
-                                        <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="email">
+                                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="email">
 
-                                        <button (click)="eraseForm(['direccionResidencia','barrioResidencia','telFijo','telCel','email'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-right" title="Borrar contenido de campos">
+                                        <button (click)="eraseForm(['direccionResidencia','barrioResidencia','telFijo','telCel','email'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                                                 <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
                                             </svg>
@@ -316,12 +316,12 @@
                                     <h3 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">CARGO</h3>
                                     <div class="p-5">
                                         <label class="estiloLabel f-open-sans-c p-1">Cargo actual<span class="text-danger">*</span></label>
-                                        <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="cargoActual">
+                                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="cargoActual">
                                         <label class="estiloLabel f-open-sans-c p-1">A cerca de mí<span class="text-danger">*</span></label>
-                                        <textarea rows="10"class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" style="height:13rem" type="text" placeholder="" formControlName="acercaDMi">
+                                        <textarea rows="10"class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" style="height:13rem" type="text" placeholder="" formControlName="acercaDMi">
                                         </textarea>
 
-                                        <button (click)="eraseForm(['fotoFrontalSinFondo','fotoFrontalConFondo','cargoActual','acercaDMi'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-right" title="Borrar contenido de campos">
+                                        <button (click)="eraseForm(['fotoFrontalSinFondo','fotoFrontalConFondo','cargoActual','acercaDMi'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                                                 <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
                                             </svg>
@@ -341,21 +341,21 @@
                                     <div class="p-5">
 
                                         <img src="https://plantillas_dev.gitlab.io/styles/assets/icon/web.png" alt="web" height="30" width="auto" class="drop" title="web">
-                                        <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="webSite">
+                                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="webSite">
 
                                         <img src="https://plantillas_dev.gitlab.io/styles/assets/icon/instagram.png" alt="instagram" height="30" width="auto" class="drop" title="instagram">
-                                        <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="instagram">
+                                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="instagram">
 
                                         <img src="https://plantillas_dev.gitlab.io/styles/assets/icon/facebook.png" alt="facebook" height="30" width="auto" class="drop" title="facebook">
-                                        <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="facebook">
+                                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="facebook">
 
                                         <img src="https://plantillas_dev.gitlab.io/styles/assets/icon/twitter.png" alt="twitter" height="30" width="auto" class="drop" title="twitter">
-                                        <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="twitter">
+                                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="twitter">
 
                                         <img src="https://plantillas_dev.gitlab.io/styles/assets/icon/linkeding.png" alt="linkeding" height="30" width="auto" class="drop" title="linkeding">
-                                        <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" placeholder="" formControlName="linkedin">
+                                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" formControlName="linkedin">
 
-                                        <button (click)="eraseForm(['webSite','instagram','facebook','twitter','linkedin'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-right" title="Borrar contenido de campos">
+                                        <button (click)="eraseForm(['webSite','instagram','facebook','twitter','linkedin'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                                                 <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
                                             </svg>
@@ -378,25 +378,25 @@
                                             <div class="p-5">
                                                 <h4 class="f-grape tc-blue-two fs-17 text-shadow-one">Estudio {{i + 1}}</h4>
                                                 <label class="estiloLabel f-open-sans-c p-1">Nombre institución<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="nombreInstitucion">
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="nombreInstitucion">
                                                 <label class="estiloLabel f-open-sans-c p-1">Título obtenido<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="tituloObtenido">
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="tituloObtenido">
                                                 <label class="estiloLabel f-open-sans-c p-1">Fecha inicio<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="date" formControlName="fechaInicio">
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="date" formControlName="fechaInicio">
                                                 <label class="estiloLabel f-open-sans-c p-1">Fecha título<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="date" formControlName="fechaTitulo">
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="date" formControlName="fechaTitulo">
                                                 <label class="estiloLabel f-open-sans-c p-1">Ciudad estudio<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="ciudadEstudio">
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="ciudadEstudio">
                                                 <label class="estiloLabel f-open-sans-c p-1">Descripción Estudio<span class="text-danger">*</span></label>
-                                                <textarea rows="10"class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" style="height:13rem" type="text" formControlName="descripcionEstudio"></textarea>
+                                                <textarea rows="10"class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" style="height:13rem" type="text" formControlName="descripcionEstudio"></textarea>
 
-                                                <button (click)="eraseForm(['nombreInstitucion','tituloObtenido','fechaTitulo'], estudio)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-right" title="Borrar contenido de campos">
+                                                <button (click)="eraseForm(['nombreInstitucion','tituloObtenido','fechaTitulo'], estudio)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                                                         <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
                                                     </svg>
                                                 </button>
     
-                                                <button (click)="deleteControls('estudios', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-right">
+                                                <button (click)="deleteControls('estudios', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-end">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill drop" viewBox="0 0 16 16">
                                                         <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
                                                     </svg>
@@ -432,18 +432,18 @@
                                             <div class="p-5">
                                                 <h4 class="f-grape tc-blue-two fs-17 text-shadow-one">Habilidad {{i + 1}}</h4>
                                                 <label class="estiloLabel f-open-sans-c p-1">Nombre habilidad<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="habilidad">
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="habilidad">
                                                 <label class="estiloLabel f-open-sans-c p-1">Nivel<span class="text-danger">*</span></label>
-                                                <input class="w-100 fw-3 mb-2 pl-2 estilo-input" type="range" formControlName="nivel">
+                                                <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="range" formControlName="nivel">
                                                 <p class="text-light text-center f-shadow-into-l tc-yellow-one fs-50">{{ this.formBasic.value.habilidades[i].nivel }}%</p>
 
-                                                <button (click)="eraseForm(['habilidad','nivel'], habilidad)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-right" title="Borrar contenido de campos">
+                                                <button (click)="eraseForm(['habilidad','nivel'], habilidad)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                                                         <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
                                                     </svg>
                                                 </button>
     
-                                                <button (click)="deleteControls('habilidades', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-right">
+                                                <button (click)="deleteControls('habilidades', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-end">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill drop" viewBox="0 0 16 16">
                                                         <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
                                                     </svg>
@@ -477,7 +477,7 @@
                                         <div class="row p-5">
                                         <div [formGroupName]="i" *ngFor="let inter of getControls('intereses'); let i = index;" class="col-3">
                                             <div class="d-flex align-items-center">
-                                                <input class="f-open-sans-c fw-3 mt-0 mb-0 ml-0 mr-2 pl-2 estilo-input" type="checkbox" formControlName="interes" (click)="cargarIntereses($event)">
+                                                <input class="f-open-sans-c fw-3 mt-0 mb-0 ms-0 me-2 ps-2 estilo-input" type="checkbox" formControlName="interes" (click)="cargarIntereses($event)">
                                                 <p class="f-open-sans-c text-light m-0">{{ this.gustos[i].gusto }}</p>
                                             </div>
                                         </div>
@@ -502,29 +502,29 @@
                                             <div class="p-5">
                                                 <h4 class="f-grape tc-blue-two fs-17 text-shadow-one">Empresa {{i + 1}}</h4>
                                                 <label class="estiloLabel f-open-sans-c p-1">Empresa<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="nombreEmpresa">
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="nombreEmpresa">
                                                 <label class="estiloLabel f-open-sans-c p-1">Jefe inmediato<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="jefeInmediatoEmpresa">
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="jefeInmediatoEmpresa">
                                                 <label class="estiloLabel f-open-sans-c p-1">Cargo desempeñado<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="cargoEjercido">
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="cargoEjercido">
                                                 <label class="estiloLabel f-open-sans-c p-1">Describa funciones realizadas<span class="text-danger">*</span></label>
-                                                <textarea rows="10"class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" style="height:13rem" type="text" formControlName="funcionesRealizadas"></textarea>
+                                                <textarea rows="10"class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" style="height:13rem" type="text" formControlName="funcionesRealizadas"></textarea>
                                                 <label class="estiloLabel f-open-sans-c p-1">Fecha de inicio<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="date" formControlName="fechaInicioEmpresa">
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="date" formControlName="fechaInicioEmpresa">
                                                 <label class="estiloLabel f-open-sans-c p-1">Fecha de final actual<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="date" formControlName="fechaFinalEmpresa">
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="date" formControlName="fechaFinalEmpresa">
                                                 <label class="estiloLabel f-open-sans-c p-1">Número de contacto<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="telContactoEmpresa">
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="telContactoEmpresa">
                                                 <label class="estiloLabel f-open-sans-c p-1">Ciudad<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="ciudadEmpresa">
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="ciudadEmpresa">
     
-                                                <button (click)="eraseForm([], formExpLaboral)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-right" title="Borrar contenido de campos">
+                                                <button (click)="eraseForm([], formExpLaboral)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                                                         <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
                                                     </svg>
                                                 </button>
 
-                                                <button (click)="deleteControls('expLaboral', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-right">
+                                                <button (click)="deleteControls('expLaboral', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-end">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill drop" viewBox="0 0 16 16">
                                                         <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
                                                     </svg>
@@ -557,19 +557,19 @@
                                             <div class="p-5">
                                                 <h4 class="f-grape tc-blue-two fs-17 text-shadow-one">Conocimiento {{i + 1}}</h4>
                                                 <label class="estiloLabel f-open-sans-c p-1">Conocimiento<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="nombreConocimiento">
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="nombreConocimiento">
                                                 <label class="estiloLabel f-open-sans-c p-1">Duración<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="duracion">
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="duracion">
                                                 <label class="estiloLabel f-open-sans-c p-1">Fecha Finalización<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="date" formControlName="fechaFinalizacion">
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="date" formControlName="fechaFinalizacion">
     
-                                                <button (click)="eraseForm([], conocimientos)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-right" title="Borrar contenido de campos">
+                                                <button (click)="eraseForm([], conocimientos)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                                                         <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
                                                     </svg>
                                                 </button>
     
-                                                <button (click)="deleteControls('conocimientosAdicionales', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-right">
+                                                <button (click)="deleteControls('conocimientosAdicionales', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-end">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill drop" viewBox="0 0 16 16">
                                                         <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
                                                     </svg>
@@ -601,21 +601,21 @@
                                             <div class="p-5">
                                                 <h4 class="f-grape tc-blue-two fs-17 text-shadow-one">Persona {{i + 1}}</h4>
                                                 <label class="estiloLabel f-open-sans-c p-1">Nombre Completo<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="nombreCompleto">
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="nombreCompleto">
                                                 <label class="estiloLabel f-open-sans-c p-1">Ocupación - Cargo<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="ocupacion">
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="ocupacion">
                                                 <label class="estiloLabel f-open-sans-c p-1">Teléfono<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="telefono">
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="telefono">
                                                 <label class="estiloLabel f-open-sans-c p-1">Empresa<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="empresa">
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="empresa">
     
-                                                <button (click)="eraseForm([], referenciasPersonales)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-right" title="Borrar contenido de campos">
+                                                <button (click)="eraseForm([], referenciasPersonales)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                                                         <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
                                                     </svg>
                                                 </button>
     
-                                                <button (click)="deleteControls('referenciasPersonales', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-right">
+                                                <button (click)="deleteControls('referenciasPersonales', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-end">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill drop" viewBox="0 0 16 16">
                                                         <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
                                                     </svg>
@@ -647,24 +647,24 @@
                                             <div class="p-5">
                                                 <h4 class="f-grape tc-blue-two fs-17 text-shadow-one">Familiar {{i + 1}}</h4>
                                                 <label class="estiloLabel f-open-sans-c p-1">Nombre Completo<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="nombreCompleto">
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="nombreCompleto">
                                                 <label class="estiloLabel f-open-sans-c p-1">Ocupación<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="ocupacion">
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="ocupacion">
                                                 <label class="estiloLabel f-open-sans-c p-1">Teléfono<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="telefono">
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="telefono">
                                                 <label class="estiloLabel f-open-sans-c p-1">Parentesco<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="parentesco">
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="parentesco">
                                                 <label class="estiloLabel f-open-sans-c p-1">Empresa<span class="text-danger">*</span></label>
-                                                <input class="f-open-sans-c w-100 fw-3 mb-2 pl-2 estilo-input" type="text" formControlName="empresa">
+                                                <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" formControlName="empresa">
                                             
                                                 
-                                                <button (click)="eraseForm([], referenciasFamiliares)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-right" title="Borrar contenido de campos">
+                                                <button (click)="eraseForm([], referenciasFamiliares)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                                                         <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
                                                     </svg>
                                                 </button>
     
-                                                <button (click)="deleteControls('referenciasFamiliares', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-right">
+                                                <button (click)="deleteControls('referenciasFamiliares', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-end">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill drop" viewBox="0 0 16 16">
                                                         <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
                                                     </svg>
@@ -686,29 +686,29 @@
                     <div class="col-md-2"></div>
                 </div>
                 
-                <button class="carousel-control-prev border-0 bg-cero" type="button" data-target="#carousel-form" data-slide="prev" (click)="scrollTo()">
+                <button class="carousel-control-prev border-0 bg-cero" type="button" data-bs-target="#carousel-form" data-bs-slide="prev" (click)="scrollTo()">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
+                    <span class="visually-hidden">Previous</span>
                 </button>
-                <button class="carousel-control-next border-0 bg-cero" type="button" data-target="#carousel-form" data-slide="next" (click)="scrollTo()">
+                <button class="carousel-control-next border-0 bg-cero" type="button" data-bs-target="#carousel-form" data-bs-slide="next" (click)="scrollTo()">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
+                    <span class="visually-hidden">Next</span>
                 </button>
             </div>
             <div class="btn-guardar">
-                <button class="border-0 bg-blue-one text-light pt-1 pb-1 pr-4 pl-4 f-open-sans-c fs-20 shadow-three" (click)="guardar()">Guardar</button>
+                <button class="border-0 bg-blue-one text-light pt-1 pb-1 pe-4 ps-4 f-open-sans-c fs-20 shadow-three" (click)="guardar()">Guardar</button>
             </div>
         </form>
     </div>
     <div class="col-md-1"></div>
 </div>
 
-    <div class="modal fade" id="modalLoader" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="modalLoader" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content bg-transparent">
                 <div class="text-center">
                     <div class="spinner-border text-warning" style="width: 3rem; height: 3rem;" role="status">
-                        <span class="sr-only">Loading...</span>
+                        <span class="visually-hidden">Loading...</span>
                     </div>
                 </div>
             </div>

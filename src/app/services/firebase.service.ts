@@ -2,7 +2,6 @@ import { EnvironmentInjector, Injectable, inject, runInInjectionContext } from '
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { environment } from '../../environments/environment.prod';
 import 'firebase/compat/storage';
-import { getStorage, ref, getDownloadURL, uploadString, getBlob } from "firebase/storage";
 import firebase from 'firebase/compat/app';
 
 firebase.initializeApp(environment.firebase);
@@ -101,65 +100,5 @@ export class FirebaseService {
       
     }
   }
-
-  dropImg(){
-    // Crear una referencia con una ruta y un nombre de archivo iniciales
-/*     const storage = getStorage();
-    const pathReference = ref(storage, 'fondo/img_1657769247581'); */
-
-    // Crear una referencia a partir de un URI de Google Cloud Storage
-/*     this.storageRef.delete() */
-  
-  // Create a reference to the file we want to download
-const storage = getStorage();
-const starsRef = ref(storage, 'frontal-sin-fondo/img_1662255026419');
-
-// Get the download URL
-getDownloadURL(starsRef)
-  .then((url) => {
-    // Insert url into an <img> tag to "download"
-  })
-  .catch((error) => {
-    // A full list of error codes is available at
-    // https://firebase.google.com/docs/storage/web/handle-errors
-    switch (error.code) {
-      case 'storage/object-not-found':
-        // File doesn't exist
-        break;
-      case 'storage/unauthorized':
-        // User doesn't have permission to access the object
-        break;
-      case 'storage/canceled':
-        // User canceled the upload
-        break;
-
-      // ...
-
-      case 'storage/unknown':
-        // Unknown error occurred, inspect the server response
-        break;
-    }
-  });
-  }
-
-  async subirBase64(dataBase: any, carpetaCategoria: string){
-    const storage = getStorage();
-    const storageRef = ref(storage, carpetaCategoria);
-
-    const message2 = 'Este es un mensaje de prueba';
-    uploadString(storageRef, message2, dataBase).then((snapshot) => {
-      console.log(snapshot,'String base64 subido');
-    });
-  }
-
-  descargarBase64(carpetaCategoria: string){
-    const storage = getStorage();
-    const storageRef = ref(storage, 'frontal-sin-fondo/img_1662255026419');
-
-    getBlob(storageRef).then( response => {
-      console.log(response, 'RESPUESTA')
-    });
-  }
-
 
 }

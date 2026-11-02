@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { OwlOptions } from 'ngx-owl-carousel-o';
 import { AuthService } from '../../services/auth.service';
 import { FirebaseService } from '../../services/firebase.service';
 
@@ -17,32 +16,6 @@ export class SliderTemplatesComponent implements OnInit {
   public datosGenerales: any;
   public alpha: boolean = false;
   public beta: boolean = false;
-  public templates: any[] = [
-    {
-      ruta: 'alpha',
-      imagen: 'assets/img/slider-templates/example.png'
-    },
-    {
-      ruta: 'beta',
-      imagen: 'assets/img/slider-templates/example.png'
-    },
-    {
-      ruta: 'beta',
-      imagen: 'assets/img/slider-templates/example.png'
-    },
-    {
-      ruta: 'beta',
-      imagen: 'assets/img/slider-templates/example.png'
-    },
-    {
-      ruta: 'beta',
-      imagen: 'assets/img/slider-templates/example.png'
-    },
-    {
-      ruta: 'beta',
-      imagen: 'assets/img/slider-templates/example.png'
-    },
-  ];
 
   constructor(private authService: AuthService,
               private database: FirebaseService) {
