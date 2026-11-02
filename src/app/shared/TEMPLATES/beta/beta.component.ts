@@ -14,6 +14,7 @@ export class BetaComponent implements OnInit {
   @Input() contenido: any;
   public gustos = INTERESES_GUSTOS;
   public iconosSeleccionados: any[]=[];
+  public experienciaLaboral: any[] = [];
 
   constructor() {
   }
@@ -21,6 +22,8 @@ export class BetaComponent implements OnInit {
   ngOnInit(): void {
     if(this.contenido){
       this.iconosDestacados(this.contenido.formBasic.intereses);
+      // Se calcula una sola vez: reverse() en la plantilla cambia el orden en cada refresco.
+      this.experienciaLaboral = [...(this.contenido.formBasic.expLaboral ?? [])].reverse();
     }
   }
 

@@ -15,6 +15,7 @@ export class AlphaComponent implements OnInit {
   public avatar: string = '';
   public gustos = INTERESES_GUSTOS;
   public iconosSeleccionados: any[]=[];
+  public experienciaLaboral: any[] = [];
   public color: string = 'one';
 
   constructor() {}
@@ -27,6 +28,8 @@ export class AlphaComponent implements OnInit {
     if(this.contenido){
       this.avatar = this.contenido.formBasic.fotoFrontalConFondo;
       this.iconosDestacados(this.contenido.formBasic.intereses);
+      // Se calcula una sola vez: reverse() en la plantilla cambia el orden en cada refresco.
+      this.experienciaLaboral = [...(this.contenido.formBasic.expLaboral ?? [])].reverse();
     }
   }
 
