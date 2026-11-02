@@ -1,3 +1,4 @@
+import Compressor from 'compressorjs';
 import { toJpeg } from 'html-to-image';
 import Swal from 'sweetalert2';
 
@@ -58,4 +59,32 @@ export async function descargarCv(idElemento: string, formato: 'jpeg' | 'pdf'){
         console.error(error);
         SweetAlert('error', 'No se pudo generar el archivo');
     }
+}
+
+export interface OpcionesImagen {
+    anchoMaximo: number;
+    formato: 'image/jpeg' | 'image/png';
+}
+
+export function comprimirImagen(archivo: Blob, opciones: OpcionesImagen): Promise<Blob> {
+    return new Promise((resolver, rechazar) => {
+        new Compressor(archivo, {
+            maxWidth: opciones.anchoMaximo,
+            mimeType: opciones.formato,
+            quality: 0.8,
+            // Evita que un PNG grande pase a JPEG y pierda la transparencia.
+            convertSize: Infinity,
+            success: resolver,
+            error: rechazar
+        });
+    });
+}
+
+export function leerComoBase64(archivo: Blob): Promise<string> {
+    return new Promise((resolver, rechazar) => {
+        const lector = new FileReader();
+        lector.onload = () => resolver(lector.result as string);
+        lector.onerror = () => rechazar(lector.error);
+        lector.readAsDataURL(archivo);
+    });
 }

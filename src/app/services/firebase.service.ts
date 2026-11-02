@@ -12,8 +12,6 @@ firebase.initializeApp(environment.firebase);
 export class FirebaseService {
 
   public storageRef = firebase.app().storage().ref();
-  public urlImg:any;
-  public metaDatos:any;
   private injector = inject(EnvironmentInjector);
 
   constructor(private firestore: AngularFirestore) {
@@ -62,42 +60,11 @@ export class FirebaseService {
 
   async loadImg(categoria: string, nombre: string, imgBase64: any){
     try{
-      let respuesta = await this.storageRef.child(categoria + nombre).putString(imgBase64, 'data_url');
-      
-      respuesta.ref.getDownloadURL().then( respuesta => {
-        this.urlImg = respuesta? respuesta : null;
-
-
-        // `url` is the download URL for 'images/stars.jpg'
-
-    // This can be downloaded directly:
-    const xhr = new XMLHttpRequest();
-    xhr.responseType = 'blob';
-    xhr.onload = (event) => {
-      const blob = xhr.response;
-      console.log(event, 'XHR ONLOAD EVENT');
-    };
-    xhr.open('GET', respuesta);
-    xhr.send();
-
-
-
-
-
-
-      });
-      respuesta.ref.getMetadata().then( datos => {
-        console.log(datos, 'QUE')
-        this.metaDatos = datos? datos : null;
-      })
-
-        return  await respuesta.ref.getDownloadURL();
-       
-
+      const respuesta = await this.storageRef.child(categoria + nombre).putString(imgBase64, 'data_url');
+      return await respuesta.ref.getDownloadURL();
     }catch(err){
       console.error(err);
       return null;
-      
     }
   }
 

@@ -1,11 +1,11 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { FormArray } from '@angular/forms';
-import { of, throwError } from 'rxjs';
+import { of } from 'rxjs';
 
 import { INTERESES_GUSTOS } from '../../constants/workface.contants';
 import { AuthService } from '../../services/auth.service';
-import { FirebaseService } from '../../services/firebase.service';
+import { PerfilLocalService } from '../../services/perfil-local.service';
 import { WebServicesService } from '../../services/web-services.service';
 import { FormBasicComponent } from './form-basic.component';
 
@@ -34,7 +34,7 @@ describe('FormBasicComponent: intereses', () => {
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         { provide: AuthService, useValue: { getUserLogged: () => of(null) } },
-        { provide: FirebaseService, useValue: {} },
+        { provide: PerfilLocalService, useValue: {} },
         { provide: WebServicesService, useValue: { consultarRecursos: () => of({}) } }
       ]
     });
@@ -66,10 +66,10 @@ describe('FormBasicComponent: intereses', () => {
   describe('cierre del modal de carga', () => {
     let modal: jasmine.Spy;
 
-    const iniciar = async (consulta: any) => {
+    const iniciar = async (consulta: Promise<any>) => {
       const instancia = component as any;
       instancia.authService = { getUserLogged: () => of({ multiFactor: { user: { uid: 'u' } } }) };
-      instancia.database = { getById: () => Promise.resolve(consulta) };
+      instancia.perfilLocal = { obtener: () => consulta };
       component.inicializarVariables();
       await new Promise(resolver => setTimeout(resolver));
     };
@@ -81,22 +81,65 @@ describe('FormBasicComponent: intereses', () => {
 
     afterEach(() => delete (window as any).$);
 
-    it('lo cierra si el usuario nuevo no tiene documento', async () => {
-      await iniciar(of({ data: () => undefined }));
+    it('lo cierra si el usuario nuevo no tiene perfil', async () => {
+      await iniciar(Promise.resolve(undefined));
       expect(modal).toHaveBeenCalledWith('hide');
       expect(component.datosGenerales).toBeUndefined();
       expect(intereses().length).toBe(total);
     });
 
-    it('lo cierra si falla la consulta', async () => {
+    it('lo cierra si falla la lectura', async () => {
       spyOn(console, 'error');
-      await iniciar(throwError(() => new Error('sin permisos')));
+      await iniciar(Promise.reject(new Error('sin acceso')));
+      expect(modal).toHaveBeenCalledWith('hide');
+    });
+  });
+
+  describe('subida de imagenes', () => {
+    const archivo = () => new Promise<Blob>(resolver => {
+      const lienzo = document.createElement('canvas');
+      lienzo.width = lienzo.height = 10;
+      lienzo.toBlob(imagen => resolver(imagen!), 'image/png');
+    });
+    let modal: jasmine.Spy;
+
+    beforeEach(() => {
+      modal = jasmine.createSpy('modal');
+      (window as any).$ = () => ({ modal });
+    });
+
+    afterEach(() => delete (window as any).$);
+
+    it('deja la imagen comprimida en el formulario', async () => {
+      await component.loadImg('/firma/', { target: { files: [await archivo()] } });
+      expect(component.formBasic.get('imgFirma')?.value).toMatch(/^data:image\/png;base64,/);
+      expect(component.imgFirma.length).toBe(1);
       expect(modal).toHaveBeenCalledWith('hide');
     });
 
-    it('lo cierra si el servicio devuelve null', async () => {
-      await iniciar(null);
+    it('conserva la imagen anterior y cierra el modal si el archivo no es valido', async () => {
+      spyOn(console, 'error');
+      component.formBasic.get('imgFirma')?.setValue('data:anterior');
+      await component.loadImg('/firma/', { target: { files: [new Blob(['no es imagen'], { type: 'text/plain' })] } });
+      expect(component.formBasic.get('imgFirma')?.value).toBe('data:anterior');
       expect(modal).toHaveBeenCalledWith('hide');
+    });
+
+    it('guarda el formulario y actualiza los datos generales', async () => {
+      const guardar = jasmine.createSpy('guardar').and.resolveTo();
+      (component as any).perfilLocal = { guardar };
+      component.uid = 'u';
+      component.formBasic.get('primerNombre')?.setValue('Ana');
+      component.guardar();
+      await new Promise(resolver => setTimeout(resolver));
+      expect(guardar.calls.mostRecent().args[0]).toBe('u');
+      expect(component.datosGenerales.formBasic.primerNombre).toBe('Ana');
+      expect(modal).toHaveBeenCalledWith('hide');
+    });
+
+    it('no hace nada si se cancela la seleccion', async () => {
+      await component.loadImg('/firma/', { target: { files: [] } });
+      expect(modal).not.toHaveBeenCalled();
     });
   });
 });

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { FirebaseService } from '../../services/firebase.service';
+import { PerfilLocalService } from '../../services/perfil-local.service';
 
 declare var $: any;
 
@@ -18,7 +18,7 @@ export class SliderTemplatesComponent implements OnInit {
   public beta: boolean = false;
 
   constructor(private authService: AuthService,
-              private database: FirebaseService) {
+              private perfilLocal: PerfilLocalService) {
                 this.inicializarVariables();
               }
 
@@ -31,18 +31,14 @@ export class SliderTemplatesComponent implements OnInit {
     this.authService.getUserLogged().subscribe((usuario: any) => {
       if (usuario) {
         this.uid = usuario.multiFactor.user.uid;
-        this.database.getById('form-basic', usuario.multiFactor.user.uid).then(respuesta => {
-          if (respuesta) {
-            respuesta?.subscribe((formulario: any) => {
-              if (formulario) {
-                this.datosGenerales = formulario.data();
-                this.alpha = true;
-                $("#modalLoader").modal('hide');
-                console.log(this.datosGenerales, 'LOS DATOS GENERALES');
-              }
-            })
-          }
-        })
+        this.perfilLocal.obtener(this.uid).then(datos => {
+          this.datosGenerales = datos;
+          this.alpha = true;
+        }).catch(error => {
+          console.error(error);
+        }).finally(() => {
+          $("#modalLoader").modal('hide');
+        });
       }
     })
   }

@@ -1,15 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray, AbstractControl } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { SweetAlert } from 'src/app/constants/functions.constants';
+import { OpcionesImagen, SweetAlert, comprimirImagen, leerComoBase64 } from 'src/app/constants/functions.constants';
 import { AuthService } from 'src/app/services/auth.service';
-import { FirebaseService } from 'src/app/services/firebase.service';
+import { PerfilLocalService } from 'src/app/services/perfil-local.service';
 import { WebServicesService } from '../../services/web-services.service';
 
 import Swal from 'sweetalert2';
 import { INTERESES_GUSTOS } from '../../constants/workface.contants';
 
 declare var $: any;
+
+type CampoImagen = 'fotoFrontalSinFondo' | 'fotoFrontalConFondo' | 'imgFondo' | 'imgFirma';
+
+// La foto sin fondo y la firma siguen en PNG para conservar la transparencia.
+const IMAGENES: Record<string, OpcionesImagen & { campo: CampoImagen }> = {
+  '/frontal-sin-fondo/': { campo: 'fotoFrontalSinFondo', anchoMaximo: 800, formato: 'image/png' },
+  '/frontal-con-fondo/': { campo: 'fotoFrontalConFondo', anchoMaximo: 800, formato: 'image/jpeg' },
+  '/fondo/': { campo: 'imgFondo', anchoMaximo: 1600, formato: 'image/jpeg' },
+  '/firma/': { campo: 'imgFirma', anchoMaximo: 600, formato: 'image/png' }
+};
 
 @Component({
   standalone: false,
@@ -38,7 +48,7 @@ export class FormBasicComponent implements OnInit {
   constructor(private fb: FormBuilder,
     public webService: WebServicesService,
     private authService: AuthService,
-    private database: FirebaseService,
+    private perfilLocal: PerfilLocalService,
     private sant:DomSanitizer
     ) {
       
@@ -119,30 +129,20 @@ export class FormBasicComponent implements OnInit {
     this.authService.getUserLogged().subscribe( (usuario: any) => {
       if(usuario){
         this.uid = usuario.multiFactor.user.uid;
-        this.database.getById('form-basic', usuario.multiFactor.user.uid).then( respuesta => {
-          if(respuesta){
-            respuesta.subscribe({
-              next: (formulario:any) => {
-                // Un usuario nuevo todavia no tiene documento: data() devuelve undefined.
-                const datos = formulario?.data();
-                if(datos){
-                  this.datosGenerales = datos;
-                  this.setFormBasic(datos);
-                  this.loadFormsArray(datos);
-                  this.cargarImagenes(datos);
-                  console.log(this.datosGenerales, 'DATOS GENERALES');
-                }
-                $("#modalLoader").modal('hide');
-              },
-              error: (error: any) => {
-                console.error(error);
-                $("#modalLoader").modal('hide');
-              }
-            })
-          } else {
-            $("#modalLoader").modal('hide');
+        this.perfilLocal.obtener(this.uid).then( datos => {
+          // Un usuario nuevo todavia no tiene perfil guardado.
+          if(datos){
+            this.datosGenerales = datos;
+            this.setFormBasic(datos);
+            this.loadFormsArray(datos);
+            this.cargarImagenes(datos);
           }
-        })
+        }).catch( error => {
+          console.error(error);
+          SweetAlert('error', 'NO SE PUDIERON CARGAR LOS DATOS');
+        }).finally( () => {
+          $("#modalLoader").modal('hide');
+        });
       }
     });
   }
@@ -174,49 +174,30 @@ export class FormBasicComponent implements OnInit {
     this.convertFileToBase64();
   }
 
-  loadImg(categoria: string, files: any){
+  async loadImg(categoria: string, evento: any){
+    const archivo: File | undefined = evento.target.files?.[0];
+    if(!archivo){
+      return;
+    }
 
+    const opciones = IMAGENES[categoria];
     $("#modalLoader").modal('show');
-    let file = files.target.files;
-    let reader = new FileReader();
-
-    reader.readAsDataURL(file[0]);
-    reader.onloadend = () => {
-      // this.fotoFrontalSinFondo.push(reader.result);
-      if(categoria === '/frontal-sin-fondo/'){
-        this.fotoFrontalSinFondo?.push(reader.result);
-        console.log(this.fotoFrontalSinFondo, 'FRONTAL SIN FONDO');
-      }else if(categoria === '/frontal-con-fondo/'){
-        this.fotoFrontalConFondo?.push(reader.result);
-      }else if(categoria === '/fondo/'){
-        this.imgFondo?.push(reader.result);
-      }else if(categoria === '/firma/'){
-        this.imgFirma?.push(reader.result);
-      }
-      // this.selectionImg(categoria, reader);
-      console.log(reader.result, 'READER RESULT');
-
-      // this.database.subirBase64(this.fotoFrontalSinFondo, '/frontal-sin-fondo/');
-      this.database.loadImg(categoria, 'img_' + Date.now(), reader.result).then((urlImagen: any) => {
-
-        if(categoria === '/frontal-sin-fondo/'){
-          this.formBasic.get('fotoFrontalSinFondo')?.setValue(urlImagen);
-
-        }else if(categoria === '/frontal-con-fondo/'){
-          this.formBasic.get('fotoFrontalConFondo')?.setValue(urlImagen);
-          
-        }else if(categoria === '/fondo/'){
-          this.formBasic.get('imgFondo')?.setValue(urlImagen);
-          
-        }else if(categoria === '/firma/'){
-          this.formBasic.get('imgFirma')?.setValue(urlImagen);
-        }
-        SweetAlert('success','IMAGEN SUBIDA AHORA GUARDE PARA ADJUNTAR');
-        $("#modalLoader").modal('hide');
-      })
+    try {
+      const imagen = await comprimirImagen(archivo, opciones);
+      const base64 = await leerComoBase64(imagen);
+      this[opciones.campo] = [base64];
+      this.formBasic.get(opciones.campo)?.setValue(base64);
+      SweetAlert('success','IMAGEN LISTA, AHORA GUARDE PARA ADJUNTAR');
+    } catch(error) {
+      console.error(error);
+      SweetAlert('error','NO SE PUDO PROCESAR LA IMAGEN');
+    } finally {
+      // Permite volver a elegir el mismo archivo despues de un error.
+      evento.target.value = '';
+      $("#modalLoader").modal('hide');
     }
   }
-  
+
   convertFileToBase64(): void{
     let reader = new FileReader();
     reader.readAsDataURL(this.fileSelected as Blob);
@@ -426,25 +407,15 @@ export class FormBasicComponent implements OnInit {
     usuario.avatar = '';
     usuario.firma = '';
 
-    console.log(this.formBasic.value, 'COMO ESTA EL FORMULARIO');
-
-    if(this.datosGenerales){ 
-      this.database.update('form-basic',this.uid, usuario).then( respuesta => {
-        SweetAlert('success','FORMULARIO ACTUALIZADO');
-        $("#modalLoader").modal('hide');
-        
-      });
-    }else{
-      this.database.createUid('form-basic', usuario, usuario.idUsuario).then( res =>{
-        SweetAlert('success','FORMULARIO GUARDADO');
-        $("#modalLoader").modal('hide');
-        
-      }).catch( err => {
-        console.error( err);
-          SweetAlert('error', 'ERROR GUARDANDO');
-      })
-    }
-    $("#modalLoader").modal('hide');
+    this.perfilLocal.guardar(this.uid, usuario).then( () => {
+      this.datosGenerales = usuario;
+      SweetAlert('success','FORMULARIO GUARDADO');
+    }).catch( error => {
+      console.error(error);
+      SweetAlert('error', 'ERROR GUARDANDO');
+    }).finally( () => {
+      $("#modalLoader").modal('hide');
+    });
   }
 
   eliminarImagen(campo: string){
