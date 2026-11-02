@@ -63,6 +63,16 @@ describe('FormBasicComponent: intereses', () => {
     expect(intereses().length).toBe(total);
   });
 
+  it('no propone la fecha actual en ningun campo de fecha', () => {
+    component.agregarEstudio();
+    component.agregarExpLaboral();
+    expect(component.formBasic.get('fechaNacimiento')?.value).toBe('');
+    expect(component.formBasic.get('estudios')?.value[0].fechaInicio).toBe('');
+    expect(component.formBasic.get('estudios')?.value[0].fechaTitulo).toBe('');
+    expect(component.formBasic.get('expLaboral')?.value[0].fechaInicioEmpresa).toBe('');
+    expect(component.formBasic.get('expLaboral')?.value[0].fechaFinalEmpresa).toBe('');
+  });
+
   describe('cierre del modal de carga', () => {
     let modal: jasmine.Spy;
 

@@ -14,11 +14,17 @@ describe('PerfilLocalService', () => {
     expect(await service.obtener(uid('nuevo'))).toBeUndefined();
   });
 
-  it('conserva los datos, fechas e imagenes guardados', async () => {
+  it('conserva los datos, fechas de texto e imagenes guardados', async () => {
     const id = uid('completo');
-    const perfil = { formBasic: { primerNombre: 'Ana', fecha: new Date(0), imgFondo: 'data:image/jpeg;base64,' + 'A'.repeat(500000) } };
+    const perfil = { formBasic: { primerNombre: 'Ana', fechaNacimiento: '1990-05-20', imgFondo: 'data:image/jpeg;base64,' + 'A'.repeat(500000) } };
     await service.guardar(id, perfil);
     expect(await service.obtener(id)).toEqual(perfil);
+  });
+
+  it('vacia las fechas por defecto de perfiles antiguos', async () => {
+    const id = uid('antiguo');
+    await service.guardar(id, { formBasic: { fechaNacimiento: new Date(), estudios: [{ fechaTitulo: new Date(), tituloObtenido: 'Tecnologo' }] } });
+    expect(await service.obtener(id)).toEqual({ formBasic: { fechaNacimiento: '', estudios: [{ fechaTitulo: '', tituloObtenido: 'Tecnologo' }] } });
   });
 
   it('reemplaza el perfil al volver a guardar', async () => {

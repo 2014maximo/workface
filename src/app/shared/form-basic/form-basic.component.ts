@@ -73,7 +73,7 @@ export class FormBasicComponent implements OnInit {
       'nacionalidad': new FormControl('', Validators.required),
 
       // NACIMIENTO
-      'fechaNacimiento': new FormControl(new Date, Validators.required),
+      'fechaNacimiento': new FormControl('', Validators.required),
       'ciudadNacimiento': new FormControl('', Validators.required),
       'genero': new FormControl('', Validators.required),
 
@@ -314,8 +314,8 @@ export class FormBasicComponent implements OnInit {
     (<FormArray>this.formBasic.controls['estudios']).push(new FormGroup({
       'nombreInstitucion': new FormControl('', Validators.required),
       'tituloObtenido': new FormControl('', Validators.required),
-      'fechaInicio': new FormControl(new Date, Validators.required),
-      'fechaTitulo': new FormControl(new Date, Validators.required),
+      'fechaInicio': new FormControl('', Validators.required),
+      'fechaTitulo': new FormControl('', Validators.required),
       'ciudadEstudio': new FormControl('', Validators.required),
       'descripcionEstudio':new FormControl('', Validators.compose([
         Validators.required,
@@ -330,8 +330,8 @@ export class FormBasicComponent implements OnInit {
       'nombreEmpresa': new FormControl('', Validators.required),
       'jefeInmediatoEmpresa': new FormControl('', Validators.required),
       'cargoEjercido': new FormControl('', Validators.required),
-      'fechaInicioEmpresa': new FormControl(new Date, Validators.required),
-      'fechaFinalEmpresa':new FormControl(new Date),
+      'fechaInicioEmpresa': new FormControl('', Validators.required),
+      'fechaFinalEmpresa':new FormControl(''),
       'funcionesRealizadas':new FormControl('', Validators.compose([
         Validators.required,
         Validators.minLength(40),
@@ -346,7 +346,7 @@ export class FormBasicComponent implements OnInit {
     (<FormArray>this.formBasic.controls['conocimientosAdicionales']).push(new FormGroup({
       'nombreConocimiento': new FormControl('', Validators.required),
       'duracion': new FormControl('', Validators.required),
-      'fechaFinalizacion': new FormControl(new Date, Validators.required),
+      'fechaFinalizacion': new FormControl('', Validators.required),
     }));
 
   }
