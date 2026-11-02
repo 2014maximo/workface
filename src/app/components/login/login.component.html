@@ -25,10 +25,20 @@
               }
               <input class="f-open-sans-c text-light fw-3 w-100 mb-2 ps-2 bg-transparent" autocomplete="off" id="email" type="text" placeholder="Email" formControlName="email">
               @if (ingreso || registro) {
-                <input class="f-open-sans-c fw-3 w-100 mb-2 ps-2 text-light bg-transparent" autocomplete="off" type="password" placeholder="Clave"  formControlName="password">
+                <div class="position-relative mb-2">
+                  <input class="f-open-sans-c fw-3 w-100 ps-2 pe-5 text-light bg-transparent" autocomplete="off" [type]="mostrarClave ? 'text' : 'password'" placeholder="Clave" formControlName="password">
+                  <button type="button" class="btn-ver-clave position-absolute top-50 end-0 translate-middle-y bg-transparent border-0 text-light" [attr.aria-label]="mostrarClave ? 'Ocultar clave' : 'Mostrar clave'" [attr.aria-pressed]="mostrarClave" (click)="mostrarClave = !mostrarClave">
+                    <i class="max" [class.max-eye]="!mostrarClave" [class.max-eye-blocked]="mostrarClave" aria-hidden="true"></i>
+                  </button>
+                </div>
               }
               @if (registro) {
-                <input class="f-open-sans-c fw-3 w-100 mb-3 ps-2 text-light bg-transparent" type="password" placeholder="Confirmar clave" formControlName="confirmPassword">
+                <div class="position-relative mb-3">
+                  <input class="f-open-sans-c fw-3 w-100 ps-2 pe-5 text-light bg-transparent" [type]="mostrarConfirmacion ? 'text' : 'password'" placeholder="Confirmar clave" formControlName="confirmPassword">
+                  <button type="button" class="btn-ver-clave position-absolute top-50 end-0 translate-middle-y bg-transparent border-0 text-light" [attr.aria-label]="mostrarConfirmacion ? 'Ocultar clave' : 'Mostrar clave'" [attr.aria-pressed]="mostrarConfirmacion" (click)="mostrarConfirmacion = !mostrarConfirmacion">
+                    <i class="max" [class.max-eye]="!mostrarConfirmacion" [class.max-eye-blocked]="mostrarConfirmacion" aria-hidden="true"></i>
+                  </button>
+                </div>
               }
               <button class="tc-yellow-one bg-transparent border-0 mb-4 f-open-sans-c fw-3" (click)="submit()">ENVIAR</button><br>
 
@@ -43,7 +53,7 @@
                 <a class="tc-blue-one f-open-sans-c fw-3 cursor-p" (click)="ajustesRegistrar()"> REGISTRAR</a>
                 }<br>
                 @if (!recordar) {
-                  <a href="http://" class="fuenteUno t3 fw-3" (click)="ajustesRecordarClave()">RECORDAR CONTRASEÑA</a>
+                  <a class="fuenteUno t3 fw-3 cursor-p" (click)="ajustesRecordarClave()">RECORDAR CONTRASEÑA</a>
                 }
                 @if (camposRegistrar) {
                   <button class="w-100">REGISTRAR</button>

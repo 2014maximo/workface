@@ -21,6 +21,8 @@ export class LoginComponent implements OnInit {
   public recordar: boolean;
   public registro: boolean;
   public separar: boolean;
+  public mostrarClave = false;
+  public mostrarConfirmacion = false;
 
   constructor(private fb: FormBuilder,
               private authService: AuthService,
@@ -94,13 +96,20 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  private ocultarClaves(){
+    this.mostrarClave = false;
+    this.mostrarConfirmacion = false;
+  }
+
   public ajustesIngresar(){
+    this.ocultarClaves();
     this.registro = false;
     this.recordar = false;
     this.ingreso = true;
     this.separar = false;
   }
   public ajustesRegistrar(){
+    this.ocultarClaves();
     this.resetForm();
     this.focoEmail();
     this.ingreso = false;
@@ -109,6 +118,7 @@ export class LoginComponent implements OnInit {
     this.separar = false;
   }
   public ajustesRecordarClave(){
+    this.ocultarClaves();
     this.resetForm();
     this.focoEmail();
     this.ingreso = false;
