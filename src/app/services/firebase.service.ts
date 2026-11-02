@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EnvironmentInjector, Injectable, inject, runInInjectionContext } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { environment } from '../../environments/environment.prod';
 import 'firebase/compat/storage';
@@ -15,13 +15,19 @@ export class FirebaseService {
   public storageRef = firebase.app().storage().ref();
   public urlImg:any;
   public metaDatos:any;
+  private injector = inject(EnvironmentInjector);
 
   constructor(private firestore: AngularFirestore) {
   }
 
+  // collection() y doc() de @angular/fire usan inject(), asi que deben ejecutarse en un contexto de inyeccion.
+  private enContexto<T>(operacion: () => T): T {
+    return runInInjectionContext(this.injector, operacion);
+  }
+
   async create(collection: string, data: any){
     try {
-      return await this.firestore.collection(collection).add(data);
+      return await this.enContexto(() => this.firestore.collection(collection).add(data));
     }catch(error){
       console.error(error);
       return null
@@ -30,7 +36,7 @@ export class FirebaseService {
 
   async createUid(collection: string, data: any, uid: string){
     try {
-      return await this.firestore.collection(collection).doc(uid).set(data);
+      return await this.enContexto(() => this.firestore.collection(collection).doc(uid).set(data));
     }catch(error){
       console.error(error);
       return null
@@ -39,7 +45,7 @@ export class FirebaseService {
 
   async getById(collection: any, id:any){
     try {
-      return await this.firestore.collection(collection).doc(id).get();
+      return await this.enContexto(() => this.firestore.collection(collection).doc(id).get());
     } catch(error){
       console.error(error);
       return null
@@ -48,7 +54,7 @@ export class FirebaseService {
 
   async update(collection: string, id: any, data:any){
     try {
-      return await this.firestore.collection(collection).doc(id).update(data);
+      return await this.enContexto(() => this.firestore.collection(collection).doc(id).update(data));
     } catch(error){
       console.error(error);
       return null
