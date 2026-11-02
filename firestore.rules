@@ -1,15 +1,10 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /form-basic/{producto}{
-
-      allow read: if true;
-      allow write: if true;
-      // allow read: if request.resource.data.uid = users.uid;
-      // allow write: if request.resource.data.uid = users.uid;
-
-      // allow read: if resource.data.uid = users.uid,
-      // allow write: if resource.data.uid = users.uid,
+    // Cada documento usa como ID el uid de su dueño: solo esa persona puede usarlo.
+    // Cualquier otra coleccion queda denegada porque no tiene una regla que la permita.
+    match /form-basic/{uid} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
     }
   }
-} 
+}
