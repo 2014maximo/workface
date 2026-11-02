@@ -41,3 +41,6 @@ package-lock.json
 # System files
 .DS_Store
 Thumbs.db
+
+# Binario de Impeccable: el lanzador lo descarga si falta
+.claude/skills/impeccable/scripts/bin/
