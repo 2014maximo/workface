@@ -6,6 +6,7 @@ import { FirebaseService } from '../../services/firebase.service';
 declare var $: any;
 
 @Component({
+  standalone: false,
   selector: 'app-slider-templates',
   templateUrl: './slider-templates.component.html',
   styleUrls: ['./slider-templates.component.css']

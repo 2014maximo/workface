@@ -3,6 +3,7 @@ import { FORMATOS } from '../../../constants/curriculums.constant';
 import { CurriculumModel } from '../../../models/formatos.model';
 
 @Component({
+  standalone: false,
   selector: 'app-curriculums',
   templateUrl: 'curriculums.component.html',
   styleUrls: ['curriculums.component.css']

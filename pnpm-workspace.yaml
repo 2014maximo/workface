@@ -1,0 +1,14 @@
+allowBuilds:
+  '@angular/cli': false
+  '@firebase/util': false
+  '@parcel/watcher': false
+  core-js: false
+  esbuild: true
+  lmdb: false
+  msgpackr-extract: false
+  nice-napi: false
+  protobufjs: false
+
+# El binario nativo de Rollup requiere instrucciones que esta CPU no tiene (SIGILL en `ng serve`).
+overrides:
+  rollup: npm:@rollup/wasm-node@^4.43.0

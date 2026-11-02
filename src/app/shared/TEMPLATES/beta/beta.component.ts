@@ -4,6 +4,7 @@ import { INTERESES_GUSTOS } from '../../../constants/workface.contants';
 
 
 @Component({
+  standalone: false,
   selector: 'app-beta',
   templateUrl: './beta.component.html',
   styleUrls: ['./beta.component.css']

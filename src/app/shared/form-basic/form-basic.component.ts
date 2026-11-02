@@ -12,6 +12,7 @@ import { INTERESES_GUSTOS } from '../../constants/workface.contants';
 declare var $: any;
 
 @Component({
+  standalone: false,
   selector: 'app-form-basic',
   templateUrl: './form-basic.component.html',
   styleUrls: ['./form-basic.component.css']

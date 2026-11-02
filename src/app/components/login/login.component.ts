@@ -6,6 +6,7 @@ import { timeout } from 'rxjs';
 import { SweetAlert } from 'src/app/constants/functions.constants';
 
 @Component({
+  standalone: false,
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']

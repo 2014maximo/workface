@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-galeria-templates',
   templateUrl: './galeria-templates.component.html',
   styleUrls: ['./galeria-templates.component.css']

@@ -26,10 +26,10 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('workface');
   });
 
-  it('should render title', () => {
+  it('should render the router outlet', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('workface app is running!');
+    expect(compiled.querySelector('.fondoNegro router-outlet')).toBeTruthy();
   });
 });

@@ -14,6 +14,7 @@ import { INTERESES_GUSTOS } from 'src/app/constants/workface.contants';
 
 
 @Component({
+  standalone: false,
   selector: 'app-alpha',
   templateUrl: './alpha.component.html',
   styleUrls: ['./alpha.component.css']
