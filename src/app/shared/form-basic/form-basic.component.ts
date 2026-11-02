@@ -99,6 +99,7 @@ export class FormBasicComponent implements OnInit {
 
     });
 
+    this.cargarInteresesArray();
     this.listaTipoIdentificacion = [];
     this.paises = [];
     this.cargarTipoIdentificacion();
@@ -219,11 +220,6 @@ export class FormBasicComponent implements OnInit {
   loadFormsArray(formularios: any){
 
     if(formularios.formBasic){
-      formularios.formBasic.intereses?.forEach((staff: any, index: number, form: any) => {
-        this.agregarInteres();
-        (<FormArray>this.formBasic.get('intereses')).at(index).setValue(staff);
-      });
-  
       formularios.formBasic.habilidades?.forEach((staff: any, index: number, form: any) => {
         this.agregarHabilidad();
         (<FormArray>this.formBasic.get('habilidades')).at(index).setValue(staff);
@@ -397,8 +393,7 @@ export class FormBasicComponent implements OnInit {
   setFormBasic(respuesta: any){
     // let form = this.formBasic.get('estudios') as FormArray;
 
-    if(respuesta && respuesta.formBasic && respuesta.formBasic.intereses.length > 1){
-      this.cargarInteresesArray();
+    if(respuesta && respuesta.formBasic){
       this.formBasic.patchValue(respuesta.formBasic as FormGroup);
     } 
     

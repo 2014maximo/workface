@@ -186,7 +186,7 @@ export class AlphaComponent implements OnInit {
 
   public iconosDestacados(datos: any) {
     this.gustos?.forEach( (item, index) =>{
-      if(datos[index].interes){
+      if(datos?.[index]?.interes){
         this.iconosSeleccionados[index] = item;
       }
     });
