@@ -121,17 +121,26 @@ export class FormBasicComponent implements OnInit {
         this.uid = usuario.multiFactor.user.uid;
         this.database.getById('form-basic', usuario.multiFactor.user.uid).then( respuesta => {
           if(respuesta){
-            respuesta?.subscribe( (formulario:any) => {
-              if(formulario){
-                this.datosGenerales = formulario.data();
-                this.setFormBasic(formulario.data());
-                this.loadFormsArray(this.datosGenerales);
-                this.cargarImagenes(this.datosGenerales);
+            respuesta.subscribe({
+              next: (formulario:any) => {
+                // Un usuario nuevo todavia no tiene documento: data() devuelve undefined.
+                const datos = formulario?.data();
+                if(datos){
+                  this.datosGenerales = datos;
+                  this.setFormBasic(datos);
+                  this.loadFormsArray(datos);
+                  this.cargarImagenes(datos);
+                  console.log(this.datosGenerales, 'DATOS GENERALES');
+                }
                 $("#modalLoader").modal('hide');
-                console.log(this.datosGenerales, 'DATOS GENERALES');
+              },
+              error: (error: any) => {
+                console.error(error);
+                $("#modalLoader").modal('hide');
               }
-              
             })
+          } else {
+            $("#modalLoader").modal('hide');
           }
         })
       }

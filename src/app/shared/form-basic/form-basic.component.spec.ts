@@ -1,7 +1,7 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { FormArray } from '@angular/forms';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 
 import { INTERESES_GUSTOS } from '../../constants/workface.contants';
 import { AuthService } from '../../services/auth.service';
@@ -61,5 +61,42 @@ describe('FormBasicComponent: intereses', () => {
     cargar({ primerNombre: 'Ana', intereses: [] });
     expect(component.formBasic.get('primerNombre')?.value).toBe('Ana');
     expect(intereses().length).toBe(total);
+  });
+
+  describe('cierre del modal de carga', () => {
+    let modal: jasmine.Spy;
+
+    const iniciar = async (consulta: any) => {
+      const instancia = component as any;
+      instancia.authService = { getUserLogged: () => of({ multiFactor: { user: { uid: 'u' } } }) };
+      instancia.database = { getById: () => Promise.resolve(consulta) };
+      component.inicializarVariables();
+      await new Promise(resolver => setTimeout(resolver));
+    };
+
+    beforeEach(() => {
+      modal = jasmine.createSpy('modal');
+      (window as any).$ = () => ({ modal });
+    });
+
+    afterEach(() => delete (window as any).$);
+
+    it('lo cierra si el usuario nuevo no tiene documento', async () => {
+      await iniciar(of({ data: () => undefined }));
+      expect(modal).toHaveBeenCalledWith('hide');
+      expect(component.datosGenerales).toBeUndefined();
+      expect(intereses().length).toBe(total);
+    });
+
+    it('lo cierra si falla la consulta', async () => {
+      spyOn(console, 'error');
+      await iniciar(throwError(() => new Error('sin permisos')));
+      expect(modal).toHaveBeenCalledWith('hide');
+    });
+
+    it('lo cierra si el servicio devuelve null', async () => {
+      await iniciar(null);
+      expect(modal).toHaveBeenCalledWith('hide');
+    });
   });
 });
