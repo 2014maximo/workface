@@ -10,6 +10,7 @@
     font-family: 'Alex Brush';
     src: url(https://2014maximo.github.io/templates/styles/fonts/AlexBrush-Regular.ttf);
     font-weight: normal;
+    font-display: swap;
 }
 
 
@@ -31,6 +32,12 @@
     --color-dark-dos: #002451;
     --color-dark-tres:#3a0000;
     --color-alpha: #2d4399;
+    /* Colores de la interfaz sobre el fondo oscuro: todos cumplen WCAG AA */
+    --texto-secundario: #b8b8b8;
+    --enlace: #4cbbe8;
+    --accion: #FFEF27;
+    --borde-campo: #a8a8a8;
+    --foco: #4cbbe8;
 }
 .fuenteUno {
     font-family: var(--fuente-uno);
@@ -154,21 +161,28 @@
 .drop {
     filter: drop-shadow(0 11px 1px rgba(0, 0, 0, 0.7));
 }
-.typining{
-    overflow: hidden;
-    border-right: .15em solid white;
-    white-space: nowrap;
-    margin: 0 auto;
-    letter-spacing: .15em;
-    animation: typing 3.5s steps(40,end), blink-caret .75s step-end infinite;
-}
-@keyframes typing {
-    from{width:0} to {width:100%}
-}
-@keyframes blink-caret {
-    from,to{border-color: transparent;} 50% {border-color: white;}
-}
-
 .bgBase{
     background-color: #2d4399 !important;
+}
+
+/* Foco visible en la interfaz, sin tocar las plantillas de hoja de vida */
+app-header :focus-visible,
+app-footer :focus-visible,
+app-login :focus-visible,
+app-home :focus-visible {
+    outline: 2px solid var(--foco);
+    outline-offset: 2px;
+}
+.btn-pausa {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid var(--borde-campo);
+    border-radius: 50%;
+    cursor: pointer;
 }

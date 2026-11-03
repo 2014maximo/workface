@@ -1,14 +1,22 @@
-.obj-fit{
-    object-fit: cover;
+.pie {
+    padding: 48px clamp(12px, 8.33vw, 160px);
+    text-align: center;
 }
-.bgBase{
-    background-color: #2d4399 !important;
+.inicio,
+.trucos {
+    display: block;
+    width: fit-content;
+    margin-inline: auto;
 }
-
-.wrappers{
+.logo {
+    display: block;
+    height: 80px;
+    width: auto;
+}
+.wrappers {
     position: relative;
-    height: 40px;
-    width: 40px;
+    height: 44px;
+    width: 44px;
     display: block;
     background: #fff;
     text-align: center;
@@ -18,29 +26,41 @@
     z-index: 2;
     box-shadow: 0 10px 10px rgba(0,0,0,0.1);
     font-size: 25px;
-    line-height: 40px;
+    line-height: 44px;
 }
-.wrappers:hover{
+.wrappers:hover {
     color: #fff;
 }
-.linkedin:hover{
+.linkedin:hover {
     background: #0a66c2;
 }
-.github:hover{
+.github:hover {
     background: #000;
 }
-.trucos{
+.trucos {
+    min-height: 44px;
     text-decoration: none;
 }
-.trucos h3:hover{
+.trucos span:hover {
     color: #FFEF27 !important;
 }
-/* Las columnas del footer se apilan por debajo de md */
-@media (max-width: 767.98px) {
-    .footer{
-        text-align: center;
+.footer-icons {
+    justify-content: center;
+}
+.credito {
+    margin-bottom: 0;
+    color: var(--texto-secundario);
+    letter-spacing: .05em;
+}
+@media (min-width: 768px) {
+    .pie {
+        text-align: left;
     }
-    .footer-icons{
-        justify-content: center;
+    .inicio,
+    .trucos {
+        margin-inline: 0;
+    }
+    .footer-icons {
+        justify-content: flex-start;
     }
 }

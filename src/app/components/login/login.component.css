@@ -1,7 +1,122 @@
-a {
-    text-decoration: none;
+.login-pagina {
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 88px 12px 48px;
+}
+.login-tarjeta {
+    align-self: flex-start;
+    width: 100%;
+    max-width: 420px;
+}
+.login-logo {
+    display: block;
+    width: 170px;
+    margin: 0 auto 24px;
+}
+.campo {
+    margin-bottom: 12px;
+    text-align: left;
+}
+.campo label {
+    display: block;
+    margin-bottom: 4px;
+    color: #fff;
+    font-family: var(--fuente-uno);
+    font-size: 1.125rem;
+}
+.campo input {
+    min-height: 44px;
+    /* 16 px o mas: iOS no acerca la pagina al enfocar el campo */
+    font-size: 1.125rem;
+    border: 1px solid var(--borde-campo);
+}
+.con-ojo {
+    padding-right: 44px;
+}
+/* El autocompletado del navegador conserva el fondo oscuro y deja ver el ojo */
+.campo input:-webkit-autofill,
+.campo input:-webkit-autofill:hover,
+.campo input:-webkit-autofill:focus {
+    -webkit-text-fill-color: #fff;
+    caret-color: #fff;
+    box-shadow: 0 0 0 1000px #2b2b2b inset;
 }
 .btn-ver-clave {
+    width: 44px;
+    height: 44px;
+    padding: 0;
     line-height: 1;
-    padding: 0 8px;
+}
+.btn-enviar {
+    width: 100%;
+    min-height: 44px;
+    margin-top: 8px;
+    font-size: 1.125rem;
+    color: var(--accion);
+    background: transparent;
+    border: 1px solid var(--accion);
+    transition: color 150ms ease-out, background-color 150ms ease-out;
+}
+.btn-enviar:hover:not(:disabled) {
+    color: #1c1c1c;
+    background: var(--accion);
+}
+.btn-enviar:disabled {
+    opacity: .7;
+    cursor: progress;
+}
+.btn-google {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    min-height: 44px;
+    margin-top: 12px;
+    font-size: 1.125rem;
+    color: #1f1f1f;
+    background: #fff;
+    border: 1px solid #fff;
+}
+.btn-google:hover:not(:disabled) {
+    background: #e8e8e8;
+}
+.btn-google:disabled {
+    opacity: .7;
+    cursor: progress;
+}
+.login-enlaces {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    column-gap: 16px;
+    margin-top: 16px;
+}
+.btn-enlace {
+    min-height: 44px;
+    padding: 0 4px;
+    font-size: 1.125rem;
+    color: var(--enlace);
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+}
+.btn-enlace:hover {
+    color: #fff;
+}
+@media (min-width: 768px) {
+    .login-pagina {
+        justify-content: flex-end;
+        padding: 130px clamp(12px, 8.33vw, 160px) 64px;
+    }
+    .login-logo {
+        width: 220px;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .btn-enviar {
+        transition: none;
+    }
 }

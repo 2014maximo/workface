@@ -1,20 +1,24 @@
+<div class="container-fluid">
 <div class="row">
     <div class="col-md-1"></div>
-    <div class="col-md-10">
-        <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
-            <div class="carousel-inner text-center">
+    <div class="col-md-10 text-center">
+        <div #carrusel="appCarrusel" appCarrusel id="carouselExampleFade" class="carousel slide carousel-fade">
+            <div class="carousel-inner">
               <div class="carousel-item active" data-bs-interval="15000">
-                <h4 class="fuenteUno fw-3 text-light fs-40 typining">En asuntos laborales es imprescindible mostrar la mejor imagen.</h4>
+                <p class="frase fuenteUno fw-3 text-light">En asuntos laborales es imprescindible mostrar la mejor imagen.</p>
               </div>
               <div class="carousel-item" data-bs-interval="15000">
-                <h4 class="fuenteUno fw-3 text-light fs-40 typining">Mejoremos la manera monótona del proceso.</h4>
+                <p class="frase fuenteUno fw-3 text-light">Mejoremos la manera monótona del proceso.</p>
               </div>
               <div class="carousel-item" data-bs-interval="15000">
-                <h4 class="fuenteUno fw-3 text-light fs-40 typining">La primera imagen es la más importante.</h4>
+                <p class="frase fuenteUno fw-3 text-light">La primera imagen es la más importante.</p>
               </div>
             </div>
         </div>
+        <button type="button" class="btn-pausa mt-2" [attr.aria-label]="carrusel.pausado ? 'Reanudar frases' : 'Pausar frases'" (click)="carrusel.alternar()">
+            <i class="max" [class.max-pause]="!carrusel.pausado" [class.max-play]="carrusel.pausado" aria-hidden="true"></i>
+        </button>
     </div>
-
     <div class="col-md-1"></div>
+</div>
 </div>

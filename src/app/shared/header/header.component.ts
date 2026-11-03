@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { UserFirebase } from '../../models/usuario.model';
@@ -13,8 +13,11 @@ export class HeaderComponent implements OnInit {
 
   public userLogged = this.authService.getUserLogged();
 
-  public abrirMenu: string = '';
-  public iconAbrir: boolean = true;
+  @ViewChild('botonAbrir') private botonAbrir?: ElementRef<HTMLElement>;
+  @ViewChild('botonCerrar') private botonCerrar?: ElementRef<HTMLElement>;
+  @ViewChild('menu') private menu?: ElementRef<HTMLElement>;
+
+  public menuAbierto: boolean = false;
   public returnHome: string = '';
   public mostrarLogin: string = '';
   public email: string = '';
@@ -28,7 +31,6 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.enLogin = document.location.href.includes('login');
-    console.log(document.location.href.includes('login'));
 
     this.userLogged.subscribe( (usuario: any) => {
       if(usuario){
@@ -56,13 +58,36 @@ export class HeaderComponent implements OnInit {
   }
 
   public abreMenu(){
-    this.abrirMenu = 'menu-hamburger-open';
-    this.iconAbrir = false;
+    this.menuAbierto = true;
+    this.enfocarDespuesDeRenderizar(this.botonCerrar);
   }
 
   public cierreMenu(){
-    this.abrirMenu = 'menu-hamburger-close';
-    this.iconAbrir = true;
+    this.menuAbierto = false;
+    this.enfocarDespuesDeRenderizar(this.botonAbrir);
+  }
+
+  // El menu cubre toda la pantalla: Tab no debe salir de el mientras este abierto
+  public mantenerFoco(evento: Event){
+    const teclado = evento as KeyboardEvent;
+    const enfocables = this.menu?.nativeElement.querySelectorAll<HTMLElement>('a[href], button');
+    if(!enfocables?.length){
+      return;
+    }
+    const primero = enfocables[0];
+    const ultimo = enfocables[enfocables.length - 1];
+    const activo = document.activeElement;
+    if(teclado.shiftKey && activo === primero){
+      teclado.preventDefault();
+      ultimo.focus();
+    } else if(!teclado.shiftKey && activo === ultimo){
+      teclado.preventDefault();
+      primero.focus();
+    }
+  }
+
+  private enfocarDespuesDeRenderizar(boton?: ElementRef<HTMLElement>){
+    setTimeout(() => boton?.nativeElement.focus());
   }
 
   public logout(){

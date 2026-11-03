@@ -1,0 +1,8 @@
+.espacio-superior {
+    height: 96px;
+}
+@media (min-width: 768px) {
+    .espacio-superior {
+        height: 150px;
+    }
+}

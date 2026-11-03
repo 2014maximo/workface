@@ -1,0 +1,30 @@
+/* Por defecto la frase se lee completa y ocupa varias lineas si hace falta */
+.frase {
+    margin: 0 auto;
+    /* Reserva tres lineas para que la pagina no salte al cambiar de frase */
+    min-height: 4.05em;
+    font-size: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+    line-height: 1.35;
+    letter-spacing: .05em;
+    text-wrap: balance;
+}
+/* El efecto de escritura solo cuando la frase cabe en una linea y se acepta movimiento */
+@media (min-width: 1200px) and (prefers-reduced-motion: no-preference) {
+    .frase {
+        min-height: 0;
+        overflow: hidden;
+        font-size: min(2.4vw, 2.5rem);
+        letter-spacing: .15em;
+        white-space: nowrap;
+        border-right: .15em solid transparent;
+        animation: typing 3.5s steps(40, end), blink-caret .75s step-end 5;
+    }
+}
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: white; }
+}

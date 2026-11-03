@@ -1,0 +1,35 @@
+/* La imagen se ajusta al ancho disponible, hasta su tamano de escritorio */
+.carousel-item img {
+    display: block;
+    width: 100%;
+    max-width: 667px;
+    height: auto;
+    margin-inline: auto;
+}
+/* Flechas visibles sobre cualquier imagen, con area tactil suficiente */
+.carousel-control-prev,
+.carousel-control-next {
+    width: 56px;
+    height: calc(100% - 5rem);
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: 44px;
+    height: 44px;
+    background-color: rgba(0, 0, 0, 0.7);
+    background-size: 55%;
+    border-radius: 50%;
+}
+.btn-pausa-imagenes {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    z-index: 3;
+    transform: translateX(-50%);
+}
+@media (min-width: 768px) {
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 15%;
+    }
+}

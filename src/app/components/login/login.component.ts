@@ -1,8 +1,7 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, ValidatorFn, Validators, AbstractControl, ValidationErrors, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ValidatorFn, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { timeout } from 'rxjs';
 import { SweetAlert } from 'src/app/constants/functions.constants';
 
 @Component({
@@ -13,32 +12,27 @@ import { SweetAlert } from 'src/app/constants/functions.constants';
 })
 export class LoginComponent implements OnInit {
 
-  public mostrarOcultarRecordar: boolean;
   public form: FormGroup;
-  public usuarioIncorrecto: boolean;
-  public camposRegistrar: boolean;
   public ingreso: boolean;
   public recordar: boolean;
   public registro: boolean;
   public separar: boolean;
   public mostrarClave = false;
   public mostrarConfirmacion = false;
+  public enviando = false;
 
   constructor(private fb: FormBuilder,
               private authService: AuthService,
               private route: Router ) {
-    this.mostrarOcultarRecordar = false;             
-    this.usuarioIncorrecto = false;
     this.ingreso = true;
     this.recordar = false;
     this.registro = false;
     this.separar = false;
     this.form = this.fb.group({
-      email:['', [Validators.required, Validators.pattern(/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/)]],
+      email:['', [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/)]],
       password: ['', [Validators.required]],
       confirmPassword: ['']
     }, { validators: this.checkPasswords});
-    this.camposRegistrar = false;
   }
 
 
@@ -48,11 +42,14 @@ export class LoginComponent implements OnInit {
     return pass === confirmPass ? null : { notSame: true }
   }
 
-  public isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const invalidCtrl = !!(control?.invalid && control?.parent?.dirty);
-    const invalidParent = !!(control?.parent?.invalid && control?.parent?.dirty);
-
-    return invalidCtrl || invalidParent;
+  public get textoEnviar(): string {
+    if(this.enviando){
+      return 'ENVIANDO…';
+    }
+    if(this.registro){
+      return 'CREAR CUENTA';
+    }
+    return this.recordar ? 'ENVIAR ENLACE' : 'INGRESAR';
   }
 
   ngOnInit(): void {
@@ -64,10 +61,6 @@ export class LoginComponent implements OnInit {
   private getPass(){
     return this.form.value.password;
   }
-  private getConfirmPass(){
-    return this.form.value.confirmPassword;
-  }
-
   public resetForm(){
     this.form.get('email')?.setValue('');
     this.form.get('password')?.setValue('');
@@ -79,21 +72,26 @@ export class LoginComponent implements OnInit {
   }
 
 
+  private limpiarClaves(){
+    this.form.patchValue({ password: '', confirmPassword: '' });
+  }
+
+  // Espera a que Angular muestre la vista antes de mover el foco
   public focoEmail(){
     setTimeout( ()=>{
-      this.resetForm();
       document.getElementById('email')?.focus();
-    }, 1000)
+    });
   }
 
   public ingresoGoogle(){
+    this.enviando = true;
     this.authService.loginGoogle().then( res =>{
       if(res){
         this.route.navigate(['profile']);
       } else {
-
+        this.toas('error', 'No pudimos ingresar con Google. Revisa que el navegador permita ventanas emergentes e inténtalo de nuevo.');
       }
-    });
+    }).finally(() => this.enviando = false);
   }
 
   private ocultarClaves(){
@@ -130,63 +128,72 @@ export class LoginComponent implements OnInit {
   public ingresoUsuario(){
 
     if(this.getEmail() && this.getPass()){
+        this.enviando = true;
         this.authService.login(this.getEmail(), this.getPass()).then( res =>{
           if(res?.operationType === "signIn"){
             this.route.navigate(['profile']);
           } else {
-            this.toas('error','Email o clave errados');
-            this.usuarioIncorrecto = true;
-            setTimeout(()=>{
-              this.usuarioIncorrecto = false;
-            },5000);
+            this.toas('error','El email o la clave no son correctos. Revísalos e inténtalo de nuevo.');
+            this.limpiarClaves();
             this.focoEmail();
           }
-        });
+        }).finally(() => this.enviando = false);
 
     } else {
-      this.toas('error', 'Ingrese correctamente los datos');
+      this.toas('error', 'Escribe tu email y tu clave.');
     }
 
+  }
+
+  private errorRegistro(): string | null {
+    if(this.form.get('email')?.invalid){
+      return 'Escribe un email válido, por ejemplo nombre@correo.com.';
+    }
+    if(this.form.get('password')?.invalid){
+      return 'Escribe una clave.';
+    }
+    return this.form.hasError('notSame') ? 'Las claves no coinciden.' : null;
   }
 
   public registroUsuario(){
-    if(this.form.valid){
-        this.authService.register(this.getEmail(), this.getPass()).then( res => {
-          console.log(this.getEmail().value, this.getPass().value, 'EL VALOR QUE SE MANDA');
-          if(res?.additionalUserInfo?.isNewUser){
-            this.toas('success','Registro correcto');
-            this.resetForm();
-          }else{
-            this.toas('error', 'El usuario ya esta registrado');
-            this.resetForm();
-            this.focoEmail();
-          }
-        });
-      } else {
-        this.toas('error', 'Formulario inválido');
-        this.resetForm();
+    const error = this.errorRegistro();
+    if(error){
+      this.toas('error', error);
+      return;
+    }
+    this.enviando = true;
+    this.authService.register(this.getEmail(), this.getPass()).then( res => {
+      if(res?.additionalUserInfo?.isNewUser){
+        this.toas('success','Registro correcto');
+        this.route.navigate(['profile']);
+      }else{
+        this.toas('error', 'No pudimos crear la cuenta. Revisa que el email no esté registrado y que la clave tenga al menos 6 caracteres.');
+        this.limpiarClaves();
         this.focoEmail();
       }
+    }).finally(() => this.enviando = false);
   }
 
   public recordarClave(){
-    if(this.getEmail()){
-        this.authService.resetPassword(this.getEmail()).then( res => {
-        });
+    if(this.form.get('email')?.valid){
+        this.enviando = true;
+        this.authService.resetPassword(this.getEmail()).then( error => {
+          if(error){
+            this.toas('error', 'No pudimos enviar el enlace. Inténtalo de nuevo en unos minutos.');
+          } else {
+            this.toas('success', 'Si el email está registrado, te enviamos un enlace para cambiar tu clave.');
+          }
+        }).finally(() => this.enviando = false);
     } else {
-      this.toas('error', 'Ingresa correctamente el correo');
+      this.toas('error', 'Escribe un email válido, por ejemplo nombre@correo.com.');
     }
   }
 
-/* En las versiones chrome no permite
-abrir la ventana aparte para loguear con gmail */
-
-/*   private validarGoogle(): boolean{
-    return this.getEmail().includes('gmail');
-  } */
-
-
   public submit(){
+    if(this.enviando){
+      return;
+    }
+
     // INGRESO DEL USUARIO
     if(this.ingreso){
       this.ingresoUsuario();

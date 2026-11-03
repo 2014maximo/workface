@@ -1,77 +1,103 @@
 @import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light+Two&display=swap');
 
-.linkCategoria {
+/* El encabezado se muestra en todos los anchos: es la unica navegacion de la app */
+.encabezado {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 8px clamp(12px, 8.33vw, 160px);
+}
+.logo {
+    display: block;
+    height: 56px;
+    width: auto;
+}
+.btn-menu {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    color: #fff;
+    background: transparent;
+    border: 0;
     cursor: pointer;
-    transition: 0.3s;
+}
+.btn-menu svg {
+    width: 40px;
+    height: 40px;
 }
 .sidenav {
-    height: 100%;
-    width: 0;
     position: fixed;
-    z-index: 999;
-    top: 0;
-    left: 0;
-    background: rgba(0, 0, 0, 0.8) !important;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 0;
+    inset: 0;
+    z-index: 1040;
+    padding: 8px clamp(12px, 8.33vw, 160px);
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.8);
+    transform: translateX(-100%);
+    /* Cerrado queda oculto tambien para el teclado y los lectores de pantalla */
+    visibility: hidden;
+    transition: transform 200ms cubic-bezier(0.4, 0, 1, 1), visibility 0s linear 200ms;
 }
-.sidenav ul {
-    list-style:none
+.sidenav-abierto {
+    transform: none;
+    visibility: visible;
+    transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1), visibility 0s;
 }
-
-.closebtn {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 50px;
-    color: #fff;
-    display: block;
-    transition: 0.3s;
-    text-decoration: none;
+.menu-lista {
+    margin: 32px 0 0;
+    padding: 0;
+    list-style: none;
 }
 a {
     color: #fff;
     text-decoration: none;
-    transition: 0.3s;
 }
-a:hover {
-    text-decoration: none;
-}
-.box:hover{
-    position: relative;
-    float: left;
-    -moz-animation: 3s ease 0s normal none infinite swing;
-    -moz-transform-origin: center top;
-    -webkit-animation:swing 3s ease-in-out;
-    -webkit-transform-origin:top;
-}
-
-@-moz-keyframes swing{
-    0%{-moz-transform:rotate(-3deg)}
-    50%{-moz-transform:rotate(3deg)}
-    100%{-moz-transform:rotate(-3deg)}
-}
-@-webkit-keyframes swing{
-    0%{-webkit-transform:rotate(-3deg)}
-    50%{-webkit-transform:rotate(3deg)}
-    100%{-webkit-transform:rotate(-3deg)}
-}
-.btn-menu-catego svg{
-    height: 60px !important;
-    width: 60px !important;
-    color: white;
+.btn-salir {
+    padding: 0;
+    color: #fff;
+    background: transparent;
+    border: 0;
+    font: inherit;
     cursor: pointer;
-    margin: 30px;
 }
-.menu-hamburger-open{
-    width: 100% !important;
-    z-index: 1040;
+.menu-lista a,
+.btn-salir {
+    display: inline-block;
+    min-height: 48px;
+    line-height: 48px;
 }
-.menu-hamburger-close {
-    width: 0% !important;
-    cursor: pointer; 
+.perfil-img {
+    border-radius: 5px;
 }
-
-.perfil-img{
-    border-radius: 5 5 5 5;
+@media (min-width: 768px) {
+    .encabezado {
+        padding-block: 16px;
+    }
+    .logo {
+        height: 80px;
+    }
+    .btn-menu {
+        width: 64px;
+        height: 64px;
+    }
+    .btn-menu svg {
+        width: 60px;
+        height: 60px;
+    }
+}
+/* Menos movimiento: el menu aparece sin desplazarse */
+@media (prefers-reduced-motion: reduce) {
+    .sidenav,
+    .sidenav-abierto {
+        transform: none;
+        opacity: 0;
+        transition: opacity 150ms linear, visibility 0s linear 150ms;
+    }
+    .sidenav-abierto {
+        opacity: 1;
+        transition: opacity 150ms linear, visibility 0s;
+    }
 }
