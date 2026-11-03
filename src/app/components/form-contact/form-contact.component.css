@@ -1,0 +1,30 @@
+.contacto-form label {
+    display: block;
+    margin-top: 12px;
+    margin-bottom: 4px;
+    color: #fff;
+    font-size: 1.125rem;
+}
+.contacto-form input,
+.contacto-form textarea {
+    display: block;
+    width: 100%;
+    min-height: 44px;
+    padding-inline: 8px;
+    font-size: 1.125rem;
+    color: #fff;
+    background: transparent;
+    border: 1px solid var(--borde-campo);
+}
+.contacto-form input:focus-visible,
+.contacto-form textarea:focus-visible,
+.contacto-enviar:focus-visible {
+    outline: 2px solid var(--foco);
+    outline-offset: 2px;
+}
+.contacto-enviar {
+    display: block;
+    width: 100%;
+    min-height: 44px;
+    margin-top: 16px;
+}

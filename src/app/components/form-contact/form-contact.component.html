@@ -1,26 +1,30 @@
 <app-header></app-header>
-<div class="espaciado"></div>
-
-<div class="row">
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
-        <div class="p-5 shadow-one">
-            <div class="d-flex justify-content-center">
+<main class="container-fluid">
+<div class="espacio-superior"></div>
+<div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-5">
+        <div class="p-3 p-md-5 shadow-one">
+            <div class="d-flex justify-content-center align-items-center">
                 <img src="assets/img/icons/emoticon.png" alt="" height="60" width="auto" class="me-3 drop">
-                <h2 class="f-shadow-into-l tc-blue-two fs-40 fw-6 text-center text-shadow-one">CONTACTO</h2>
+                <h1 class="f-shadow-into-l tc-blue-two fs-40 fw-6 text-center text-shadow-one m-0">CONTACTO</h1>
             </div>
-            <form action="" class="f-open-sans-c">
-                <input type="text" placeholder="Nombre" class="d-block w-100 bg-transparent text-light m-2 border-end-0 border-start-0 border-top-0 ps-2">
-                <input type="email" placeholder="Email" class="d-block w-100 bg-transparent text-light m-2 border-end-0 border-start-0 border-top-0 ps-2">
-                <input type="text" placeholder="Teléfono" class="d-block w-100 bg-transparent text-light m-2 border-end-0 border-start-0 border-top-0 ps-2">
-                <input type="text" placeholder="Asunto" class="d-block w-100 bg-transparent text-light m-2 border-end-0 border-start-0 border-top-0 ps-2">
-                <textarea name="" id="" cols="30" rows="10" placeholder="Mensaje" class="mt-5 d-block w-100 bg-transparent text-light m-2 ps-2"></textarea>
-                <button class="border-0 bgBase text-light pt-1 pb-1 pe-4 ps-4 f-shadow-into-l fs-20 shadow-three m-2 w-100">Enviar</button>
+            <form action="" class="contacto-form f-open-sans-c">
+                <label for="contacto-nombre">Nombre</label>
+                <input id="contacto-nombre" type="text" autocomplete="name">
+                <label for="contacto-email">Email</label>
+                <input id="contacto-email" type="email" autocomplete="email">
+                <label for="contacto-telefono">Teléfono</label>
+                <input id="contacto-telefono" type="tel" autocomplete="tel">
+                <label for="contacto-asunto">Asunto</label>
+                <input id="contacto-asunto" type="text">
+                <label for="contacto-mensaje">Mensaje</label>
+                <textarea id="contacto-mensaje" rows="8"></textarea>
+                <button class="contacto-enviar border-0 bgBase text-light f-shadow-into-l fs-20 shadow-three">Enviar</button>
             </form>
         </div>
     </div>
-    <div class="col-md-4"></div>
 </div>
+</main>
 
 <div class="espaciado"></div>
 <app-footer></app-footer>

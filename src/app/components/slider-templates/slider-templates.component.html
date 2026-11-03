@@ -1,41 +1,61 @@
 <app-header></app-header>
-<div class="espaciado"></div>
+<main class="container-fluid">
+<div class="espacio-superior"></div>
+<h1 class="visually-hidden">Galería de plantillas</h1>
 
+@if (sinPerfil) {
+  <div class="galeria-vacia text-center f-open-sans-c">
+    <h2 class="f-shadow-into-l text-light fs-30">Aún no tienes un perfil guardado</h2>
+    <p class="text-light">Llena tus datos una vez y aquí los verás en cada plantilla.</p>
+    <a class="galeria-accion" href="profile">Ir a mi perfil</a>
+  </div>
+}
+
+@if (!sinPerfil) {
 <div class="row">
   <div class="col-md-4"></div>
   <div class="col-md-4">
     <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false" data-bs-interval="false">
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img src="assets/img/slider-templates/alpha.jpeg" height="200" width="auto" class="d-block mx-auto cursor-p" alt="..." (click)="cargarAlpha()">
+          <button type="button" class="btn-miniatura d-block mx-auto" [attr.aria-pressed]="alpha" (click)="cargarAlpha()">
+            <img src="assets/img/slider-templates/alpha.jpeg" height="200" width="auto" class="d-block" alt="Ver plantilla Alpha">
+          </button>
         </div>
         <div class="carousel-item">
-          <img src="assets/img/slider-templates/beta.jpg" height="200" width="auto" class="d-block mx-auto cursor-p"  alt="..." (click)="cargarBeta()">
+          <button type="button" class="btn-miniatura d-block mx-auto" [attr.aria-pressed]="beta" (click)="cargarBeta()">
+            <img src="assets/img/slider-templates/beta.jpg" height="200" width="auto" class="d-block" alt="Ver plantilla Beta">
+          </button>
         </div>
         <div class="carousel-item">
-          <img src="assets/img/slider-templates/example.png" height="200" width="auto" class="d-block mx-auto"  alt="...">
+          <img src="assets/img/slider-templates/example.png" height="200" width="auto" class="d-block mx-auto" alt="Ejemplo de plantilla">
         </div>
       </div>
       <button class="carousel-control-prev bg-cero border-0" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
+        <span class="visually-hidden">Anterior</span>
       </button>
       <button class="carousel-control-next bg-cero border-0" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
+        <span class="visually-hidden">Siguiente</span>
       </button>
     </div>
   </div>
   <div class="col-md-4"></div>
 </div>
 
-@if (alpha) {
-  <app-alpha [contenido]="datosGenerales"></app-alpha>
-}
+<!-- Las plantillas tienen ancho fijo: se desplazan aqui sin ensanchar la pagina -->
+<div class="plantilla-contenedor" tabindex="0" role="region" aria-label="Vista previa de la plantilla">
+  @if (alpha) {
+    <app-alpha [contenido]="datosGenerales"></app-alpha>
+  }
 
-@if (beta) {
-  <app-beta [contenido]="datosGenerales"></app-beta>
+  @if (beta) {
+    <app-beta [contenido]="datosGenerales"></app-beta>
+  }
+</div>
 }
+</main>
 
 <div class="espaciado"></div>
 
@@ -46,7 +66,7 @@
     <div class="modal-content bg-transparent">
       <div class="text-center">
         <div class="spinner-border text-warning" style="width: 3rem; height: 3rem;" role="status">
-          <span class="visually-hidden">Loading...</span>
+          <span class="visually-hidden">Cargando…</span>
         </div>
       </div>
     </div>

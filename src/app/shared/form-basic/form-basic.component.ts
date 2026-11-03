@@ -125,7 +125,6 @@ export class FormBasicComponent implements OnInit {
   }
 
   inicializarVariables(){
-    console.log(this.formBasic, 'FORM BASIC');
     this.authService.getUserLogged().subscribe( (usuario: any) => {
       if(usuario){
         this.uid = usuario.multiFactor.user.uid;
@@ -139,7 +138,7 @@ export class FormBasicComponent implements OnInit {
           }
         }).catch( error => {
           console.error(error);
-          SweetAlert('error', 'NO SE PUDIERON CARGAR LOS DATOS');
+          SweetAlert('error', 'No pudimos cargar tus datos. Recarga la página e inténtalo de nuevo.');
         }).finally( () => {
           $("#modalLoader").modal('hide');
         });
@@ -166,7 +165,6 @@ export class FormBasicComponent implements OnInit {
   }
   
   onSelectNewFile(files: any): void{
-    console.log(files)
     let file = files.target.files;
     this.fileSelected = file[0] as Blob;
     this.imageUrl = this.sant.bypassSecurityTrustUrl(window.URL.createObjectURL(this.fileSelected)) as string;
@@ -187,10 +185,10 @@ export class FormBasicComponent implements OnInit {
       const base64 = await leerComoBase64(imagen);
       this[opciones.campo] = [base64];
       this.formBasic.get(opciones.campo)?.setValue(base64);
-      SweetAlert('success','IMAGEN LISTA, AHORA GUARDE PARA ADJUNTAR');
+      SweetAlert('success','Imagen lista. Pulsa Guardar para conservarla.');
     } catch(error) {
       console.error(error);
-      SweetAlert('error','NO SE PUDO PROCESAR LA IMAGEN');
+      SweetAlert('error','No pudimos procesar la imagen. Prueba con otro archivo.');
     } finally {
       // Permite volver a elegir el mismo archivo despues de un error.
       evento.target.value = '';
@@ -266,7 +264,7 @@ export class FormBasicComponent implements OnInit {
 
   deleteControls(formArray: string, index: number){
     Swal.fire({
-      title: 'Quieres eliminar el formulario?',
+      title: '¿Eliminar este registro?',
       showDenyButton: true,
       showCancelButton: false,
       confirmButtonText: 'Eliminar',
@@ -274,10 +272,10 @@ export class FormBasicComponent implements OnInit {
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        Swal.fire('Saved!', '', 'success');
+        Swal.fire('Registro eliminado', 'Pulsa Guardar para conservar el cambio.', 'success');
         (<FormArray>this.formBasic.controls[formArray]).removeAt(index);
       } else if (result.isDenied) {
-        Swal.fire('El formulario no fue borrado', '', 'info')
+        Swal.fire('El registro no se eliminó', '', 'info')
       }
     })
   }
@@ -409,10 +407,14 @@ export class FormBasicComponent implements OnInit {
 
     this.perfilLocal.guardar(this.uid, usuario).then( () => {
       this.datosGenerales = usuario;
-      SweetAlert('success','FORMULARIO GUARDADO');
+      if(this.formBasic.valid){
+        SweetAlert('success','Perfil guardado.');
+      } else {
+        SweetAlert('warning','Perfil guardado. Aún faltan datos obligatorios: revisa los pasos marcados con x.');
+      }
     }).catch( error => {
       console.error(error);
-      SweetAlert('error', 'ERROR GUARDANDO');
+      SweetAlert('error', 'No pudimos guardar. Inténtalo de nuevo; tus datos siguen en pantalla.');
     }).finally( () => {
       $("#modalLoader").modal('hide');
     });
@@ -428,11 +430,11 @@ export class FormBasicComponent implements OnInit {
     })
     
     swalWithBootstrapButtons.fire({
-      title: 'Quiere eliminar la imagen?',
-      text: "Recuerde guardar el cambio!",
+      title: '¿Eliminar la imagen?',
+      text: "Recuerda pulsar Guardar para conservar el cambio.",
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Si, borrar!',
+      confirmButtonText: 'Sí, eliminar',
       cancelButtonText: 'No, cancelar!',
       reverseButtons: true
     }).then((result) => {

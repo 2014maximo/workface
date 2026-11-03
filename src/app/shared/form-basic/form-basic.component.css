@@ -55,3 +55,148 @@ input[type='file']{
     left: -25px;
     top: -30px;
 }
+
+/* Los campos de archivo siguen ocultos a la vista, pero se pueden usar con teclado */
+input[type='file'] {
+    display: block;
+    position: absolute;
+    width: 1px !important;
+    height: 1px;
+    margin: 0 !important;
+    padding: 0 !important;
+    opacity: 0;
+}
+input[type='file']:focus-visible ~ label[for] {
+    outline: 2px solid var(--foco);
+    outline-offset: 2px;
+}
+.estilo-input {
+    height: 44px;
+    font-size: clamp(22px, 1rem + 1.5vw, 30px);
+}
+.estiloLabel {
+    height: auto;
+    margin-top: 8px;
+    font-size: 14px;
+}
+.estado-pendiente {
+    /* Mismo rojo de la marca, aclarado para cumplir 3:1 sobre el fondo oscuro */
+    color: #ff8a80 !important;
+}
+.btn-eliminar-imagen {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+}
+.carousel-item button {
+    min-height: 44px;
+}
+.carousel-item img {
+    max-width: 100%;
+    height: auto;
+}
+.carousel-item img[height="200"] {
+    max-height: 200px;
+    width: auto;
+}
+h2.fs-50 {
+    font-size: clamp(1.75rem, 1rem + 4vw, 3.125rem) !important;
+    overflow-wrap: anywhere;
+}
+.btn-guardar-accion {
+    min-height: 44px;
+    color: #fff;
+}
+.carousel-indicators [data-bs-target] {
+    height: 15px;
+    filter: drop-shadow(0px 3px 1px rgba(0, 0, 0, 0.7));
+}
+.paso {
+    /* En escritorio cada paso sigue siendo parte de la misma fila */
+    display: contents;
+}
+.contador-paso {
+    margin-bottom: 8px;
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #fff;
+}
+.contador-total {
+    font-size: 1.125rem;
+    font-weight: 400;
+    color: var(--texto-secundario);
+}
+/* Celular: los controles forman una barra fija y no tapan los campos */
+@media (max-width: 767.98px) {
+    .carousel-inner {
+        padding-right: 0 !important;
+        padding-bottom: 180px;
+    }
+    .carousel-item .espaciado {
+        height: 24px;
+    }
+    /* Siete pasos por renglon, centrados: cada marca queda sobre su paso */
+    .carousel-indicators {
+        display: grid;
+        grid-template-columns: repeat(7, minmax(0, 44px));
+        justify-content: center;
+        margin: 0;
+        padding: 6px 12px;
+        background: #1a1a1a;
+    }
+    .paso {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+    .carousel-indicators [data-bs-target] {
+        flex: none;
+        width: 30px;
+        /* 12 px mas 6 px de borde arriba y abajo: area tactil de 24 px */
+        height: 12px;
+        margin: 0;
+        border-top-width: 6px;
+        border-bottom-width: 6px;
+    }
+    .icon-navigate {
+        position: static;
+        margin: 0;
+        font-size: 18px !important;
+        line-height: 20px;
+    }
+    .carousel-control-prev,
+    .carousel-control-next {
+        position: fixed;
+        top: auto;
+        bottom: 112px;
+        z-index: 1031;
+        width: 44px;
+        height: 44px;
+        opacity: 1;
+        background: #1a1a1a;
+        border: 1px solid var(--borde-campo) !important;
+        border-radius: 50%;
+    }
+    .carousel-control-prev {
+        left: 12px;
+    }
+    .carousel-control-next {
+        right: 12px;
+    }
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        width: 20px;
+        height: 20px;
+    }
+    .btn-guardar {
+        left: 50%;
+        right: auto;
+        bottom: 112px;
+        z-index: 1031;
+        transform: translateX(-50%);
+    }
+}

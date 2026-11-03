@@ -1,6 +1,6 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { FormArray } from '@angular/forms';
+import { FormArray, ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 
 import { INTERESES_GUSTOS } from '../../constants/workface.contants';
@@ -151,5 +151,44 @@ describe('FormBasicComponent: intereses', () => {
       await component.loadImg('/firma/', { target: { files: [] } });
       expect(modal).not.toHaveBeenCalled();
     });
+  });
+});
+
+describe('FormBasicComponent: plantilla', () => {
+  let elemento: HTMLElement;
+  let jQueryOriginal: any;
+
+  beforeEach(() => {
+    jQueryOriginal = (window as any).$;
+    const vacio = { modal: () => vacio, tooltip: () => vacio, ready: () => vacio };
+    (window as any).$ = () => vacio;
+    TestBed.configureTestingModule({
+      declarations: [FormBasicComponent],
+      imports: [ReactiveFormsModule],
+      schemas: [NO_ERRORS_SCHEMA],
+      providers: [
+        { provide: AuthService, useValue: { getUserLogged: () => of(null) } },
+        { provide: PerfilLocalService, useValue: {} },
+        { provide: WebServicesService, useValue: { consultarRecursos: () => of({}) } }
+      ]
+    });
+    const fixture = TestBed.createComponent(FormBasicComponent);
+    fixture.detectChanges();
+    elemento = fixture.nativeElement;
+  });
+
+  afterEach(() => (window as any).$ = jQueryOriginal);
+
+  it('ningun boton envia el formulario, para que Enter no borre datos', () => {
+    const botones = Array.from(elemento.querySelectorAll('form button'));
+    expect(botones.length).toBeGreaterThan(0);
+    botones.forEach(boton => expect(boton.getAttribute('type')).toBe('button'));
+  });
+
+  it('cada campo tiene un nombre accesible', () => {
+    const campos = Array.from(elemento.querySelectorAll<HTMLElement>('form input, form select, form textarea'));
+    expect(campos.length).toBeGreaterThan(0);
+    const sinNombre = campos.filter(campo => !campo.getAttribute('aria-label') && !elemento.querySelector(`label[for="${campo.id}"]`));
+    expect(sinNombre.map(campo => campo.getAttribute('formcontrolname'))).toEqual([]);
   });
 });

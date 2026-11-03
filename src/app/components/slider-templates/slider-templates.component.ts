@@ -16,6 +16,7 @@ export class SliderTemplatesComponent implements OnInit {
   public datosGenerales: any;
   public alpha: boolean = false;
   public beta: boolean = false;
+  public sinPerfil: boolean = false;
 
   constructor(private authService: AuthService,
               private perfilLocal: PerfilLocalService) {
@@ -33,7 +34,8 @@ export class SliderTemplatesComponent implements OnInit {
         this.uid = usuario.multiFactor.user.uid;
         this.perfilLocal.obtener(this.uid).then(datos => {
           this.datosGenerales = datos;
-          this.alpha = true;
+          this.sinPerfil = !datos;
+          this.alpha = !!datos;
         }).catch(error => {
           console.error(error);
         }).finally(() => {
