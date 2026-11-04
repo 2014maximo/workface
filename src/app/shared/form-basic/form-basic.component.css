@@ -6,42 +6,23 @@
     border-right: none;
     border-left: 0.3px solid gray;
     border-bottom: 0.3px solid gray;
-    height: 40px;
-    font-size: 30px;
+    height: 44px;
+    font-size: clamp(22px, 1rem + 1.5vw, 30px);
     font-family: 'Grape Nuts', cursive !important;
 }
 
 .estiloLabel{
     color: black;
     background-color: #fff;
-    font-size: 13px;
+    margin-top: 8px;
+    font-size: 14px;
     position: relative;
-    height: 20px;
+    height: auto;
     line-height: 1;
     border-radius: 5px;
 }
 .bg-form {
-    
-background: rgba(61,56,61,1);
-background: -moz-radial-gradient(center, ellipse cover, rgba(61,56,61,1) 0%, rgba(26,26,26,1) 59%, rgba(26,26,26,1) 100%);
-background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(61,56,61,1)), color-stop(59%, rgba(26,26,26,1)), color-stop(100%, rgba(26,26,26,1)));
-background: -webkit-radial-gradient(center, ellipse cover, rgba(61,56,61,1) 0%, rgba(26,26,26,1) 59%, rgba(26,26,26,1) 100%);
-background: -o-radial-gradient(center, ellipse cover, rgba(61,56,61,1) 0%, rgba(26,26,26,1) 59%, rgba(26,26,26,1) 100%);
-background: -ms-radial-gradient(center, ellipse cover, rgba(61,56,61,1) 0%, rgba(26,26,26,1) 59%, rgba(26,26,26,1) 100%);
-background: radial-gradient(ellipse at center, rgba(61,56,61,1) 0%, rgba(26,26,26,1) 59%, rgba(26,26,26,1) 100%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3d383d', endColorstr='#1a1a1a', GradientType=1 );
-
-}
-input[type='file']{
-    display: none;
-}
-
-.bg-menu-static{
-    background: rgba(26,26,26,1) ;
-}
-.carousel-indicators li{
-    height: 15px;
-    filter: drop-shadow(0px 3px 1px rgba(0, 0, 0, 0.7));
+    background: radial-gradient(ellipse at center, rgba(61,56,61,1) 0%, rgba(26,26,26,1) 59%, rgba(26,26,26,1) 100%);
 }
 
 .icon-navigate {
@@ -60,13 +41,9 @@ input[type='file'] {
     padding: 0 !important;
     opacity: 0;
 }
-input[type='file']:focus-visible ~ label[for] {
+input[type='file']:focus-visible ~ .carga-imagen label[for] {
     outline: 2px solid var(--foco);
     outline-offset: 2px;
-}
-.estilo-input {
-    height: 44px;
-    font-size: clamp(22px, 1rem + 1.5vw, 30px);
 }
 /* Los ejemplos van en otra letra y en gris para no confundirse con lo escrito por el usuario */
 .estilo-input::placeholder {
@@ -75,14 +52,30 @@ input[type='file']:focus-visible ~ label[for] {
     color: var(--texto-secundario);
     opacity: 1;
 }
-.estiloLabel {
-    height: auto;
-    margin-top: 8px;
-    font-size: 14px;
-}
 .estado-pendiente {
     /* Mismo rojo de la marca, aclarado para cumplir 3:1 sobre el fondo oscuro */
     color: #ff8a80 !important;
+}
+/* La imagen queda centrada bajo su titulo; la X va al lado sin desplazarla */
+.carga-imagen {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    margin-top: 8px;
+}
+/* Con imagen cargada se reserva sitio para la X, aunque la imagen sea muy ancha */
+.carga-imagen:has(.btn-eliminar-imagen) {
+    grid-template-columns: minmax(44px, 1fr) minmax(0, auto) minmax(44px, 1fr);
+}
+.estiloLabel + br + img {
+    margin-top: 8px;
+}
+.carga-imagen label[for] {
+    grid-column: 2;
+}
+.carga-imagen .btn-eliminar-imagen {
+    grid-column: 3;
+    justify-self: start;
 }
 .icono-agregar {
     transition: transform 160ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -142,6 +135,18 @@ h2.fs-50 {
     height: 15px;
     filter: drop-shadow(0px 3px 1px rgba(0, 0, 0, 0.7));
 }
+/* Paso actual: relleno de accion y un contorno separado de la barra */
+.carousel-indicators [data-bs-target].active {
+    position: relative;
+    background-color: var(--accion);
+    opacity: 1;
+}
+.carousel-indicators [data-bs-target].active::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border: 2px solid var(--accion);
+}
 .paso {
     /* En escritorio cada paso sigue siendo parte de la misma fila */
     display: contents;
@@ -189,6 +194,10 @@ h2.fs-50 {
         margin: 0;
         border-top-width: 6px;
         border-bottom-width: 6px;
+    }
+    /* Los pasos van mas juntos: el contorno no debe tocar al vecino */
+    .carousel-indicators [data-bs-target].active::after {
+        inset: -3px -2px;
     }
     .icon-navigate {
         position: static;

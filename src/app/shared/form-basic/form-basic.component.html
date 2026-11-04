@@ -192,18 +192,20 @@
                       <div class="col text-center">
                         <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" accept=".png" (change)="loadImg('/frontal-sin-fondo/', $event)" type="file" id="img-sin-fondo" aria-label="Imagen de frente sin fondo">
                         <label class="estiloLabel f-open-sans-c p-1">Imagen de frente sin fondo<span class="text-danger">*</span></label><br>
-                        <label for="img-sin-fondo" class="text-light cursor-p">
-                          @if (!fotoFrontalSinFondo[0]) {
-                            <img src="assets/img/icons/agregar-imagen.svg" alt="Agregar imagen" title="Agregar imagen" width="56" height="56" class="icono-agregar mt-3">
-                            <span class="medidas-ejemplo">Ancho 388 px<br>Alto 400 px</span>
-                          }
+                        <div class="carga-imagen">
+                          <label for="img-sin-fondo" class="text-light cursor-p">
+                            @if (!fotoFrontalSinFondo[0]) {
+                              <img src="assets/img/icons/agregar-imagen.svg" alt="Agregar imagen" title="Agregar imagen" width="56" height="56" class="icono-agregar mt-2">
+                              <span class="medidas-ejemplo">Ancho 388 px<br>Alto 400 px</span>
+                            }
+                            @if (fotoFrontalSinFondo[0]) {
+                              <img src="{{ fotoFrontalSinFondo[0] }}" alt="" height="200" width="auto">
+                            }
+                          </label>
                           @if (fotoFrontalSinFondo[0]) {
-                            <img src="{{ fotoFrontalSinFondo[0] }}" alt="" height="200" width="auto">
+                            <button type="button" class="btn-eliminar-imagen" aria-label="Eliminar imagen" title="Eliminar imagen" (click)="eliminarImagen('fotoFrontalSinFondo')"><img src="assets/img/icons/equis.webp" alt="" width="40" height="41" class="drop"></button>
                           }
-                        </label>
-                        @if (fotoFrontalSinFondo[0]) {
-                          <button type="button" class="btn-eliminar-imagen" aria-label="Eliminar imagen" title="Eliminar imagen" (click)="eliminarImagen('fotoFrontalSinFondo')"><img src="assets/img/icons/equis.webp" alt="" width="40" height="41" class="drop"></button>
-                        }
+                        </div>
                       </div>
                       @if (!fotoFrontalSinFondo[0]) {
                         <div class="col text-center">
@@ -223,18 +225,20 @@
                       <div class="col text-center">
                         <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" accept=".png, .jpg, .jpeg" (change)="loadImg('/semiperfil/', $event)" type="file" id="img-semiperfil" aria-label="Imagen en semiperfil">
                         <label class="estiloLabel f-open-sans-c p-1">Imagen en semiperfil<span class="text-danger">*</span></label><br>
-                        <label for="img-semiperfil" class="text-light cursor-p">
-                          @if (!fotoSemiperfil[0]) {
-                            <img src="assets/img/icons/agregar-imagen.svg" alt="Agregar imagen" title="Agregar imagen" width="56" height="56" class="icono-agregar mt-3">
-                            <span class="medidas-ejemplo">Ancho 912 px<br>Alto 1165 px</span>
-                          }
+                        <div class="carga-imagen">
+                          <label for="img-semiperfil" class="text-light cursor-p">
+                            @if (!fotoSemiperfil[0]) {
+                              <img src="assets/img/icons/agregar-imagen.svg" alt="Agregar imagen" title="Agregar imagen" width="56" height="56" class="icono-agregar mt-2">
+                              <span class="medidas-ejemplo">Ancho 912 px<br>Alto 1165 px</span>
+                            }
+                            @if (fotoSemiperfil[0]) {
+                              <img src="{{ fotoSemiperfil[0] }}" alt="" height="200" width="auto">
+                            }
+                          </label>
                           @if (fotoSemiperfil[0]) {
-                            <img src="{{ fotoSemiperfil[0] }}" alt="" height="200" width="auto">
+                            <button type="button" class="btn-eliminar-imagen" aria-label="Eliminar imagen" title="Eliminar imagen" (click)="eliminarImagen('fotoSemiperfil')"><img src="assets/img/icons/equis.webp" alt="" width="40" height="41" class="drop"></button>
                           }
-                        </label>
-                        @if (fotoSemiperfil[0]) {
-                          <button type="button" class="btn-eliminar-imagen" aria-label="Eliminar imagen" title="Eliminar imagen" (click)="eliminarImagen('fotoSemiperfil')"><img src="assets/img/icons/equis.webp" alt="" width="40" height="41" class="drop"></button>
-                        }
+                        </div>
                       </div>
                       @if (!fotoSemiperfil[0]) {
                         <div class="col text-center">
@@ -259,18 +263,20 @@
                       <div class="col text-center">
                         <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" accept=".png, .jpg, .jpeg" (change)="loadImg('/cuerpo-completo/', $event)" type="file" id="img-cuerpo-completo" aria-label="Imagen de cuerpo completo">
                         <label class="estiloLabel f-open-sans-c p-1">Imagen de cuerpo completo<span class="text-danger">*</span></label><br>
-                        <label for="img-cuerpo-completo" class="text-light cursor-p">
-                          @if (!fotoCuerpoCompleto[0]) {
-                            <img src="assets/img/icons/agregar-imagen.svg" alt="Agregar imagen" title="Agregar imagen" width="56" height="56" class="icono-agregar mt-3">
-                            <span class="medidas-ejemplo">Ancho 896 px<br>Alto 1167 px</span>
-                          }
+                        <div class="carga-imagen">
+                          <label for="img-cuerpo-completo" class="text-light cursor-p">
+                            @if (!fotoCuerpoCompleto[0]) {
+                              <img src="assets/img/icons/agregar-imagen.svg" alt="Agregar imagen" title="Agregar imagen" width="56" height="56" class="icono-agregar mt-2">
+                              <span class="medidas-ejemplo">Ancho 896 px<br>Alto 1167 px</span>
+                            }
+                            @if (fotoCuerpoCompleto[0]) {
+                              <img src="{{ fotoCuerpoCompleto[0] }}" alt="" height="200" width="auto" class="img-fluid">
+                            }
+                          </label>
                           @if (fotoCuerpoCompleto[0]) {
-                            <img src="{{ fotoCuerpoCompleto[0] }}" alt="" height="200" width="auto" class="img-fluid">
+                            <button type="button" class="btn-eliminar-imagen" aria-label="Eliminar imagen" title="Eliminar imagen" (click)="eliminarImagen('fotoCuerpoCompleto')"><img src="assets/img/icons/equis.webp" alt="" width="40" height="41" class="drop"></button>
                           }
-                        </label>
-                        @if (fotoCuerpoCompleto[0]) {
-                          <button type="button" class="btn-eliminar-imagen" aria-label="Eliminar imagen" title="Eliminar imagen" (click)="eliminarImagen('fotoCuerpoCompleto')"><img src="assets/img/icons/equis.webp" alt="" width="40" height="41" class="drop"></button>
-                        }
+                        </div>
                       </div>
                       @if (!fotoCuerpoCompleto[0]) {
                         <div class="col text-center">
@@ -289,18 +295,20 @@
                       <div class="col text-center">
                         <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" accept=".png, .jpg, .jpeg" (change)="loadImg('/firma/', $event)" type="file" id="firma" aria-label="Firma sin fondo">
                         <label class="estiloLabel f-open-sans-c p-1">Firma sin fondo<span class="text-danger">*</span></label><br>
-                        <label for="firma" class="text-light cursor-p">
-                          @if (!imgFirma[0]) {
-                            <img src="assets/img/icons/agregar-imagen.svg" alt="Agregar imagen" title="Agregar imagen" width="56" height="56" class="icono-agregar mt-3">
-                            <span class="medidas-ejemplo">Ancho 415 px<br>Alto 400 px</span>
-                          }
+                        <div class="carga-imagen">
+                          <label for="firma" class="text-light cursor-p">
+                            @if (!imgFirma[0]) {
+                              <img src="assets/img/icons/agregar-imagen.svg" alt="Agregar imagen" title="Agregar imagen" width="56" height="56" class="icono-agregar mt-2">
+                              <span class="medidas-ejemplo">Ancho 415 px<br>Alto 400 px</span>
+                            }
+                            @if (imgFirma[0]) {
+                              <img src="{{ imgFirma[0] }}" alt="" height="200" width="auto" class="drop">
+                            }
+                          </label>
                           @if (imgFirma[0]) {
-                            <img src="{{ imgFirma[0] }}" alt="" height="200" width="auto" class="drop">
+                            <button type="button" class="btn-eliminar-imagen" aria-label="Eliminar imagen" title="Eliminar imagen" (click)="eliminarImagen('imgFirma')"><img src="assets/img/icons/equis.webp" alt="" width="40" height="41" class="drop"></button>
                           }
-                        </label>
-                        @if (imgFirma[0]) {
-                          <button type="button" class="btn-eliminar-imagen" aria-label="Eliminar imagen" title="Eliminar imagen" (click)="eliminarImagen('imgFirma')"><img src="assets/img/icons/equis.webp" alt="" width="40" height="41" class="drop"></button>
-                        }
+                        </div>
                       </div>
                       @if (!imgFirma[0]) {
                         <div class="col text-center">
