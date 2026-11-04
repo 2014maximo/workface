@@ -11,13 +11,13 @@ import { INTERESES_GUSTOS } from '../../constants/workface.contants';
 
 declare var $: any;
 
-type CampoImagen = 'fotoFrontalSinFondo' | 'fotoFrontalConFondo' | 'imgFondo' | 'imgFirma';
+type CampoImagen = 'fotoFrontalSinFondo' | 'fotoSemiperfil' | 'fotoCuerpoCompleto' | 'imgFirma';
 
 // La foto sin fondo y la firma siguen en PNG para conservar la transparencia.
 const IMAGENES: Record<string, OpcionesImagen & { campo: CampoImagen }> = {
   '/frontal-sin-fondo/': { campo: 'fotoFrontalSinFondo', anchoMaximo: 800, formato: 'image/png' },
-  '/frontal-con-fondo/': { campo: 'fotoFrontalConFondo', anchoMaximo: 800, formato: 'image/jpeg' },
-  '/fondo/': { campo: 'imgFondo', anchoMaximo: 1600, formato: 'image/jpeg' },
+  '/semiperfil/': { campo: 'fotoSemiperfil', anchoMaximo: 800, formato: 'image/jpeg' },
+  '/cuerpo-completo/': { campo: 'fotoCuerpoCompleto', anchoMaximo: 1600, formato: 'image/jpeg' },
   '/firma/': { campo: 'imgFirma', anchoMaximo: 600, formato: 'image/png' }
 };
 
@@ -38,9 +38,9 @@ export class FormBasicComponent implements OnInit {
   public datosGenerales: any;
   public imageUrl?: string;
   public fotoFrontalSinFondo: any[]=[];
-  public fotoFrontalConFondo: any[]=[];
+  public fotoSemiperfil: any[]=[];
   public imgFirma: any[]=[];
-  public imgFondo: any[]=[];
+  public fotoCuerpoCompleto: any[]=[];
   public objImagenes: any[]=[];
   public cerrarLoader: boolean = false;
   public gustos: Array<any> = INTERESES_GUSTOS;
@@ -61,10 +61,10 @@ export class FormBasicComponent implements OnInit {
 
       // FOTO PERFIL
       'fotoFrontalSinFondo': new FormControl('', Validators.required),
-      'fotoFrontalConFondo': new FormControl('', Validators.required),
+      'fotoSemiperfil': new FormControl('', Validators.required),
 
-      // IMAGEN DE FONDO
-      'imgFondo': new FormControl('', Validators.required),
+      // IMAGEN DE CUERPO COMPLETO
+      'fotoCuerpoCompleto': new FormControl('', Validators.required),
       'imgFirma': new FormControl('', Validators.required),
 
       // IDENTIFICACIÓN
@@ -151,11 +151,11 @@ export class FormBasicComponent implements OnInit {
       if(datosGenerales.formBasic.fotoFrontalSinFondo){
         this.fotoFrontalSinFondo[0] = datosGenerales.formBasic.fotoFrontalSinFondo;
       } 
-      if(datosGenerales.formBasic.fotoFrontalConFondo){
-        this.fotoFrontalConFondo[0] = datosGenerales.formBasic.fotoFrontalConFondo;
+      if(datosGenerales.formBasic.fotoSemiperfil){
+        this.fotoSemiperfil[0] = datosGenerales.formBasic.fotoSemiperfil;
       }
-      if(datosGenerales.formBasic.imgFondo){
-        this.imgFondo[0] = datosGenerales.formBasic.imgFondo;
+      if(datosGenerales.formBasic.fotoCuerpoCompleto){
+        this.fotoCuerpoCompleto[0] = datosGenerales.formBasic.fotoCuerpoCompleto;
       }
       if(datosGenerales.formBasic.imgFirma){
         this.imgFirma[0] = datosGenerales.formBasic.imgFirma;
@@ -465,14 +465,14 @@ export class FormBasicComponent implements OnInit {
         console.log(this.formBasic, 'EL FORMULARIO BASICO');
         break;
         
-        case 'fotoFrontalConFondo':
-          this.fotoFrontalConFondo=[];
-          this.formBasic.controls['fotoFrontalConFondo'].reset();
+        case 'fotoSemiperfil':
+          this.fotoSemiperfil=[];
+          this.formBasic.controls['fotoSemiperfil'].reset();
           break;
           
-          case 'imgFondo':
-            this.imgFondo=[];
-            this.formBasic.controls['imgFondo'].reset();
+          case 'fotoCuerpoCompleto':
+            this.fotoCuerpoCompleto=[];
+            this.formBasic.controls['fotoCuerpoCompleto'].reset();
             break;
             
             case 'imgFirma':

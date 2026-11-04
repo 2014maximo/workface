@@ -32,12 +32,6 @@ background: radial-gradient(ellipse at center, rgba(61,56,61,1) 0%, rgba(26,26,2
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3d383d', endColorstr='#1a1a1a', GradientType=1 );
 
 }
-.btn-guardar{
-    position: fixed;
-    right: 0;
-    left: 25px;
-    bottom: 25px;
-}
 input[type='file']{
     display: none;
 }
@@ -83,6 +77,25 @@ input[type='file']:focus-visible ~ label[for] {
     /* Mismo rojo de la marca, aclarado para cumplir 3:1 sobre el fondo oscuro */
     color: #ff8a80 !important;
 }
+.icono-agregar {
+    transition: transform 160ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+label[for]:hover .icono-agregar {
+    transform: translateY(-3px);
+}
+.medidas-ejemplo {
+    display: block;
+    margin-top: 8px;
+    font-size: 14px;
+    line-height: 1.4;
+    font-variant-numeric: tabular-nums;
+    color: var(--texto-secundario);
+}
+@media (prefers-reduced-motion: reduce) {
+    .icono-agregar {
+        transition: none;
+    }
+}
 .btn-eliminar-imagen {
     min-width: 44px;
     min-height: 44px;
@@ -107,7 +120,10 @@ h2.fs-50 {
     overflow-wrap: anywhere;
 }
 .btn-guardar-accion {
+    flex: none;
+    align-self: center;
     min-height: 44px;
+    margin-left: 16px;
     color: #fff;
 }
 .carousel-indicators [data-bs-target] {
@@ -139,10 +155,10 @@ h2.fs-50 {
     .carousel-item .espaciado {
         height: 24px;
     }
-    /* Siete pasos por renglon, centrados: cada marca queda sobre su paso */
+    /* Siete pasos por renglon y Guardar al final: cada marca queda sobre su paso */
     .carousel-indicators {
         display: grid;
-        grid-template-columns: repeat(7, minmax(0, 44px));
+        grid-template-columns: repeat(7, minmax(0, 44px)) auto;
         justify-content: center;
         margin: 0;
         padding: 6px 12px;
@@ -192,11 +208,12 @@ h2.fs-50 {
         width: 20px;
         height: 20px;
     }
-    .btn-guardar {
-        left: 50%;
-        right: auto;
-        bottom: 112px;
-        z-index: 1031;
-        transform: translateX(-50%);
+    .btn-guardar-accion {
+        grid-column: 8;
+        grid-row: 1 / span 2;
+        margin-left: 8px;
+        padding-right: 8px !important;
+        padding-left: 8px !important;
+        font-size: 16px !important;
     }
 }

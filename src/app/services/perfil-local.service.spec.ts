@@ -16,7 +16,7 @@ describe('PerfilLocalService', () => {
 
   it('conserva los datos, fechas de texto e imagenes guardados', async () => {
     const id = uid('completo');
-    const perfil = { formBasic: { primerNombre: 'Ana', fechaNacimiento: '1990-05-20', imgFondo: 'data:image/jpeg;base64,' + 'A'.repeat(500000) } };
+    const perfil = { formBasic: { primerNombre: 'Ana', fechaNacimiento: '1990-05-20', fotoCuerpoCompleto: 'data:image/jpeg;base64,' + 'A'.repeat(500000) } };
     await service.guardar(id, perfil);
     expect(await service.obtener(id)).toEqual(perfil);
   });
