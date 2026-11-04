@@ -68,6 +68,13 @@ input[type='file']:focus-visible ~ label[for] {
     height: 44px;
     font-size: clamp(22px, 1rem + 1.5vw, 30px);
 }
+/* Los ejemplos van en otra letra y en gris para no confundirse con lo escrito por el usuario */
+.estilo-input::placeholder {
+    font-family: var(--fuente-tres);
+    font-size: 16px;
+    color: var(--texto-secundario);
+    opacity: 1;
+}
 .estiloLabel {
     height: auto;
     margin-top: 8px;
@@ -113,6 +120,11 @@ label[for]:hover .icono-agregar {
 }
 .carousel-item img[height="200"] {
     max-height: 200px;
+    width: auto;
+}
+/* Iconos de redes: los archivos miden hasta 1596 px y height:auto ignora su atributo */
+.carousel-item img[height="30"] {
+    height: 30px;
     width: auto;
 }
 h2.fs-50 {
