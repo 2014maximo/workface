@@ -1,6 +1,6 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { FormArray, ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, FormArray, ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 
 import { INTERESES_GUSTOS } from '../../constants/workface.contants';
@@ -179,36 +179,100 @@ describe('FormBasicComponent: plantilla', () => {
 
   afterEach(() => (window as any).$ = jQueryOriginal);
 
-  it('avisa cuando la descripcion de un estudio no llega al minimo y lo marca como pendiente', () => {
-    const fixture = TestBed.createComponent(FormBasicComponent);
-    const componente = fixture.componentInstance;
-    componente.agregarEstudio();
-    componente.formBasic.get('estudios')?.setValue([{
-      nombreInstitucion: 'Universidad',
-      tituloObtenido: 'Ingeniera',
-      fechaInicio: '2010-01-01',
-      fechaTitulo: '2015-01-01',
-      ciudadEstudio: 'Cali',
-      descripcionEstudio: 'Muy corta'
-    }]);
-    fixture.detectChanges();
+  describe('aviso de la descripcion de un estudio', () => {
+    let fixture: any;
+    let componente: FormBasicComponent;
+    let descripcion: AbstractControl;
+    const aviso = (): HTMLElement | null => {
+      fixture.detectChanges();
+      return fixture.nativeElement.querySelector('#ayuda-descripcionEstudio-0');
+    };
+    const escribir = (texto: string) => {
+      descripcion.setValue(texto);
+      descripcion.markAsDirty();
+    };
 
-    const ayuda: HTMLElement = fixture.nativeElement.querySelector('#ayuda-descripcionEstudio-0');
-    expect(ayuda.textContent).toContain('Llevas 9');
-    expect(ayuda.classList).toContain('estado-pendiente');
-    expect(componente.pasosPendientes()).toContain('Estudios');
+    beforeEach(() => {
+      fixture = TestBed.createComponent(FormBasicComponent);
+      componente = fixture.componentInstance;
+      componente.agregarEstudio();
+      descripcion = componente.formBasic.get('estudios.0.descripcionEstudio') as AbstractControl;
+    });
 
-    componente.formBasic.get('estudios.0.descripcionEstudio')?.setValue('x'.repeat(40));
-    fixture.detectChanges();
+    it('no aparece antes de escribir', () => {
+      expect(aviso()).toBeNull();
+    });
 
-    expect(ayuda.classList).not.toContain('estado-pendiente');
-    expect(componente.pasosPendientes()).not.toContain('Estudios');
+    it('queda en rojo al escribir menos del minimo', () => {
+      escribir('Muy corta');
+      expect(aviso()?.textContent).toContain('Llevas 9');
+      expect(aviso()?.classList).toContain('estado-pendiente');
+      expect(componente.pasosPendientes()).toContain('Estudios');
+    });
 
-    componente.formBasic.get('estudios.0.descripcionEstudio')?.setValue('x'.repeat(300));
-    fixture.detectChanges();
+    it('desaparece al llegar al minimo, sin limite maximo', () => {
+      escribir('Muy corta');
+      expect(aviso()).not.toBeNull();
+      escribir('x'.repeat(40));
+      expect(aviso()).toBeNull();
+      escribir('x'.repeat(300));
+      expect(aviso()).toBeNull();
+    });
 
-    expect(ayuda.classList).not.toContain('estado-pendiente');
-    expect(componente.pasosPendientes()).not.toContain('Estudios');
+    it('sigue en rojo si se vacia el campo despues de escribir', () => {
+      escribir('');
+      expect(aviso()?.textContent).toContain('Llevas 0');
+    });
+
+    it('aparece si una descripcion guardada no llega al minimo', () => {
+      descripcion.setValue('Muy corta');
+      expect(aviso()).not.toBeNull();
+    });
+  });
+
+  describe('aviso de las funciones realizadas', () => {
+    let fixture: any;
+    let funciones: AbstractControl;
+    const aviso = (): HTMLElement | null => {
+      fixture.detectChanges();
+      return fixture.nativeElement.querySelector('#ayuda-funcionesRealizadas-0');
+    };
+    const escribir = (texto: string) => {
+      funciones.setValue(texto);
+      funciones.markAsDirty();
+    };
+
+    beforeEach(() => {
+      fixture = TestBed.createComponent(FormBasicComponent);
+      fixture.componentInstance.agregarExpLaboral();
+      funciones = fixture.componentInstance.formBasic.get('expLaboral.0.funcionesRealizadas') as AbstractControl;
+    });
+
+    it('no aparece antes de escribir', () => {
+      expect(aviso()).toBeNull();
+    });
+
+    it('queda en rojo por debajo del minimo y por encima del maximo', () => {
+      escribir('Muy corta');
+      expect(aviso()?.textContent).toContain('Llevas 9');
+      expect(aviso()?.classList).toContain('estado-pendiente');
+      escribir('x'.repeat(131));
+      expect(aviso()?.textContent).toContain('Llevas 131');
+    });
+
+    it('desaparece dentro del rango', () => {
+      escribir('Muy corta');
+      expect(aviso()).not.toBeNull();
+      escribir('x'.repeat(40));
+      expect(aviso()).toBeNull();
+      escribir('x'.repeat(130));
+      expect(aviso()).toBeNull();
+    });
+
+    it('aparece si un texto guardado esta fuera del rango', () => {
+      funciones.setValue('x'.repeat(131));
+      expect(aviso()).not.toBeNull();
+    });
   });
 
   describe('deshacer borrados', () => {
