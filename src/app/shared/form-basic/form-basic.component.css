@@ -56,6 +56,15 @@ input[type='file']:focus-visible ~ .carga-imagen label[for] {
     /* Mismo rojo de la marca, aclarado para cumplir 3:1 sobre el fondo oscuro */
     color: #ff8a80 !important;
 }
+.barra-deshacer {
+    bottom: 88px;
+    z-index: 1032;
+    width: max-content;
+}
+.btn-deshacer {
+    min-height: 44px;
+    background: var(--accion);
+}
 /* La imagen queda centrada bajo su titulo; la X va al lado sin desplazarla */
 .carga-imagen {
     display: grid;
@@ -228,6 +237,11 @@ h2.fs-50 {
     .carousel-control-next-icon {
         width: 20px;
         height: 20px;
+    }
+    /* Por encima de la barra fija y de las flechas */
+    .barra-deshacer {
+        bottom: 164px;
+        width: calc(100vw - 24px);
     }
     .btn-guardar-accion {
         grid-column: 8;

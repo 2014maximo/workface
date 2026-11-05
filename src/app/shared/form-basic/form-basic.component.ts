@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray, AbstractControl } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { OpcionesImagen, SweetAlert, comprimirImagen, leerComoBase64 } from 'src/app/constants/functions.constants';
@@ -6,7 +6,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { PerfilLocalService } from 'src/app/services/perfil-local.service';
 import { WebServicesService } from '../../services/web-services.service';
 
-import Swal from 'sweetalert2';
 import { INTERESES_GUSTOS } from '../../constants/workface.contants';
 
 declare var $: any;
@@ -20,6 +19,40 @@ const IMAGENES: Record<string, OpcionesImagen & { campo: CampoImagen }> = {
   '/cuerpo-completo/': { campo: 'fotoCuerpoCompleto', anchoMaximo: 1600, formato: 'image/jpeg' },
   '/firma/': { campo: 'imgFirma', anchoMaximo: 600, formato: 'image/png' }
 };
+
+const NOMBRES_IMAGEN: Record<CampoImagen, string> = {
+  fotoFrontalSinFondo: 'foto frontal',
+  fotoSemiperfil: 'foto de semiperfil',
+  fotoCuerpoCompleto: 'foto de cuerpo completo',
+  imgFirma: 'firma'
+};
+
+const NOMBRES_REGISTRO: Record<string, string> = {
+  estudios: 'Estudio',
+  habilidades: 'Habilidad',
+  expLaboral: 'Experiencia laboral',
+  conocimientosAdicionales: 'Conocimiento',
+  referenciasPersonales: 'Referencia personal',
+  referenciasFamiliares: 'Referencia familiar'
+};
+
+// Mismos pasos y controles que muestran las marcas de la barra inferior.
+const PASOS: { nombre: string, controles: string[] }[] = [
+  { nombre: 'Nombre completo', controles: ['primerNombre', 'primerApellido'] },
+  { nombre: 'Imagen perfil / cuerpo completo', controles: ['fotoFrontalSinFondo', 'fotoSemiperfil', 'fotoCuerpoCompleto', 'imgFirma'] },
+  { nombre: 'Identificación', controles: ['tipoIdentificacion', 'identificacion', 'nacionalidad'] },
+  { nombre: 'Nacimiento', controles: ['fechaNacimiento', 'ciudadNacimiento', 'genero'] },
+  { nombre: 'De contacto', controles: ['direccionResidencia', 'barrioResidencia', 'email'] },
+  { nombre: 'Cargo', controles: ['cargoActual', 'acercaDMi'] },
+  { nombre: 'Redes', controles: ['linkedin'] },
+  { nombre: 'Estudios', controles: ['estudios'] },
+  { nombre: 'Habilidades', controles: ['habilidades'] },
+  { nombre: 'Intereses', controles: ['intereses'] },
+  { nombre: 'Experiencia laboral', controles: ['expLaboral'] },
+  { nombre: 'Otros conocimientos', controles: ['conocimientosAdicionales'] },
+  { nombre: 'Referencias personales', controles: ['referenciasPersonales'] },
+  { nombre: 'Referencias familiares', controles: ['referenciasFamiliares'] }
+];
 
 @Component({
   standalone: false,
@@ -44,6 +77,10 @@ export class FormBasicComponent implements OnInit {
   public objImagenes: any[]=[];
   public cerrarLoader: boolean = false;
   public gustos: Array<any> = INTERESES_GUSTOS;
+  // Solo se puede deshacer el ultimo borrado; Guardar lo confirma.
+  public borrado: { mensaje: string, restaurar: () => void, origen: HTMLElement | null } | null = null;
+  public anuncio: string = '';
+  @ViewChild('botonDeshacer') private botonDeshacer?: ElementRef<HTMLButtonElement>;
 
   constructor(private fb: FormBuilder,
     public webService: WebServicesService,
@@ -255,32 +292,49 @@ export class FormBasicComponent implements OnInit {
   }
 
   eraseForm(campos: string[], formArray?: AbstractControl){
-    if(formArray){
-      formArray.reset();
-    } else {
-      campos.forEach(campo => this.formBasic.get(campo)?.reset());
+    const controles = formArray ? [formArray] : campos.map(campo => this.formBasic.get(campo) as AbstractControl);
+    const valores = controles.map(control => control.value);
+    const tieneContenido = valores.some(valor => valor && typeof valor === 'object' ? Object.values(valor).some(Boolean) : Boolean(valor));
+    // Sin nada que borrar, no se pierde la opcion de deshacer el borrado anterior.
+    if(!tieneContenido){
+      return;
     }
+    controles.forEach(control => control.reset());
+    this.registrarBorrado('Se borraron los campos.', () => {
+      controles.forEach((control, indice) => control.setValue(valores[indice]));
+    });
   }
 
   deleteControls(formArray: string, index: number){
-    Swal.fire({
-      title: '¿Eliminar este registro?',
-      showDenyButton: true,
-      showCancelButton: false,
-      confirmButtonText: 'Eliminar',
-      denyButtonText: `No eliminar`,
-    }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
-      if (result.isConfirmed) {
-        Swal.fire('Registro eliminado', 'Pulsa Guardar para conservar el cambio.', 'success');
-        (<FormArray>this.formBasic.controls[formArray]).removeAt(index);
-      } else if (result.isDenied) {
-        Swal.fire('El registro no se eliminó', '', 'info')
-      }
-    })
+    const lista = this.formBasic.controls[formArray] as FormArray;
+    const registro = lista.at(index);
+    lista.removeAt(index);
+    this.registrarBorrado(`Se eliminó: ${NOMBRES_REGISTRO[formArray]} ${index + 1}.`, () => lista.insert(index, registro));
   }
 
-  
+  private registrarBorrado(mensaje: string, restaurar: () => void){
+    this.borrado = { mensaje, restaurar, origen: document.activeElement as HTMLElement | null };
+    this.anuncio = mensaje;
+    // El boton pulsado puede desaparecer: el foco pasa a Deshacer.
+    setTimeout(() => this.botonDeshacer?.nativeElement.focus());
+  }
+
+  public deshacer(){
+    this.borrado?.restaurar();
+    this.anuncio = 'Se deshizo el borrado.';
+    this.cerrarDeshacer();
+  }
+
+  public cerrarDeshacer(){
+    const origen = this.borrado?.origen;
+    this.borrado = null;
+    setTimeout(() => {
+      // En celular el boton pulsado no siempre recibe el foco y queda en el body.
+      const destino = origen?.isConnected && origen !== document.body ? origen : document.querySelector<HTMLElement>('.carousel-item.active button');
+      destino?.focus({ preventScroll: true });
+    });
+  }
+
   agregarInteres(){
     (<FormArray>this.formBasic.controls['intereses']).push(new FormGroup({
       'interes': new FormControl(false, Validators.required)
@@ -317,8 +371,7 @@ export class FormBasicComponent implements OnInit {
       'ciudadEstudio': new FormControl('', Validators.required),
       'descripcionEstudio':new FormControl('', Validators.compose([
         Validators.required,
-        Validators.minLength(40),
-        Validators.maxLength(130)
+        Validators.minLength(40)
       ])),
     }));
   }
@@ -396,6 +449,16 @@ export class FormBasicComponent implements OnInit {
   }
 
 
+  public pasosPendientes(): string[] {
+    return PASOS
+      .filter(paso => paso.controles.some(control => this.formBasic.get(control)?.invalid))
+      .map(paso => paso.nombre);
+  }
+
+  public largoTexto(control: AbstractControl | null): number {
+    return control?.value?.length ?? 0;
+  }
+
   public guardar(){
     $("#modalLoader").modal('show');
     
@@ -407,10 +470,11 @@ export class FormBasicComponent implements OnInit {
 
     this.perfilLocal.guardar(this.uid, usuario).then( () => {
       this.datosGenerales = usuario;
+      this.borrado = null;
       if(this.formBasic.valid){
         SweetAlert('success','Perfil guardado.');
       } else {
-        SweetAlert('warning','Perfil guardado. Aún faltan datos obligatorios: revisa los pasos marcados con x.');
+        SweetAlert('warning',`Perfil guardado. Aún faltan datos en: ${this.pasosPendientes().join(', ')}.`);
       }
     }).catch( error => {
       console.error(error);
@@ -420,66 +484,15 @@ export class FormBasicComponent implements OnInit {
     });
   }
 
-  eliminarImagen(campo: string){
-    const swalWithBootstrapButtons = Swal.mixin({
-      customClass: {
-        confirmButton: 'btn btn-success',
-        cancelButton: 'btn btn-danger'
-      },
-      buttonsStyling: false
-    })
-    
-    swalWithBootstrapButtons.fire({
-      title: '¿Eliminar la imagen?',
-      text: "Recuerda pulsar Guardar para conservar el cambio.",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Sí, eliminar',
-      cancelButtonText: 'No, cancelar!',
-      reverseButtons: true
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.limpiarContenedor(campo);
-        swalWithBootstrapButtons.fire(
-          'Borrada!',
-          'La imagen ha sido borrada.',
-          'success'
-        )
-      } else if (
-        /* Read more about handling dismissals below */
-        result.dismiss === Swal.DismissReason.cancel
-      ) {
-        swalWithBootstrapButtons.fire(
-          'Cancelar',
-          'La imagen no se borró',
-          'error'
-        )
-      }
-    })
-  }
-  limpiarContenedor(arg0: string) {
-    switch(arg0){
-      case 'fotoFrontalSinFondo':
-        this.fotoFrontalSinFondo=[];
-        this.formBasic.controls['fotoFrontalSinFondo'].reset();
-        console.log(this.formBasic, 'EL FORMULARIO BASICO');
-        break;
-        
-        case 'fotoSemiperfil':
-          this.fotoSemiperfil=[];
-          this.formBasic.controls['fotoSemiperfil'].reset();
-          break;
-          
-          case 'fotoCuerpoCompleto':
-            this.fotoCuerpoCompleto=[];
-            this.formBasic.controls['fotoCuerpoCompleto'].reset();
-            break;
-            
-            case 'imgFirma':
-              this.imgFirma=[];
-              this.formBasic.controls['imgFirma'].reset();
-        break;
-    }
+  eliminarImagen(campo: CampoImagen){
+    const control = this.formBasic.controls[campo];
+    const imagen = control.value;
+    this[campo] = [];
+    control.reset();
+    this.registrarBorrado(`Se eliminó la imagen: ${NOMBRES_IMAGEN[campo]}.`, () => {
+      control.setValue(imagen);
+      this[campo] = [imagen];
+    });
   }
 
   public cargarIntereses(e: any){

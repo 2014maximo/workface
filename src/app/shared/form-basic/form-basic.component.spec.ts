@@ -179,6 +179,143 @@ describe('FormBasicComponent: plantilla', () => {
 
   afterEach(() => (window as any).$ = jQueryOriginal);
 
+  it('avisa cuando la descripcion de un estudio no llega al minimo y lo marca como pendiente', () => {
+    const fixture = TestBed.createComponent(FormBasicComponent);
+    const componente = fixture.componentInstance;
+    componente.agregarEstudio();
+    componente.formBasic.get('estudios')?.setValue([{
+      nombreInstitucion: 'Universidad',
+      tituloObtenido: 'Ingeniera',
+      fechaInicio: '2010-01-01',
+      fechaTitulo: '2015-01-01',
+      ciudadEstudio: 'Cali',
+      descripcionEstudio: 'Muy corta'
+    }]);
+    fixture.detectChanges();
+
+    const ayuda: HTMLElement = fixture.nativeElement.querySelector('#ayuda-descripcionEstudio-0');
+    expect(ayuda.textContent).toContain('Llevas 9');
+    expect(ayuda.classList).toContain('estado-pendiente');
+    expect(componente.pasosPendientes()).toContain('Estudios');
+
+    componente.formBasic.get('estudios.0.descripcionEstudio')?.setValue('x'.repeat(40));
+    fixture.detectChanges();
+
+    expect(ayuda.classList).not.toContain('estado-pendiente');
+    expect(componente.pasosPendientes()).not.toContain('Estudios');
+
+    componente.formBasic.get('estudios.0.descripcionEstudio')?.setValue('x'.repeat(300));
+    fixture.detectChanges();
+
+    expect(ayuda.classList).not.toContain('estado-pendiente');
+    expect(componente.pasosPendientes()).not.toContain('Estudios');
+  });
+
+  describe('deshacer borrados', () => {
+    let fixture: any;
+    let componente: FormBasicComponent;
+
+    beforeEach(() => {
+      fixture = TestBed.createComponent(FormBasicComponent);
+      componente = fixture.componentInstance;
+    });
+
+    it('restaura los campos limpiados', () => {
+      componente.formBasic.patchValue({ primerNombre: 'Ana', primerApellido: 'Ruiz' });
+
+      componente.eraseForm(['primerNombre', 'primerApellido']);
+      expect(componente.formBasic.value.primerNombre).toBeNull();
+
+      componente.deshacer();
+      expect(componente.formBasic.value.primerNombre).toBe('Ana');
+      expect(componente.formBasic.value.primerApellido).toBe('Ruiz');
+      expect(componente.borrado).toBeNull();
+    });
+
+    it('restaura un registro limpiado', () => {
+      componente.agregarHabilidad();
+      const habilidad = (componente.formBasic.get('habilidades') as FormArray).at(0);
+      habilidad.setValue({ habilidad: 'Excel', nivel: '80' });
+
+      componente.eraseForm([], habilidad);
+      expect(habilidad.value.habilidad).toBeNull();
+
+      componente.deshacer();
+      expect(habilidad.value).toEqual({ habilidad: 'Excel', nivel: '80' });
+    });
+
+    it('no reemplaza el borrado anterior si no habia nada que limpiar', () => {
+      componente.formBasic.patchValue({ primerNombre: 'Ana' });
+      componente.eraseForm(['primerNombre']);
+      componente.eraseForm(['cargoActual']);
+
+      componente.deshacer();
+      expect(componente.formBasic.value.primerNombre).toBe('Ana');
+    });
+
+    it('devuelve el registro eliminado a su posicion', () => {
+      const lista = componente.formBasic.get('habilidades') as FormArray;
+      ['A', 'B', 'C'].forEach((nombre, i) => {
+        componente.agregarHabilidad();
+        lista.at(i).setValue({ habilidad: nombre, nivel: '1' });
+      });
+
+      componente.deleteControls('habilidades', 1);
+      expect(lista.length).toBe(2);
+      expect(componente.borrado?.mensaje).toBe('Se eliminó: Habilidad 2.');
+
+      componente.deshacer();
+      expect(lista.value.map((h: any) => h.habilidad)).toEqual(['A', 'B', 'C']);
+    });
+
+    it('devuelve la imagen y su vista previa', () => {
+      componente.formBasic.patchValue({ imgFirma: 'data:firma' });
+      componente.imgFirma = ['data:firma'];
+
+      componente.eliminarImagen('imgFirma');
+      expect(componente.formBasic.value.imgFirma).toBeNull();
+      expect(componente.imgFirma).toEqual([]);
+
+      componente.deshacer();
+      expect(componente.formBasic.value.imgFirma).toBe('data:firma');
+      expect(componente.imgFirma).toEqual(['data:firma']);
+    });
+
+    it('solo recupera el ultimo borrado', () => {
+      componente.formBasic.patchValue({ primerNombre: 'Ana', cargoActual: 'Gerente' });
+      componente.eraseForm(['primerNombre']);
+      componente.eraseForm(['cargoActual']);
+
+      componente.deshacer();
+      expect(componente.formBasic.value.cargoActual).toBe('Gerente');
+      expect(componente.formBasic.value.primerNombre).toBeNull();
+    });
+
+    it('muestra la barra y la quita al guardar', async () => {
+      TestBed.inject(PerfilLocalService).guardar = () => Promise.resolve() as any;
+      componente.formBasic.patchValue({ primerNombre: 'Ana' });
+      componente.eraseForm(['primerNombre']);
+      fixture.detectChanges();
+      expect(fixture.nativeElement.querySelector('.btn-deshacer')).not.toBeNull();
+
+      componente.guardar();
+      await fixture.whenStable();
+      fixture.detectChanges();
+      expect(fixture.nativeElement.querySelector('.btn-deshacer')).toBeNull();
+    });
+
+    it('limpiar Cargo no toca las fotos', () => {
+      componente.formBasic.patchValue({ cargoActual: 'Gerente', fotoSemiperfil: 'data:foto' });
+      fixture.detectChanges();
+      const botones = Array.from<HTMLElement>(fixture.nativeElement.querySelectorAll('button[aria-label="Borrar contenido de los textos"]'));
+      const boton = botones.find(b => b.closest('.carousel-item')?.querySelector('#cargoActual'));
+
+      boton?.click();
+      expect(componente.formBasic.value.cargoActual).toBeNull();
+      expect(componente.formBasic.value.fotoSemiperfil).toBe('data:foto');
+    });
+  });
+
   it('ningun boton envia el formulario, para que Enter no borre datos', () => {
     const botones = Array.from(elemento.querySelectorAll('form button'));
     expect(botones.length).toBeGreaterThan(0);

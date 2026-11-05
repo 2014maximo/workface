@@ -440,7 +440,7 @@
                     <textarea rows="10"class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" style="height:13rem" type="text" placeholder="" id="acercaDMi" formControlName="acercaDMi">
                     </textarea>
 
-                    <button type="button" aria-label="Borrar contenido de los textos" (click)="eraseForm(['fotoFrontalSinFondo','fotoSemiperfil','cargoActual','acercaDMi'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
+                    <button type="button" aria-label="Borrar contenido de los textos" (click)="eraseForm(['cargoActual','acercaDMi'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                         <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
                       </svg>
@@ -507,7 +507,9 @@
                           <label [attr.for]="'ciudadEstudio-' + i" class="estiloLabel f-open-sans-c p-1">Ciudad estudio<span class="text-danger">*</span></label>
                           <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" [id]="'ciudadEstudio-' + i" formControlName="ciudadEstudio">
                           <label [attr.for]="'descripcionEstudio-' + i" class="estiloLabel f-open-sans-c p-1">Descripción Estudio<span class="text-danger">*</span></label>
-                          <textarea rows="10"class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" style="height:13rem" type="text" [id]="'descripcionEstudio-' + i" formControlName="descripcionEstudio"></textarea>
+                          <textarea rows="10"class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" style="height:13rem" type="text" [id]="'descripcionEstudio-' + i" [attr.aria-describedby]="'ayuda-descripcionEstudio-' + i" formControlName="descripcionEstudio"></textarea>
+                          @let largoEstudio = largoTexto(estudio.get('descripcionEstudio'));
+                          <p [id]="'ayuda-descripcionEstudio-' + i" class="f-open-sans-c small mb-2" style="color: var(--texto-secundario)" [class.estado-pendiente]="largoEstudio > 0 && largoEstudio < 40">Mínimo 40 caracteres. Llevas {{largoEstudio}}.</p>
                           <button type="button" aria-label="Borrar contenido de los textos" (click)="eraseForm(['nombreInstitucion','tituloObtenido','fechaTitulo'], estudio)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                               <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
@@ -626,7 +628,9 @@
                           <label [attr.for]="'cargoEjercido-' + i" class="estiloLabel f-open-sans-c p-1">Cargo desempeñado<span class="text-danger">*</span></label>
                           <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" [id]="'cargoEjercido-' + i" formControlName="cargoEjercido">
                           <label [attr.for]="'funcionesRealizadas-' + i" class="estiloLabel f-open-sans-c p-1">Describa funciones realizadas<span class="text-danger">*</span></label>
-                          <textarea rows="10"class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" style="height:13rem" type="text" [id]="'funcionesRealizadas-' + i" formControlName="funcionesRealizadas"></textarea>
+                          <textarea rows="10"class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" style="height:13rem" type="text" [id]="'funcionesRealizadas-' + i" [attr.aria-describedby]="'ayuda-funcionesRealizadas-' + i" formControlName="funcionesRealizadas"></textarea>
+                          @let largoFunciones = largoTexto(formExpLaboral.get('funcionesRealizadas'));
+                          <p [id]="'ayuda-funcionesRealizadas-' + i" class="f-open-sans-c small mb-2" style="color: var(--texto-secundario)" [class.estado-pendiente]="largoFunciones > 130 || (largoFunciones > 0 && largoFunciones < 40)">Entre 40 y 130 caracteres. Llevas {{largoFunciones}}.</p>
                           <label [attr.for]="'fechaInicioEmpresa-' + i" class="estiloLabel f-open-sans-c p-1">Fecha de inicio<span class="text-danger">*</span></label>
                           <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="date" [id]="'fechaInicioEmpresa-' + i" formControlName="fechaInicioEmpresa">
                           <label [attr.for]="'fechaFinalEmpresa-' + i" class="estiloLabel f-open-sans-c p-1">Fecha de final actual<span class="text-danger">*</span></label>
@@ -810,6 +814,14 @@
           <span class="visually-hidden">Siguiente</span>
         </button>
       </div>
+      <p class="visually-hidden" role="status">{{anuncio}}</p>
+      @if (borrado) {
+        <div class="barra-deshacer f-open-sans-c position-fixed start-50 translate-middle-x d-flex align-items-center justify-content-between gap-3 py-2 px-3 fs-18 text-white bg-dark border shadow">
+          <p class="m-0">{{borrado.mensaje}}</p>
+          <button #botonDeshacer type="button" class="btn-deshacer border-0 flex-shrink-0 px-3 fw-bold text-dark" (click)="deshacer()">Deshacer</button>
+          <button type="button" class="btn-close btn-close-white flex-shrink-0" aria-label="Cerrar aviso" (click)="cerrarDeshacer()"></button>
+        </div>
+      }
     </form>
   </div>
   <div class="col-md-1"></div>
