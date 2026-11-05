@@ -88,3 +88,11 @@ export function leerComoBase64(archivo: Blob): Promise<string> {
         lector.readAsDataURL(archivo);
     });
 }
+
+// Para habilidades que no estan en el catalogo. Usa el mismo formato de los iconos del catalogo.
+export const ICONO_HABILIDAD_GENERICO = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m12 17.75l-6.172 3.245l1.179-6.873l-5-4.867l6.9-1l3.086-6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"/></svg>';
+
+// Un SVG dentro de <img> no hereda el color: se le aplica antes de mostrarlo.
+export function svgComoImagen(svg: string, color: string): string {
+  return `data:image/svg+xml,${encodeURIComponent(svg.replaceAll('currentColor', color))}`;
+}

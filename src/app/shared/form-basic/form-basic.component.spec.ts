@@ -275,6 +275,102 @@ describe('FormBasicComponent: plantilla', () => {
     });
   });
 
+  describe('habilidades', () => {
+    let fixture: any;
+    let componente: FormBasicComponent;
+    const lista = () => componente.formBasic.get('habilidades') as FormArray;
+
+    beforeEach(() => {
+      fixture = TestBed.createComponent(FormBasicComponent);
+      componente = fixture.componentInstance;
+    });
+
+    it('carga habilidades guardadas sin icono', () => {
+      componente.loadFormsArray({ formBasic: {
+        habilidades: [{ habilidad: 'Excel', nivel: '80' }],
+        estudios: [], expLaboral: [], conocimientosAdicionales: [], referenciasPersonales: [], referenciasFamiliares: []
+      } });
+      expect(lista().at(0).value.habilidad).toBe('Excel');
+
+      fixture.detectChanges();
+      const boton: HTMLElement = fixture.nativeElement.querySelector('#habilidad-0');
+      expect(boton.textContent).toContain('Excel');
+      expect(boton.querySelector('img')?.getAttribute('src')).toContain('data:image/svg+xml');
+    });
+
+    it('invita a elegir cuando no hay habilidad y no tiene campo de texto', () => {
+      componente.agregarHabilidad();
+      fixture.detectChanges();
+      const boton: HTMLElement = fixture.nativeElement.querySelector('#habilidad-0');
+      expect(boton.tagName).toBe('BUTTON');
+      expect(boton.textContent).toContain('Elegir habilidad');
+    });
+
+    it('el boton de agregar no crea el registro hasta que se elige una habilidad', () => {
+      fixture.detectChanges();
+      fixture.nativeElement.querySelector('#agregarHabilidad').click();
+      expect(lista().length).toBe(0);
+
+      componente.habilidadElegida({ nombre: 'Python', icono: '<svg></svg>' });
+
+      expect(lista().length).toBe(1);
+      expect(lista().at(0).value.habilidad).toBe('Python');
+    });
+
+    it('empieza en 50 y el paso queda completo al elegir', () => {
+      componente.abrirSelectorHabilidad();
+      componente.habilidadElegida({ nombre: 'Python', icono: '' });
+      fixture.detectChanges();
+
+      expect(lista().at(0).value.nivel).toBe(50);
+      expect(lista().valid).toBeTrue();
+      expect(fixture.nativeElement.querySelector('#nivel-0').value).toBe('50');
+      expect(fixture.nativeElement.textContent).toContain('50%');
+    });
+
+    it('conserva el nivel al cambiar de habilidad, incluido el 0', () => {
+      componente.abrirSelectorHabilidad();
+      componente.habilidadElegida({ nombre: 'Python', icono: '' });
+      lista().at(0).patchValue({ nivel: 0 });
+
+      componente.abrirSelectorHabilidad(0);
+      componente.habilidadElegida({ nombre: 'Excel', icono: '' });
+
+      expect(lista().at(0).value.habilidad).toBe('Excel');
+      expect(lista().at(0).value.nivel).toBe(0);
+    });
+
+    it('cerrar el modal sin elegir no crea ningun registro', () => {
+      fixture.detectChanges();
+      fixture.nativeElement.querySelector('#agregarHabilidad').click();
+
+      componente.selectorHabilidadCerrado();
+
+      expect(lista().length).toBe(0);
+    });
+
+    it('dos habilidades agregadas seguidas quedan en registros distintos', () => {
+      componente.abrirSelectorHabilidad();
+      componente.habilidadElegida({ nombre: 'Python', icono: '' });
+      componente.abrirSelectorHabilidad();
+      componente.habilidadElegida({ nombre: 'Excel', icono: '' });
+
+      expect(lista().value.map((h: any) => h.habilidad)).toEqual(['Python', 'Excel']);
+    });
+
+    it('guarda en el registro correcto lo que se elige en el modal', () => {
+      componente.agregarHabilidad();
+      componente.agregarHabilidad();
+
+      componente.abrirSelectorHabilidad(1);
+      componente.habilidadElegida({ nombre: 'Python', icono: '<svg></svg>' });
+
+      expect(lista().at(0).value.habilidad).toBe('');
+      expect(lista().at(1).value.habilidad).toBe('Python');
+      expect(lista().at(1).value.icono).toBe('<svg></svg>');
+    });
+  });
+
   describe('deshacer borrados', () => {
     let fixture: any;
     let componente: FormBasicComponent;
@@ -299,13 +395,13 @@ describe('FormBasicComponent: plantilla', () => {
     it('restaura un registro limpiado', () => {
       componente.agregarHabilidad();
       const habilidad = (componente.formBasic.get('habilidades') as FormArray).at(0);
-      habilidad.setValue({ habilidad: 'Excel', nivel: '80' });
+      habilidad.setValue({ habilidad: 'Excel', icono: '<svg></svg>', nivel: '80' });
 
       componente.eraseForm([], habilidad);
       expect(habilidad.value.habilidad).toBeNull();
 
       componente.deshacer();
-      expect(habilidad.value).toEqual({ habilidad: 'Excel', nivel: '80' });
+      expect(habilidad.value).toEqual({ habilidad: 'Excel', icono: '<svg></svg>', nivel: '80' });
     });
 
     it('no reemplaza el borrado anterior si no habia nada que limpiar', () => {
@@ -321,7 +417,7 @@ describe('FormBasicComponent: plantilla', () => {
       const lista = componente.formBasic.get('habilidades') as FormArray;
       ['A', 'B', 'C'].forEach((nombre, i) => {
         componente.agregarHabilidad();
-        lista.at(i).setValue({ habilidad: nombre, nivel: '1' });
+        lista.at(i).setValue({ habilidad: nombre, icono: '', nivel: '1' });
       });
 
       componente.deleteControls('habilidades', 1);

@@ -1,12 +1,13 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray, AbstractControl } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { OpcionesImagen, SweetAlert, comprimirImagen, leerComoBase64 } from 'src/app/constants/functions.constants';
+import { ICONO_HABILIDAD_GENERICO, OpcionesImagen, SweetAlert, comprimirImagen, leerComoBase64, svgComoImagen } from 'src/app/constants/functions.constants';
 import { AuthService } from 'src/app/services/auth.service';
 import { PerfilLocalService } from 'src/app/services/perfil-local.service';
 import { WebServicesService } from '../../services/web-services.service';
 
 import { INTERESES_GUSTOS } from '../../constants/workface.contants';
+import { HabilidadElegida, SelectorHabilidadComponent } from '../selector-habilidad/selector-habilidad.component';
 
 declare var $: any;
 
@@ -19,6 +20,8 @@ const IMAGENES: Record<string, OpcionesImagen & { campo: CampoImagen }> = {
   '/cuerpo-completo/': { campo: 'fotoCuerpoCompleto', anchoMaximo: 1600, formato: 'image/jpeg' },
   '/firma/': { campo: 'imgFirma', anchoMaximo: 600, formato: 'image/png' }
 };
+
+const NIVEL_INICIAL = 50;
 
 const NOMBRES_IMAGEN: Record<CampoImagen, string> = {
   fotoFrontalSinFondo: 'foto frontal',
@@ -81,6 +84,9 @@ export class FormBasicComponent implements OnInit {
   public borrado: { mensaje: string, restaurar: () => void, origen: HTMLElement | null } | null = null;
   public anuncio: string = '';
   @ViewChild('botonDeshacer') private botonDeshacer?: ElementRef<HTMLButtonElement>;
+  @ViewChild(SelectorHabilidadComponent) private selectorHabilidad?: SelectorHabilidadComponent;
+  private habilidadEnEdicion?: number;
+  private habilidadConfirmada: boolean = false;
 
   constructor(private fb: FormBuilder,
     public webService: WebServicesService,
@@ -247,7 +253,8 @@ export class FormBasicComponent implements OnInit {
     if(formularios.formBasic){
       formularios.formBasic.habilidades?.forEach((staff: any, index: number, form: any) => {
         this.agregarHabilidad();
-        (<FormArray>this.formBasic.get('habilidades')).at(index).setValue(staff);
+        // Las habilidades guardadas antes del catalogo no traen icono.
+        (<FormArray>this.formBasic.get('habilidades')).at(index).patchValue(staff);
       });
   
       formularios.formBasic.debilidades?.forEach((staff: any, index: number, form: any) => {
@@ -351,8 +358,40 @@ export class FormBasicComponent implements OnInit {
   agregarHabilidad(){
     (<FormArray>this.formBasic.controls['habilidades']).push(new FormGroup({
       'habilidad': new FormControl('', Validators.required),
+      'icono': new FormControl(''),
       'nivel': new FormControl('', Validators.required)
     }));
+  }
+
+  // Sin indice, el registro se crea solo cuando se elige una habilidad.
+  public abrirSelectorHabilidad(index?: number){
+    this.habilidadEnEdicion = index;
+    this.habilidadConfirmada = false;
+    this.selectorHabilidad?.abrir();
+  }
+
+  public habilidadElegida({ nombre, icono }: HabilidadElegida){
+    if(this.habilidadEnEdicion === undefined){
+      this.agregarHabilidad();
+      this.habilidadEnEdicion = (this.formBasic.get('habilidades') as FormArray).length - 1;
+    }
+    const registro = (this.formBasic.get('habilidades') as FormArray).at(this.habilidadEnEdicion);
+    // Al cambiar de habilidad se conserva el nivel ya indicado, incluido el 0.
+    const nivelVacio = registro.value.nivel === '' || registro.value.nivel === null;
+    registro.patchValue({ habilidad: nombre, icono, nivel: nivelVacio ? NIVEL_INICIAL : registro.value.nivel });
+    this.habilidadConfirmada = true;
+  }
+
+  // Tras elegir sigue indicar el nivel; al cancelar se vuelve al boton que abrio el modal.
+  public selectorHabilidadCerrado(){
+    const destino = this.habilidadEnEdicion === undefined
+      ? 'agregarHabilidad'
+      : `${this.habilidadConfirmada ? 'nivel' : 'habilidad'}-${this.habilidadEnEdicion}`;
+    document.getElementById(destino)?.focus();
+  }
+
+  public imagenHabilidad(icono: string | null): string {
+    return svgComoImagen(icono || ICONO_HABILIDAD_GENERICO, '#fff');
   }
 
   agregarIdioma(){

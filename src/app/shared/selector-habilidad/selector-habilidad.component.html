@@ -1,0 +1,95 @@
+<div #modal class="modal fade" id="modalHabilidad" tabindex="-1" aria-labelledby="tituloModalHabilidad" aria-hidden="true" data-bs-theme="dark">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable modal-fullscreen-sm-down">
+    <div class="modal-content f-open-sans-c">
+      <div class="modal-header">
+        <h2 class="modal-title fs-4" id="tituloModalHabilidad">Elegir habilidad</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+
+      <div class="controles p-3">
+        <fieldset class="d-flex flex-wrap gap-3 mb-2">
+          <legend class="visually-hidden">Buscar habilidad por</legend>
+          <label class="d-flex align-items-center gap-2 modo">
+            <input type="radio" class="form-check-input m-0" name="modoHabilidad" [checked]="modo === 'palabra'" (change)="cambiarModo('palabra')">
+            Palabra clave
+          </label>
+          <label class="d-flex align-items-center gap-2 modo">
+            <input type="radio" class="form-check-input m-0" name="modoHabilidad" [checked]="modo === 'area'" (change)="cambiarModo('area')">
+            Área
+          </label>
+        </fieldset>
+
+        @if (modo === 'palabra') {
+          <label for="buscarHabilidad" class="visually-hidden">Palabra clave</label>
+          <input #campoTexto type="search" class="form-control" id="buscarHabilidad" placeholder="Escribe una habilidad" autocomplete="off" [value]="texto" (input)="alEscribir($any($event.target).value)">
+        } @else {
+          <label for="areaHabilidad" class="visually-hidden">Área</label>
+          <select class="form-select" id="areaHabilidad" [disabled]="!areas.length" (change)="elegirArea($any($event.target).value)">
+            <option value="" [selected]="!archivoArea">Elige un área</option>
+            @for (area of areas; track area.archivo) {
+              <option [value]="area.archivo" [selected]="area.archivo === archivoArea">{{ area.nombre }}</option>
+            }
+          </select>
+        }
+      </div>
+
+      <div class="modal-body">
+        <div role="status">
+          @if (cargando) {
+            <p class="aviso">Cargando…</p>
+          } @else if (busquedaCorta) {
+            <p class="aviso">Escribe al menos 2 letras.</p>
+          } @else if (modo === 'area' && !archivoArea && !error) {
+            <p class="aviso">Elige un área para ver sus habilidades.</p>
+          } @else if (sinResultados) {
+            <p class="aviso">No encontramos “{{ texto.trim() }}”. Prueba con otra palabra, busca por área o agrégala como otra habilidad.</p>
+          } @else if (totalResultados > maximoResultados) {
+            <p class="aviso">Se muestran {{ maximoResultados }} de {{ totalResultados }} resultados. Escribe más letras para afinar.</p>
+          }
+        </div>
+
+        @if (error) {
+          <div role="alert" class="d-flex flex-wrap align-items-center gap-3 mb-3">
+            <p class="m-0">No pudimos cargar las habilidades. Revisa tu conexión.</p>
+            <button type="button" class="btn btn-outline-light" (click)="actualizar()">Reintentar</button>
+          </div>
+        }
+
+        @for (grupo of grupos; track grupo.titulo) {
+          @if (grupo.titulo) {
+            <h3 class="especialidad">{{ grupo.titulo }}</h3>
+          }
+          <ul class="opciones">
+            @for (opcion of grupo.opciones; track opcion.nombre) {
+              <li>
+                <button type="button" class="opcion" [disabled]="!imagen(opcion.nombre)" (click)="elegir(opcion)">
+                  @if (imagen(opcion.nombre); as url) {
+                    <img [src]="url" alt="" width="32" height="32">
+                  } @else {
+                    <span class="sin-icono"></span>
+                  }
+                  <span class="nombre">{{ opcion.nombre }}</span>
+                  @if (opcion.area) {
+                    <span class="area">{{ opcion.area }}</span>
+                  }
+                </button>
+              </li>
+            }
+          </ul>
+        }
+      </div>
+
+      <div class="modal-footer justify-content-start">
+        @if (otraVisible) {
+          <label for="otraHabilidad" class="visually-hidden">Nombre de la habilidad</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="otraHabilidad" placeholder="Nombre de la habilidad" maxlength="60" autocomplete="off" [value]="textoOtra" (input)="textoOtra = $any($event.target).value" (keydown.enter)="usarOtra()">
+            <button type="button" class="btn usar" [disabled]="!textoOtra.trim()" (click)="usarOtra()">Usar</button>
+          </div>
+        } @else {
+          <button type="button" class="btn btn-link otra" (click)="mostrarOtra()">¿No está? Agregar otra habilidad</button>
+        }
+      </div>
+    </div>
+  </div>
+</div>

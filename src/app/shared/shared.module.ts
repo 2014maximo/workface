@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BetaComponent } from './TEMPLATES/beta/beta.component';
 import { CurriculumsComponent } from './components/curriculus/curriculums.component';
 import { CarruselDirective } from './carrusel.directive';
+import { SelectorHabilidadComponent } from './selector-habilidad/selector-habilidad.component';
 
 
 
@@ -26,7 +27,8 @@ import { CarruselDirective } from './carrusel.directive';
     FormBasicComponent,
     BetaComponent,
     CurriculumsComponent,
-    CarruselDirective
+    CarruselDirective,
+    SelectorHabilidadComponent
   ],
   imports: [
     CommonModule,
