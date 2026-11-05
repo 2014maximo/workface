@@ -1,9 +1,23 @@
 .modal-content {
+    color: #fff;
     font-size: 18px;
+    background: radial-gradient(ellipse at center, rgba(61,56,61,1) 0%, rgba(26,26,26,1) 59%, rgba(26,26,26,1) 100%);
+    /* Lista del select, radios y barra de scroll oscuros, como el resto del perfil */
+    color-scheme: dark;
+    scrollbar-color: var(--borde-campo) transparent;
+}
+.titulo {
+    font-size: clamp(1.5rem, 1rem + 2vw, 2.25rem);
+    overflow-wrap: anywhere;
+}
+.btn-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    margin: 0;
 }
 .controles {
     flex: none;
-    border-bottom: 1px solid var(--bs-border-color);
 }
 fieldset {
     margin: 0;
@@ -14,23 +28,56 @@ fieldset {
     min-height: 44px;
     cursor: pointer;
 }
+.modo input {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--accion);
+    cursor: pointer;
+}
+/* Mismo campo que los demas pasos del perfil */
+.estilo-input {
+    min-width: 0;
+    height: 44px;
+    font-family: 'Grape Nuts', cursive;
+    font-size: clamp(20px, 1rem + 1vw, 26px);
+    color: var(--accion);
+    background: transparent;
+    border: 0;
+    border-left: 1px solid var(--borde-campo);
+    border-bottom: 1px solid var(--borde-campo);
+    caret-color: var(--accion);
+}
+.estilo-input::placeholder {
+    font-family: var(--fuente-tres);
+    font-size: 16px;
+    color: var(--texto-secundario);
+    opacity: 1;
+}
+select.estilo-input {
+    text-overflow: ellipsis;
+}
+option {
+    font-family: var(--fuente-uno);
+    font-size: 16px;
+    color: #fff;
+    background: #1a1a1a;
+}
 .modal-body {
     min-height: 40vh;
+    padding-top: 0;
 }
 .aviso {
+    text-align: center;
     color: var(--texto-secundario);
 }
 .especialidad {
-    margin: 16px 0 8px;
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--texto-secundario);
+    margin: 16px 0 12px;
 }
 .opciones {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
-    gap: 8px;
-    margin: 0;
+    gap: 12px;
+    margin: 0 0 24px;
     padding: 0;
     list-style: none;
 }
@@ -44,16 +91,15 @@ fieldset {
     padding: 16px 8px 12px;
     text-align: center;
     color: #fff;
-    background: var(--bs-tertiary-bg);
-    border: 1px solid transparent;
-    transition: border-color .15s ease-out;
+    background: transparent;
+    border: 0;
+    border-left: 1px solid var(--borde-campo);
+    border-bottom: 1px solid var(--borde-campo);
+    transition: background-color .15s ease-out, border-color .15s ease-out;
 }
 .opcion:hover:not(:disabled) {
+    background: rgba(255, 255, 255, .06);
     border-color: var(--accion);
-}
-.opcion:focus-visible {
-    outline: 2px solid var(--foco);
-    outline-offset: 2px;
 }
 .opcion:disabled {
     cursor: progress;
@@ -71,16 +117,29 @@ fieldset {
     line-height: 1.2;
     color: var(--texto-secundario);
 }
+.modal-footer {
+    flex: none;
+    border-top: 1px solid rgba(255, 255, 255, .15);
+}
 .otra {
     min-height: 44px;
-    padding: 0;
+    text-decoration: underline;
     color: var(--enlace);
 }
-.usar {
-    min-width: 72px;
-    font-weight: 700;
-    color: #1a1a1a;
-    background: var(--accion);
+.accion {
+    flex: none;
+    min-height: 44px;
+}
+.usar:disabled {
+    opacity: .5;
+}
+.opcion:focus-visible,
+.estilo-input:focus-visible,
+.otra:focus-visible,
+.accion:focus-visible,
+.modo input:focus-visible {
+    outline: 2px solid var(--foco);
+    outline-offset: 2px;
 }
 @media (prefers-reduced-motion: reduce) {
     .opcion {

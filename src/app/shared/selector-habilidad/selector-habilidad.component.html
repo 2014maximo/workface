@@ -1,30 +1,30 @@
-<div #modal class="modal fade" id="modalHabilidad" tabindex="-1" aria-labelledby="tituloModalHabilidad" aria-hidden="true" data-bs-theme="dark">
+<div #modal class="modal fade" id="modalHabilidad" tabindex="-1" aria-labelledby="tituloModalHabilidad" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-scrollable modal-fullscreen-sm-down">
-    <div class="modal-content f-open-sans-c">
-      <div class="modal-header">
-        <h2 class="modal-title fs-4" id="tituloModalHabilidad">Elegir habilidad</h2>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+    <div class="modal-content f-open-sans-c rounded-0 border-0 shadow-two">
+      <div class="modal-header border-0 pb-0">
+        <h2 class="titulo ls-5 fw-6 text-light text-center text-shadow-one w-100 m-0" id="tituloModalHabilidad">ELEGIR HABILIDAD</h2>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
 
-      <div class="controles p-3">
-        <fieldset class="d-flex flex-wrap gap-3 mb-2">
+      <div class="controles px-3 pt-2 pb-3 px-md-5">
+        <fieldset class="d-flex flex-wrap justify-content-center gap-4 mb-1">
           <legend class="visually-hidden">Buscar habilidad por</legend>
           <label class="d-flex align-items-center gap-2 modo">
-            <input type="radio" class="form-check-input m-0" name="modoHabilidad" [checked]="modo === 'palabra'" (change)="cambiarModo('palabra')">
+            <input type="radio" name="modoHabilidad" [checked]="modo === 'palabra'" (change)="cambiarModo('palabra')">
             Palabra clave
           </label>
           <label class="d-flex align-items-center gap-2 modo">
-            <input type="radio" class="form-check-input m-0" name="modoHabilidad" [checked]="modo === 'area'" (change)="cambiarModo('area')">
+            <input type="radio" name="modoHabilidad" [checked]="modo === 'area'" (change)="cambiarModo('area')">
             Área
           </label>
         </fieldset>
 
         @if (modo === 'palabra') {
           <label for="buscarHabilidad" class="visually-hidden">Palabra clave</label>
-          <input #campoTexto type="search" class="form-control" id="buscarHabilidad" placeholder="Escribe una habilidad" autocomplete="off" [value]="texto" (input)="alEscribir($any($event.target).value)">
+          <input #campoTexto type="search" class="estilo-input w-100 ps-2" id="buscarHabilidad" placeholder="Escribe una habilidad" autocomplete="off" [value]="texto" (input)="alEscribir($any($event.target).value)">
         } @else {
           <label for="areaHabilidad" class="visually-hidden">Área</label>
-          <select class="form-select" id="areaHabilidad" [disabled]="!areas.length" (change)="elegirArea($any($event.target).value)">
+          <select class="estilo-input w-100 ps-2" id="areaHabilidad" [disabled]="!areas.length" (change)="elegirArea($any($event.target).value)">
             <option value="" [selected]="!archivoArea">Elige un área</option>
             @for (area of areas; track area.archivo) {
               <option [value]="area.archivo" [selected]="area.archivo === archivoArea">{{ area.nombre }}</option>
@@ -33,7 +33,7 @@
         }
       </div>
 
-      <div class="modal-body">
+      <div class="modal-body px-3 px-md-5">
         <div role="status">
           @if (cargando) {
             <p class="aviso">Cargando…</p>
@@ -51,13 +51,13 @@
         @if (error) {
           <div role="alert" class="d-flex flex-wrap align-items-center gap-3 mb-3">
             <p class="m-0">No pudimos cargar las habilidades. Revisa tu conexión.</p>
-            <button type="button" class="btn btn-outline-light" (click)="actualizar()">Reintentar</button>
+            <button type="button" class="accion border-0 bg-blue-one text-light px-4 fs-20 shadow-three" (click)="actualizar()">Reintentar</button>
           </div>
         }
 
         @for (grupo of grupos; track grupo.titulo) {
           @if (grupo.titulo) {
-            <h3 class="especialidad">{{ grupo.titulo }}</h3>
+            <h3 class="especialidad f-grape tc-blue-two fs-17 text-shadow-one">{{ grupo.titulo }}</h3>
           }
           <ul class="opciones">
             @for (opcion of grupo.opciones; track opcion.nombre) {
@@ -79,15 +79,15 @@
         }
       </div>
 
-      <div class="modal-footer justify-content-start">
+      <div class="modal-footer justify-content-center px-3 px-md-5">
         @if (otraVisible) {
           <label for="otraHabilidad" class="visually-hidden">Nombre de la habilidad</label>
-          <div class="input-group">
-            <input type="text" class="form-control" id="otraHabilidad" placeholder="Nombre de la habilidad" maxlength="60" autocomplete="off" [value]="textoOtra" (input)="textoOtra = $any($event.target).value" (keydown.enter)="usarOtra()">
-            <button type="button" class="btn usar" [disabled]="!textoOtra.trim()" (click)="usarOtra()">Usar</button>
+          <div class="d-flex align-items-center gap-3 w-100">
+            <input type="text" class="estilo-input flex-grow-1 ps-2" id="otraHabilidad" placeholder="Nombre de la habilidad" maxlength="60" autocomplete="off" [value]="textoOtra" (input)="textoOtra = $any($event.target).value" (keydown.enter)="usarOtra()">
+            <button type="button" class="accion usar border-0 bg-blue-one text-light px-4 fs-20 shadow-three" [disabled]="!textoOtra.trim()" (click)="usarOtra()">Usar</button>
           </div>
         } @else {
-          <button type="button" class="btn btn-link otra" (click)="mostrarOtra()">¿No está? Agregar otra habilidad</button>
+          <button type="button" class="otra bg-transparent border-0" (click)="mostrarOtra()">¿No está? Agregar otra habilidad</button>
         }
       </div>
     </div>
