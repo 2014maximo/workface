@@ -252,25 +252,23 @@ describe('FormBasicComponent: plantilla', () => {
       expect(aviso()).toBeNull();
     });
 
-    it('queda en rojo por debajo del minimo y por encima del maximo', () => {
+    it('queda en rojo al escribir menos del minimo', () => {
       escribir('Muy corta');
-      expect(aviso()?.textContent).toContain('Llevas 9');
+      expect(aviso()?.textContent).toContain('Mínimo 40 caracteres. Llevas 9');
       expect(aviso()?.classList).toContain('estado-pendiente');
-      escribir('x'.repeat(131));
-      expect(aviso()?.textContent).toContain('Llevas 131');
     });
 
-    it('desaparece dentro del rango', () => {
+    it('desaparece al llegar al minimo, sin limite maximo', () => {
       escribir('Muy corta');
       expect(aviso()).not.toBeNull();
       escribir('x'.repeat(40));
       expect(aviso()).toBeNull();
-      escribir('x'.repeat(130));
+      escribir('x'.repeat(300));
       expect(aviso()).toBeNull();
     });
 
-    it('aparece si un texto guardado esta fuera del rango', () => {
-      funciones.setValue('x'.repeat(131));
+    it('aparece si un texto guardado no llega al minimo', () => {
+      funciones.setValue('Muy corta');
       expect(aviso()).not.toBeNull();
     });
   });

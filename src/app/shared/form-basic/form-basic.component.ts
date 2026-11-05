@@ -424,8 +424,7 @@ export class FormBasicComponent implements OnInit {
       'fechaFinalEmpresa':new FormControl(''),
       'funcionesRealizadas':new FormControl('', Validators.compose([
         Validators.required,
-        Validators.minLength(40),
-        Validators.maxLength(130)
+        Validators.minLength(40)
       ])),
       'telContactoEmpresa': new FormControl('', Validators.required),
       'ciudadEmpresa': new FormControl('', Validators.required),
