@@ -44,3 +44,9 @@ Thumbs.db
 
 # Binario de Impeccable: el lanzador lo descarga si falta
 .claude/skills/impeccable/scripts/bin/
+
+# Hojas de vida de prueba para importar CV (datos personales)
+docs/*.pdf
+docs/*.doc
+docs/*.docx
+docs/*.odt
