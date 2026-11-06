@@ -487,3 +487,67 @@ describe('FormBasicComponent: plantilla', () => {
     expect(sinNombre.map(campo => campo.getAttribute('formcontrolname'))).toEqual([]);
   });
 });
+
+describe('FormBasicComponent: importar hoja de vida', () => {
+  let componente: FormBasicComponent;
+
+  const seleccion = (cambios: any = {}) => ({
+    campos: { primerNombre: 'Laura', email: 'laura@ejemplo.com' },
+    habilidades: [{ nombre: 'Excel', icono: '<svg></svg>', origen: 'seccion' as const }],
+    referencias: [{ nombreCompleto: 'Pedro Gil', ocupacion: 'Contador', telefono: '3001234567', empresa: '', familiar: false }],
+    bloquesEstudios: ['2020 | Técnico en contabilidad'],
+    bloquesExperiencia: [],
+    ...cambios
+  });
+  const lista = (nombre: string) => componente.formBasic.get(nombre) as FormArray;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [FormBasicComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+      providers: [
+        { provide: AuthService, useValue: { getUserLogged: () => of(null) } },
+        { provide: PerfilLocalService, useValue: {} },
+        { provide: WebServicesService, useValue: { consultarRecursos: () => of({}) } }
+      ]
+    });
+    componente = TestBed.createComponent(FormBasicComponent).componentInstance;
+  });
+
+  it('aplica los campos, las habilidades con nivel inicial y las referencias', () => {
+    componente.importacionAplicada(seleccion());
+    expect(componente.formBasic.value.primerNombre).toBe('Laura');
+    expect(componente.formBasic.value.email).toBe('laura@ejemplo.com');
+    expect(lista('habilidades').value).toEqual([{ habilidad: 'Excel', icono: '<svg></svg>', nivel: 50 }]);
+    expect(lista('referenciasPersonales').value[0]).toEqual({ nombreCompleto: 'Pedro Gil', ocupacion: 'Contador', telefono: '3001234567', empresa: '' });
+    expect(componente.textoImportado.estudios).toEqual(['2020 | Técnico en contabilidad']);
+  });
+
+  it('manda a referencias familiares las que vienen de esa seccion', () => {
+    componente.importacionAplicada(seleccion({ referencias: [{ nombreCompleto: 'Rosa Gil', ocupacion: 'Docente', telefono: '1', empresa: '', familiar: true }] }));
+    expect(lista('referenciasPersonales').length).toBe(0);
+    expect(lista('referenciasFamiliares').value[0].nombreCompleto).toBe('Rosa Gil');
+  });
+
+  it('deshacer devuelve los valores anteriores y quita solo lo importado', () => {
+    componente.formBasic.patchValue({ primerNombre: 'Ana' });
+    componente.agregarHabilidad();
+    lista('habilidades').at(0).patchValue({ habilidad: 'Word', nivel: 80 });
+
+    componente.importacionAplicada(seleccion());
+    expect(componente.borrado?.mensaje).toContain('Se importaron 4 datos');
+    componente.deshacer();
+
+    expect(componente.formBasic.value.primerNombre).toBe('Ana');
+    expect(componente.formBasic.value.email).toBe('');
+    expect(lista('habilidades').value.map((h: any) => h.habilidad)).toEqual(['Word']);
+    expect(lista('referenciasPersonales').length).toBe(0);
+    expect(componente.textoImportado.estudios).toEqual([]);
+  });
+
+  it('ocultar el texto de una seccion no toca la otra', () => {
+    componente.importacionAplicada(seleccion({ bloquesExperiencia: ['2019 - 2021 | Auxiliar'] }));
+    componente.ocultarTextoImportado('estudios');
+    expect(componente.textoImportado).toEqual({ estudios: [], experiencia: ['2019 - 2021 | Auxiliar'] });
+  });
+});

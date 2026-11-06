@@ -8,6 +8,8 @@ import { WebServicesService } from '../../services/web-services.service';
 
 import { INTERESES_GUSTOS } from '../../constants/workface.contants';
 import { HabilidadElegida, SelectorHabilidadComponent } from '../selector-habilidad/selector-habilidad.component';
+import { ImportarCvComponent, SeleccionImportacion } from '../importar-cv/importar-cv.component';
+import { CAMPOS_SIMPLES } from 'src/app/services/importar-cv/interpretar-cv';
 
 declare var $: any;
 
@@ -85,6 +87,10 @@ export class FormBasicComponent implements OnInit {
   public anuncio: string = '';
   @ViewChild('botonDeshacer') private botonDeshacer?: ElementRef<HTMLButtonElement>;
   @ViewChild(SelectorHabilidadComponent) private selectorHabilidad?: SelectorHabilidadComponent;
+  @ViewChild(ImportarCvComponent) private importadorCv?: ImportarCvComponent;
+  // Texto de estudios y experiencia de la hoja importada, para copiarlo a mano. No se guarda.
+  public textoImportado: { estudios: string[], experiencia: string[] } = { estudios: [], experiencia: [] };
+  public bloqueCopiado: string | null = null;
   private habilidadEnEdicion?: number;
   private habilidadConfirmada: boolean = false;
 
@@ -392,6 +398,73 @@ export class FormBasicComponent implements OnInit {
 
   public imagenHabilidad(icono: string | null): string {
     return svgComoImagen(icono || ICONO_HABILIDAD_GENERICO, '#fff');
+  }
+
+  public abrirImportacion(){
+    const valores = this.formBasic.value;
+    this.importadorCv?.abrir({
+      campos: Object.fromEntries(CAMPOS_SIMPLES.map(campo => [campo, valores[campo] ?? ''])),
+      habilidades: (valores.habilidades ?? []).map((h: any) => h.habilidad).filter(Boolean)
+    });
+  }
+
+  public importacionCerrada(){
+    document.getElementById('abrirImportacion')?.focus();
+  }
+
+  public importacionAplicada({ campos, habilidades, referencias, bloquesEstudios, bloquesExperiencia }: SeleccionImportacion){
+    const anteriores = Object.fromEntries(Object.keys(campos).map(campo => [campo, this.formBasic.get(campo)?.value]));
+    this.formBasic.patchValue(campos);
+    Object.keys(campos).forEach(campo => this.formBasic.get(campo)?.markAsDirty());
+
+    const lista = (nombre: string) => this.formBasic.get(nombre) as FormArray;
+    const largos = { habilidades: lista('habilidades').length, referenciasPersonales: lista('referenciasPersonales').length, referenciasFamiliares: lista('referenciasFamiliares').length };
+    habilidades.forEach(({ nombre, icono }) => {
+      this.agregarHabilidad();
+      lista('habilidades').at(-1).patchValue({ habilidad: nombre, icono, nivel: NIVEL_INICIAL });
+    });
+    referencias.forEach(({ familiar, nombreCompleto, ocupacion, telefono, empresa }) => {
+      if(familiar){
+        this.agregarReferenciaFamiliar();
+      } else {
+        this.agregarReferenciaPersonal();
+      }
+      lista(familiar ? 'referenciasFamiliares' : 'referenciasPersonales').at(-1).patchValue({ nombreCompleto, ocupacion, telefono, empresa });
+    });
+
+    const textoAnterior = this.textoImportado;
+    this.textoImportado = { estudios: bloquesEstudios, experiencia: bloquesExperiencia };
+    const total = Object.keys(campos).length + habilidades.length + referencias.length;
+    if(!total){
+      SweetAlert('info', 'Revisa el texto de tu hoja de vida en los pasos Estudios y Experiencia laboral.');
+      return;
+    }
+    // Igual que un borrado, la importacion se puede deshacer hasta pulsar Guardar.
+    this.registrarBorrado(`Se importaron ${total} ${total === 1 ? 'dato' : 'datos'}. Revísalos y pulsa Guardar.`, () => {
+      this.formBasic.patchValue(anteriores);
+      (Object.keys(largos) as (keyof typeof largos)[]).forEach(nombre => {
+        while(lista(nombre).length > largos[nombre]){
+          lista(nombre).removeAt(lista(nombre).length - 1);
+        }
+      });
+      this.textoImportado = textoAnterior;
+    });
+  }
+
+  public async copiarBloque(texto: string){
+    try {
+      await navigator.clipboard.writeText(texto);
+      this.bloqueCopiado = texto;
+      this.anuncio = 'Texto copiado.';
+    } catch(error) {
+      console.error(error);
+      this.anuncio = 'No se pudo copiar. Selecciona el texto y cópialo a mano.';
+      SweetAlert('error', this.anuncio);
+    }
+  }
+
+  public ocultarTextoImportado(tipo: 'estudios' | 'experiencia'){
+    this.textoImportado = { ...this.textoImportado, [tipo]: [] };
   }
 
   agregarIdioma(){

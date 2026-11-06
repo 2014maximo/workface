@@ -252,3 +252,63 @@ h2.fs-50 {
         font-size: 16px !important;
     }
 }
+/* Importar hoja de vida */
+.importar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 12px 16px;
+    margin-top: 16px;
+    font-size: 17px;
+    color: var(--texto-secundario);
+    text-align: center;
+}
+.btn-importar {
+    min-height: 44px;
+}
+.btn-importar:focus-visible,
+.btn-enlace:focus-visible,
+.btn-copiar:focus-visible {
+    outline: 2px solid var(--foco);
+    outline-offset: 2px;
+}
+.texto-importado {
+    margin: 24px 0 0;
+    padding: 16px;
+    color: #fff;
+    border-left: 1px solid var(--accion);
+    border-bottom: 1px solid var(--accion);
+}
+.ayuda-importado {
+    margin: 4px 0 12px;
+    font-size: 15px;
+    line-height: 1.45;
+    color: var(--texto-secundario);
+}
+.bloque-importado {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+    align-items: start;
+    padding: 12px 0;
+    border-top: 1px solid rgba(255, 255, 255, .15);
+}
+.bloque-importado p {
+    font-size: 16px;
+    line-height: 1.45;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+    user-select: text;
+}
+.btn-enlace,
+.btn-copiar {
+    min-height: 44px;
+    padding: 0 4px;
+    font-size: 16px;
+    color: var(--enlace);
+    background: transparent;
+    border: 0;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}

@@ -1,0 +1,308 @@
+/* Mismo fondo, campos y botones que el modal de habilidades */
+.modal-content {
+    color: #fff;
+    font-size: 18px;
+    background: radial-gradient(ellipse at center, rgba(61,56,61,1) 0%, rgba(26,26,26,1) 59%, rgba(26,26,26,1) 100%);
+    color-scheme: dark;
+    scrollbar-color: var(--borde-campo) transparent;
+}
+.modal-content ::selection {
+    color: #1a1a1a;
+    background: var(--accion);
+}
+.titulo {
+    font-size: clamp(1.5rem, 1rem + 2vw, 2.25rem);
+    overflow-wrap: anywhere;
+}
+.btn-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    margin: 0;
+}
+.modal-body {
+    min-height: 40vh;
+    padding-top: 16px;
+}
+
+/* Elegir archivo */
+.zona {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 40px 16px;
+    text-align: center;
+    color: var(--texto-secundario);
+    border-left: 1px solid var(--borde-campo);
+    border-bottom: 1px solid var(--borde-campo);
+    transition: background-color .15s ease-out, border-color .15s ease-out;
+}
+.zona.arrastrando {
+    background: rgba(255, 255, 255, .06);
+    border-color: var(--accion);
+}
+.icono-zona {
+    color: var(--accion);
+}
+/* El campo de archivo queda oculto, pero sigue disponible con teclado */
+.campo-archivo {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+.zona label.accion {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+.campo-archivo:focus-visible + svg + label {
+    outline: 2px solid var(--foco);
+    outline-offset: 2px;
+}
+.notas {
+    margin: 24px 0 0;
+    padding-left: 1.2em;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--texto-secundario);
+}
+.notas li + li {
+    margin-top: 6px;
+}
+@media (pointer: coarse) {
+    .solo-escritorio {
+        display: none;
+    }
+}
+
+.estado-centro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    min-height: 30vh;
+    text-align: center;
+}
+.mensaje-error {
+    max-width: 52ch;
+    line-height: 1.5;
+}
+
+/* Revision */
+.resumen {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    outline: none;
+}
+.archivo {
+    margin: 2px 0 8px;
+    font-size: 15px;
+    color: var(--texto-secundario);
+    overflow-wrap: anywhere;
+}
+.ayuda {
+    max-width: 65ch;
+    margin: 0 0 12px;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--texto-secundario);
+}
+.bloque {
+    margin-top: 32px;
+}
+.subtitulo {
+    margin: 0 0 12px;
+    font-size: 17px;
+}
+.fila {
+    display: grid;
+    grid-template-columns: 24px minmax(0, 1fr);
+    gap: 12px;
+    align-items: start;
+    padding: 6px 0;
+}
+.fila-contenido {
+    min-width: 0;
+}
+.marca {
+    width: 22px;
+    height: 22px;
+    margin: 12px 0 0;
+    accent-color: var(--accion);
+    cursor: pointer;
+}
+.etiqueta {
+    display: block;
+    font-size: 15px;
+    color: var(--texto-secundario);
+}
+.estilo-input {
+    min-width: 0;
+    height: 44px;
+    font-family: 'Grape Nuts', cursive;
+    font-size: clamp(20px, 1rem + 1vw, 26px);
+    color: var(--accion);
+    background: transparent;
+    border: 0;
+    border-left: 1px solid var(--borde-campo);
+    border-bottom: 1px solid var(--borde-campo);
+    caret-color: var(--accion);
+}
+textarea.estilo-input {
+    height: auto;
+    line-height: 1.35;
+    resize: vertical;
+}
+/* Lo desmarcado se ve atenuado, pero sigue legible para poder decidir */
+.fila.apagada .estilo-input,
+.fila.apagada .nombre-referencia {
+    color: var(--texto-secundario);
+}
+.reemplaza {
+    margin: 4px 0 0;
+    font-size: 15px;
+    line-height: 1.4;
+    color: var(--enlace);
+    overflow-wrap: anywhere;
+}
+
+/* Habilidades */
+.grupo-habilidades {
+    margin: 0 0 20px;
+    padding: 0;
+    border: 0;
+}
+.grupo-habilidades legend {
+    float: left;
+    margin: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+}
+.marcar-todas {
+    float: right;
+}
+.opciones {
+    clear: both;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+    gap: 12px;
+    margin: 0;
+    padding: 4px 0 0;
+    list-style: none;
+}
+.opcion {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    height: 100%;
+    padding: 16px 8px 12px;
+    text-align: center;
+    cursor: pointer;
+    border-left: 1px solid var(--borde-campo);
+    border-bottom: 1px solid var(--borde-campo);
+    transition: background-color .15s ease-out, border-color .15s ease-out;
+}
+.opcion .marca {
+    position: absolute;
+    top: 6px;
+    left: 8px;
+    margin: 0;
+}
+.opcion:has(.marca:checked) {
+    background: rgba(255, 239, 39, .08);
+    border-color: var(--accion);
+}
+.opcion:hover:not(.repetida) {
+    border-color: var(--accion);
+}
+.opcion:has(.marca:focus-visible) {
+    outline: 2px solid var(--foco);
+    outline-offset: 2px;
+}
+.opcion.repetida {
+    cursor: default;
+}
+.opcion.repetida img,
+.opcion.repetida .nombre {
+    opacity: .55;
+}
+.nombre {
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+}
+.detalle {
+    font-size: 14px;
+    line-height: 1.3;
+    color: var(--texto-secundario);
+}
+
+/* Referencias */
+.referencia {
+    cursor: pointer;
+}
+.referencia .marca {
+    margin-top: 2px;
+}
+.nombre-referencia {
+    display: block;
+    font-weight: 700;
+}
+.destino {
+    margin-top: 4px;
+    font-size: 14px;
+    color: var(--enlace);
+}
+.conteo {
+    margin: 0;
+    padding-left: 1.2em;
+    font-size: 16px;
+    line-height: 1.6;
+}
+.tabular {
+    font-variant-numeric: tabular-nums;
+}
+
+.modal-footer {
+    flex: none;
+    justify-content: space-between;
+    gap: 12px;
+    border-top: 1px solid rgba(255, 255, 255, .15);
+}
+.enlace {
+    min-height: 44px;
+    padding: 0;
+    font-size: 16px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    color: var(--enlace);
+    background: transparent;
+    border: 0;
+}
+.accion {
+    flex: none;
+    min-height: 44px;
+}
+.accion:disabled {
+    opacity: .5;
+}
+.marca:focus-visible,
+.estilo-input:focus-visible,
+.enlace:focus-visible,
+.accion:focus-visible {
+    outline: 2px solid var(--foco);
+    outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+    .zona,
+    .opcion {
+        transition: none;
+    }
+}

@@ -148,6 +148,10 @@
                 <div class="shadow-two bg-form p-3 p-md-5">
                   <p class="contador-paso text-center f-open-sans-c">01<span class="contador-total"> de 14</span></p>
                   <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">NOMBRE COMPLETO</h2>
+                  <div class="importar f-open-sans-c">
+                    <p class="m-0">¿Ya tienes tu hoja de vida en PDF o Word?</p>
+                    <button type="button" id="abrirImportacion" class="btn-importar border-0 bg-blue-one text-light px-4 fs-18 shadow-three" (click)="abrirImportacion()">Importar datos</button>
+                  </div>
                   <div class="p-3 p-md-5">
                     <label for="primerNombre" class="estiloLabel f-open-sans-c p-1">Primer nombre<span class="text-danger">*</span></label>
                     <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="text" id="primerNombre" autocomplete="given-name" formControlName="primerNombre">
@@ -491,6 +495,21 @@
                 <div class="shadow-two bg-form p-3 p-md-5">
                   <p class="contador-paso text-center f-open-sans-c">08<span class="contador-total"> de 14</span></p>
                   <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">ESTUDIOS</h2>
+                  @if (textoImportado.estudios.length) {
+                    <section class="texto-importado f-open-sans-c" aria-labelledby="tituloTextoEstudios">
+                      <div class="d-flex align-items-center justify-content-between gap-3">
+                        <h3 id="tituloTextoEstudios" class="f-grape tc-blue-two fs-17 text-shadow-one m-0">Texto de tu hoja de vida</h3>
+                        <button type="button" class="btn-enlace" (click)="ocultarTextoImportado('estudios')">Ocultar</button>
+                      </div>
+                      <p class="ayuda-importado">Copia cada parte al campo que le corresponde. Este texto no se guarda en tu perfil.</p>
+                      @for (bloque of textoImportado.estudios; track $index) {
+                        <div class="bloque-importado">
+                          <p class="m-0">{{ bloque }}</p>
+                          <button type="button" class="btn-copiar" (click)="copiarBloque(bloque)">{{ bloqueCopiado === bloque ? 'Copiado' : 'Copiar' }}</button>
+                        </div>
+                      }
+                    </section>
+                  }
                   <ng-container formArrayName="estudios">
                     @for (estudio of getControls('estudios'); track estudio; let i = $index) {
                       <div [formGroupName]="i">
@@ -629,6 +648,21 @@
                 <div class="shadow-two bg-form p-3 p-md-5">
                   <p class="contador-paso text-center f-open-sans-c">11<span class="contador-total"> de 14</span></p>
                   <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">EXPERIENCIA LABORAL</h2>
+                  @if (textoImportado.experiencia.length) {
+                    <section class="texto-importado f-open-sans-c" aria-labelledby="tituloTextoExperiencia">
+                      <div class="d-flex align-items-center justify-content-between gap-3">
+                        <h3 id="tituloTextoExperiencia" class="f-grape tc-blue-two fs-17 text-shadow-one m-0">Texto de tu hoja de vida</h3>
+                        <button type="button" class="btn-enlace" (click)="ocultarTextoImportado('experiencia')">Ocultar</button>
+                      </div>
+                      <p class="ayuda-importado">Copia cada parte al campo que le corresponde. Este texto no se guarda en tu perfil.</p>
+                      @for (bloque of textoImportado.experiencia; track $index) {
+                        <div class="bloque-importado">
+                          <p class="m-0">{{ bloque }}</p>
+                          <button type="button" class="btn-copiar" (click)="copiarBloque(bloque)">{{ bloqueCopiado === bloque ? 'Copiado' : 'Copiar' }}</button>
+                        </div>
+                      }
+                    </section>
+                  }
                   <ng-container formArrayName="expLaboral">
                     @for (formExpLaboral of getControls('expLaboral'); track formExpLaboral; let i = $index) {
                       <div [formGroupName]="i" >
@@ -846,6 +880,7 @@
 </div>
 
 <app-selector-habilidad (elegida)="habilidadElegida($event)" (cerrado)="selectorHabilidadCerrado()"></app-selector-habilidad>
+<app-importar-cv (aplicar)="importacionAplicada($event)" (cerrado)="importacionCerrada()"></app-importar-cv>
 
 <div class="modal" id="modalLoader" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">

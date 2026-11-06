@@ -11,6 +11,7 @@ import { BetaComponent } from './TEMPLATES/beta/beta.component';
 import { CurriculumsComponent } from './components/curriculus/curriculums.component';
 import { CarruselDirective } from './carrusel.directive';
 import { SelectorHabilidadComponent } from './selector-habilidad/selector-habilidad.component';
+import { ImportarCvComponent } from './importar-cv/importar-cv.component';
 
 
 
@@ -28,7 +29,8 @@ import { SelectorHabilidadComponent } from './selector-habilidad/selector-habili
     BetaComponent,
     CurriculumsComponent,
     CarruselDirective,
-    SelectorHabilidadComponent
+    SelectorHabilidadComponent,
+    ImportarCvComponent
   ],
   imports: [
     CommonModule,

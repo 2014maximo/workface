@@ -1,0 +1,144 @@
+<div #modal class="modal fade" id="modalImportarCv" tabindex="-1" aria-labelledby="tituloModalImportar" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable modal-fullscreen-sm-down">
+    <div class="modal-content f-open-sans-c rounded-0 border-0 shadow-two">
+      <div class="modal-header border-0 pb-0">
+        <h2 class="titulo ls-5 fw-6 text-light text-center text-shadow-one w-100 m-0" id="tituloModalImportar">IMPORTAR HOJA DE VIDA</h2>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+
+      <div class="modal-body px-3 px-md-5">
+        @switch (estado) {
+          @case ('elegir') {
+            <div class="zona" [class.arrastrando]="arrastrando" (dragover)="alArrastrar($event, true)" (dragleave)="alArrastrar($event, false)" (drop)="alSoltar($event)">
+              <input #campoArchivo type="file" id="archivoCv" class="campo-archivo" accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" aria-describedby="formatosCv" (change)="alElegir($event)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="icono-zona" viewBox="0 0 16 16" aria-hidden="true">
+                <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5z"/>
+                <path d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5"/>
+              </svg>
+              <label for="archivoCv" class="accion bg-blue-one text-light px-4 fs-20 shadow-three">Elegir archivo</label>
+              <p id="formatosCv" class="m-0">PDF o Word (.docx), hasta 10 MB. <span class="solo-escritorio">También puedes soltarlo aquí.</span></p>
+            </div>
+            <ul class="notas">
+              <li>El archivo se lee en este navegador y no se envía a ningún servidor.</li>
+              <li>Antes de aplicar revisas cada dato, y nada de lo que ya escribiste se reemplaza sin tu permiso.</li>
+              <li>Las fotos y la firma se cargan aparte, en el paso 2.</li>
+            </ul>
+          }
+
+          @case ('leyendo') {
+            <div class="estado-centro" role="status">
+              <div class="spinner-border text-warning" aria-hidden="true"></div>
+              <p class="m-0">Leyendo {{ nombreArchivo }}…</p>
+            </div>
+          }
+
+          @case ('error') {
+            <div class="estado-centro" role="alert">
+              <p class="m-0 mensaje-error">{{ mensajeError }}</p>
+              <button type="button" class="accion border-0 bg-blue-one text-light px-4 fs-20 shadow-three" (click)="elegirOtro()">Elegir otro archivo</button>
+            </div>
+          }
+
+          @case ('revision') {
+            <h3 #tituloRevision tabindex="-1" class="resumen">Revisa lo que encontramos</h3>
+            <p class="archivo">{{ nombreArchivo }}</p>
+            @if (hayAlgo) {
+              <p class="ayuda">Marca lo que quieres llevar a tu perfil y corrige aquí lo que haga falta. Lo que no aparece no se encontró: lo llenas a mano.</p>
+            } @else {
+              <p class="ayuda" role="status">No reconocimos datos en este archivo. Prueba con otra versión de tu hoja de vida, por ejemplo un PDF exportado desde Word, o llena el perfil a mano.</p>
+            }
+
+            @for (grupo of grupos; track grupo.titulo) {
+              <section class="bloque">
+                <h4 class="subtitulo f-grape tc-blue-two text-shadow-one">{{ grupo.titulo }}</h4>
+                @for (campo of grupo.campos; track campo.campo) {
+                  <div class="fila" [class.apagada]="!campo.marcado">
+                    <input type="checkbox" class="marca" [id]="'usar-' + campo.campo" [(ngModel)]="campo.marcado" [attr.aria-label]="'Usar ' + campo.etiqueta">
+                    <div class="fila-contenido">
+                      <label [for]="'valor-' + campo.campo" class="etiqueta">{{ campo.etiqueta }}</label>
+                      @if (campo.multilinea) {
+                        <textarea class="estilo-input w-100 ps-2" rows="6" [id]="'valor-' + campo.campo" [(ngModel)]="campo.valor" [attr.aria-describedby]="campo.actual ? 'actual-' + campo.campo : null"></textarea>
+                      } @else {
+                        <input class="estilo-input w-100 ps-2" [type]="campo.tipo" [id]="'valor-' + campo.campo" [(ngModel)]="campo.valor" [attr.aria-describedby]="campo.actual ? 'actual-' + campo.campo : null">
+                      }
+                      @if (campo.actual) {
+                        <p class="reemplaza" [id]="'actual-' + campo.campo">Ahora tienes «{{ campo.actual }}». Márcalo solo si quieres reemplazarlo.</p>
+                      }
+                    </div>
+                  </div>
+                }
+              </section>
+            }
+
+            @if (habilidades.length) {
+              <section class="bloque">
+                <h4 class="subtitulo f-grape tc-blue-two text-shadow-one">Habilidades</h4>
+                <p class="ayuda">Llegan con nivel 50 %; lo ajustas después en el paso Habilidades.</p>
+                @for (grupo of habilidades; track grupo.origen) {
+                  <fieldset class="grupo-habilidades">
+                    <legend>{{ grupo.titulo }}</legend>
+                    <button type="button" class="enlace marcar-todas" (click)="marcarHabilidades(grupo.lista, !todasMarcadas(grupo.lista))">{{ todasMarcadas(grupo.lista) ? 'Desmarcar todas' : 'Marcar todas' }}</button>
+                    <ul class="opciones">
+                      @for (habilidad of grupo.lista; track habilidad.nombre) {
+                        <li>
+                          <label class="opcion" [class.repetida]="habilidad.repetida">
+                            <input type="checkbox" class="marca" [(ngModel)]="habilidad.marcada" [disabled]="habilidad.repetida">
+                            <img [src]="habilidad.imagen" alt="" width="32" height="32">
+                            <span class="nombre">{{ habilidad.nombre }}</span>
+                            @if (habilidad.repetida) {
+                              <span class="detalle">Ya está en tu perfil</span>
+                            }
+                          </label>
+                        </li>
+                      }
+                    </ul>
+                  </fieldset>
+                }
+              </section>
+            }
+
+            @if (referencias.length) {
+              <section class="bloque">
+                <h4 class="subtitulo f-grape tc-blue-two text-shadow-one">Referencias</h4>
+                @for (referencia of referencias; track $index) {
+                  <label class="fila referencia" [class.apagada]="!referencia.marcada">
+                    <input type="checkbox" class="marca" [(ngModel)]="referencia.marcada">
+                    <span class="fila-contenido">
+                      <span class="nombre-referencia">{{ referencia.nombreCompleto }}</span>
+                      @if (referencia.ocupacion) {<span class="detalle d-block">{{ referencia.ocupacion }}</span>}
+                      @if (referencia.empresa) {<span class="detalle d-block">{{ referencia.empresa }}</span>}
+                      @if (referencia.telefono) {<span class="detalle d-block tabular">{{ referencia.telefono }}</span>}
+                      <span class="destino d-block">Va a: {{ referencia.familiar ? 'Referencias familiares' : 'Referencias personales' }}</span>
+                    </span>
+                  </label>
+                }
+              </section>
+            }
+
+            <section class="bloque">
+              <h4 class="subtitulo f-grape tc-blue-two text-shadow-one">Estudios y experiencia laboral</h4>
+              @if (hayBloques) {
+                <p class="ayuda">No se reparten solos en los campos, porque cada hoja de vida los ordena distinto. Al aplicar, el texto encontrado queda a la vista en esos pasos para que copies cada parte.</p>
+                <ul class="conteo">
+                  <li><span class="tabular">{{ bloquesEstudios.length }}</span> {{ bloquesEstudios.length === 1 ? 'texto' : 'textos' }} de estudios</li>
+                  <li><span class="tabular">{{ bloquesExperiencia.length }}</span> {{ bloquesExperiencia.length === 1 ? 'texto' : 'textos' }} de experiencia</li>
+                </ul>
+              } @else {
+                <p class="ayuda">No encontramos estas secciones; las llenas a mano en sus pasos.</p>
+              }
+            </section>
+          }
+        }
+      </div>
+
+      @if (estado === 'revision') {
+        <div class="modal-footer px-3 px-md-5">
+          <button type="button" class="enlace" (click)="elegirOtro()">Elegir otro archivo</button>
+          <button type="button" class="accion border-0 bg-blue-one text-light px-4 fs-20 shadow-three" [disabled]="!totalMarcados && !hayBloques" (click)="confirmar()">
+            Aplicar{{ totalMarcados ? ' ' + totalMarcados + (totalMarcados === 1 ? ' dato' : ' datos') : '' }}
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+</div>
