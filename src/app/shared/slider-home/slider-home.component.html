@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-1"></div>
     <div class="col-md-10">
-        <div #carrusel="appCarrusel" appCarrusel id="carouselExampleControls" class="carousel slide">
+        <div appCarrusel id="carouselExampleControls" class="carousel slide">
             <div class="carousel-inner text-center">
                 <div class="carousel-item active">
                     <img src="assets/img/slider-home/slide-5-1200.webp"
@@ -43,9 +43,6 @@
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Siguiente</span>
             </a>
-            <button type="button" class="btn-pausa btn-pausa-imagenes" [attr.aria-label]="carrusel.pausado ? 'Reanudar imágenes' : 'Pausar imágenes'" (click)="carrusel.alternar()">
-                <i class="max" [class.max-pause]="!carrusel.pausado" [class.max-play]="carrusel.pausado" aria-hidden="true"></i>
-            </button>
         </div>
     </div>
     <div class="col-md-1"></div>

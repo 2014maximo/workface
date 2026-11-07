@@ -20,13 +20,6 @@
     background-size: 55%;
     border-radius: 50%;
 }
-.btn-pausa-imagenes {
-    position: absolute;
-    bottom: 12px;
-    left: 50%;
-    z-index: 3;
-    transform: translateX(-50%);
-}
 @media (min-width: 768px) {
     .carousel-control-prev,
     .carousel-control-next {
