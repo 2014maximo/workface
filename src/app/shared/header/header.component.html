@@ -29,20 +29,20 @@
         }
         <p class="tc-blue-one"><small>{{user.email}}</small></p>
       </li>
-    }
-    @if (!email && !enLogin) {
-      <li class="f-shadow-into-l">
-        <a href="login">INGRESAR</a>
-      </li>
+      <li class="menu-separador" aria-hidden="true"></li>
     }
     @if (email) {
       <li class="f-shadow-into-l">
         <a href="profile">INFORMACIÓN DE CV</a>
       </li>
-    }
-    @if (email) {
       <li class="f-shadow-into-l">
-        <a class="tc-yellow-one" href="galeria">PLANTILLAS CV</a>
+        <a class="enlace-destacado" href="galeria"><span class="tc-yellow-one">PLANTILLAS</span> CV</a>
+      </li>
+      <li class="menu-separador" aria-hidden="true"></li>
+    }
+    @if (!email && !enLogin) {
+      <li class="f-shadow-into-l">
+        <a href="login">INGRESAR</a>
       </li>
     }
     <li class="f-shadow-into-l">

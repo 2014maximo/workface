@@ -69,6 +69,53 @@ a {
     min-height: 48px;
     line-height: 48px;
 }
+/* Plantillas CV es el destino principal del menu: mas grande que el resto */
+.menu-lista .enlace-destacado {
+    font-size: clamp(2.25rem, 1.5rem + 3vw, 2.875rem);
+    line-height: 1.2;
+    padding-block: 4px;
+    /* Para que Motion pueda escalarlo */
+    transform-origin: center;
+}
+/* Linea corta entre los grupos del menu */
+.menu-separador {
+    width: min(240px, 60%);
+    height: 1px;
+    margin: 20px auto;
+    background: rgba(255, 255, 255, 0.3);
+}
+/* Hover: una linea fina crece desde el centro bajo la opcion */
+.menu-lista a,
+.btn-salir {
+    position: relative;
+}
+.menu-lista a::after,
+.btn-salir::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 6px;
+    height: 2px;
+    background: currentColor;
+    opacity: 0.6;
+    transform: scaleX(0);
+    transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+@media (hover: hover) {
+    .menu-lista a:hover::after,
+    .btn-salir:hover::after {
+        transform: scaleX(1);
+    }
+}
+.menu-lista a:focus-visible::after,
+.btn-salir:focus-visible::after {
+    transform: scaleX(1);
+}
+/* En Plantillas CV la linea toma el amarillo de la palabra destacada */
+.menu-lista .enlace-destacado::after {
+    background: var(--accion);
+}
 .perfil-img {
     border-radius: 5px;
 }
@@ -90,6 +137,10 @@ a {
 }
 /* Menos movimiento: el menu aparece sin desplazarse */
 @media (prefers-reduced-motion: reduce) {
+    .menu-lista a::after,
+    .btn-salir::after {
+        transition: none;
+    }
     .sidenav,
     .sidenav-abierto {
         transform: none;
