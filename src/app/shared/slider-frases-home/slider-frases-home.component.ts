@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { FRASES, INTERVALO_FRASES } from '../constants/frases.constant';
+import { FraseModel } from '../models/frase.model';
 
 @Component({
   standalone: false,
@@ -6,11 +8,9 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './slider-frases-home.component.html',
   styleUrls: ['./slider-frases-home.component.css']
 })
-export class SliderFrasesHomeComponent implements OnInit {
+export class SliderFrasesHomeComponent {
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+  public readonly frases: FraseModel[] = FRASES;
+  public readonly intervalo = INTERVALO_FRASES;
 
 }

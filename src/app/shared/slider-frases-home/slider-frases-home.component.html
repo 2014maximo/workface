@@ -4,15 +4,11 @@
     <div class="col-md-10 text-center">
         <div #carrusel="appCarrusel" appCarrusel id="carouselExampleFade" class="carousel slide carousel-fade">
             <div class="carousel-inner">
-              <div class="carousel-item active" data-bs-interval="15000">
-                <p class="frase fuenteUno fw-3 text-light">En asuntos laborales es imprescindible mostrar la mejor imagen.</p>
-              </div>
-              <div class="carousel-item" data-bs-interval="15000">
-                <p class="frase fuenteUno fw-3 text-light">Mejoremos la manera monótona del proceso.</p>
-              </div>
-              <div class="carousel-item" data-bs-interval="15000">
-                <p class="frase fuenteUno fw-3 text-light">La primera imagen es la más importante.</p>
-              </div>
+              @for (frase of frases; track frase.id; let primera = $first) {
+                <div class="carousel-item" [class.active]="primera" [attr.data-bs-interval]="intervalo">
+                  <p class="frase fuenteUno fw-3 text-light">{{ frase.texto }}</p>
+                </div>
+              }
             </div>
         </div>
         <button type="button" class="btn-pausa mt-2" [attr.aria-label]="carrusel.pausado ? 'Reanudar frases' : 'Pausar frases'" (click)="carrusel.alternar()">
