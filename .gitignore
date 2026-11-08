@@ -50,3 +50,6 @@ docs/*.pdf
 docs/*.doc
 docs/*.docx
 docs/*.odt
+
+# Lista local de tareas y hallazgos (herramienta de desarrollo)
+/.tareas/
