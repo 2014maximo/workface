@@ -41,6 +41,22 @@ const NOMBRES_REGISTRO: Record<string, string> = {
   referenciasFamiliares: 'Referencia familiar'
 };
 
+// Nombres de los campos de experiencia laboral, para decir cuales faltan.
+export const CAMPOS_EXPERIENCIA: Record<string, string> = {
+  nombreEmpresa: 'Empresa',
+  jefeInmediatoEmpresa: 'Jefe inmediato',
+  cargoEjercido: 'Cargo desempeñado',
+  funcionesRealizadas: 'Funciones realizadas',
+  fechaInicioEmpresa: 'Fecha de inicio',
+  telContactoEmpresa: 'Número de contacto',
+  ciudadEmpresa: 'Ciudad'
+};
+
+// "Jefe inmediato, Ciudad y Fecha de inicio"
+function enumerar(partes: string[]): string {
+  return partes.length > 1 ? `${partes.slice(0, -1).join(', ')} y ${partes[partes.length - 1]}` : partes[0] ?? '';
+}
+
 // Mismos pasos y controles que muestran las marcas de la barra inferior.
 const PASOS: { nombre: string, controles: string[] }[] = [
   { nombre: 'Nombre completo', controles: ['primerNombre', 'primerApellido'] },
@@ -91,6 +107,8 @@ export class FormBasicComponent implements OnInit {
   // Texto de estudios y experiencia de la hoja importada, para copiarlo a mano. No se guarda.
   public textoImportado: { estudios: string[], experiencia: string[] } = { estudios: [], experiencia: [] };
   public bloqueCopiado: string | null = null;
+  // Despues del primer intento de guardar, cada registro incompleto dice que le falta.
+  public intentoGuardar: boolean = false;
   private habilidadEnEdicion?: number;
   private habilidadConfirmada: boolean = false;
 
@@ -566,11 +584,42 @@ export class FormBasicComponent implements OnInit {
       .map(paso => paso.nombre);
   }
 
+  // Campos sin llenar o incorrectos de cada empresa, en el orden del formulario.
+  public faltantesExperiencia(): { empresa: number, campos: string[] }[] {
+    return (this.formBasic.get('expLaboral') as FormArray).controls
+      .map((grupo, indice) => ({
+        empresa: indice + 1,
+        campos: Object.keys(CAMPOS_EXPERIENCIA).filter(campo => grupo.get(campo)?.invalid).map(campo => CAMPOS_EXPERIENCIA[campo])
+      }))
+      .filter(empresa => empresa.campos.length > 0);
+  }
+
+  public camposFaltantes(grupo: AbstractControl): string {
+    return enumerar(Object.keys(CAMPOS_EXPERIENCIA).filter(campo => grupo.get(campo)?.invalid).map(campo => CAMPOS_EXPERIENCIA[campo]));
+  }
+
+  // Un campo se marca cuando el usuario ya paso por el o cuando intento guardar.
+  public mostrarError(control: AbstractControl | null): boolean {
+    return !!control?.invalid && (control.touched || control.dirty);
+  }
+
+  // Detalle para el aviso de guardado: "Experiencia laboral (Empresa 1: Jefe inmediato y Ciudad)".
+  private detallePaso(paso: string): string {
+    if (paso !== 'Experiencia laboral') {
+      return paso;
+    }
+    const detalle = this.faltantesExperiencia().map(e => `Empresa ${e.empresa}: ${enumerar(e.campos)}`).join('; ');
+    return detalle ? `${paso} (${detalle})` : paso;
+  }
+
   public largoTexto(control: AbstractControl | null): number {
     return control?.value?.length ?? 0;
   }
 
   public guardar(){
+    // Muestra en cada paso los campos que faltan, no solo el aviso general.
+    this.formBasic.markAllAsTouched();
+    this.intentoGuardar = true;
     $("#modalLoader").modal('show');
     
     let usuario:any = {};
@@ -585,7 +634,7 @@ export class FormBasicComponent implements OnInit {
       if(this.formBasic.valid){
         SweetAlert('success','Perfil guardado.');
       } else {
-        SweetAlert('warning',`Perfil guardado. Aún faltan datos en: ${this.pasosPendientes().join(', ')}.`);
+        SweetAlert('warning',`Perfil guardado. Aún faltan datos en: ${this.pasosPendientes().map(paso => this.detallePaso(paso)).join(', ')}.`, 8000);
       }
     }).catch( error => {
       console.error(error);

@@ -2,13 +2,14 @@ import Compressor from 'compressorjs';
 import { toJpeg } from 'html-to-image';
 import Swal from 'sweetalert2';
 
-export function SweetAlert(icon: any, message: string){
+// Un mensaje largo necesita mas tiempo en pantalla: se puede pasar la duracion en milisegundos.
+export function SweetAlert(icon: any, message: string, duracion: number = 3000){
 
     let TOAST = Swal.mixin({
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
-        timer: 3000,
+        timer: duracion,
         timerProgressBar: true,
         didOpen: (toast) => {
           toast.addEventListener('mouseenter', Swal.stopTimer)

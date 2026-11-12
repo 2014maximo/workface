@@ -685,28 +685,56 @@
                       <div [formGroupName]="i" >
                         <div class="p-3 p-md-5">
                           <h3 class="f-grape tc-blue-two fs-17 text-shadow-one">Empresa {{i + 1}}</h3>
+                          @if (intentoGuardar && formExpLaboral.invalid && formExpLaboral.touched) {
+                            <p class="resumen-faltantes f-open-sans-c estado-pendiente">Falta completar: {{ camposFaltantes(formExpLaboral) }}.</p>
+                          }
+                          @let empresa = formExpLaboral.get('nombreEmpresa');
                           <label [attr.for]="'nombreEmpresa-' + i" class="estiloLabel f-open-sans-c p-1">Empresa<span class="text-danger">*</span></label>
-                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" [id]="'nombreEmpresa-' + i" formControlName="nombreEmpresa">
+                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" [class.campo-invalido]="mostrarError(empresa)" [attr.aria-invalid]="mostrarError(empresa)" [attr.aria-describedby]="mostrarError(empresa) ? 'error-nombreEmpresa-' + i : null" type="text" [id]="'nombreEmpresa-' + i" formControlName="nombreEmpresa">
+                          @if (mostrarError(empresa)) {
+                            <p [id]="'error-nombreEmpresa-' + i" class="error-campo f-open-sans-c estado-pendiente">Escribe el nombre de la empresa.</p>
+                          }
+                          @let jefe = formExpLaboral.get('jefeInmediatoEmpresa');
                           <label [attr.for]="'jefeInmediatoEmpresa-' + i" class="estiloLabel f-open-sans-c p-1">Jefe inmediato<span class="text-danger">*</span></label>
-                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" [id]="'jefeInmediatoEmpresa-' + i" formControlName="jefeInmediatoEmpresa">
+                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" [class.campo-invalido]="mostrarError(jefe)" [attr.aria-invalid]="mostrarError(jefe)" [attr.aria-describedby]="mostrarError(jefe) ? 'error-jefeInmediatoEmpresa-' + i : null" type="text" [id]="'jefeInmediatoEmpresa-' + i" formControlName="jefeInmediatoEmpresa">
+                          @if (mostrarError(jefe)) {
+                            <p [id]="'error-jefeInmediatoEmpresa-' + i" class="error-campo f-open-sans-c estado-pendiente">Escribe el nombre de tu jefe inmediato.</p>
+                          }
+                          @let cargo = formExpLaboral.get('cargoEjercido');
                           <label [attr.for]="'cargoEjercido-' + i" class="estiloLabel f-open-sans-c p-1">Cargo desempeñado<span class="text-danger">*</span></label>
-                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" [id]="'cargoEjercido-' + i" formControlName="cargoEjercido">
+                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" [class.campo-invalido]="mostrarError(cargo)" [attr.aria-invalid]="mostrarError(cargo)" [attr.aria-describedby]="mostrarError(cargo) ? 'error-cargoEjercido-' + i : null" type="text" [id]="'cargoEjercido-' + i" formControlName="cargoEjercido">
+                          @if (mostrarError(cargo)) {
+                            <p [id]="'error-cargoEjercido-' + i" class="error-campo f-open-sans-c estado-pendiente">Escribe el cargo que tenías.</p>
+                          }
                           <label [attr.for]="'funcionesRealizadas-' + i" class="estiloLabel f-open-sans-c p-1">Describa funciones realizadas<span class="text-danger">*</span></label>
                           @let funciones = formExpLaboral.get('funcionesRealizadas');
                           @let largoFunciones = largoTexto(funciones);
-                          @let funcionesIncorrectas = funciones?.invalid && (funciones?.dirty || largoFunciones > 0);
-                          <textarea rows="10"class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" style="height:13rem" type="text" [id]="'funcionesRealizadas-' + i" [attr.aria-describedby]="funcionesIncorrectas ? 'ayuda-funcionesRealizadas-' + i : null" formControlName="funcionesRealizadas"></textarea>
+                          @let funcionesIncorrectas = mostrarError(funciones) || (!!funciones?.invalid && largoFunciones > 0);
+                          <textarea rows="10"class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" [class.campo-invalido]="funcionesIncorrectas" [attr.aria-invalid]="funcionesIncorrectas" style="height:13rem" type="text" [id]="'funcionesRealizadas-' + i" [attr.aria-describedby]="funcionesIncorrectas ? 'ayuda-funcionesRealizadas-' + i : null" formControlName="funcionesRealizadas"></textarea>
                           @if (funcionesIncorrectas) {
-                            <p [id]="'ayuda-funcionesRealizadas-' + i" class="f-open-sans-c small mb-2 estado-pendiente">Mínimo 40 caracteres. Llevas {{largoFunciones}}.</p>
+                            <p [id]="'ayuda-funcionesRealizadas-' + i" class="error-campo f-open-sans-c estado-pendiente">{{ largoFunciones === 0 ? 'Describe tus funciones: mínimo 40 caracteres.' : 'Mínimo 40 caracteres. Llevas ' + largoFunciones + '.' }}</p>
                           }
+                          @let inicio = formExpLaboral.get('fechaInicioEmpresa');
                           <label [attr.for]="'fechaInicioEmpresa-' + i" class="estiloLabel f-open-sans-c p-1">Fecha de inicio<span class="text-danger">*</span></label>
-                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="date" [id]="'fechaInicioEmpresa-' + i" formControlName="fechaInicioEmpresa">
-                          <label [attr.for]="'fechaFinalEmpresa-' + i" class="estiloLabel f-open-sans-c p-1">Fecha de final actual<span class="text-danger">*</span></label>
-                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="date" [id]="'fechaFinalEmpresa-' + i" formControlName="fechaFinalEmpresa">
+                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" [class.campo-invalido]="mostrarError(inicio)" [attr.aria-invalid]="mostrarError(inicio)" [attr.aria-describedby]="mostrarError(inicio) ? 'error-fechaInicioEmpresa-' + i : null" type="date" [id]="'fechaInicioEmpresa-' + i" formControlName="fechaInicioEmpresa">
+                          @if (mostrarError(inicio)) {
+                            <p [id]="'error-fechaInicioEmpresa-' + i" class="error-campo f-open-sans-c estado-pendiente">Elige la fecha en que empezaste.</p>
+                          }
+                          <label [attr.for]="'fechaFinalEmpresa-' + i" class="estiloLabel f-open-sans-c p-1">Fecha de finalización</label>
+                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="date" [id]="'fechaFinalEmpresa-' + i" [attr.aria-describedby]="'ayuda-fechaFinalEmpresa-' + i" formControlName="fechaFinalEmpresa">
+                          <p [id]="'ayuda-fechaFinalEmpresa-' + i" class="error-campo ayuda-campo f-open-sans-c">Déjala vacía si aún trabajas aquí.</p>
+                          @let telefono = formExpLaboral.get('telContactoEmpresa');
                           <label [attr.for]="'telContactoEmpresa-' + i" class="estiloLabel f-open-sans-c p-1">Número de contacto<span class="text-danger">*</span></label>
-                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" [id]="'telContactoEmpresa-' + i" formControlName="telContactoEmpresa">
+                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" [class.campo-invalido]="mostrarError(telefono)" [attr.aria-invalid]="mostrarError(telefono)" [attr.aria-describedby]="mostrarError(telefono) ? 'error-telContactoEmpresa-' + i : null" type="tel" inputmode="tel" [id]="'telContactoEmpresa-' + i" formControlName="telContactoEmpresa">
+                          @if (mostrarError(telefono)) {
+                            <p [id]="'error-telContactoEmpresa-' + i" class="error-campo f-open-sans-c estado-pendiente">Escribe un teléfono de la empresa.</p>
+                          }
+                          @let ciudad = formExpLaboral.get('ciudadEmpresa');
                           <label [attr.for]="'ciudadEmpresa-' + i" class="estiloLabel f-open-sans-c p-1">Ciudad<span class="text-danger">*</span></label>
-                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" [id]="'ciudadEmpresa-' + i" formControlName="ciudadEmpresa">
+                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" [class.campo-invalido]="mostrarError(ciudad)" [attr.aria-invalid]="mostrarError(ciudad)" [attr.aria-describedby]="mostrarError(ciudad) ? 'error-ciudadEmpresa-' + i : null" type="text" [id]="'ciudadEmpresa-' + i" formControlName="ciudadEmpresa">
+                          @if (mostrarError(ciudad)) {
+                            <p [id]="'error-ciudadEmpresa-' + i" class="error-campo f-open-sans-c estado-pendiente">Escribe la ciudad donde trabajaste.</p>
+                          }
                           <button type="button" aria-label="Borrar contenido de los textos" (click)="eraseForm([], formExpLaboral)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                               <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>

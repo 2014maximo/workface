@@ -551,3 +551,54 @@ describe('FormBasicComponent: importar hoja de vida', () => {
     expect(componente.textoImportado).toEqual({ estudios: [], experiencia: ['2019 - 2021 | Auxiliar'] });
   });
 });
+
+describe('FormBasicComponent: campos faltantes de experiencia laboral', () => {
+  let component: FormBasicComponent;
+  const experiencia = () => component.formBasic.get('expLaboral') as FormArray;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [FormBasicComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+      providers: [
+        { provide: AuthService, useValue: { getUserLogged: () => of(null) } },
+        { provide: PerfilLocalService, useValue: { guardar: () => Promise.resolve() } },
+        { provide: WebServicesService, useValue: { consultarRecursos: () => of({}) } }
+      ]
+    });
+    component = TestBed.createComponent(FormBasicComponent).componentInstance;
+    component.agregarExpLaboral();
+    component.agregarExpLaboral();
+    experiencia().at(0).patchValue({
+      nombreEmpresa: 'Comercializadora Andina', jefeInmediatoEmpresa: 'Luis Gómez', cargoEjercido: 'Analista',
+      funcionesRealizadas: 'Desarrollé reportes y tableros de control para el área financiera.',
+      fechaInicioEmpresa: '2020-01-01', telContactoEmpresa: '6045550000', ciudadEmpresa: 'Medellín'
+    });
+    experiencia().at(1).patchValue({ nombreEmpresa: 'Tiendas Cafeteras', cargoEjercido: 'Líder', funcionesRealizadas: 'Muy corto' });
+  });
+
+  it('dice que empresa esta incompleta y que campos le faltan', () => {
+    expect(component.faltantesExperiencia()).toEqual([
+      { empresa: 2, campos: ['Jefe inmediato', 'Funciones realizadas', 'Fecha de inicio', 'Número de contacto', 'Ciudad'] }
+    ]);
+    expect(component.camposFaltantes(experiencia().at(1))).toBe('Jefe inmediato, Funciones realizadas, Fecha de inicio, Número de contacto y Ciudad');
+  });
+
+  it('no exige la fecha de finalizacion', () => {
+    expect(experiencia().at(0).valid).toBeTrue();
+  });
+
+  it('al guardar marca los campos que faltan para mostrarlos', async () => {
+    // guardar() abre el modal de carga con jQuery, que no existe en las pruebas.
+    const jQuery = (window as any).$;
+    (window as any).$ = () => ({ modal: () => undefined });
+    const jefe = experiencia().at(1).get('jefeInmediatoEmpresa');
+    expect(component.mostrarError(jefe)).toBeFalse();
+    component.guardar();
+    expect(component.mostrarError(jefe)).toBeTrue();
+    expect(component.mostrarError(experiencia().at(0).get('nombreEmpresa'))).toBeFalse();
+    // Espera a que termine el guardado, que cierra el modal al final.
+    await new Promise(resolver => setTimeout(resolver));
+    (window as any).$ = jQuery;
+  });
+});
