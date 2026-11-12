@@ -532,23 +532,21 @@
                       <div [formGroupName]="i">
                         <div class="p-3 p-md-5">
                           <h3 class="f-grape tc-blue-two fs-17 text-shadow-one">Estudio {{i + 1}}</h3>
-                          <label [attr.for]="'nombreInstitucion-' + i" class="estiloLabel f-open-sans-c p-1">Nombre institución<span class="text-danger">*</span></label>
-                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" [id]="'nombreInstitucion-' + i" formControlName="nombreInstitucion">
-                          <label [attr.for]="'tituloObtenido-' + i" class="estiloLabel f-open-sans-c p-1">Título obtenido<span class="text-danger">*</span></label>
-                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" [id]="'tituloObtenido-' + i" formControlName="tituloObtenido">
-                          <label [attr.for]="'fechaInicio-' + i" class="estiloLabel f-open-sans-c p-1">Fecha inicio<span class="text-danger">*</span></label>
-                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="date" [id]="'fechaInicio-' + i" formControlName="fechaInicio">
-                          <label [attr.for]="'fechaTitulo-' + i" class="estiloLabel f-open-sans-c p-1">Fecha título<span class="text-danger">*</span></label>
-                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="date" [id]="'fechaTitulo-' + i" formControlName="fechaTitulo">
-                          <label [attr.for]="'ciudadEstudio-' + i" class="estiloLabel f-open-sans-c p-1">Ciudad estudio<span class="text-danger">*</span></label>
-                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" [id]="'ciudadEstudio-' + i" formControlName="ciudadEstudio">
+                          @if (intentoGuardar && estudio.invalid && estudio.touched) {
+                            <p class="resumen-faltantes f-open-sans-c estado-pendiente">Falta completar: {{ camposFaltantes('estudios', estudio) }}.</p>
+                          }
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: estudio, nombre: 'nombreInstitucion', id: 'nombreInstitucion-' + i, etiqueta: 'Nombre institución', error: 'Escribe el nombre de la institución.' }" />
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: estudio, nombre: 'tituloObtenido', id: 'tituloObtenido-' + i, etiqueta: 'Título obtenido', error: 'Escribe el título que obtuviste.' }" />
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: estudio, nombre: 'fechaInicio', id: 'fechaInicio-' + i, etiqueta: 'Fecha inicio', error: 'Elige la fecha en que empezaste.', tipo: 'date' }" />
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: estudio, nombre: 'fechaTitulo', id: 'fechaTitulo-' + i, etiqueta: 'Fecha título', error: 'Elige la fecha en que te graduaste.', tipo: 'date' }" />
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: estudio, nombre: 'ciudadEstudio', id: 'ciudadEstudio-' + i, etiqueta: 'Ciudad estudio', error: 'Escribe la ciudad donde estudiaste.' }" />
                           <label [attr.for]="'descripcionEstudio-' + i" class="estiloLabel f-open-sans-c p-1">Descripción Estudio<span class="text-danger">*</span></label>
-                          @let descripcion = estudio.get('descripcionEstudio');
-                          @let largoEstudio = largoTexto(descripcion);
-                          @let descripcionIncorrecta = descripcion?.invalid && (descripcion?.dirty || largoEstudio > 0);
-                          <textarea rows="10"class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" style="height:13rem" type="text" [id]="'descripcionEstudio-' + i" [attr.aria-describedby]="descripcionIncorrecta ? 'ayuda-descripcionEstudio-' + i : null" formControlName="descripcionEstudio"></textarea>
-                          @if (descripcionIncorrecta) {
-                            <p [id]="'ayuda-descripcionEstudio-' + i" class="f-open-sans-c small mb-2 estado-pendiente">Mínimo 40 caracteres. Llevas {{largoEstudio}}.</p>
+                          @let descripcionEstudioControl = estudio.get('descripcionEstudio');
+                          @let descripcionEstudioLargo = largoTexto(descripcionEstudioControl);
+                          @let descripcionEstudioIncorrecto = mostrarError(descripcionEstudioControl) || (!!descripcionEstudioControl?.invalid && descripcionEstudioLargo > 0);
+                          <textarea rows="10" class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" [class.campo-invalido]="descripcionEstudioIncorrecto" [attr.aria-invalid]="descripcionEstudioIncorrecto" style="height:13rem" [id]="'descripcionEstudio-' + i" [attr.aria-describedby]="descripcionEstudioIncorrecto ? 'ayuda-descripcionEstudio-' + i : null" formControlName="descripcionEstudio"></textarea>
+                          @if (descripcionEstudioIncorrecto) {
+                            <p [id]="'ayuda-descripcionEstudio-' + i" class="error-campo f-open-sans-c estado-pendiente">{{ descripcionEstudioLargo === 0 && !descripcionEstudioControl?.dirty ? 'Describe tu estudio: mínimo 40 caracteres.' : 'Mínimo 40 caracteres. Llevas ' + descripcionEstudioLargo + '.' }}</p>
                           }
                           <button type="button" aria-label="Borrar contenido de los textos" (click)="eraseForm(['nombreInstitucion','tituloObtenido','fechaTitulo'], estudio)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
@@ -686,55 +684,25 @@
                         <div class="p-3 p-md-5">
                           <h3 class="f-grape tc-blue-two fs-17 text-shadow-one">Empresa {{i + 1}}</h3>
                           @if (intentoGuardar && formExpLaboral.invalid && formExpLaboral.touched) {
-                            <p class="resumen-faltantes f-open-sans-c estado-pendiente">Falta completar: {{ camposFaltantes(formExpLaboral) }}.</p>
+                            <p class="resumen-faltantes f-open-sans-c estado-pendiente">Falta completar: {{ camposFaltantes('expLaboral', formExpLaboral) }}.</p>
                           }
-                          @let empresa = formExpLaboral.get('nombreEmpresa');
-                          <label [attr.for]="'nombreEmpresa-' + i" class="estiloLabel f-open-sans-c p-1">Empresa<span class="text-danger">*</span></label>
-                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" [class.campo-invalido]="mostrarError(empresa)" [attr.aria-invalid]="mostrarError(empresa)" [attr.aria-describedby]="mostrarError(empresa) ? 'error-nombreEmpresa-' + i : null" type="text" [id]="'nombreEmpresa-' + i" formControlName="nombreEmpresa">
-                          @if (mostrarError(empresa)) {
-                            <p [id]="'error-nombreEmpresa-' + i" class="error-campo f-open-sans-c estado-pendiente">Escribe el nombre de la empresa.</p>
-                          }
-                          @let jefe = formExpLaboral.get('jefeInmediatoEmpresa');
-                          <label [attr.for]="'jefeInmediatoEmpresa-' + i" class="estiloLabel f-open-sans-c p-1">Jefe inmediato<span class="text-danger">*</span></label>
-                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" [class.campo-invalido]="mostrarError(jefe)" [attr.aria-invalid]="mostrarError(jefe)" [attr.aria-describedby]="mostrarError(jefe) ? 'error-jefeInmediatoEmpresa-' + i : null" type="text" [id]="'jefeInmediatoEmpresa-' + i" formControlName="jefeInmediatoEmpresa">
-                          @if (mostrarError(jefe)) {
-                            <p [id]="'error-jefeInmediatoEmpresa-' + i" class="error-campo f-open-sans-c estado-pendiente">Escribe el nombre de tu jefe inmediato.</p>
-                          }
-                          @let cargo = formExpLaboral.get('cargoEjercido');
-                          <label [attr.for]="'cargoEjercido-' + i" class="estiloLabel f-open-sans-c p-1">Cargo desempeñado<span class="text-danger">*</span></label>
-                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" [class.campo-invalido]="mostrarError(cargo)" [attr.aria-invalid]="mostrarError(cargo)" [attr.aria-describedby]="mostrarError(cargo) ? 'error-cargoEjercido-' + i : null" type="text" [id]="'cargoEjercido-' + i" formControlName="cargoEjercido">
-                          @if (mostrarError(cargo)) {
-                            <p [id]="'error-cargoEjercido-' + i" class="error-campo f-open-sans-c estado-pendiente">Escribe el cargo que tenías.</p>
-                          }
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: formExpLaboral, nombre: 'nombreEmpresa', id: 'nombreEmpresa-' + i, etiqueta: 'Empresa', error: 'Escribe el nombre de la empresa.' }" />
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: formExpLaboral, nombre: 'jefeInmediatoEmpresa', id: 'jefeInmediatoEmpresa-' + i, etiqueta: 'Jefe inmediato', error: 'Escribe el nombre de tu jefe inmediato.' }" />
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: formExpLaboral, nombre: 'cargoEjercido', id: 'cargoEjercido-' + i, etiqueta: 'Cargo desempeñado', error: 'Escribe el cargo que tenías.' }" />
                           <label [attr.for]="'funcionesRealizadas-' + i" class="estiloLabel f-open-sans-c p-1">Describa funciones realizadas<span class="text-danger">*</span></label>
-                          @let funciones = formExpLaboral.get('funcionesRealizadas');
-                          @let largoFunciones = largoTexto(funciones);
-                          @let funcionesIncorrectas = mostrarError(funciones) || (!!funciones?.invalid && largoFunciones > 0);
-                          <textarea rows="10"class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" [class.campo-invalido]="funcionesIncorrectas" [attr.aria-invalid]="funcionesIncorrectas" style="height:13rem" type="text" [id]="'funcionesRealizadas-' + i" [attr.aria-describedby]="funcionesIncorrectas ? 'ayuda-funcionesRealizadas-' + i : null" formControlName="funcionesRealizadas"></textarea>
-                          @if (funcionesIncorrectas) {
-                            <p [id]="'ayuda-funcionesRealizadas-' + i" class="error-campo f-open-sans-c estado-pendiente">{{ largoFunciones === 0 ? 'Describe tus funciones: mínimo 40 caracteres.' : 'Mínimo 40 caracteres. Llevas ' + largoFunciones + '.' }}</p>
+                          @let funcionesRealizadasControl = formExpLaboral.get('funcionesRealizadas');
+                          @let funcionesRealizadasLargo = largoTexto(funcionesRealizadasControl);
+                          @let funcionesRealizadasIncorrecto = mostrarError(funcionesRealizadasControl) || (!!funcionesRealizadasControl?.invalid && funcionesRealizadasLargo > 0);
+                          <textarea rows="10" class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" [class.campo-invalido]="funcionesRealizadasIncorrecto" [attr.aria-invalid]="funcionesRealizadasIncorrecto" style="height:13rem" [id]="'funcionesRealizadas-' + i" [attr.aria-describedby]="funcionesRealizadasIncorrecto ? 'ayuda-funcionesRealizadas-' + i : null" formControlName="funcionesRealizadas"></textarea>
+                          @if (funcionesRealizadasIncorrecto) {
+                            <p [id]="'ayuda-funcionesRealizadas-' + i" class="error-campo f-open-sans-c estado-pendiente">{{ funcionesRealizadasLargo === 0 && !funcionesRealizadasControl?.dirty ? 'Describe tus funciones: mínimo 40 caracteres.' : 'Mínimo 40 caracteres. Llevas ' + funcionesRealizadasLargo + '.' }}</p>
                           }
-                          @let inicio = formExpLaboral.get('fechaInicioEmpresa');
-                          <label [attr.for]="'fechaInicioEmpresa-' + i" class="estiloLabel f-open-sans-c p-1">Fecha de inicio<span class="text-danger">*</span></label>
-                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" [class.campo-invalido]="mostrarError(inicio)" [attr.aria-invalid]="mostrarError(inicio)" [attr.aria-describedby]="mostrarError(inicio) ? 'error-fechaInicioEmpresa-' + i : null" type="date" [id]="'fechaInicioEmpresa-' + i" formControlName="fechaInicioEmpresa">
-                          @if (mostrarError(inicio)) {
-                            <p [id]="'error-fechaInicioEmpresa-' + i" class="error-campo f-open-sans-c estado-pendiente">Elige la fecha en que empezaste.</p>
-                          }
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: formExpLaboral, nombre: 'fechaInicioEmpresa', id: 'fechaInicioEmpresa-' + i, etiqueta: 'Fecha de inicio', error: 'Elige la fecha en que empezaste.', tipo: 'date' }" />
                           <label [attr.for]="'fechaFinalEmpresa-' + i" class="estiloLabel f-open-sans-c p-1">Fecha de finalización</label>
                           <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="date" [id]="'fechaFinalEmpresa-' + i" [attr.aria-describedby]="'ayuda-fechaFinalEmpresa-' + i" formControlName="fechaFinalEmpresa">
                           <p [id]="'ayuda-fechaFinalEmpresa-' + i" class="error-campo ayuda-campo f-open-sans-c">Déjala vacía si aún trabajas aquí.</p>
-                          @let telefono = formExpLaboral.get('telContactoEmpresa');
-                          <label [attr.for]="'telContactoEmpresa-' + i" class="estiloLabel f-open-sans-c p-1">Número de contacto<span class="text-danger">*</span></label>
-                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" [class.campo-invalido]="mostrarError(telefono)" [attr.aria-invalid]="mostrarError(telefono)" [attr.aria-describedby]="mostrarError(telefono) ? 'error-telContactoEmpresa-' + i : null" type="tel" inputmode="tel" [id]="'telContactoEmpresa-' + i" formControlName="telContactoEmpresa">
-                          @if (mostrarError(telefono)) {
-                            <p [id]="'error-telContactoEmpresa-' + i" class="error-campo f-open-sans-c estado-pendiente">Escribe un teléfono de la empresa.</p>
-                          }
-                          @let ciudad = formExpLaboral.get('ciudadEmpresa');
-                          <label [attr.for]="'ciudadEmpresa-' + i" class="estiloLabel f-open-sans-c p-1">Ciudad<span class="text-danger">*</span></label>
-                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" [class.campo-invalido]="mostrarError(ciudad)" [attr.aria-invalid]="mostrarError(ciudad)" [attr.aria-describedby]="mostrarError(ciudad) ? 'error-ciudadEmpresa-' + i : null" type="text" [id]="'ciudadEmpresa-' + i" formControlName="ciudadEmpresa">
-                          @if (mostrarError(ciudad)) {
-                            <p [id]="'error-ciudadEmpresa-' + i" class="error-campo f-open-sans-c estado-pendiente">Escribe la ciudad donde trabajaste.</p>
-                          }
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: formExpLaboral, nombre: 'telContactoEmpresa', id: 'telContactoEmpresa-' + i, etiqueta: 'Número de contacto', error: 'Escribe un teléfono de la empresa.', tipo: 'tel', modo: 'tel' }" />
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: formExpLaboral, nombre: 'ciudadEmpresa', id: 'ciudadEmpresa-' + i, etiqueta: 'Ciudad', error: 'Escribe la ciudad donde trabajaste.' }" />
                           <button type="button" aria-label="Borrar contenido de los textos" (click)="eraseForm([], formExpLaboral)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                               <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
@@ -773,12 +741,12 @@
                       <div [formGroupName]="i" >
                         <div class="p-3 p-md-5">
                           <h3 class="f-grape tc-blue-two fs-17 text-shadow-one">Conocimiento {{i + 1}}</h3>
-                          <label [attr.for]="'nombreConocimiento-' + i" class="estiloLabel f-open-sans-c p-1">Conocimiento<span class="text-danger">*</span></label>
-                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" [id]="'nombreConocimiento-' + i" formControlName="nombreConocimiento">
-                          <label [attr.for]="'duracion-' + i" class="estiloLabel f-open-sans-c p-1">Duración<span class="text-danger">*</span></label>
-                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" [id]="'duracion-' + i" formControlName="duracion">
-                          <label [attr.for]="'fechaFinalizacion-' + i" class="estiloLabel f-open-sans-c p-1">Fecha Finalización<span class="text-danger">*</span></label>
-                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="date" [id]="'fechaFinalizacion-' + i" formControlName="fechaFinalizacion">
+                          @if (intentoGuardar && conocimientos.invalid && conocimientos.touched) {
+                            <p class="resumen-faltantes f-open-sans-c estado-pendiente">Falta completar: {{ camposFaltantes('conocimientosAdicionales', conocimientos) }}.</p>
+                          }
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: conocimientos, nombre: 'nombreConocimiento', id: 'nombreConocimiento-' + i, etiqueta: 'Conocimiento', error: 'Escribe el nombre del curso o conocimiento.' }" />
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: conocimientos, nombre: 'duracion', id: 'duracion-' + i, etiqueta: 'Duración', error: 'Escribe cuánto duró, por ejemplo: 40 horas.' }" />
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: conocimientos, nombre: 'fechaFinalizacion', id: 'fechaFinalizacion-' + i, etiqueta: 'Fecha Finalización', error: 'Elige la fecha en que terminaste.', tipo: 'date' }" />
                           <button type="button" aria-label="Borrar contenido de los textos" (click)="eraseForm([], conocimientos)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                               <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
@@ -817,14 +785,13 @@
                       <div [formGroupName]="i" >
                         <div class="p-3 p-md-5">
                           <h3 class="f-grape tc-blue-two fs-17 text-shadow-one">Persona {{i + 1}}</h3>
-                          <label [attr.for]="'nombreCompleto-' + i" class="estiloLabel f-open-sans-c p-1">Nombre Completo<span class="text-danger">*</span></label>
-                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" [id]="'nombreCompleto-' + i" formControlName="nombreCompleto">
-                          <label [attr.for]="'ocupacion-' + i" class="estiloLabel f-open-sans-c p-1">Ocupación - Cargo<span class="text-danger">*</span></label>
-                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" [id]="'ocupacion-' + i" formControlName="ocupacion">
-                          <label [attr.for]="'telefono-' + i" class="estiloLabel f-open-sans-c p-1">Teléfono<span class="text-danger">*</span></label>
-                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" [id]="'telefono-' + i" formControlName="telefono">
-                          <label [attr.for]="'empresa-' + i" class="estiloLabel f-open-sans-c p-1">Empresa<span class="text-danger">*</span></label>
-                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" [id]="'empresa-' + i" formControlName="empresa">
+                          @if (intentoGuardar && referenciasPersonales.invalid && referenciasPersonales.touched) {
+                            <p class="resumen-faltantes f-open-sans-c estado-pendiente">Falta completar: {{ camposFaltantes('referenciasPersonales', referenciasPersonales) }}.</p>
+                          }
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: referenciasPersonales, nombre: 'nombreCompleto', id: 'refPersonal-nombreCompleto-' + i, etiqueta: 'Nombre Completo', error: 'Escribe el nombre de la persona.' }" />
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: referenciasPersonales, nombre: 'ocupacion', id: 'refPersonal-ocupacion-' + i, etiqueta: 'Ocupación - Cargo', error: 'Escribe a qué se dedica.' }" />
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: referenciasPersonales, nombre: 'telefono', id: 'refPersonal-telefono-' + i, etiqueta: 'Teléfono', error: 'Escribe un teléfono de contacto.', tipo: 'tel', modo: 'tel' }" />
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: referenciasPersonales, nombre: 'empresa', id: 'refPersonal-empresa-' + i, etiqueta: 'Empresa', error: 'Escribe dónde trabaja.' }" />
                           <button type="button" aria-label="Borrar contenido de los textos" (click)="eraseForm([], referenciasPersonales)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                               <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
@@ -863,16 +830,14 @@
                       <div [formGroupName]="i" >
                         <div class="p-3 p-md-5">
                           <h3 class="f-grape tc-blue-two fs-17 text-shadow-one">Familiar {{i + 1}}</h3>
-                          <label [attr.for]="'nombreCompleto-' + i" class="estiloLabel f-open-sans-c p-1">Nombre Completo<span class="text-danger">*</span></label>
-                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" [id]="'nombreCompleto-' + i" formControlName="nombreCompleto">
-                          <label [attr.for]="'ocupacion-' + i" class="estiloLabel f-open-sans-c p-1">Ocupación<span class="text-danger">*</span></label>
-                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" [id]="'ocupacion-' + i" formControlName="ocupacion">
-                          <label [attr.for]="'telefono-' + i" class="estiloLabel f-open-sans-c p-1">Teléfono<span class="text-danger">*</span></label>
-                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" [id]="'telefono-' + i" formControlName="telefono">
-                          <label [attr.for]="'parentesco-' + i" class="estiloLabel f-open-sans-c p-1">Parentesco<span class="text-danger">*</span></label>
-                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" [id]="'parentesco-' + i" formControlName="parentesco">
-                          <label [attr.for]="'empresa-' + i" class="estiloLabel f-open-sans-c p-1">Empresa<span class="text-danger">*</span></label>
-                          <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" [id]="'empresa-' + i" formControlName="empresa">
+                          @if (intentoGuardar && referenciasFamiliares.invalid && referenciasFamiliares.touched) {
+                            <p class="resumen-faltantes f-open-sans-c estado-pendiente">Falta completar: {{ camposFaltantes('referenciasFamiliares', referenciasFamiliares) }}.</p>
+                          }
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: referenciasFamiliares, nombre: 'nombreCompleto', id: 'refFamiliar-nombreCompleto-' + i, etiqueta: 'Nombre Completo', error: 'Escribe el nombre de tu familiar.' }" />
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: referenciasFamiliares, nombre: 'ocupacion', id: 'refFamiliar-ocupacion-' + i, etiqueta: 'Ocupación', error: 'Escribe a qué se dedica.' }" />
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: referenciasFamiliares, nombre: 'telefono', id: 'refFamiliar-telefono-' + i, etiqueta: 'Teléfono', error: 'Escribe un teléfono de contacto.', tipo: 'tel', modo: 'tel' }" />
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: referenciasFamiliares, nombre: 'parentesco', id: 'refFamiliar-parentesco-' + i, etiqueta: 'Parentesco', error: 'Escribe el parentesco, por ejemplo: hermana.' }" />
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: referenciasFamiliares, nombre: 'empresa', id: 'refFamiliar-empresa-' + i, etiqueta: 'Empresa', error: 'Escribe dónde trabaja.' }" />
                           <button type="button" aria-label="Borrar contenido de los textos" (click)="eraseForm([], referenciasFamiliares)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                               <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
@@ -939,3 +904,14 @@
   </div>
 </div>
 <div class="espaciado bg-transparent"></div>
+
+<!-- Campo de un registro (estudio, empresa, conocimiento, referencia) con su mensaje si falta -->
+<ng-template #campoRegistro let-grupo="grupo" let-nombre="nombre" let-id="id" let-etiqueta="etiqueta" let-error="error" let-tipo="tipo" let-modo="modo">
+  @let control = $any(grupo.get(nombre));
+  @let conError = mostrarError(control);
+  <label [attr.for]="id" class="estiloLabel f-open-sans-c p-1">{{ etiqueta }}<span class="text-danger">*</span></label>
+  <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" [class.campo-invalido]="conError" [attr.aria-invalid]="conError" [attr.aria-describedby]="conError ? 'error-' + id : null" [type]="tipo ?? 'text'" [attr.inputmode]="modo ?? null" [id]="id" [formControl]="control">
+  @if (conError) {
+    <p [id]="'error-' + id" class="error-campo f-open-sans-c estado-pendiente">{{ error }}</p>
+  }
+</ng-template>

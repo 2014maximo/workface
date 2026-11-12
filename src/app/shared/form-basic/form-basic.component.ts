@@ -41,15 +41,59 @@ const NOMBRES_REGISTRO: Record<string, string> = {
   referenciasFamiliares: 'Referencia familiar'
 };
 
-// Nombres de los campos de experiencia laboral, para decir cuales faltan.
-export const CAMPOS_EXPERIENCIA: Record<string, string> = {
-  nombreEmpresa: 'Empresa',
-  jefeInmediatoEmpresa: 'Jefe inmediato',
-  cargoEjercido: 'Cargo desempeñado',
-  funcionesRealizadas: 'Funciones realizadas',
-  fechaInicioEmpresa: 'Fecha de inicio',
-  telContactoEmpresa: 'Número de contacto',
-  ciudadEmpresa: 'Ciudad'
+// Campos obligatorios de cada lista, en el orden del formulario, para decir cuales faltan.
+// "registro" es el titulo que muestra cada elemento de la lista: "Empresa 2", "Familiar 1".
+export const CAMPOS_REGISTRO: Record<string, { registro: string, campos: Record<string, string> }> = {
+  estudios: {
+    registro: 'Estudio',
+    campos: {
+      nombreInstitucion: 'Nombre institución',
+      tituloObtenido: 'Título obtenido',
+      fechaInicio: 'Fecha inicio',
+      fechaTitulo: 'Fecha título',
+      ciudadEstudio: 'Ciudad estudio',
+      descripcionEstudio: 'Descripción estudio'
+    }
+  },
+  expLaboral: {
+    registro: 'Empresa',
+    campos: {
+      nombreEmpresa: 'Empresa',
+      jefeInmediatoEmpresa: 'Jefe inmediato',
+      cargoEjercido: 'Cargo desempeñado',
+      funcionesRealizadas: 'Funciones realizadas',
+      fechaInicioEmpresa: 'Fecha de inicio',
+      telContactoEmpresa: 'Número de contacto',
+      ciudadEmpresa: 'Ciudad'
+    }
+  },
+  conocimientosAdicionales: {
+    registro: 'Conocimiento',
+    campos: {
+      nombreConocimiento: 'Conocimiento',
+      duracion: 'Duración',
+      fechaFinalizacion: 'Fecha finalización'
+    }
+  },
+  referenciasPersonales: {
+    registro: 'Persona',
+    campos: {
+      nombreCompleto: 'Nombre completo',
+      ocupacion: 'Ocupación - Cargo',
+      telefono: 'Teléfono',
+      empresa: 'Empresa'
+    }
+  },
+  referenciasFamiliares: {
+    registro: 'Familiar',
+    campos: {
+      nombreCompleto: 'Nombre completo',
+      ocupacion: 'Ocupación',
+      telefono: 'Teléfono',
+      parentesco: 'Parentesco',
+      empresa: 'Empresa'
+    }
+  }
 };
 
 // "Jefe inmediato, Ciudad y Fecha de inicio"
@@ -584,18 +628,20 @@ export class FormBasicComponent implements OnInit {
       .map(paso => paso.nombre);
   }
 
-  // Campos sin llenar o incorrectos de cada empresa, en el orden del formulario.
-  public faltantesExperiencia(): { empresa: number, campos: string[] }[] {
-    return (this.formBasic.get('expLaboral') as FormArray).controls
-      .map((grupo, indice) => ({
-        empresa: indice + 1,
-        campos: Object.keys(CAMPOS_EXPERIENCIA).filter(campo => grupo.get(campo)?.invalid).map(campo => CAMPOS_EXPERIENCIA[campo])
-      }))
-      .filter(empresa => empresa.campos.length > 0);
+  private nombresFaltantes(lista: string, grupo: AbstractControl): string[] {
+    const campos = CAMPOS_REGISTRO[lista].campos;
+    return Object.keys(campos).filter(campo => grupo.get(campo)?.invalid).map(campo => campos[campo]);
   }
 
-  public camposFaltantes(grupo: AbstractControl): string {
-    return enumerar(Object.keys(CAMPOS_EXPERIENCIA).filter(campo => grupo.get(campo)?.invalid).map(campo => CAMPOS_EXPERIENCIA[campo]));
+  // Elementos incompletos de una lista y sus campos faltantes, en el orden del formulario.
+  public faltantes(lista: string): { numero: number, campos: string[] }[] {
+    return (this.formBasic.get(lista) as FormArray).controls
+      .map((grupo, indice) => ({ numero: indice + 1, campos: this.nombresFaltantes(lista, grupo) }))
+      .filter(elemento => elemento.campos.length > 0);
+  }
+
+  public camposFaltantes(lista: string, grupo: AbstractControl): string {
+    return enumerar(this.nombresFaltantes(lista, grupo));
   }
 
   // Un campo se marca cuando el usuario ya paso por el o cuando intento guardar.
@@ -605,10 +651,12 @@ export class FormBasicComponent implements OnInit {
 
   // Detalle para el aviso de guardado: "Experiencia laboral (Empresa 1: Jefe inmediato y Ciudad)".
   private detallePaso(paso: string): string {
-    if (paso !== 'Experiencia laboral') {
+    const [lista] = PASOS.find(p => p.nombre === paso)?.controles ?? [];
+    if (!CAMPOS_REGISTRO[lista]) {
       return paso;
     }
-    const detalle = this.faltantesExperiencia().map(e => `Empresa ${e.empresa}: ${enumerar(e.campos)}`).join('; ');
+    const registro = CAMPOS_REGISTRO[lista].registro;
+    const detalle = this.faltantes(lista).map(e => `${registro} ${e.numero}: ${enumerar(e.campos)}`).join('; ');
     return detalle ? `${paso} (${detalle})` : paso;
   }
 

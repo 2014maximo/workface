@@ -578,10 +578,10 @@ describe('FormBasicComponent: campos faltantes de experiencia laboral', () => {
   });
 
   it('dice que empresa esta incompleta y que campos le faltan', () => {
-    expect(component.faltantesExperiencia()).toEqual([
-      { empresa: 2, campos: ['Jefe inmediato', 'Funciones realizadas', 'Fecha de inicio', 'Número de contacto', 'Ciudad'] }
+    expect(component.faltantes('expLaboral')).toEqual([
+      { numero: 2, campos: ['Jefe inmediato', 'Funciones realizadas', 'Fecha de inicio', 'Número de contacto', 'Ciudad'] }
     ]);
-    expect(component.camposFaltantes(experiencia().at(1))).toBe('Jefe inmediato, Funciones realizadas, Fecha de inicio, Número de contacto y Ciudad');
+    expect(component.camposFaltantes('expLaboral', experiencia().at(1))).toBe('Jefe inmediato, Funciones realizadas, Fecha de inicio, Número de contacto y Ciudad');
   });
 
   it('no exige la fecha de finalizacion', () => {
@@ -600,5 +600,65 @@ describe('FormBasicComponent: campos faltantes de experiencia laboral', () => {
     // Espera a que termine el guardado, que cierra el modal al final.
     await new Promise(resolver => setTimeout(resolver));
     (window as any).$ = jQuery;
+  });
+});
+
+describe('FormBasicComponent: campos faltantes en estudios, conocimientos y referencias', () => {
+  let fixture: any;
+  let component: FormBasicComponent;
+  let jQueryOriginal: any;
+
+  beforeEach(() => {
+    // ngOnInit y guardar() usan jQuery, que no existe en las pruebas.
+    jQueryOriginal = (window as any).$;
+    const vacio = { modal: () => vacio, tooltip: () => vacio, ready: () => vacio };
+    (window as any).$ = () => vacio;
+    TestBed.configureTestingModule({
+      declarations: [FormBasicComponent],
+      imports: [ReactiveFormsModule],
+      schemas: [NO_ERRORS_SCHEMA],
+      providers: [
+        { provide: AuthService, useValue: { getUserLogged: () => of(null) } },
+        { provide: PerfilLocalService, useValue: { guardar: () => Promise.resolve() } },
+        { provide: WebServicesService, useValue: { consultarRecursos: () => of({}) } }
+      ]
+    });
+    fixture = TestBed.createComponent(FormBasicComponent);
+    component = fixture.componentInstance;
+    component.agregarEstudio();
+    component.agregarConocimientos();
+    component.agregarReferenciaPersonal();
+    component.agregarReferenciaFamiliar();
+    (component.formBasic.get('referenciasFamiliares') as FormArray).at(0).patchValue({ nombreCompleto: 'Ana Ruiz', telefono: '3000000000' });
+  });
+
+  // Espera a que termine el guardado, que cierra el modal al final.
+  afterEach(async () => {
+    await new Promise(resolver => setTimeout(resolver));
+    (window as any).$ = jQueryOriginal;
+  });
+
+  it('nombra los campos que faltan en cada lista', () => {
+    expect(component.faltantes('conocimientosAdicionales')).toEqual([{ numero: 1, campos: ['Conocimiento', 'Duración', 'Fecha finalización'] }]);
+    expect(component.faltantes('referenciasFamiliares')).toEqual([{ numero: 1, campos: ['Ocupación', 'Parentesco', 'Empresa'] }]);
+  });
+
+  it('marca los campos con su mensaje al intentar guardar', () => {
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('#error-nombreInstitucion-0')).toBeNull();
+    component.guardar();
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('#error-nombreInstitucion-0')?.textContent).toContain('Escribe el nombre de la institución.');
+    expect(fixture.nativeElement.querySelector('#nombreInstitucion-0').getAttribute('aria-invalid')).toBe('true');
+    expect(fixture.nativeElement.querySelector('#error-refFamiliar-parentesco-0')).not.toBeNull();
+    expect(fixture.nativeElement.querySelector('#error-refFamiliar-nombreCompleto-0')).toBeNull();
+    expect(fixture.nativeElement.querySelector('#ayuda-descripcionEstudio-0')?.textContent).toContain('Describe tu estudio');
+    expect(fixture.nativeElement.textContent).toContain('Falta completar: Ocupación, Parentesco y Empresa.');
+  });
+
+  it('no repite los identificadores de los campos entre referencias personales y familiares', () => {
+    fixture.detectChanges();
+    const ids = [...fixture.nativeElement.querySelectorAll('[id]')].map((e: HTMLElement) => e.id);
+    expect(ids.filter((id: string, i: number) => ids.indexOf(id) !== i)).toEqual([]);
   });
 });
