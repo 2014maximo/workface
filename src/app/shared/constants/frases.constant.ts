@@ -15,5 +15,9 @@ export const FRASES: FraseModel[] = [
     {
         id: 3,
         texto: 'La primera imagen es la más importante.'
+    },
+    {
+        id: 4,
+        texto: 'Llegará en un momento en que nos cansemos de tanta información, personalizaciones avanzadas y cargadas de contenido.'
     }
 ];
