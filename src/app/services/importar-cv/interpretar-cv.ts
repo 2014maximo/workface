@@ -59,7 +59,7 @@ export const normalizar = (texto: string) =>
 
 const TITULOS: Record<Exclude<Seccion, 'inicio'>, string[]> = {
   experiencia: ['experiencia', 'experiencia laboral', 'experiencia profesional', 'historial laboral', 'trayectoria laboral', 'trayectoria profesional'],
-  estudios: ['educacion', 'formacion', 'formacion academica', 'formacion tecnica', 'estudios', 'estudios y titulos', 'estudios realizados', 'informacion academica'],
+  estudios: ['educacion', 'formacion', 'formacion academica', 'formacion tecnica', 'estudios', 'estudios y titulos', 'estudios realizados', 'informacion academica', 'cursos', 'cursos y certificaciones', 'certificaciones', 'formacion complementaria'],
   habilidades: ['habilidades', 'mis habilidades', 'habilidades tecnicas', 'conocimientos', 'conocimientos tecnicos', 'aptitudes', 'competencias', 'skills', 'herramientas', 'software de diseno'],
   perfil: ['perfil', 'perfil profesional', 'perfil ocupacional', 'perfil personal', 'acerca de mi', 'sobre mi', 'resumen', 'resumen profesional', 'objetivo', 'objetivo profesional'],
   referencias: ['referencias', 'referencias personales', 'referencias familiares', 'referencias laborales'],

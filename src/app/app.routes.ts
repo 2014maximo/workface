@@ -6,6 +6,7 @@ import { canActivate, redirectUnauthorizedTo } from '@angular/fire/compat/auth-g
 import { AlphaComponent } from "./shared/TEMPLATES/alpha/alpha.component";
 import { GaleriaTemplatesComponent } from "./components/galeria-templates/galeria-templates.component";
 import { BetaComponent } from "./shared/TEMPLATES/beta/beta.component";
+import { IotaComponent } from "./shared/TEMPLATES/iota/iota.component";
 import { SliderTemplatesComponent } from './components/slider-templates/slider-templates.component';
 import { FormContactComponent } from './components/form-contact/form-contact.component';
 import { CurriculumsComponent } from './shared/components/curriculus/curriculums.component';
@@ -27,6 +28,7 @@ export const ROUTES: Routes = [
     // TEMPLATES
     { path: 'alpha', component: AlphaComponent, ...requiereSesion },
     { path: 'beta', component: BetaComponent, ...requiereSesion },
+    { path: 'iota', component: IotaComponent, ...requiereSesion },
     
     // SHARED
     { path: 'curriculums', component: CurriculumsComponent },

@@ -16,6 +16,7 @@ export class SliderTemplatesComponent implements OnInit {
   public datosGenerales: any;
   public alpha: boolean = false;
   public beta: boolean = false;
+  public iota: boolean = false;
   public sinPerfil: boolean = false;
 
   constructor(private authService: AuthService,
@@ -48,10 +49,17 @@ export class SliderTemplatesComponent implements OnInit {
   public cargarAlpha(){
     this.alpha = true;
     this.beta = false;
+    this.iota = false;
   }
   public cargarBeta(){
     this.beta = true;
     this.alpha = false;
+    this.iota = false;
+  }
+  public cargarIota(){
+    this.iota = true;
+    this.alpha = false;
+    this.beta = false;
   }
 
 }

@@ -1,0 +1,79 @@
+@if (cv) {
+<div class="iota">
+  <div class="iota-acciones">
+    <button type="button" class="iota-descargar" (click)="descargarPdf()" [disabled]="generando" [attr.aria-busy]="generando">
+      {{ generando ? 'Generando PDF…' : 'Descargar PDF' }}
+    </button>
+    @if (cv.foto) {
+      <label class="iota-interruptor">
+        <input type="checkbox" role="switch" [checked]="conFoto" (change)="conFoto = $any($event.target).checked">
+        <span>Incluir foto</span>
+      </label>
+    }
+    <p class="iota-nota">El PDF trae texto real: los sistemas de selección (ATS) lo pueden leer.</p>
+  </div>
+
+  <div class="iota-marco">
+    <article class="iota-hoja" lang="es" aria-label="Vista previa de la hoja de vida">
+      <header class="iota-encabezado" [class.con-foto]="conFoto && cv.foto">
+        <div>
+          @if (cv.nombre) {
+            <h1 class="iota-nombre">{{ cv.nombre }}</h1>
+          }
+          @if (cv.cargo) {
+            <p class="iota-cargo">{{ cv.cargo }}</p>
+          }
+          @if (cv.contacto.length) {
+            <p class="iota-contacto">
+              @for (dato of cv.contacto; track $index; let primero = $first) {
+                <span class="iota-dato">@if (!primero) {<span class="iota-separador" aria-hidden="true">|</span>}{{ dato }}</span>
+              }
+            </p>
+          }
+        </div>
+        @if (conFoto && cv.foto) {
+          <img class="iota-foto" [src]="cv.foto" alt="" width="96" height="96">
+        }
+      </header>
+
+      @for (seccion of cv.secciones; track seccion.titulo) {
+        <section class="iota-seccion">
+          <h2 class="iota-titulo-seccion">{{ seccion.titulo }}</h2>
+
+          @if (seccion.parrafo) {
+            <p class="iota-texto">{{ seccion.parrafo }}</p>
+          }
+
+          @for (entrada of seccion.entradas; track $index) {
+            <div class="iota-entrada">
+              <div class="iota-linea">
+                <h3 class="iota-titulo-entrada">{{ entrada.titulo }}</h3>
+                @if (entrada.fechas) {
+                  <p class="iota-fechas">{{ entrada.fechas }}</p>
+                }
+              </div>
+              @if (entrada.lugar) {
+                <p class="iota-lugar">{{ entrada.lugar }}</p>
+              }
+              @if (entrada.parrafo) {
+                <p class="iota-texto">{{ entrada.parrafo }}</p>
+              }
+              @if (entrada.puntos.length) {
+                <ul class="iota-puntos">
+                  @for (punto of entrada.puntos; track $index) {
+                    <li>{{ punto }}</li>
+                  }
+                </ul>
+              }
+            </div>
+          }
+
+          @if (seccion.elementos.length) {
+            <p class="iota-texto">{{ seccion.elementos.join(', ') }}</p>
+          }
+        </section>
+      }
+    </article>
+  </div>
+</div>
+}

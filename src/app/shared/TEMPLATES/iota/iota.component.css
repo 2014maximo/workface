@@ -1,0 +1,273 @@
+/* Iota: una hoja de vida que se lee como un itinerario.
+   Una unidad --pt equivale a un punto de la hoja carta (612 x 792) del PDF, asi que la vista previa
+   conserva la composicion del archivo a cualquier ancho. Colores y tamaños: iota-pdf.ts. */
+
+@font-face {
+    font-family: 'Atkinson Hyperlegible';
+    src: url('../../../../assets/fonts/atkinson/AtkinsonHyperlegible-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Atkinson Hyperlegible';
+    src: url('../../../../assets/fonts/atkinson/AtkinsonHyperlegible-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-display: swap;
+}
+
+.iota {
+    --iota-tinta: #16181D;
+    --iota-secundario: #4B5560;
+    --iota-acento: #0B5D57;
+    max-width: 840px;
+    margin: 0 auto;
+    padding: 0 12px 48px;
+}
+
+/* Controles: viven en el fondo oscuro de Workface, no en la hoja */
+.iota-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 20px;
+    margin-bottom: 20px;
+    font-family: 'Atkinson Hyperlegible', system-ui, sans-serif;
+    color: #f2f2f2;
+}
+.iota-descargar {
+    min-height: 44px;
+    padding: 0 24px;
+    border: 0;
+    font: inherit;
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: #1c1c1c;
+    background: var(--accion);
+    cursor: pointer;
+    transition: transform 160ms cubic-bezier(0.16, 1, 0.3, 1), opacity 160ms ease-out;
+}
+.iota-descargar:hover:not(:disabled) {
+    transform: translateY(-1px);
+}
+.iota-descargar:active:not(:disabled) {
+    transform: translateY(0);
+}
+.iota-descargar:disabled {
+    cursor: progress;
+    opacity: 0.7;
+}
+.iota-interruptor {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+.iota-interruptor input {
+    appearance: none;
+    position: relative;
+    width: 40px;
+    height: 24px;
+    margin: 0;
+    border: 2px solid var(--borde-campo);
+    border-radius: 12px;
+    background: transparent;
+    cursor: pointer;
+    transition: background-color 160ms ease-out, border-color 160ms ease-out;
+}
+.iota-interruptor input::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #f2f2f2;
+    transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.iota-interruptor input:checked {
+    border-color: var(--accion);
+    background: var(--accion);
+}
+.iota-interruptor input:checked::after {
+    background: #1c1c1c;
+    transform: translateX(16px);
+}
+.iota-descargar:focus-visible,
+.iota-interruptor input:focus-visible {
+    outline: 2px solid var(--foco);
+    outline-offset: 3px;
+}
+.iota-nota {
+    flex-basis: 100%;
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--texto-secundario);
+}
+
+/* La hoja */
+.iota-marco {
+    container-type: inline-size;
+}
+.iota-hoja {
+    /* En pantallas angostas la letra no baja de un tamaño legible: el texto se reacomoda,
+       pero los margenes siguen la proporcion de la hoja. */
+    --pt: max(calc(100cqw / 612), 1.2px);
+    --margen: calc(54 * 100cqw / 612);
+    position: relative;
+    min-height: calc(792 * 100cqw / 612);
+    padding: calc(42 * 100cqw / 612) var(--margen) var(--margen);
+    font-family: 'Atkinson Hyperlegible', system-ui, sans-serif;
+    font-size: calc(10 * var(--pt));
+    line-height: 1.4;
+    color: var(--iota-tinta);
+    background: #fff;
+    box-shadow: 0 12px 40px rgb(0 0 0 / 0.45), 0 2px 6px rgb(0 0 0 / 0.3);
+}
+/* La linea de la ruta */
+.iota-hoja::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: calc(5 * 100cqw / 612);
+    background: var(--iota-acento);
+}
+.iota-hoja ::selection {
+    color: #fff;
+    background: var(--iota-acento);
+}
+.iota-hoja p,
+.iota-hoja h1,
+.iota-hoja h2,
+.iota-hoja h3,
+.iota-hoja ul {
+    margin: 0;
+}
+
+.iota-encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: calc(18 * var(--pt));
+}
+.iota-nombre {
+    font-size: calc(24 * var(--pt));
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    color: var(--iota-tinta);
+}
+.iota-cargo {
+    font-size: calc(12 * var(--pt));
+    font-weight: 700;
+    color: var(--iota-acento);
+}
+.iota-contacto {
+    margin-top: calc(2 * var(--pt)) !important;
+    font-size: calc(9.5 * var(--pt));
+    color: var(--iota-secundario);
+}
+/* Cada dato pasa entero al siguiente renglon; solo se corta si no cabe en uno */
+.iota-dato {
+    display: inline-block;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+}
+.iota-separador {
+    margin: 0 0.6em;
+}
+/* El separador viaja con el dato que sigue: ningun renglon termina en una barra */
+.iota-dato:not(:first-child) {
+    margin-left: -0.25em;
+}
+.iota-foto {
+    flex: none;
+    width: calc(72 * var(--pt));
+    height: calc(72 * var(--pt));
+    margin-top: calc(-8 * var(--pt));
+    object-fit: contain;
+}
+
+.iota-seccion {
+    margin-top: calc(16 * var(--pt));
+}
+/* El anden: el titulo y una linea del color de acento hasta el margen */
+.iota-titulo-seccion {
+    display: flex;
+    align-items: center;
+    gap: calc(8 * var(--pt));
+    margin-bottom: calc(4 * var(--pt)) !important;
+    font-size: calc(11 * var(--pt));
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--iota-acento);
+}
+.iota-titulo-seccion::after {
+    content: '';
+    flex: 1;
+    height: max(1px, calc(0.8 * var(--pt)));
+    background: var(--iota-acento);
+}
+
+.iota-entrada + .iota-entrada {
+    margin-top: calc(8 * var(--pt));
+}
+.iota-linea {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: calc(16 * var(--pt));
+}
+.iota-titulo-entrada {
+    font-size: calc(10.5 * var(--pt));
+    font-weight: 700;
+    line-height: 1.4;
+}
+.iota-fechas {
+    flex: none;
+    font-size: calc(9.5 * var(--pt));
+    color: var(--iota-secundario);
+}
+.iota-lugar {
+    font-size: calc(9.5 * var(--pt));
+    color: var(--iota-secundario);
+}
+.iota-texto {
+    max-width: 100%;
+}
+.iota-lugar + .iota-texto,
+.iota-lugar + .iota-puntos,
+.iota-linea + .iota-texto,
+.iota-linea + .iota-puntos {
+    margin-top: calc(2 * var(--pt)) !important;
+}
+.iota-puntos {
+    padding: 0;
+    list-style: none;
+}
+.iota-puntos li {
+    position: relative;
+    padding-left: calc(13 * var(--pt));
+}
+/* Cada punto es una parada de la ruta */
+.iota-puntos li::before {
+    content: '';
+    position: absolute;
+    left: calc(1.6 * var(--pt));
+    top: calc(0.7em - 1.9 * var(--pt));
+    width: calc(3.8 * var(--pt));
+    height: calc(3.8 * var(--pt));
+    border-radius: 50%;
+    background: var(--iota-acento);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .iota-descargar,
+    .iota-interruptor input,
+    .iota-interruptor input::after {
+        transition: none;
+    }
+}
