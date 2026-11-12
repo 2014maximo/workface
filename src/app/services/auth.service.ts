@@ -45,15 +45,6 @@ export class AuthService {
     }
   }
 
-  async loginFacebook(email: string, password: string){
-    try {
-      return await this.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider());
-    } catch(err){
-      console.error(err);
-      return null;
-    }
-  }
-
   getUserLogged(){
     return this.auth.authState;
   }
