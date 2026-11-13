@@ -58,6 +58,16 @@ describe('Plantilla iota: contenido', () => {
     ['1017654321', '1990', 'Femenino', 'El Poblado', 'Luis Gómez', 'Ana Ruiz'].forEach(dato => expect(texto).not.toContain(dato));
   });
 
+  it('muestra solo las 3 experiencias mas recientes y cuenta las demas', () => {
+    const datos: any = perfil();
+    ['2010', '2012', '2014'].forEach(anio => datos.formBasic.expLaboral.push({ cargoEjercido: 'Analista ' + anio, nombreEmpresa: 'Empresa ' + anio, fechaInicioEmpresa: `${anio}-01-01` }));
+    const cv = documentoIota(datos);
+    expect(cv.secciones.find(s => s.titulo === TITULOS_IOTA.experiencia)!.entradas.map(e => e.titulo))
+      .toEqual(['Desarrolladora Frontend Senior', 'Desarrolladora Junior', 'Analista 2014']);
+    expect(cv.empresasOmitidas).toBe(2);
+    expect(documentoIota(perfil()).empresasOmitidas).toBe(0);
+  });
+
   it('omite las secciones vacias', () => {
     const cv = documentoIota({ formBasic: { primerNombre: 'Ana', habilidades: [{ habilidad: 'Excel' }] } });
     expect(cv.secciones.map(s => s.titulo)).toEqual([TITULOS_IOTA.habilidades]);

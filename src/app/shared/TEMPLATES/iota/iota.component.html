@@ -11,6 +11,13 @@
       </label>
     }
     <p class="iota-nota">El PDF trae texto real: los sistemas de selección (ATS) lo pueden leer.</p>
+    @if (cv.empresasOmitidas > 0) {
+      <p class="iota-aviso" role="status">
+        <svg class="iota-aviso-icono" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="9.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 10.75v5.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><circle cx="12" cy="7.75" r="1.1" fill="currentColor"/></svg>
+        <span>Para que tu hoja de vida quepa en una página, esta plantilla muestra solo tus {{ maximoEmpresas }} experiencias laborales más recientes.
+          {{ cv.empresasOmitidas === 1 ? 'La otra sigue guardada' : 'Las otras ' + cv.empresasOmitidas + ' siguen guardadas' }} en tu perfil.</span>
+      </p>
+    }
   </div>
 
   <div class="iota-marco">

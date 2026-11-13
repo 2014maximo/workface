@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { SweetAlert } from '../../../constants/functions.constants';
-import { DocumentoCv, documentoIota, nombreArchivoIota } from './iota-documento';
+import { DocumentoCv, documentoIota, MAXIMO_EMPRESAS_IOTA, nombreArchivoIota } from './iota-documento';
 import { crearPdfIota } from './iota-pdf';
 
 // Plantilla pensada para sistemas ATS: una columna, encabezados estandar y un PDF con texto real.
@@ -18,6 +18,7 @@ export class IotaComponent implements OnChanges {
   // La foto va apagada por defecto: muchos ATS descartan las imagenes.
   public conFoto = false;
   public generando = false;
+  public maximoEmpresas = MAXIMO_EMPRESAS_IOTA;
 
   ngOnChanges(): void {
     this.cv = this.contenido ? documentoIota(this.contenido) : undefined;

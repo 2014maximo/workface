@@ -27,7 +27,12 @@ export interface DocumentoCv {
   contacto: string[];
   foto: string;
   secciones: SeccionCv[];
+  // Experiencias que no caben en esta plantilla: siguen guardadas en el perfil.
+  empresasOmitidas: number;
 }
+
+// Para que la hoja de vida quepa en una pagina, Iota muestra solo las experiencias mas recientes.
+export const MAXIMO_EMPRESAS_IOTA = 3;
 
 export const TITULOS_IOTA = {
   perfil: 'Perfil profesional',
@@ -75,7 +80,7 @@ export function puntosDe(valor: unknown): string[] {
 
 const unir = (...partes: string[]) => partes.filter(Boolean).join(', ');
 
-// Lo mas reciente primero. Sin fecha, se respeta el orden inverso en que se agrego, como en alpha y beta.
+// Lo mas reciente primero. Sin fecha, lo ultimo que se agrego va primero.
 function recientesPrimero<T>(lista: T[], fecha: (item: T) => string): T[] {
   return lista
     .map((item, indice) => ({ item, indice, fecha: fecha(item) }))
@@ -106,8 +111,9 @@ export function documentoIota(perfil: any): DocumentoCv {
   const contacto = [datos.telCel, datos.telFijo, datos.email, datos.linkedin, datos.webSite]
     .map(texto).filter(Boolean);
 
-  const experiencia = recientesPrimero(lista('expLaboral'), e => texto(e.fechaInicioEmpresa))
-    .filter(e => texto(e.cargoEjercido) || texto(e.nombreEmpresa))
+  const experienciaCompleta = recientesPrimero(lista('expLaboral'), e => texto(e.fechaInicioEmpresa))
+    .filter(e => texto(e.cargoEjercido) || texto(e.nombreEmpresa));
+  const experiencia = experienciaCompleta.slice(0, MAXIMO_EMPRESAS_IOTA)
     .map(e => entrada(
       texto(e.cargoEjercido) || texto(e.nombreEmpresa),
       unir(texto(e.cargoEjercido) ? texto(e.nombreEmpresa) : '', texto(e.ciudadEmpresa)),
@@ -149,6 +155,7 @@ export function documentoIota(perfil: any): DocumentoCv {
     contacto,
     foto: typeof datos.fotoFrontalSinFondo === 'string' && datos.fotoFrontalSinFondo.startsWith('data:image/') ? datos.fotoFrontalSinFondo : '',
     secciones,
+    empresasOmitidas: experienciaCompleta.length - experiencia.length,
   };
 }
 
