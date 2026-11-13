@@ -179,6 +179,21 @@ h2.fs-50 {
 :host-context(.perfil-dividido) .barra-deshacer {
     left: calc((100% - var(--ancho-vista-previa)) / 2) !important;
 }
+/* Las columnas de Bootstrap se calculan con el ancho de la ventana, no con el de esta columna:
+   junto a la vista previa el cuadro de cada paso ocupa todo el ancho, con espacio para las flechas */
+:host-context(.perfil-dividido) .columna-lateral {
+    display: none;
+}
+:host-context(.perfil-dividido) .columna-pasos {
+    flex: 0 0 100%;
+    width: 100%;
+    max-width: 100%;
+    padding-inline: 56px;
+}
+:host-context(.perfil-dividido) .carousel-control-prev,
+:host-context(.perfil-dividido) .carousel-control-next {
+    width: 56px;
+}
 .carousel-indicators .indicador-intro {
     display: none;
 }

@@ -1,7 +1,6 @@
 <div class="container-fluid">
 <div class="row">
-  <div class="col-md-1"></div>
-  <div class="col-md-10">
+  <div class="col-md-12">
     <h1 class="visually-hidden">Mi perfil</h1>
     <form [formGroup]="formBasic">
       <div id="carousel-form" class="carousel slide carousel-fade" data-bs-touch="false" data-bs-interval="false">
@@ -139,8 +138,8 @@
         </div>
 
         <div class="row">
-          <div class="col-md-2"></div>
-          <div class="col-md-8">
+          <div class="col-md-2 columna-lateral"></div>
+          <div class="col-md-8 columna-pasos">
             <div class="carousel-inner pe-4">
               <!--------------------------------------------------------------------------------->
               <!------------------------------- 0. INGRESO DE DATOS ----------------------------->
@@ -863,7 +862,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-2"></div>
+          <div class="col-md-2 columna-lateral"></div>
         </div>
 
         <button class="carousel-control-prev border-0 bg-cero" type="button" data-bs-target="#carousel-form" data-bs-slide="prev" (click)="scrollTo()">
@@ -885,7 +884,6 @@
       }
     </form>
   </div>
-  <div class="col-md-1"></div>
 </div>
 </div>
 
