@@ -172,6 +172,13 @@ h2.fs-50 {
     inset: -4px;
     border: 2px solid var(--accion);
 }
+/* Junto a la vista previa del perfil, la barra inferior y el aviso de deshacer ocupan solo la columna del formulario */
+:host-context(.perfil-dividido) .carousel-indicators {
+    right: var(--ancho-vista-previa);
+}
+:host-context(.perfil-dividido) .barra-deshacer {
+    left: calc((100% - var(--ancho-vista-previa)) / 2) !important;
+}
 .carousel-indicators .indicador-intro {
     display: none;
 }

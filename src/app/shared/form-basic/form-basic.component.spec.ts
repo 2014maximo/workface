@@ -1,5 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { AbstractControl, FormArray, ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 
@@ -661,4 +661,29 @@ describe('FormBasicComponent: campos faltantes en estudios, conocimientos y refe
     const ids = [...fixture.nativeElement.querySelectorAll('[id]')].map((e: HTMLElement) => e.id);
     expect(ids.filter((id: string, i: number) => ids.indexOf(id) !== i)).toEqual([]);
   });
+});
+
+describe('FormBasicComponent: vista previa en vivo', () => {
+  it('avisa los cambios del formulario despues de una pausa corta', fakeAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [FormBasicComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+      providers: [
+        { provide: AuthService, useValue: { getUserLogged: () => of(null) } },
+        { provide: PerfilLocalService, useValue: {} },
+        { provide: WebServicesService, useValue: { consultarRecursos: () => of({}) } }
+      ]
+    });
+    const component = TestBed.createComponent(FormBasicComponent).componentInstance;
+    const recibidos: any[] = [];
+    component.cambio.subscribe(valor => recibidos.push(valor));
+
+    component.formBasic.get('primerNombre')!.setValue('M');
+    component.formBasic.get('primerNombre')!.setValue('María');
+    tick(100);
+    expect(recibidos.length).toBe(0);
+    tick(200);
+    expect(recibidos.length).toBe(1);
+    expect(recibidos[0].formBasic.primerNombre).toBe('María');
+  }));
 });

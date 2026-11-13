@@ -1,8 +1,22 @@
 <app-header></app-header>
 <div class="espacio-superior"></div>
 
-<main>
-  <app-form-basic></app-form-basic>
+<main [class.perfil-dividido]="escritorio()">
+  <div class="perfil-formulario">
+    <app-form-basic (cambio)="borrador.set($event)"></app-form-basic>
+  </div>
+
+  @if (escritorio()) {
+    <aside class="perfil-vista-previa" aria-labelledby="tituloVistaPrevia">
+      <h2 id="tituloVistaPrevia" class="vista-previa-titulo">Vista previa</h2>
+      <p class="vista-previa-ayuda">Se actualiza mientras escribes. Pulsa Guardar para conservar los cambios.</p>
+      @if (tieneDatos()) {
+        <app-iota [contenido]="borrador()"></app-iota>
+      } @else {
+        <p class="vista-previa-vacia">Escribe tu nombre y aquí empezará a verse tu hoja de vida.</p>
+      }
+    </aside>
+  }
 </main>
 
 <div class="espaciado"></div>

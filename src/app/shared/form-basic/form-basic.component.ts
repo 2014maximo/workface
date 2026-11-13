@@ -1,4 +1,6 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, output } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { debounceTime } from 'rxjs';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray, AbstractControl } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ICONO_HABILIDAD_GENERICO, OpcionesImagen, SweetAlert, comprimirImagen, leerComoBase64, svgComoImagen } from 'src/app/constants/functions.constants';
@@ -153,6 +155,8 @@ export class FormBasicComponent implements OnInit {
   public bloqueCopiado: string | null = null;
   // Despues del primer intento de guardar, cada registro incompleto dice que le falta.
   public intentoGuardar: boolean = false;
+  // Datos del formulario mientras se escriben, aun sin guardar: alimentan la vista previa.
+  public cambio = output<{ formBasic: any }>();
   private habilidadEnEdicion?: number;
   private habilidadConfirmada: boolean = false;
 
@@ -221,6 +225,9 @@ export class FormBasicComponent implements OnInit {
     });
 
     this.cargarInteresesArray();
+    // Una pausa corta evita redibujar la vista previa en cada tecla.
+    this.formBasic.valueChanges.pipe(debounceTime(200), takeUntilDestroyed())
+      .subscribe(() => this.cambio.emit({ formBasic: this.formBasic.getRawValue() }));
     this.listaTipoIdentificacion = [];
     this.paises = [];
     this.cargarTipoIdentificacion();
