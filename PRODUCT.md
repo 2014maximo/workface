@@ -29,11 +29,10 @@ Workface se distingue por la calidad de sus plantillas: el valor principal es el
 
 - Inicio de sesión con Firebase Authentication (correo y contraseña o Google); las rutas privadas redirigen a `/login`.
 - El plan gratuito guarda el perfil y las imágenes en IndexedDB, solo en el navegador del usuario: no se sincronizan entre dispositivos.
-- Plantillas actuales: `alpha` y `beta`, exportadas en PDF y JPEG mediante `html-to-image` y `jsPDF` (el PDF es una imagen, sin texto). Lo que se muestra en ellas debe poder capturarse correctamente.
 - Plantilla `iota`: pensada para sistemas ATS. Su PDF se dibuja con texto real en hoja carta (`jsPDF` con la fuente Atkinson Hyperlegible incrustada), en una columna, con encabezados estándar y foto opcional. No incluye identificación, fecha de nacimiento, género ni referencias.
 - Sitio publicado en GitHub Pages.
 - Prioridad a móvil: el flujo debe funcionar bien en el celular.
-- Las plantillas `alpha` y `beta` quedan fuera del trabajo con Impeccable: no se auditan ni se modifican con esta herramienta.
+- Las plantillas son por ahora de prueba: sirven para moldear y ajustar el producto. `alpha` y `beta` se retiraron del proyecto por razones legales y de autoría (2026-11-12); no deben volver a agregarse.
 - Decisión abierta: los planes de pago aún no están definidos.
 
 ## Brand Commitments

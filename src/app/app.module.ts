@@ -13,7 +13,6 @@ import { ROUTES } from './app.routes';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './components/profile/profile.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { GaleriaTemplatesComponent } from './components/galeria-templates/galeria-templates.component';
 import { ComponentsModule } from './components/components.module';
 
 
@@ -23,7 +22,6 @@ import { ComponentsModule } from './components/components.module';
     HomeComponent,
     LoginComponent,
     ProfileComponent,
-    GaleriaTemplatesComponent,
   ],
   imports: [
     FormsModule,

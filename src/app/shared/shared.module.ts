@@ -4,10 +4,8 @@ import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { SliderFrasesHomeComponent } from './slider-frases-home/slider-frases-home.component';
 import { SliderHomeComponent } from './slider-home/slider-home.component';
-import { AlphaComponent } from './TEMPLATES/alpha/alpha.component';
 import { FormBasicComponent } from './form-basic/form-basic.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BetaComponent } from './TEMPLATES/beta/beta.component';
 import { IotaComponent } from './TEMPLATES/iota/iota.component';
 import { CurriculumsComponent } from './components/curriculus/curriculums.component';
 import { CarruselDirective } from './carrusel.directive';
@@ -25,9 +23,7 @@ import { ImportarCvComponent } from './importar-cv/importar-cv.component';
     HeaderComponent,
     SliderFrasesHomeComponent,
     SliderHomeComponent,
-    AlphaComponent,
     FormBasicComponent,
-    BetaComponent,
     IotaComponent,
     CurriculumsComponent,
     CarruselDirective,
@@ -45,8 +41,6 @@ import { ImportarCvComponent } from './importar-cv/importar-cv.component';
     HeaderComponent,
     SliderFrasesHomeComponent,
     SliderHomeComponent,
-    AlphaComponent,
-    BetaComponent,
     IotaComponent,
     FormBasicComponent
   ]

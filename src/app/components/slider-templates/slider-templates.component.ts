@@ -14,8 +14,6 @@ export class SliderTemplatesComponent implements OnInit {
 
   public uid?: any;
   public datosGenerales: any;
-  public alpha: boolean = false;
-  public beta: boolean = false;
   public iota: boolean = false;
   public sinPerfil: boolean = false;
 
@@ -36,7 +34,7 @@ export class SliderTemplatesComponent implements OnInit {
         this.perfilLocal.obtener(this.uid).then(datos => {
           this.datosGenerales = datos;
           this.sinPerfil = !datos;
-          this.alpha = !!datos;
+          this.iota = !!datos;
         }).catch(error => {
           console.error(error);
         }).finally(() => {
@@ -46,20 +44,8 @@ export class SliderTemplatesComponent implements OnInit {
     })
   }
 
-  public cargarAlpha(){
-    this.alpha = true;
-    this.beta = false;
-    this.iota = false;
-  }
-  public cargarBeta(){
-    this.beta = true;
-    this.alpha = false;
-    this.iota = false;
-  }
   public cargarIota(){
     this.iota = true;
-    this.alpha = false;
-    this.beta = false;
   }
 
 }

@@ -18,16 +18,6 @@
     <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false" data-bs-interval="false">
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <button type="button" class="btn-miniatura d-block mx-auto" [attr.aria-pressed]="alpha" (click)="cargarAlpha()">
-            <img src="assets/img/slider-templates/alpha.jpeg" height="200" width="auto" class="d-block" alt="Ver plantilla Alpha">
-          </button>
-        </div>
-        <div class="carousel-item">
-          <button type="button" class="btn-miniatura d-block mx-auto" [attr.aria-pressed]="beta" (click)="cargarBeta()">
-            <img src="assets/img/slider-templates/beta.jpg" height="200" width="auto" class="d-block" alt="Ver plantilla Beta">
-          </button>
-        </div>
-        <div class="carousel-item">
           <button type="button" class="btn-miniatura d-block mx-auto" [attr.aria-pressed]="iota" (click)="cargarIota()">
             <img src="assets/img/slider-templates/iota.png" height="200" width="155" class="d-block" alt="Ver plantilla Iota, lista para sistemas ATS">
           </button>
@@ -49,16 +39,8 @@
   <div class="col-md-4"></div>
 </div>
 
-<!-- Las plantillas tienen ancho fijo: se desplazan aqui sin ensanchar la pagina -->
+<!-- Si una plantilla es mas ancha que la pantalla, se desplaza aqui sin ensanchar la pagina -->
 <div class="plantilla-contenedor" tabindex="0" role="region" aria-label="Vista previa de la plantilla">
-  @if (alpha) {
-    <app-alpha [contenido]="datosGenerales"></app-alpha>
-  }
-
-  @if (beta) {
-    <app-beta [contenido]="datosGenerales"></app-beta>
-  }
-
   @if (iota) {
     <app-iota [contenido]="datosGenerales"></app-iota>
   }

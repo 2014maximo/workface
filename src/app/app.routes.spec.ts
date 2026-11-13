@@ -27,7 +27,7 @@ describe('Rutas protegidas', () => {
   };
 
   it('cubre todas las paginas privadas', () => {
-    expect(protegidas).toEqual(['profile', 'templates', 'galeria', 'contacto', 'alpha', 'beta', 'iota']);
+    expect(protegidas).toEqual(['profile', 'galeria', 'contacto', 'iota']);
   });
 
   protegidas.forEach(ruta => {

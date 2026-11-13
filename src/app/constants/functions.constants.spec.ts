@@ -1,4 +1,4 @@
-import { comprimirImagen, descargarCv } from './functions.constants';
+import { comprimirImagen } from './functions.constants';
 
 const crearImagen = (ancho: number, alto: number, tipo: string): Promise<Blob> => new Promise(resolver => {
   const lienzo = document.createElement('canvas');
@@ -31,10 +31,3 @@ describe('comprimirImagen', () => {
   });
 });
 
-describe('descargarCv', () => {
-  it('informa el error sin lanzar excepcion si no existe el elemento', async () => {
-    const error = spyOn(console, 'error');
-    await descargarCv('no-existe', 'pdf');
-    expect(error).toHaveBeenCalled();
-  });
-});
