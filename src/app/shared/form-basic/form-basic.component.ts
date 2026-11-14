@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, output } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, output, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { debounceTime } from 'rxjs';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray, AbstractControl } from '@angular/forms';
@@ -720,6 +720,9 @@ export class FormBasicComponent implements OnInit {
       this.agregarInteres();
     });
   }
+
+  /** Slide visible del carrusel: 0 es Ingreso de datos */
+  public pasoActual = signal(0);
 
   public scrollTo() {
     window.scroll({ 

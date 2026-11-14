@@ -26,9 +26,9 @@
 }
 
 .icon-navigate {
-    position: relative;
-    left: -25px;
-    top: -30px;
+    margin: 0;
+    font-size: 18px !important;
+    line-height: 20px;
 }
 
 /* Los campos de archivo siguen ocultos a la vista, pero se pueden usar con teclado */
@@ -149,16 +149,92 @@ h2.fs-50 {
     font-size: clamp(1.75rem, 1rem + 4vw, 3.125rem) !important;
     overflow-wrap: anywhere;
 }
-.btn-guardar-accion {
-    flex: none;
-    align-self: center;
+/* Barra fija de navegacion: el bloque de pasos queda en el centro exacto,
+   Ingreso de datos a su izquierda y Guardar a su derecha */
+.barra-pasos {
+    container-type: inline-size;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    column-gap: 20px;
+    padding: 8px clamp(12px, 4vw, 48px);
+    background: #1a1a1a;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.5);
+}
+/* Bootstrap posiciona los indicadores encima del carrusel; aqui son una pieza mas de la barra */
+.barra-pasos .carousel-indicators {
+    position: static;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 36px;
+    justify-items: center;
+    margin: 0;
+    padding: 0;
+}
+.btn-ingreso {
+    justify-self: end;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     min-height: 44px;
-    margin-left: 16px;
+    padding: 0 16px;
+    font-size: 18px;
+    color: #fff;
+    background: transparent;
+    border: 1px solid var(--borde-campo);
+    transition: color 160ms ease-out, border-color 160ms ease-out;
+}
+.btn-ingreso svg {
+    flex: none;
+    width: 20px;
+    height: 20px;
+}
+.btn-ingreso:hover {
+    color: var(--enlace);
+    border-color: var(--enlace);
+}
+.btn-ingreso:focus-visible {
+    outline: 2px solid var(--foco);
+    outline-offset: 2px;
+}
+/* En Ingreso de datos toma el amarillo del paso actual */
+.btn-ingreso[aria-current] {
+    color: var(--accion);
+    border-color: var(--accion);
+}
+/* Sin espacio para el texto queda solo el icono; el nombre sigue disponible para lectores de pantalla */
+@container (max-width: 820px) {
+    .barra-pasos .carousel-indicators {
+        grid-auto-columns: 32px;
+    }
+    .btn-ingreso {
+        width: 44px;
+        padding: 0;
+        justify-content: center;
+    }
+    .btn-ingreso-texto {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+    }
+}
+.btn-guardar-accion {
+    justify-self: start;
+    min-height: 44px;
     color: #fff;
 }
 .carousel-indicators [data-bs-target] {
-    height: 15px;
-    filter: drop-shadow(0px 3px 1px rgba(0, 0, 0, 0.7));
+    flex: none;
+    width: 30px;
+    /* 12 px mas 6 px de borde arriba y abajo: area tactil de 24 px */
+    height: 12px;
+    margin: 0;
+    border-top-width: 6px;
+    border-bottom-width: 6px;
 }
 /* Paso actual: relleno de accion y un contorno separado de la barra */
 .carousel-indicators [data-bs-target].active {
@@ -173,8 +249,10 @@ h2.fs-50 {
     border: 2px solid var(--accion);
 }
 /* Junto a la vista previa del perfil, la barra inferior y el aviso de deshacer ocupan solo la columna del formulario */
-:host-context(.perfil-dividido) .carousel-indicators {
+:host-context(.perfil-dividido) .barra-pasos {
     right: var(--ancho-vista-previa);
+    column-gap: 12px;
+    padding-inline: 16px;
 }
 :host-context(.perfil-dividido) .barra-deshacer {
     left: calc((100% - var(--ancho-vista-previa)) / 2) !important;
@@ -197,9 +275,11 @@ h2.fs-50 {
 .carousel-indicators .indicador-intro {
     display: none;
 }
+/* Cada paso es una columna: su marca encima y el indicador debajo */
 .paso {
-    /* En escritorio cada paso sigue siendo parte de la misma fila */
-    display: contents;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
 }
 .contador-paso {
     margin-bottom: 8px;
@@ -222,38 +302,25 @@ h2.fs-50 {
     .carousel-item .espaciado {
         height: 24px;
     }
-    /* Siete pasos por renglon y Guardar al final: cada marca queda sobre su paso */
-    .carousel-indicators {
-        display: grid;
-        grid-template-columns: repeat(7, minmax(0, 44px)) auto;
+    /* Siete pasos por renglon, entre Ingreso de datos y Guardar */
+    .barra-pasos {
+        grid-template-columns: auto minmax(0, auto) auto;
         justify-content: center;
-        margin: 0;
+        column-gap: 8px;
         padding: 6px 12px;
-        background: #1a1a1a;
     }
-    .paso {
-        display: flex;
-        flex-direction: column-reverse;
-        align-items: center;
+    .barra-pasos .carousel-indicators {
+        grid-auto-flow: row;
+        grid-template-columns: repeat(7, minmax(0, 36px));
+        /* Cada paso ocupa su celda: el indicador se mide contra ella */
+        justify-items: stretch;
     }
     .carousel-indicators [data-bs-target] {
-        flex: none;
-        width: 30px;
-        /* 12 px mas 6 px de borde arriba y abajo: area tactil de 24 px */
-        height: 12px;
-        margin: 0;
-        border-top-width: 6px;
-        border-bottom-width: 6px;
+        width: min(30px, calc(100% - 6px));
     }
     /* Los pasos van mas juntos: el contorno no debe tocar al vecino */
     .carousel-indicators [data-bs-target].active::after {
         inset: -3px -2px;
-    }
-    .icon-navigate {
-        position: static;
-        margin: 0;
-        font-size: 18px !important;
-        line-height: 20px;
     }
     .carousel-control-prev,
     .carousel-control-next {
@@ -285,9 +352,6 @@ h2.fs-50 {
         width: calc(100vw - 24px);
     }
     .btn-guardar-accion {
-        grid-column: 8;
-        grid-row: 1 / span 2;
-        margin-left: 8px;
         padding-right: 8px !important;
         padding-left: 8px !important;
         font-size: 16px !important;

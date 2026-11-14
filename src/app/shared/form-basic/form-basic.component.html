@@ -3,8 +3,17 @@
   <div class="col-md-12">
     <h1 class="visually-hidden">Mi perfil</h1>
     <form [formGroup]="formBasic">
-      <div id="carousel-form" class="carousel slide carousel-fade" data-bs-touch="false" data-bs-interval="false">
-        <div class="carousel-indicators fixed-bottom" (click)="scrollTo()">
+      <div id="carousel-form" class="carousel slide carousel-fade" data-bs-touch="false" data-bs-interval="false" (slid.bs.carousel)="pasoActual.set($any($event).to)">
+        <!-- Barra fija de navegacion: volver a Ingreso de datos, los 14 pasos y Guardar -->
+        <nav class="barra-pasos fixed-bottom" aria-label="Pasos del perfil">
+        <button type="button" class="btn-ingreso f-open-sans-c" data-bs-target="#carousel-form" data-bs-slide-to="0" title="Ingreso de datos" [attr.aria-current]="pasoActual() === 0 ? 'step' : null" (click)="scrollTo()">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707V11.5z"/>
+            <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+          </svg>
+          <span class="btn-ingreso-texto">Ingreso de datos</span>
+        </button>
+        <div class="carousel-indicators" (click)="scrollTo()">
           <!-- Indicador oculto de la introduccion: Bootstrap necesita siempre uno activo para cambiar de slide -->
           <button type="button" data-bs-target="#carousel-form" data-bs-slide-to="0" class="active indicador-intro" tabindex="-1" aria-hidden="true"></button>
           <div class="paso">
@@ -133,9 +142,9 @@
             <p class="text-light fs-30 icon-navigate estado-pendiente"><span aria-hidden="true">x</span><span class="visually-hidden">Pendiente</span></p>
           }
           </div>
-          <!-- Guardar no cambia de paso: se detiene el clic para que la barra no desplace la pagina -->
-          <button type="button" class="btn-guardar-accion border-0 bg-blue-one pt-1 pb-1 pe-4 ps-4 f-open-sans-c fs-20 shadow-three" (click)="guardar(); $event.stopPropagation()">Guardar</button>
         </div>
+        <button type="button" class="btn-guardar-accion border-0 bg-blue-one pt-1 pb-1 pe-4 ps-4 f-open-sans-c fs-20 shadow-three" (click)="guardar()">Guardar</button>
+        </nav>
 
         <div class="row">
           <div class="col-md-2 columna-lateral"></div>
