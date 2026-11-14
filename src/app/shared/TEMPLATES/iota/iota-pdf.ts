@@ -74,13 +74,13 @@ export async function crearPdfIota(cv: DocumentoCv, opciones: OpcionesPdfIota): 
   });
 
   pdf.setProperties({
-    title: cv.nombre ? `${cv.nombre} - Hoja de vida` : 'Hoja de vida',
+    title: cv.nombre ? `${cv.nombre} - ${cv.tituloDocumento}` : cv.tituloDocumento,
     subject: cv.cargo,
     author: cv.nombre,
     keywords: cv.secciones.flatMap(s => s.elementos).join(', '),
     creator: 'Workface',
   });
-  pdf.setLanguage('es-CO');
+  pdf.setLanguage(cv.idioma as Parameters<typeof pdf.setLanguage>[0]);
 
   const foto = opciones.conFoto ? await fotoCompatible(cv.foto) : '';
   new DibujoIota(pdf).documento(cv, foto);

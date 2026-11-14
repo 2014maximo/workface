@@ -1,4 +1,6 @@
-import { Component, ElementRef, OnInit, ViewChild, output, signal } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, computed, effect, inject, output, signal } from '@angular/core';
+import { IdiomaService } from 'src/app/services/idioma.service';
+import { TranslateService } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { debounceTime } from 'rxjs';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray, AbstractControl } from '@angular/forms';
@@ -14,6 +16,11 @@ import { ImportarCvComponent, SeleccionImportacion } from '../importar-cv/import
 import { CAMPOS_SIMPLES } from 'src/app/services/importar-cv/interpretar-cv';
 
 declare var $: any;
+declare const bootstrap: any;
+
+// Importar una hoja de vida (PDF o Word) solo esta disponible en español.
+// En los demas idiomas llegara mas adelante, con los planes de pago.
+const IDIOMAS_CON_IMPORTACION = ['es'];
 
 type CampoImagen = 'fotoFrontalSinFondo' | 'fotoSemiperfil' | 'fotoCuerpoCompleto' | 'imgFirma';
 
@@ -28,97 +35,98 @@ const IMAGENES: Record<string, OpcionesImagen & { campo: CampoImagen }> = {
 const NIVEL_INICIAL = 50;
 
 const NOMBRES_IMAGEN: Record<CampoImagen, string> = {
-  fotoFrontalSinFondo: 'foto frontal',
-  fotoSemiperfil: 'foto de semiperfil',
-  fotoCuerpoCompleto: 'foto de cuerpo completo',
-  imgFirma: 'firma'
+  fotoFrontalSinFondo: 'form.nombreImagen.frontal',
+  fotoSemiperfil: 'form.nombreImagen.semiperfil',
+  fotoCuerpoCompleto: 'form.nombreImagen.cuerpo',
+  imgFirma: 'form.nombreImagen.firma'
 };
 
 const NOMBRES_REGISTRO: Record<string, string> = {
-  estudios: 'Estudio',
-  habilidades: 'Habilidad',
-  expLaboral: 'Experiencia laboral',
-  conocimientosAdicionales: 'Conocimiento',
-  referenciasPersonales: 'Referencia personal',
-  referenciasFamiliares: 'Referencia familiar'
+  estudios: 'form.nombreRegistro.estudio',
+  habilidades: 'form.nombreRegistro.habilidad',
+  expLaboral: 'form.nombreRegistro.experiencia',
+  conocimientosAdicionales: 'form.nombreRegistro.conocimiento',
+  referenciasPersonales: 'form.nombreRegistro.refPersonal',
+  referenciasFamiliares: 'form.nombreRegistro.refFamiliar'
 };
 
 // Campos obligatorios de cada lista, en el orden del formulario, para decir cuales faltan.
 // "registro" es el titulo que muestra cada elemento de la lista: "Empresa 2", "Familiar 1".
+// Todos los textos son claves de traduccion.
 export const CAMPOS_REGISTRO: Record<string, { registro: string, campos: Record<string, string> }> = {
   estudios: {
-    registro: 'Estudio',
+    registro: 'form.registro.estudio',
     campos: {
-      nombreInstitucion: 'Nombre institución',
-      tituloObtenido: 'Título obtenido',
-      fechaInicio: 'Fecha inicio',
-      fechaTitulo: 'Fecha título',
-      ciudadEstudio: 'Ciudad estudio',
-      descripcionEstudio: 'Descripción estudio'
+      nombreInstitucion: 'form.campo.nombreInstitucion',
+      tituloObtenido: 'form.campo.tituloObtenido',
+      fechaInicio: 'form.campo.fechaInicio',
+      fechaTitulo: 'form.campo.fechaTitulo',
+      ciudadEstudio: 'form.campo.ciudadEstudio',
+      descripcionEstudio: 'form.campo.descripcionEstudio'
     }
   },
   expLaboral: {
-    registro: 'Empresa',
+    registro: 'form.registro.empresa',
     campos: {
-      nombreEmpresa: 'Empresa',
-      jefeInmediatoEmpresa: 'Jefe inmediato',
-      cargoEjercido: 'Cargo desempeñado',
-      funcionesRealizadas: 'Funciones realizadas',
-      fechaInicioEmpresa: 'Fecha de inicio',
-      telContactoEmpresa: 'Número de contacto',
-      ciudadEmpresa: 'Ciudad'
+      nombreEmpresa: 'form.campo.nombreEmpresa',
+      jefeInmediatoEmpresa: 'form.campo.jefeInmediatoEmpresa',
+      cargoEjercido: 'form.campo.cargoEjercido',
+      funcionesRealizadas: 'form.campo.funcionesRealizadas',
+      fechaInicioEmpresa: 'form.campo.fechaInicioEmpresa',
+      telContactoEmpresa: 'form.campo.telContactoEmpresa',
+      ciudadEmpresa: 'form.campo.ciudadEmpresa'
     }
   },
   conocimientosAdicionales: {
-    registro: 'Conocimiento',
+    registro: 'form.registro.conocimiento',
     campos: {
-      nombreConocimiento: 'Conocimiento',
-      duracion: 'Duración',
-      fechaFinalizacion: 'Fecha finalización'
+      nombreConocimiento: 'form.campo.nombreConocimiento',
+      duracion: 'form.campo.duracion',
+      fechaFinalizacion: 'form.campo.fechaFinalizacion'
     }
   },
   referenciasPersonales: {
-    registro: 'Persona',
+    registro: 'form.registro.persona',
     campos: {
-      nombreCompleto: 'Nombre completo',
-      ocupacion: 'Ocupación - Cargo',
-      telefono: 'Teléfono',
-      empresa: 'Empresa'
+      nombreCompleto: 'form.campo.nombreCompleto',
+      ocupacion: 'form.campo.ocupacion',
+      telefono: 'form.campo.telefono',
+      empresa: 'form.campo.empresa'
     }
   },
   referenciasFamiliares: {
-    registro: 'Familiar',
+    registro: 'form.registro.familiar',
     campos: {
-      nombreCompleto: 'Nombre completo',
-      ocupacion: 'Ocupación',
-      telefono: 'Teléfono',
-      parentesco: 'Parentesco',
-      empresa: 'Empresa'
+      nombreCompleto: 'form.campo.nombreCompleto',
+      ocupacion: 'form.campo.ocupacionFamiliar',
+      telefono: 'form.campo.telefono',
+      parentesco: 'form.campo.parentesco',
+      empresa: 'form.campo.empresa'
     }
   }
 };
 
 // "Jefe inmediato, Ciudad y Fecha de inicio"
-function enumerar(partes: string[]): string {
-  return partes.length > 1 ? `${partes.slice(0, -1).join(', ')} y ${partes[partes.length - 1]}` : partes[0] ?? '';
+function enumerar(partes: string[], y: string): string {
+  return partes.length > 1 ? `${partes.slice(0, -1).join(', ')} ${y} ${partes[partes.length - 1]}` : partes[0] ?? '';
 }
 
 // Mismos pasos y controles que muestran las marcas de la barra inferior.
 const PASOS: { nombre: string, controles: string[] }[] = [
-  { nombre: 'Nombre completo', controles: ['primerNombre', 'primerApellido'] },
-  { nombre: 'Imagen perfil / cuerpo completo', controles: ['fotoFrontalSinFondo', 'fotoSemiperfil', 'fotoCuerpoCompleto', 'imgFirma'] },
-  { nombre: 'Identificación', controles: ['tipoIdentificacion', 'identificacion', 'nacionalidad'] },
-  { nombre: 'Nacimiento', controles: ['fechaNacimiento', 'ciudadNacimiento', 'genero'] },
-  { nombre: 'De contacto', controles: ['direccionResidencia', 'barrioResidencia', 'email'] },
-  { nombre: 'Cargo', controles: ['cargoActual', 'acercaDMi'] },
-  { nombre: 'Redes', controles: ['linkedin'] },
-  { nombre: 'Estudios', controles: ['estudios'] },
-  { nombre: 'Habilidades', controles: ['habilidades'] },
-  { nombre: 'Intereses', controles: ['intereses'] },
-  { nombre: 'Experiencia laboral', controles: ['expLaboral'] },
-  { nombre: 'Otros conocimientos', controles: ['conocimientosAdicionales'] },
-  { nombre: 'Referencias personales', controles: ['referenciasPersonales'] },
-  { nombre: 'Referencias familiares', controles: ['referenciasFamiliares'] }
+  { nombre: 'form.resumen.p1', controles: ['primerNombre', 'primerApellido'] },
+  { nombre: 'form.resumen.p2', controles: ['fotoFrontalSinFondo', 'fotoSemiperfil', 'fotoCuerpoCompleto', 'imgFirma'] },
+  { nombre: 'form.resumen.p3', controles: ['tipoIdentificacion', 'identificacion', 'nacionalidad'] },
+  { nombre: 'form.resumen.p4', controles: ['fechaNacimiento', 'ciudadNacimiento', 'genero'] },
+  { nombre: 'form.resumen.p5', controles: ['direccionResidencia', 'barrioResidencia', 'email'] },
+  { nombre: 'form.resumen.p6', controles: ['cargoActual', 'acercaDMi'] },
+  { nombre: 'form.resumen.p7', controles: ['linkedin'] },
+  { nombre: 'form.resumen.p8', controles: ['estudios'] },
+  { nombre: 'form.resumen.p9', controles: ['habilidades'] },
+  { nombre: 'form.resumen.p10', controles: ['intereses'] },
+  { nombre: 'form.resumen.p11', controles: ['expLaboral'] },
+  { nombre: 'form.resumen.p12', controles: ['conocimientosAdicionales'] },
+  { nombre: 'form.resumen.p13', controles: ['referenciasPersonales'] },
+  { nombre: 'form.resumen.p14', controles: ['referenciasFamiliares'] }
 ];
 
 @Component({
@@ -256,7 +264,7 @@ export class FormBasicComponent implements OnInit {
           }
         }).catch( error => {
           console.error(error);
-          SweetAlert('error', 'No pudimos cargar tus datos. Recarga la página e inténtalo de nuevo.');
+          SweetAlert('error', this.t('form.avisos.errorCarga'));
         }).finally( () => {
           $("#modalLoader").modal('hide');
         });
@@ -303,10 +311,10 @@ export class FormBasicComponent implements OnInit {
       const base64 = await leerComoBase64(imagen);
       this[opciones.campo] = [base64];
       this.formBasic.get(opciones.campo)?.setValue(base64);
-      SweetAlert('success','Imagen lista. Pulsa Guardar para conservarla.');
+      SweetAlert('success', this.t('form.avisos.imagenLista'));
     } catch(error) {
       console.error(error);
-      SweetAlert('error','No pudimos procesar la imagen. Prueba con otro archivo.');
+      SweetAlert('error', this.t('form.avisos.errorImagen'));
     } finally {
       // Permite volver a elegir el mismo archivo despues de un error.
       evento.target.value = '';
@@ -382,7 +390,7 @@ export class FormBasicComponent implements OnInit {
       return;
     }
     controles.forEach(control => control.reset());
-    this.registrarBorrado('Se borraron los campos.', () => {
+    this.registrarBorrado(this.t('form.avisos.camposBorrados'), () => {
       controles.forEach((control, indice) => control.setValue(valores[indice]));
     });
   }
@@ -391,7 +399,7 @@ export class FormBasicComponent implements OnInit {
     const lista = this.formBasic.controls[formArray] as FormArray;
     const registro = lista.at(index);
     lista.removeAt(index);
-    this.registrarBorrado(`Se eliminó: ${NOMBRES_REGISTRO[formArray]} ${index + 1}.`, () => lista.insert(index, registro));
+    this.registrarBorrado(this.t('form.avisos.registroEliminado', { registro: this.t(NOMBRES_REGISTRO[formArray]), n: index + 1 }), () => lista.insert(index, registro));
   }
 
   private registrarBorrado(mensaje: string, restaurar: () => void){
@@ -403,7 +411,7 @@ export class FormBasicComponent implements OnInit {
 
   public deshacer(){
     this.borrado?.restaurar();
-    this.anuncio = 'Se deshizo el borrado.';
+    this.anuncio = this.t('form.avisos.borradoDeshecho');
     this.cerrarDeshacer();
   }
 
@@ -505,11 +513,11 @@ export class FormBasicComponent implements OnInit {
     this.textoImportado = { estudios: bloquesEstudios, experiencia: bloquesExperiencia };
     const total = Object.keys(campos).length + habilidades.length + referencias.length;
     if(!total){
-      SweetAlert('info', 'Revisa el texto de tu hoja de vida en los pasos Estudios y Experiencia laboral.');
+      SweetAlert('info', this.t('form.avisos.revisaTexto'));
       return;
     }
     // Igual que un borrado, la importacion se puede deshacer hasta pulsar Guardar.
-    this.registrarBorrado(`Se importaron ${total} ${total === 1 ? 'dato' : 'datos'}. Revísalos y pulsa Guardar.`, () => {
+    this.registrarBorrado(this.t(total === 1 ? 'form.avisos.importadoUno' : 'form.avisos.importadosVarios', { total }), () => {
       this.formBasic.patchValue(anteriores);
       (Object.keys(largos) as (keyof typeof largos)[]).forEach(nombre => {
         while(lista(nombre).length > largos[nombre]){
@@ -524,10 +532,10 @@ export class FormBasicComponent implements OnInit {
     try {
       await navigator.clipboard.writeText(texto);
       this.bloqueCopiado = texto;
-      this.anuncio = 'Texto copiado.';
+      this.anuncio = this.t('form.avisos.textoCopiado');
     } catch(error) {
       console.error(error);
-      this.anuncio = 'No se pudo copiar. Selecciona el texto y cópialo a mano.';
+      this.anuncio = this.t('form.avisos.errorCopiar');
       SweetAlert('error', this.anuncio);
     }
   }
@@ -637,7 +645,7 @@ export class FormBasicComponent implements OnInit {
 
   private nombresFaltantes(lista: string, grupo: AbstractControl): string[] {
     const campos = CAMPOS_REGISTRO[lista].campos;
-    return Object.keys(campos).filter(campo => grupo.get(campo)?.invalid).map(campo => campos[campo]);
+    return Object.keys(campos).filter(campo => grupo.get(campo)?.invalid).map(campo => this.t(campos[campo]));
   }
 
   // Elementos incompletos de una lista y sus campos faltantes, en el orden del formulario.
@@ -648,7 +656,7 @@ export class FormBasicComponent implements OnInit {
   }
 
   public camposFaltantes(lista: string, grupo: AbstractControl): string {
-    return enumerar(this.nombresFaltantes(lista, grupo));
+    return enumerar(this.nombresFaltantes(lista, grupo), this.t('form.y'));
   }
 
   // Un campo se marca cuando el usuario ya paso por el o cuando intento guardar.
@@ -659,12 +667,13 @@ export class FormBasicComponent implements OnInit {
   // Detalle para el aviso de guardado: "Experiencia laboral (Empresa 1: Jefe inmediato y Ciudad)".
   private detallePaso(paso: string): string {
     const [lista] = PASOS.find(p => p.nombre === paso)?.controles ?? [];
+    const nombre = this.t(paso);
     if (!CAMPOS_REGISTRO[lista]) {
-      return paso;
+      return nombre;
     }
     const registro = CAMPOS_REGISTRO[lista].registro;
-    const detalle = this.faltantes(lista).map(e => `${registro} ${e.numero}: ${enumerar(e.campos)}`).join('; ');
-    return detalle ? `${paso} (${detalle})` : paso;
+    const detalle = this.faltantes(lista).map(e => `${this.t(registro, { n: e.numero })}: ${enumerar(e.campos, this.t('form.y'))}`).join('; ');
+    return detalle ? `${nombre} (${detalle})` : nombre;
   }
 
   public largoTexto(control: AbstractControl | null): number {
@@ -687,13 +696,13 @@ export class FormBasicComponent implements OnInit {
       this.datosGenerales = usuario;
       this.borrado = null;
       if(this.formBasic.valid){
-        SweetAlert('success','Perfil guardado.');
+        SweetAlert('success', this.t('form.avisos.guardado'));
       } else {
-        SweetAlert('warning',`Perfil guardado. Aún faltan datos en: ${this.pasosPendientes().map(paso => this.detallePaso(paso)).join(', ')}.`, 8000);
+        SweetAlert('warning', this.t('form.avisos.guardadoIncompleto', { pasos: this.pasosPendientes().map(paso => this.detallePaso(paso)).join(', ') }), 8000);
       }
     }).catch( error => {
       console.error(error);
-      SweetAlert('error', 'No pudimos guardar. Inténtalo de nuevo; tus datos siguen en pantalla.');
+      SweetAlert('error', this.t('form.avisos.errorGuardar'));
     }).finally( () => {
       $("#modalLoader").modal('hide');
     });
@@ -704,7 +713,7 @@ export class FormBasicComponent implements OnInit {
     const imagen = control.value;
     this[campo] = [];
     control.reset();
-    this.registrarBorrado(`Se eliminó la imagen: ${NOMBRES_IMAGEN[campo]}.`, () => {
+    this.registrarBorrado(this.t('form.avisos.imagenEliminada', { imagen: this.t(NOMBRES_IMAGEN[campo]) }), () => {
       control.setValue(imagen);
       this[campo] = [imagen];
     });
@@ -721,8 +730,37 @@ export class FormBasicComponent implements OnInit {
     });
   }
 
+  private readonly traductor = inject(TranslateService);
+
+  /** Texto traducido de una clave */
+  private t(clave: string, parametros?: Record<string, unknown>): string {
+    return this.traductor.instant(clave, parametros);
+  }
+
+  private readonly idioma = inject(IdiomaService);
+  public readonly importacionDisponible = computed(() => IDIOMAS_CON_IMPORTACION.includes(this.idioma.actual()));
+  /** Slide con el que arranca el carrusel: sin importacion se salta Ingreso de datos */
+  public readonly pasoInicial = this.importacionDisponible() ? 0 : 1;
+
   /** Slide visible del carrusel: 0 es Ingreso de datos */
-  public pasoActual = signal(0);
+  public pasoActual = signal(this.pasoInicial);
+
+  // Al cambiar a un idioma sin importacion estando en Ingreso de datos, pasa al primer paso
+  private readonly salirDeIngreso = effect(() => {
+    if (!this.importacionDisponible() && this.pasoActual() === 0) {
+      const carrusel = document.getElementById('carousel-form');
+      if (carrusel && typeof bootstrap !== 'undefined') {
+        bootstrap.Carousel.getOrCreateInstance(carrusel).to(1);
+      }
+    }
+  });
+
+  /** Sin importacion, Ingreso de datos no se puede abrir: ni con las flechas ni al dar la vuelta desde el ultimo paso */
+  public antesDeCambiarPaso(evento: Event): void {
+    if (!this.importacionDisponible() && (evento as Event & { to: number }).to === 0) {
+      evento.preventDefault();
+    }
+  }
 
   public scrollTo() {
     window.scroll({ 

@@ -1,3 +1,5 @@
+import { TranslatePipe } from '@ngx-translate/core';
+import { proveerTraduccionPruebas } from '../../i18n/pruebas';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
@@ -10,6 +12,8 @@ describe('FormContactComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ FormContactComponent ],
+      imports: [ TranslatePipe ],
+      providers: [ proveerTraduccionPruebas() ],
       schemas: [ NO_ERRORS_SCHEMA ]
     })
     .compileComponents();

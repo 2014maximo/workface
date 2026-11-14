@@ -35,6 +35,9 @@ importers:
       '@angular/router':
         specifier: ~21.2.0
         version: 21.2.25(@angular/common@21.2.25(@angular/core@21.2.25(@angular/compiler@21.2.25)(rxjs@7.8.1)(zone.js@0.16.3))(rxjs@7.8.1))(@angular/core@21.2.25(@angular/compiler@21.2.25)(rxjs@7.8.1)(zone.js@0.16.3))(@angular/platform-browser@21.2.25(@angular/common@21.2.25(@angular/core@21.2.25(@angular/compiler@21.2.25)(rxjs@7.8.1)(zone.js@0.16.3))(rxjs@7.8.1))(@angular/core@21.2.25(@angular/compiler@21.2.25)(rxjs@7.8.1)(zone.js@0.16.3)))(rxjs@7.8.1)
+      '@ngx-translate/core':
+        specifier: ^18.1.0
+        version: 18.1.0(@angular/common@21.2.25(@angular/core@21.2.25(@angular/compiler@21.2.25)(rxjs@7.8.1)(zone.js@0.16.3))(rxjs@7.8.1))(@angular/core@21.2.25(@angular/compiler@21.2.25)(rxjs@7.8.1)(zone.js@0.16.3))(rxjs@7.8.1)
       compressorjs:
         specifier: ^1.4.0
         version: 1.4.0
@@ -1286,6 +1289,13 @@ packages:
     peerDependencies:
       '@emnapi/core': ^1.7.1 || 2.0.0-beta.2
       '@emnapi/runtime': ^1.7.1 || 2.0.0-beta.2
+
+  '@ngx-translate/core@18.1.0':
+    resolution: {integrity: sha512-UYbxYUmobUboO9aa8LO+rJBfvxbwRsIrbCI7+fC5lGzwwcVbQ0FiPysYFgZC+JWsGBw/+z7u1a6vciJZzqXrcQ==}
+    peerDependencies:
+      '@angular/common': '>=18'
+      '@angular/core': '>=18'
+      rxjs: '>=7'
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -4769,6 +4779,13 @@ snapshots:
       '@emnapi/runtime': 1.11.3
       '@tybys/wasm-util': 0.10.4
     optional: true
+
+  '@ngx-translate/core@18.1.0(@angular/common@21.2.25(@angular/core@21.2.25(@angular/compiler@21.2.25)(rxjs@7.8.1)(zone.js@0.16.3))(rxjs@7.8.1))(@angular/core@21.2.25(@angular/compiler@21.2.25)(rxjs@7.8.1)(zone.js@0.16.3))(rxjs@7.8.1)':
+    dependencies:
+      '@angular/common': 21.2.25(@angular/core@21.2.25(@angular/compiler@21.2.25)(rxjs@7.8.1)(zone.js@0.16.3))(rxjs@7.8.1)
+      '@angular/core': 21.2.25(@angular/compiler@21.2.25)(rxjs@7.8.1)(zone.js@0.16.3)
+      rxjs: 7.8.1
+      tslib: 2.9.1
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:

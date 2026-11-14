@@ -1,3 +1,5 @@
+import { TranslatePipe } from '@ngx-translate/core';
+import { proveerTraduccionPruebas } from '../../i18n/pruebas';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
@@ -11,7 +13,9 @@ describe('HeaderComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [HeaderComponent],
+      imports: [TranslatePipe],
       providers: [
+        proveerTraduccionPruebas(),
         { provide: AuthService, useValue: { getUserLogged: () => of(null) } },
         { provide: ActivatedRoute, useValue: { snapshot: { url: [] } } },
         { provide: Router, useValue: {} }

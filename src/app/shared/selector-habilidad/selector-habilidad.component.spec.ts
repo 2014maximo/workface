@@ -1,3 +1,5 @@
+import { TranslatePipe } from '@ngx-translate/core';
+import { proveerTraduccionPruebas } from '../../i18n/pruebas';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ICONO_HABILIDAD_GENERICO } from '../../constants/functions.constants';
@@ -37,7 +39,8 @@ describe('SelectorHabilidadComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [SelectorHabilidadComponent],
-      providers: [{ provide: HabilidadesService, useValue: servicio }]
+      imports: [TranslatePipe],
+      providers: [proveerTraduccionPruebas(), { provide: HabilidadesService, useValue: servicio }]
     });
     fixture = TestBed.createComponent(SelectorHabilidadComponent);
     componente = fixture.componentInstance;

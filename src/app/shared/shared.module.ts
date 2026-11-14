@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
@@ -34,9 +35,10 @@ import { ImportarCvComponent } from './importar-cv/importar-cv.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-
+    TranslatePipe,
   ],
   exports: [
+    TranslatePipe,
     FooterComponent,
     HeaderComponent,
     SliderFrasesHomeComponent,

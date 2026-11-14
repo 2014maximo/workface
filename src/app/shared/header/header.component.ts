@@ -1,4 +1,5 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
+import { IDIOMAS, IdiomaService } from '../../services/idioma.service';
 import { animate, stagger, AnimationPlaybackControls } from 'motion';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -13,6 +14,8 @@ import { UserFirebase } from '../../models/usuario.model';
 export class HeaderComponent implements OnInit, OnDestroy {
 
   public userLogged = this.authService.getUserLogged();
+  public readonly idioma = inject(IdiomaService);
+  public readonly idiomas = IDIOMAS;
 
   @ViewChild('botonAbrir') private botonAbrir?: ElementRef<HTMLElement>;
   @ViewChild('botonCerrar') private botonCerrar?: ElementRef<HTMLElement>;

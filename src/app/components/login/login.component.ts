@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormGroup, ValidatorFn, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -20,6 +21,8 @@ export class LoginComponent implements OnInit {
   public mostrarClave = false;
   public mostrarConfirmacion = false;
   public enviando = false;
+
+  private readonly traductor = inject(TranslateService);
 
   constructor(private fb: FormBuilder,
               private authService: AuthService,
@@ -44,12 +47,12 @@ export class LoginComponent implements OnInit {
 
   public get textoEnviar(): string {
     if(this.enviando){
-      return 'ENVIANDO…';
+      return 'login.enviando';
     }
     if(this.registro){
-      return 'CREAR CUENTA';
+      return 'login.crearCuenta';
     }
-    return this.recordar ? 'ENVIAR ENLACE' : 'INGRESAR';
+    return this.recordar ? 'login.enviarEnlace' : 'login.botonIngresar';
   }
 
   ngOnInit(): void {
@@ -68,7 +71,8 @@ export class LoginComponent implements OnInit {
   }
 
   private toas(icon: any, message: string){
-    SweetAlert(icon, message);
+    // message es una clave de traduccion
+    SweetAlert(icon, this.traductor.instant(message));
   }
 
 
@@ -89,7 +93,7 @@ export class LoginComponent implements OnInit {
       if(res){
         this.route.navigate(['profile']);
       } else {
-        this.toas('error', 'No pudimos ingresar con Google. Revisa que el navegador permita ventanas emergentes e inténtalo de nuevo.');
+        this.toas('error', 'login.errorGoogle');
       }
     }).finally(() => this.enviando = false);
   }
@@ -133,26 +137,26 @@ export class LoginComponent implements OnInit {
           if(res?.operationType === "signIn"){
             this.route.navigate(['profile']);
           } else {
-            this.toas('error','El email o la clave no son correctos. Revísalos e inténtalo de nuevo.');
+            this.toas('error','login.errorCredenciales');
             this.limpiarClaves();
             this.focoEmail();
           }
         }).finally(() => this.enviando = false);
 
     } else {
-      this.toas('error', 'Escribe tu email y tu clave.');
+      this.toas('error', 'login.faltanDatos');
     }
 
   }
 
   private errorRegistro(): string | null {
     if(this.form.get('email')?.invalid){
-      return 'Escribe un email válido, por ejemplo nombre@correo.com.';
+      return 'login.emailInvalido';
     }
     if(this.form.get('password')?.invalid){
-      return 'Escribe una clave.';
+      return 'login.faltaClave';
     }
-    return this.form.hasError('notSame') ? 'Las claves no coinciden.' : null;
+    return this.form.hasError('notSame') ? 'login.clavesDistintas' : null;
   }
 
   public registroUsuario(){
@@ -164,10 +168,10 @@ export class LoginComponent implements OnInit {
     this.enviando = true;
     this.authService.register(this.getEmail(), this.getPass()).then( res => {
       if(res?.additionalUserInfo?.isNewUser){
-        this.toas('success','Registro correcto');
+        this.toas('success','login.registroCorrecto');
         this.route.navigate(['profile']);
       }else{
-        this.toas('error', 'No pudimos crear la cuenta. Revisa que el email no esté registrado y que la clave tenga al menos 6 caracteres.');
+        this.toas('error', 'login.errorRegistro');
         this.limpiarClaves();
         this.focoEmail();
       }
@@ -179,13 +183,13 @@ export class LoginComponent implements OnInit {
         this.enviando = true;
         this.authService.resetPassword(this.getEmail()).then( error => {
           if(error){
-            this.toas('error', 'No pudimos enviar el enlace. Inténtalo de nuevo en unos minutos.');
+            this.toas('error', 'login.errorEnlace');
           } else {
-            this.toas('success', 'Si el email está registrado, te enviamos un enlace para cambiar tu clave.');
+            this.toas('success', 'login.enlaceEnviado');
           }
         }).finally(() => this.enviando = false);
     } else {
-      this.toas('error', 'Escribe un email válido, por ejemplo nombre@correo.com.');
+      this.toas('error', 'login.emailInvalido');
     }
   }
 

@@ -2,30 +2,30 @@
   <div class="modal-dialog modal-lg modal-dialog-scrollable modal-fullscreen-sm-down">
     <div class="modal-content f-open-sans-c rounded-0 border-0 shadow-two">
       <div class="modal-header border-0 pb-0">
-        <h2 class="titulo ls-5 fw-6 text-light text-center text-shadow-one w-100 m-0" id="tituloModalHabilidad">ELEGIR HABILIDAD</h2>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        <h2 class="titulo ls-5 fw-6 text-light text-center text-shadow-one w-100 m-0" id="tituloModalHabilidad">{{ 'habilidades.titulo' | translate }}</h2>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" [attr.aria-label]="'importar.cerrar' | translate"></button>
       </div>
 
       <div class="controles px-3 pt-2 pb-3 px-md-5">
         <fieldset class="d-flex flex-wrap justify-content-center gap-4 mb-1">
-          <legend class="visually-hidden">Buscar habilidad por</legend>
+          <legend class="visually-hidden">{{ 'habilidades.buscarPor' | translate }}</legend>
           <label class="d-flex align-items-center gap-2 modo">
             <input type="radio" name="modoHabilidad" [checked]="modo === 'palabra'" (change)="cambiarModo('palabra')">
-            Palabra clave
+            {{ 'habilidades.palabraClave' | translate }}
           </label>
           <label class="d-flex align-items-center gap-2 modo">
             <input type="radio" name="modoHabilidad" [checked]="modo === 'area'" (change)="cambiarModo('area')">
-            Área
+            {{ 'habilidades.area' | translate }}
           </label>
         </fieldset>
 
         @if (modo === 'palabra') {
-          <label for="buscarHabilidad" class="visually-hidden">Palabra clave</label>
-          <input #campoTexto type="search" class="estilo-input w-100 ps-2" id="buscarHabilidad" placeholder="Escribe una habilidad" autocomplete="off" [value]="texto" (input)="alEscribir($any($event.target).value)">
+          <label for="buscarHabilidad" class="visually-hidden">{{ 'habilidades.palabraClave' | translate }}</label>
+          <input #campoTexto type="search" class="estilo-input w-100 ps-2" id="buscarHabilidad" [placeholder]="'habilidades.escribe' | translate" autocomplete="off" [value]="texto" (input)="alEscribir($any($event.target).value)">
         } @else {
-          <label for="areaHabilidad" class="visually-hidden">Área</label>
+          <label for="areaHabilidad" class="visually-hidden">{{ 'habilidades.area' | translate }}</label>
           <select class="estilo-input w-100 ps-2" id="areaHabilidad" [disabled]="!areas.length" (change)="elegirArea($any($event.target).value)">
-            <option value="" [selected]="!archivoArea">Elige un área</option>
+            <option value="" [selected]="!archivoArea">{{ 'habilidades.eligeArea' | translate }}</option>
             @for (area of areas; track area.archivo) {
               <option [value]="area.archivo" [selected]="area.archivo === archivoArea">{{ area.nombre }}</option>
             }
@@ -36,22 +36,22 @@
       <div class="modal-body px-3 px-md-5">
         <div role="status">
           @if (cargando) {
-            <p class="aviso">Cargando…</p>
+            <p class="aviso">{{ 'comun.cargando' | translate }}</p>
           } @else if (busquedaCorta) {
-            <p class="aviso">Escribe al menos 2 letras.</p>
+            <p class="aviso">{{ 'habilidades.minimoLetras' | translate }}</p>
           } @else if (modo === 'area' && !archivoArea && !error) {
-            <p class="aviso">Elige un área para ver sus habilidades.</p>
+            <p class="aviso">{{ 'habilidades.eligeAreaAyuda' | translate }}</p>
           } @else if (sinResultados) {
-            <p class="aviso">No encontramos “{{ texto.trim() }}”. Prueba con otra palabra, busca por área o agrégala como otra habilidad.</p>
+            <p class="aviso">{{ 'habilidades.sinResultados' | translate: { texto: texto.trim() } }}</p>
           } @else if (totalResultados > maximoResultados) {
-            <p class="aviso">Se muestran {{ maximoResultados }} de {{ totalResultados }} resultados. Escribe más letras para afinar.</p>
+            <p class="aviso">{{ 'habilidades.demasiados' | translate: { max: maximoResultados, total: totalResultados } }}</p>
           }
         </div>
 
         @if (error) {
           <div role="alert" class="d-flex flex-wrap align-items-center gap-3 mb-3">
-            <p class="m-0">No pudimos cargar las habilidades. Revisa tu conexión.</p>
-            <button type="button" class="accion border-0 bg-blue-one text-light px-4 fs-20 shadow-three" (click)="actualizar()">Reintentar</button>
+            <p class="m-0">{{ 'habilidades.errorCarga' | translate }}</p>
+            <button type="button" class="accion border-0 bg-blue-one text-light px-4 fs-20 shadow-three" (click)="actualizar()">{{ 'habilidades.reintentar' | translate }}</button>
           </div>
         }
 
@@ -81,13 +81,13 @@
 
       <div class="modal-footer justify-content-center px-3 px-md-5">
         @if (otraVisible) {
-          <label for="otraHabilidad" class="visually-hidden">Nombre de la habilidad</label>
+          <label for="otraHabilidad" class="visually-hidden">{{ 'habilidades.nombreOtra' | translate }}</label>
           <div class="d-flex align-items-center gap-3 w-100">
-            <input type="text" class="estilo-input flex-grow-1 ps-2" id="otraHabilidad" placeholder="Nombre de la habilidad" maxlength="60" autocomplete="off" [value]="textoOtra" (input)="textoOtra = $any($event.target).value" (keydown.enter)="usarOtra()">
-            <button type="button" class="accion usar border-0 bg-blue-one text-light px-4 fs-20 shadow-three" [disabled]="!textoOtra.trim()" (click)="usarOtra()">Usar</button>
+            <input type="text" class="estilo-input flex-grow-1 ps-2" id="otraHabilidad" [placeholder]="'habilidades.nombreOtra' | translate" maxlength="60" autocomplete="off" [value]="textoOtra" (input)="textoOtra = $any($event.target).value" (keydown.enter)="usarOtra()">
+            <button type="button" class="accion usar border-0 bg-blue-one text-light px-4 fs-20 shadow-three" [disabled]="!textoOtra.trim()" (click)="usarOtra()">{{ 'habilidades.usar' | translate }}</button>
           </div>
         } @else {
-          <button type="button" class="otra bg-transparent border-0" (click)="mostrarOtra()">¿No está? Agregar otra habilidad</button>
+          <button type="button" class="otra bg-transparent border-0" (click)="mostrarOtra()">{{ 'habilidades.agregarOtra' | translate }}</button>
         }
       </div>
     </div>

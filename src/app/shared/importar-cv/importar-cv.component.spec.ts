@@ -1,3 +1,5 @@
+import { TranslatePipe } from '@ngx-translate/core';
+import { proveerTraduccionPruebas } from '../../i18n/pruebas';
 import { TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { ImportacionCv, ImportarCvService } from 'src/app/services/importar-cv/importar-cv.service';
@@ -37,8 +39,8 @@ describe('ImportarCvComponent', () => {
     analizar = jasmine.createSpy('analizar').and.callFake(() => Promise.resolve(resultado()));
     TestBed.configureTestingModule({
       declarations: [ImportarCvComponent],
-      imports: [FormsModule],
-      providers: [{ provide: ImportarCvService, useValue: { analizar } }]
+      imports: [FormsModule, TranslatePipe],
+      providers: [proveerTraduccionPruebas(), { provide: ImportarCvService, useValue: { analizar } }]
     });
     componente = TestBed.createComponent(ImportarCvComponent).componentInstance;
   });
@@ -79,6 +81,6 @@ describe('ImportarCvComponent', () => {
     analizar.and.callFake(() => Promise.reject(new ErrorImportacion('sinTexto')));
     await leer();
     expect(componente.estado).toBe('error');
-    expect(componente.mensajeError).toContain('escaneada');
+    expect(componente.mensajeError).toBe('importar.errores.sinTexto');
   });
 });

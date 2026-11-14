@@ -8,40 +8,40 @@
                     <img src="assets/img/slider-home/slide-5-1200.webp"
                         srcset="assets/img/slider-home/slide-5-640.webp 640w, assets/img/slider-home/slide-5-1200.webp 1200w"
                         sizes="(min-width: 768px) 667px, 100vw"
-                        alt="Varias hojas de vida con franjas de colores y foto de perfil, superpuestas" width="1200" height="900" fetchpriority="high" class="sombraUno mab-5">
+                        [attr.alt]="'inicio.slide1' | translate" width="1200" height="900" fetchpriority="high" class="sombraUno mab-5">
                 </div>
                 <div class="carousel-item">
                     <img src="assets/img/slider-home/slide-1-1200.webp"
                         srcset="assets/img/slider-home/slide-1-640.webp 640w, assets/img/slider-home/slide-1-1200.webp 1200w"
                         sizes="(min-width: 768px) 667px, 100vw"
-                        alt="Hoja de vida con franja amarilla, sostenida con las dos manos" width="1200" height="900" loading="lazy" class="sombraUno mab-5">
+                        [attr.alt]="'inicio.slide2' | translate" width="1200" height="900" loading="lazy" class="sombraUno mab-5">
                 </div>
                 <div class="carousel-item">
                     <img src="assets/img/slider-home/slide-2-1200.webp"
                         srcset="assets/img/slider-home/slide-2-640.webp 640w, assets/img/slider-home/slide-2-1200.webp 1200w"
                         sizes="(min-width: 768px) 667px, 100vw"
-                        alt="Hoja de vida en fondo negro y azul, con foto y línea de tiempo" width="1200" height="900" loading="lazy" class="sombraUno mab-5">
+                        [attr.alt]="'inicio.slide3' | translate" width="1200" height="900" loading="lazy" class="sombraUno mab-5">
                 </div>
                 <div class="carousel-item">
                     <img src="assets/img/slider-home/slide-3-1200.webp"
                         srcset="assets/img/slider-home/slide-3-640.webp 640w, assets/img/slider-home/slide-3-1200.webp 1200w"
                         sizes="(min-width: 768px) 667px, 100vw"
-                        alt="Hoja de vida en amarillo y negro, con foto y datos de experiencia" width="1200" height="900" loading="lazy" class="sombraUno mab-5">
+                        [attr.alt]="'inicio.slide4' | translate" width="1200" height="900" loading="lazy" class="sombraUno mab-5">
                 </div>
                 <div class="carousel-item">
                     <img src="assets/img/slider-home/slide-4-1200.webp"
                         srcset="assets/img/slider-home/slide-4-640.webp 640w, assets/img/slider-home/slide-4-1200.webp 1200w"
                         sizes="(min-width: 768px) 667px, 100vw"
-                        alt="Hoja de vida en tonos crema y vino, con barras de habilidades" width="1200" height="900" loading="lazy" class="sombraUno mab-5">
+                        [attr.alt]="'inicio.slide5' | translate" width="1200" height="900" loading="lazy" class="sombraUno mab-5">
                 </div>
             </div>
             <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Anterior</span>
+                <span class="visually-hidden">{{ 'comun.anterior' | translate }}</span>
             </a>
             <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Siguiente</span>
+                <span class="visually-hidden">{{ 'comun.siguiente' | translate }}</span>
             </a>
         </div>
     </div>

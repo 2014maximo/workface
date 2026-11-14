@@ -1,3 +1,5 @@
+import { TranslatePipe } from '@ngx-translate/core';
+import { proveerTraduccionPruebas } from '../../i18n/pruebas';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { AbstractControl, FormArray, ReactiveFormsModule } from '@angular/forms';
@@ -31,8 +33,10 @@ describe('FormBasicComponent: intereses', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [FormBasicComponent],
+      imports: [TranslatePipe],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
+        proveerTraduccionPruebas(),
         { provide: AuthService, useValue: { getUserLogged: () => of(null) } },
         { provide: PerfilLocalService, useValue: {} },
         { provide: WebServicesService, useValue: { consultarRecursos: () => of({}) } }
@@ -164,9 +168,10 @@ describe('FormBasicComponent: plantilla', () => {
     (window as any).$ = () => vacio;
     TestBed.configureTestingModule({
       declarations: [FormBasicComponent],
-      imports: [ReactiveFormsModule],
+      imports: [TranslatePipe, ReactiveFormsModule],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
+        proveerTraduccionPruebas(),
         { provide: AuthService, useValue: { getUserLogged: () => of(null) } },
         { provide: PerfilLocalService, useValue: {} },
         { provide: WebServicesService, useValue: { consultarRecursos: () => of({}) } }
@@ -207,7 +212,7 @@ describe('FormBasicComponent: plantilla', () => {
       escribir('Muy corta');
       expect(aviso()?.textContent).toContain('Llevas 9');
       expect(aviso()?.classList).toContain('estado-pendiente');
-      expect(componente.pasosPendientes()).toContain('Estudios');
+      expect(componente.pasosPendientes()).toContain('form.resumen.p8');
     });
 
     it('desaparece al llegar al minimo, sin limite maximo', () => {
@@ -504,8 +509,10 @@ describe('FormBasicComponent: importar hoja de vida', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [FormBasicComponent],
+      imports: [TranslatePipe],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
+        proveerTraduccionPruebas(),
         { provide: AuthService, useValue: { getUserLogged: () => of(null) } },
         { provide: PerfilLocalService, useValue: {} },
         { provide: WebServicesService, useValue: { consultarRecursos: () => of({}) } }
@@ -559,8 +566,10 @@ describe('FormBasicComponent: campos faltantes de experiencia laboral', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [FormBasicComponent],
+      imports: [TranslatePipe],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
+        proveerTraduccionPruebas(),
         { provide: AuthService, useValue: { getUserLogged: () => of(null) } },
         { provide: PerfilLocalService, useValue: { guardar: () => Promise.resolve() } },
         { provide: WebServicesService, useValue: { consultarRecursos: () => of({}) } }
@@ -615,9 +624,10 @@ describe('FormBasicComponent: campos faltantes en estudios, conocimientos y refe
     (window as any).$ = () => vacio;
     TestBed.configureTestingModule({
       declarations: [FormBasicComponent],
-      imports: [ReactiveFormsModule],
+      imports: [TranslatePipe, ReactiveFormsModule],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
+        proveerTraduccionPruebas(),
         { provide: AuthService, useValue: { getUserLogged: () => of(null) } },
         { provide: PerfilLocalService, useValue: { guardar: () => Promise.resolve() } },
         { provide: WebServicesService, useValue: { consultarRecursos: () => of({}) } }
@@ -667,8 +677,10 @@ describe('FormBasicComponent: vista previa en vivo', () => {
   it('avisa los cambios del formulario despues de una pausa corta', fakeAsync(() => {
     TestBed.configureTestingModule({
       declarations: [FormBasicComponent],
+      imports: [TranslatePipe],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
+        proveerTraduccionPruebas(),
         { provide: AuthService, useValue: { getUserLogged: () => of(null) } },
         { provide: PerfilLocalService, useValue: {} },
         { provide: WebServicesService, useValue: { consultarRecursos: () => of({}) } }

@@ -6,18 +6,18 @@ export const INTERVALO_FRASES = 15000;
 export const FRASES: FraseModel[] = [
     {
         id: 1,
-        texto: 'En asuntos laborales es imprescindible mostrar la mejor imagen.'
+        clave: 'frases.f1'
     },
     {
         id: 2,
-        texto: 'Mejoremos la manera monótona del proceso.'
+        clave: 'frases.f2'
     },
     {
         id: 3,
-        texto: 'La primera imagen es la más importante.'
+        clave: 'frases.f3'
     },
     {
         id: 4,
-        texto: 'Llegará en un momento en que nos cansemos de tanta información, personalizaciones avanzadas y cargadas de contenido.'
+        clave: 'frases.f4'
     }
 ];

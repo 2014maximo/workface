@@ -39,43 +39,44 @@ interface ReferenciaRevision extends ReferenciaDetectada {
   marcada: boolean;
 }
 
+// Titulos y etiquetas son claves de traduccion
 const GRUPOS_CAMPOS: { titulo: string, campos: [keyof DatosCv, string, string?][] }[] = [
   {
-    titulo: 'Datos personales',
+    titulo: 'importar.grupos.personales',
     campos: [
-      ['primerNombre', 'Primer nombre'], ['segundoNombre', 'Segundo nombre'],
-      ['primerApellido', 'Primer apellido'], ['segundoApellido', 'Segundo apellido'],
-      ['identificacion', 'Identificación'], ['fechaNacimiento', 'Fecha de nacimiento', 'date'],
-      ['ciudadNacimiento', 'Lugar de nacimiento'],
+      ['primerNombre', 'form.campos.primerNombre'], ['segundoNombre', 'form.campos.segundoNombre'],
+      ['primerApellido', 'form.campos.primerApellido'], ['segundoApellido', 'form.campos.segundoApellido'],
+      ['identificacion', 'form.campos.identificacion'], ['fechaNacimiento', 'form.campos.fechaNacimiento', 'date'],
+      ['ciudadNacimiento', 'form.campos.lugarNacimiento'],
     ]
   },
   {
-    titulo: 'Contacto y redes',
+    titulo: 'importar.grupos.contacto',
     campos: [
-      ['direccionResidencia', 'Dirección residencia'], ['barrioResidencia', 'Barrio residencia'],
-      ['telFijo', 'Número fijo', 'tel'], ['telCel', 'Número móvil', 'tel'], ['email', 'Email', 'email'],
-      ['webSite', 'Sitio web', 'url'], ['linkedin', 'LinkedIn', 'url'],
+      ['direccionResidencia', 'form.campos.direccion'], ['barrioResidencia', 'form.campos.barrio'],
+      ['telFijo', 'form.campos.telFijo', 'tel'], ['telCel', 'form.campos.telCel', 'tel'], ['email', 'form.campos.email', 'email'],
+      ['webSite', 'form.redes.sitioWeb', 'url'], ['linkedin', 'importar.linkedin', 'url'],
     ]
   },
   {
-    titulo: 'Cargo',
-    campos: [['cargoActual', 'Cargo actual'], ['acercaDMi', 'Acerca de mí', 'textarea']]
+    titulo: 'form.resumen.p6',
+    campos: [['cargoActual', 'form.campos.cargoActual'], ['acercaDMi', 'form.campos.acercaDeMi', 'textarea']]
   },
 ];
 
 const MENSAJES_ERROR: Record<MotivoError, string> = {
-  formato: 'Ese formato no se puede leer. Usa un PDF o un Word .docx; si tu archivo es .doc u .odt, guárdalo como PDF desde tu editor.',
-  tamano: 'El archivo pesa más de 10 MB. Prueba con una versión más liviana de tu hoja de vida.',
-  protegido: 'El PDF tiene contraseña. Quítala o guarda una copia sin protección e inténtalo de nuevo.',
-  sinTexto: 'No encontramos texto en el archivo. Parece una hoja de vida escaneada o hecha como imagen: llena tus datos a mano o usa un PDF exportado desde tu editor.',
-  lectura: 'No pudimos leer el archivo. Puede estar dañado; prueba abrirlo y guardarlo de nuevo como PDF.',
+  formato: 'importar.errores.formato',
+  tamano: 'importar.errores.tamano',
+  protegido: 'importar.errores.protegido',
+  sinTexto: 'importar.errores.sinTexto',
+  lectura: 'importar.errores.lectura',
 };
 
 const ORDEN_ORIGEN: OrigenHabilidad[] = ['seccion', 'otra', 'mencion'];
 const TITULOS_ORIGEN: Record<OrigenHabilidad, string> = {
-  seccion: 'De tu sección de habilidades',
-  otra: 'No están en el catálogo: llevarán un icono genérico',
-  mencion: 'Aparecen en otras partes del texto',
+  seccion: 'importar.origen.seccion',
+  otra: 'importar.origen.otra',
+  mencion: 'importar.origen.mencion',
 };
 
 @Component({

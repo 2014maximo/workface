@@ -163,7 +163,11 @@ h2.fs-50 {
     box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.5);
 }
 /* Bootstrap posiciona los indicadores encima del carrusel; aqui son una pieza mas de la barra */
+/* Posiciones fijas: sin el boton de Ingreso de datos, los pasos siguen en el centro */
+.barra-pasos .btn-ingreso { grid-column: 1; }
+.barra-pasos .btn-guardar-accion { grid-column: 3; }
 .barra-pasos .carousel-indicators {
+    grid-column: 2;
     position: static;
     display: grid;
     grid-auto-flow: column;

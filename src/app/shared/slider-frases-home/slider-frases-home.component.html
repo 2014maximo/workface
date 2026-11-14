@@ -6,12 +6,12 @@
             <div class="carousel-inner">
               @for (frase of frases; track frase.id; let primera = $first) {
                 <div class="carousel-item" [class.active]="primera" [attr.data-bs-interval]="intervalo">
-                  <p class="frase fuenteUno fw-3 text-light">{{ frase.texto }}</p>
+                  <p class="frase fuenteUno fw-3 text-light">{{ frase.clave | translate }}</p>
                 </div>
               }
             </div>
         </div>
-        <button type="button" class="btn-pausa mt-2" [attr.aria-label]="carrusel.pausado ? 'Reanudar frases' : 'Pausar frases'" (click)="carrusel.alternar()">
+        <button type="button" class="btn-pausa mt-2" [attr.aria-label]="(carrusel.pausado ? 'inicio.reanudarFrases' : 'inicio.pausarFrases') | translate" (click)="carrusel.alternar()">
             <i class="max" [class.max-pause]="!carrusel.pausado" [class.max-play]="carrusel.pausado" aria-hidden="true"></i>
         </button>
     </div>

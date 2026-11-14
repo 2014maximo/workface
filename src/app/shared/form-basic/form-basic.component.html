@@ -1,149 +1,152 @@
 <div class="container-fluid">
 <div class="row">
   <div class="col-md-12">
-    <h1 class="visually-hidden">Mi perfil</h1>
+    <h1 class="visually-hidden">{{ 'form.miPerfil' | translate }}</h1>
     <form [formGroup]="formBasic">
-      <div id="carousel-form" class="carousel slide carousel-fade" data-bs-touch="false" data-bs-interval="false" (slid.bs.carousel)="pasoActual.set($any($event).to)">
+      <div id="carousel-form" class="carousel slide carousel-fade" data-bs-touch="false" data-bs-interval="false" (slide.bs.carousel)="antesDeCambiarPaso($event)" (slid.bs.carousel)="pasoActual.set($any($event).to)">
         <!-- Barra fija de navegacion: volver a Ingreso de datos, los 14 pasos y Guardar -->
-        <nav class="barra-pasos fixed-bottom" aria-label="Pasos del perfil">
-        <button type="button" class="btn-ingreso f-open-sans-c" data-bs-target="#carousel-form" data-bs-slide-to="0" title="Ingreso de datos" [attr.aria-current]="pasoActual() === 0 ? 'step' : null" (click)="scrollTo()">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
-            <path d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707V11.5z"/>
-            <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
-          </svg>
-          <span class="btn-ingreso-texto">Ingreso de datos</span>
-        </button>
+        <nav class="barra-pasos fixed-bottom" [attr.aria-label]="'form.pasosPerfil' | translate">
+        <!-- Importar una hoja de vida solo esta en español; en otros idiomas llegara con los planes de pago -->
+        @if (importacionDisponible()) {
+          <button type="button" class="btn-ingreso f-open-sans-c" data-bs-target="#carousel-form" data-bs-slide-to="0" [title]="'form.ingresoDatos' | translate" [attr.aria-current]="pasoActual() === 0 ? 'step' : null" (click)="scrollTo()">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707V11.5z"/>
+              <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+            </svg>
+            <span class="btn-ingreso-texto">{{ 'form.ingresoDatos' | translate }}</span>
+          </button>
+        }
         <div class="carousel-indicators" (click)="scrollTo()">
           <!-- Indicador oculto de la introduccion: Bootstrap necesita siempre uno activo para cambiar de slide -->
-          <button type="button" data-bs-target="#carousel-form" data-bs-slide-to="0" class="active indicador-intro" tabindex="-1" aria-hidden="true"></button>
+          <button type="button" data-bs-target="#carousel-form" data-bs-slide-to="0" class="indicador-intro" [class.active]="pasoInicial === 0" tabindex="-1" aria-hidden="true"></button>
           <div class="paso">
-<button type="button" data-bs-target="#carousel-form" data-bs-slide-to="1" data-bs-toggle="tooltip" title="1. NOMBRE COMPLETO" aria-label="Paso 1. NOMBRE COMPLETO"></button>
+<button type="button" data-bs-target="#carousel-form" data-bs-slide-to="1" [class.active]="pasoInicial === 1" data-bs-toggle="tooltip" [title]="'1. ' + ('form.pasos.p1' | translate)" [attr.aria-label]="'form.pasoAria' | translate: { n: 1, nombre: ('form.pasos.p1' | translate) }"></button>
           @if (this.formBasic.get('primerNombre')?.valid && this.formBasic.get('primerApellido')?.valid) {
-            <p class="text-light fs-30 icon-navigate tc-green-one"><span aria-hidden="true">✓</span><span class="visually-hidden">Completo</span></p>
+            <p class="text-light fs-30 icon-navigate tc-green-one"><span aria-hidden="true">✓</span><span class="visually-hidden">{{ 'form.completo' | translate }}</span></p>
           }
           @if (!this.formBasic.get('primerNombre')?.valid || !this.formBasic.get('primerApellido')?.valid) {
-            <p class="text-light fs-30 icon-navigate estado-pendiente"><span aria-hidden="true">x</span><span class="visually-hidden">Pendiente</span></p>
+            <p class="text-light fs-30 icon-navigate estado-pendiente"><span aria-hidden="true">x</span><span class="visually-hidden">{{ 'form.pendiente' | translate }}</span></p>
           }
           </div>
           <div class="paso">
-<button type="button" data-bs-target="#carousel-form" data-bs-slide-to="2" data-bs-toggle="tooltip" title="2. IMAGEN PERFIL / CUERPO COMPLETO" aria-label="Paso 2. IMAGEN PERFIL / CUERPO COMPLETO"></button>
+<button type="button" data-bs-target="#carousel-form" data-bs-slide-to="2" data-bs-toggle="tooltip" [title]="'2. ' + ('form.pasos.p2' | translate)" [attr.aria-label]="'form.pasoAria' | translate: { n: 2, nombre: ('form.pasos.p2' | translate) }"></button>
           @if (this.formBasic.get('fotoFrontalSinFondo')?.valid && this.formBasic.get('fotoSemiperfil')?.valid && this.formBasic.get('fotoCuerpoCompleto')?.valid && this.formBasic.get('imgFirma')?.valid) {
-            <p class="text-light fs-30 icon-navigate tc-green-one"><span aria-hidden="true">✓</span><span class="visually-hidden">Completo</span></p>
+            <p class="text-light fs-30 icon-navigate tc-green-one"><span aria-hidden="true">✓</span><span class="visually-hidden">{{ 'form.completo' | translate }}</span></p>
           }
           @if (!this.formBasic.get('fotoFrontalSinFondo')?.valid || !this.formBasic.get('fotoSemiperfil')?.valid || !this.formBasic.get('fotoCuerpoCompleto')?.valid || !this.formBasic.get('imgFirma')?.valid) {
-            <p class="text-light fs-30 icon-navigate estado-pendiente"><span aria-hidden="true">x</span><span class="visually-hidden">Pendiente</span></p>
+            <p class="text-light fs-30 icon-navigate estado-pendiente"><span aria-hidden="true">x</span><span class="visually-hidden">{{ 'form.pendiente' | translate }}</span></p>
           }
           </div>
           <div class="paso">
-<button type="button" data-bs-target="#carousel-form" data-bs-slide-to="3" data-bs-toggle="tooltip" title="3. IDENTIFICACIÓN" aria-label="Paso 3. IDENTIFICACIÓN"></button>
+<button type="button" data-bs-target="#carousel-form" data-bs-slide-to="3" data-bs-toggle="tooltip" [title]="'3. ' + ('form.pasos.p3' | translate)" [attr.aria-label]="'form.pasoAria' | translate: { n: 3, nombre: ('form.pasos.p3' | translate) }"></button>
           @if (this.formBasic.get('tipoIdentificacion')?.valid && this.formBasic.get('identificacion')?.valid && this.formBasic.get('nacionalidad')?.valid) {
-            <p class="text-light fs-30 icon-navigate tc-green-one"><span aria-hidden="true">✓</span><span class="visually-hidden">Completo</span></p>
+            <p class="text-light fs-30 icon-navigate tc-green-one"><span aria-hidden="true">✓</span><span class="visually-hidden">{{ 'form.completo' | translate }}</span></p>
           }
           @if (!this.formBasic.get('tipoIdentificacion')?.valid || !this.formBasic.get('identificacion')?.valid || !this.formBasic.get('nacionalidad')?.valid) {
-            <p class="text-light fs-30 icon-navigate estado-pendiente"><span aria-hidden="true">x</span><span class="visually-hidden">Pendiente</span></p>
+            <p class="text-light fs-30 icon-navigate estado-pendiente"><span aria-hidden="true">x</span><span class="visually-hidden">{{ 'form.pendiente' | translate }}</span></p>
           }
           </div>
           <div class="paso">
-<button type="button" data-bs-target="#carousel-form" data-bs-slide-to="4" data-bs-toggle="tooltip" title="4. NACIMIENTO" aria-label="Paso 4. NACIMIENTO"></button>
+<button type="button" data-bs-target="#carousel-form" data-bs-slide-to="4" data-bs-toggle="tooltip" [title]="'4. ' + ('form.pasos.p4' | translate)" [attr.aria-label]="'form.pasoAria' | translate: { n: 4, nombre: ('form.pasos.p4' | translate) }"></button>
           @if (this.formBasic.get('fechaNacimiento')?.valid && this.formBasic.get('ciudadNacimiento')?.valid && this.formBasic.get('genero')?.valid) {
-            <p class="text-light fs-30 icon-navigate tc-green-one"><span aria-hidden="true">✓</span><span class="visually-hidden">Completo</span></p>
+            <p class="text-light fs-30 icon-navigate tc-green-one"><span aria-hidden="true">✓</span><span class="visually-hidden">{{ 'form.completo' | translate }}</span></p>
           }
           @if (!this.formBasic.get('fechaNacimiento')?.valid || !this.formBasic.get('ciudadNacimiento')?.valid || !this.formBasic.get('genero')?.valid) {
-            <p class="text-light fs-30 icon-navigate estado-pendiente"><span aria-hidden="true">x</span><span class="visually-hidden">Pendiente</span></p>
+            <p class="text-light fs-30 icon-navigate estado-pendiente"><span aria-hidden="true">x</span><span class="visually-hidden">{{ 'form.pendiente' | translate }}</span></p>
           }
           </div>
           <div class="paso">
-<button type="button" data-bs-target="#carousel-form" data-bs-slide-to="5" data-bs-toggle="tooltip" title="5. DE CONTACTO" aria-label="Paso 5. DE CONTACTO"></button>
+<button type="button" data-bs-target="#carousel-form" data-bs-slide-to="5" data-bs-toggle="tooltip" [title]="'5. ' + ('form.pasos.p5' | translate)" [attr.aria-label]="'form.pasoAria' | translate: { n: 5, nombre: ('form.pasos.p5' | translate) }"></button>
           @if (this.formBasic.get('direccionResidencia')?.valid && this.formBasic.get('barrioResidencia')?.valid && this.formBasic.get('email')?.valid) {
-            <p class="text-light fs-30 icon-navigate tc-green-one"><span aria-hidden="true">✓</span><span class="visually-hidden">Completo</span></p>
+            <p class="text-light fs-30 icon-navigate tc-green-one"><span aria-hidden="true">✓</span><span class="visually-hidden">{{ 'form.completo' | translate }}</span></p>
           }
           @if (!this.formBasic.get('direccionResidencia')?.valid || !this.formBasic.get('barrioResidencia')?.valid || !this.formBasic.get('email')?.valid) {
-            <p class="text-light fs-30 icon-navigate estado-pendiente"><span aria-hidden="true">x</span><span class="visually-hidden">Pendiente</span></p>
+            <p class="text-light fs-30 icon-navigate estado-pendiente"><span aria-hidden="true">x</span><span class="visually-hidden">{{ 'form.pendiente' | translate }}</span></p>
           }
           </div>
           <div class="paso">
-<button type="button" data-bs-target="#carousel-form" data-bs-slide-to="6" data-bs-toggle="tooltip" title="6. CARGO" aria-label="Paso 6. CARGO"></button>
+<button type="button" data-bs-target="#carousel-form" data-bs-slide-to="6" data-bs-toggle="tooltip" [title]="'6. ' + ('form.pasos.p6' | translate)" [attr.aria-label]="'form.pasoAria' | translate: { n: 6, nombre: ('form.pasos.p6' | translate) }"></button>
           @if (this.formBasic.get('cargoActual')?.valid && this.formBasic.get('acercaDMi')?.valid) {
-            <p class="text-light fs-30 icon-navigate tc-green-one"><span aria-hidden="true">✓</span><span class="visually-hidden">Completo</span></p>
+            <p class="text-light fs-30 icon-navigate tc-green-one"><span aria-hidden="true">✓</span><span class="visually-hidden">{{ 'form.completo' | translate }}</span></p>
           }
           @if (!this.formBasic.get('cargoActual')?.valid || !this.formBasic.get('acercaDMi')?.valid) {
-            <p class="text-light fs-30 icon-navigate estado-pendiente"><span aria-hidden="true">x</span><span class="visually-hidden">Pendiente</span></p>
+            <p class="text-light fs-30 icon-navigate estado-pendiente"><span aria-hidden="true">x</span><span class="visually-hidden">{{ 'form.pendiente' | translate }}</span></p>
           }
           </div>
           <div class="paso">
-<button type="button" data-bs-target="#carousel-form" data-bs-slide-to="7" data-bs-toggle="tooltip" title="7. REDES" aria-label="Paso 7. REDES"></button>
+<button type="button" data-bs-target="#carousel-form" data-bs-slide-to="7" data-bs-toggle="tooltip" [title]="'7. ' + ('form.pasos.p7' | translate)" [attr.aria-label]="'form.pasoAria' | translate: { n: 7, nombre: ('form.pasos.p7' | translate) }"></button>
           @if (this.formBasic.get('linkedin')?.valid) {
-            <p class="text-light fs-30 icon-navigate tc-green-one"><span aria-hidden="true">✓</span><span class="visually-hidden">Completo</span></p>
+            <p class="text-light fs-30 icon-navigate tc-green-one"><span aria-hidden="true">✓</span><span class="visually-hidden">{{ 'form.completo' | translate }}</span></p>
           }
           @if (!this.formBasic.get('linkedin')?.valid) {
-            <p class="text-light fs-30 icon-navigate estado-pendiente"><span aria-hidden="true">x</span><span class="visually-hidden">Pendiente</span></p>
+            <p class="text-light fs-30 icon-navigate estado-pendiente"><span aria-hidden="true">x</span><span class="visually-hidden">{{ 'form.pendiente' | translate }}</span></p>
           }
           </div>
           <div class="paso">
-<button type="button" data-bs-target="#carousel-form" data-bs-slide-to="8" data-bs-toggle="tooltip" title="8. ESTUDIOS" aria-label="Paso 8. ESTUDIOS"></button>
+<button type="button" data-bs-target="#carousel-form" data-bs-slide-to="8" data-bs-toggle="tooltip" [title]="'8. ' + ('form.pasos.p8' | translate)" [attr.aria-label]="'form.pasoAria' | translate: { n: 8, nombre: ('form.pasos.p8' | translate) }"></button>
           @if (this.formBasic.get('estudios')?.valid) {
-            <p class="text-light fs-30 icon-navigate tc-green-one"><span aria-hidden="true">✓</span><span class="visually-hidden">Completo</span></p>
+            <p class="text-light fs-30 icon-navigate tc-green-one"><span aria-hidden="true">✓</span><span class="visually-hidden">{{ 'form.completo' | translate }}</span></p>
           }
           @if (!this.formBasic.get('estudios')?.valid) {
-            <p class="text-light fs-30 icon-navigate estado-pendiente"><span aria-hidden="true">x</span><span class="visually-hidden">Pendiente</span></p>
+            <p class="text-light fs-30 icon-navigate estado-pendiente"><span aria-hidden="true">x</span><span class="visually-hidden">{{ 'form.pendiente' | translate }}</span></p>
           }
           </div>
           <div class="paso">
-<button type="button" data-bs-target="#carousel-form" data-bs-slide-to="9" data-bs-toggle="tooltip" title="9. HABILIDADES" aria-label="Paso 9. HABILIDADES"></button>
+<button type="button" data-bs-target="#carousel-form" data-bs-slide-to="9" data-bs-toggle="tooltip" [title]="'9. ' + ('form.pasos.p9' | translate)" [attr.aria-label]="'form.pasoAria' | translate: { n: 9, nombre: ('form.pasos.p9' | translate) }"></button>
           @if (this.formBasic.get('habilidades')?.valid) {
-            <p class="text-light fs-30 icon-navigate tc-green-one"><span aria-hidden="true">✓</span><span class="visually-hidden">Completo</span></p>
+            <p class="text-light fs-30 icon-navigate tc-green-one"><span aria-hidden="true">✓</span><span class="visually-hidden">{{ 'form.completo' | translate }}</span></p>
           }
           @if (!this.formBasic.get('habilidades')?.valid) {
-            <p class="text-light fs-30 icon-navigate estado-pendiente"><span aria-hidden="true">x</span><span class="visually-hidden">Pendiente</span></p>
+            <p class="text-light fs-30 icon-navigate estado-pendiente"><span aria-hidden="true">x</span><span class="visually-hidden">{{ 'form.pendiente' | translate }}</span></p>
           }
           </div>
           <div class="paso">
-<button type="button" data-bs-target="#carousel-form" data-bs-slide-to="10" data-bs-toggle="tooltip" title="10. INTERESES" aria-label="Paso 10. INTERESES"></button>
+<button type="button" data-bs-target="#carousel-form" data-bs-slide-to="10" data-bs-toggle="tooltip" [title]="'10. ' + ('form.pasos.p10' | translate)" [attr.aria-label]="'form.pasoAria' | translate: { n: 10, nombre: ('form.pasos.p10' | translate) }"></button>
           @if (this.formBasic.get('intereses')?.valid) {
-            <p class="text-light fs-30 icon-navigate tc-green-one"><span aria-hidden="true">✓</span><span class="visually-hidden">Completo</span></p>
+            <p class="text-light fs-30 icon-navigate tc-green-one"><span aria-hidden="true">✓</span><span class="visually-hidden">{{ 'form.completo' | translate }}</span></p>
           }
           @if (!this.formBasic.get('intereses')?.valid) {
-            <p class="text-light fs-30 icon-navigate estado-pendiente"><span aria-hidden="true">x</span><span class="visually-hidden">Pendiente</span></p>
+            <p class="text-light fs-30 icon-navigate estado-pendiente"><span aria-hidden="true">x</span><span class="visually-hidden">{{ 'form.pendiente' | translate }}</span></p>
           }
           </div>
           <div class="paso">
-<button type="button" data-bs-target="#carousel-form" data-bs-slide-to="11" data-bs-toggle="tooltip" title="11. EXPERIENCIA LABORAL" aria-label="Paso 11. EXPERIENCIA LABORAL"></button>
+<button type="button" data-bs-target="#carousel-form" data-bs-slide-to="11" data-bs-toggle="tooltip" [title]="'11. ' + ('form.pasos.p11' | translate)" [attr.aria-label]="'form.pasoAria' | translate: { n: 11, nombre: ('form.pasos.p11' | translate) }"></button>
           @if (this.formBasic.get('expLaboral')?.valid) {
-            <p class="text-light fs-30 icon-navigate tc-green-one"><span aria-hidden="true">✓</span><span class="visually-hidden">Completo</span></p>
+            <p class="text-light fs-30 icon-navigate tc-green-one"><span aria-hidden="true">✓</span><span class="visually-hidden">{{ 'form.completo' | translate }}</span></p>
           }
           @if (!this.formBasic.get('expLaboral')?.valid) {
-            <p class="text-light fs-30 icon-navigate estado-pendiente"><span aria-hidden="true">x</span><span class="visually-hidden">Pendiente</span></p>
+            <p class="text-light fs-30 icon-navigate estado-pendiente"><span aria-hidden="true">x</span><span class="visually-hidden">{{ 'form.pendiente' | translate }}</span></p>
           }
           </div>
           <div class="paso">
-<button type="button" data-bs-target="#carousel-form" data-bs-slide-to="12" data-bs-toggle="tooltip" title="12. OTROS CONOCIMIENTOS" aria-label="Paso 12. OTROS CONOCIMIENTOS"></button>
+<button type="button" data-bs-target="#carousel-form" data-bs-slide-to="12" data-bs-toggle="tooltip" [title]="'12. ' + ('form.pasos.p12' | translate)" [attr.aria-label]="'form.pasoAria' | translate: { n: 12, nombre: ('form.pasos.p12' | translate) }"></button>
           @if (this.formBasic.get('conocimientosAdicionales')?.valid) {
-            <p class="text-light fs-30 icon-navigate tc-green-one"><span aria-hidden="true">✓</span><span class="visually-hidden">Completo</span></p>
+            <p class="text-light fs-30 icon-navigate tc-green-one"><span aria-hidden="true">✓</span><span class="visually-hidden">{{ 'form.completo' | translate }}</span></p>
           }
           @if (!this.formBasic.get('conocimientosAdicionales')?.valid) {
-            <p class="text-light fs-30 icon-navigate estado-pendiente"><span aria-hidden="true">x</span><span class="visually-hidden">Pendiente</span></p>
+            <p class="text-light fs-30 icon-navigate estado-pendiente"><span aria-hidden="true">x</span><span class="visually-hidden">{{ 'form.pendiente' | translate }}</span></p>
           }
           </div>
           <div class="paso">
-<button type="button" data-bs-target="#carousel-form" data-bs-slide-to="13" data-bs-toggle="tooltip" title="13. REFERENCIAS PERSONALES" aria-label="Paso 13. REFERENCIAS PERSONALES"></button>
+<button type="button" data-bs-target="#carousel-form" data-bs-slide-to="13" data-bs-toggle="tooltip" [title]="'13. ' + ('form.pasos.p13' | translate)" [attr.aria-label]="'form.pasoAria' | translate: { n: 13, nombre: ('form.pasos.p13' | translate) }"></button>
           @if (this.formBasic.get('referenciasPersonales')?.valid) {
-            <p class="text-light fs-30 icon-navigate tc-green-one"><span aria-hidden="true">✓</span><span class="visually-hidden">Completo</span></p>
+            <p class="text-light fs-30 icon-navigate tc-green-one"><span aria-hidden="true">✓</span><span class="visually-hidden">{{ 'form.completo' | translate }}</span></p>
           }
           @if (!this.formBasic.get('referenciasPersonales')?.valid) {
-            <p class="text-light fs-30 icon-navigate estado-pendiente"><span aria-hidden="true">x</span><span class="visually-hidden">Pendiente</span></p>
+            <p class="text-light fs-30 icon-navigate estado-pendiente"><span aria-hidden="true">x</span><span class="visually-hidden">{{ 'form.pendiente' | translate }}</span></p>
           }
           </div>
           <div class="paso">
-<button type="button" data-bs-target="#carousel-form" data-bs-slide-to="14" data-bs-toggle="tooltip" title="14. REFERENCIAS FAMILIARES" aria-label="Paso 14. REFERENCIAS FAMILIARES"></button>
+<button type="button" data-bs-target="#carousel-form" data-bs-slide-to="14" data-bs-toggle="tooltip" [title]="'14. ' + ('form.pasos.p14' | translate)" [attr.aria-label]="'form.pasoAria' | translate: { n: 14, nombre: ('form.pasos.p14' | translate) }"></button>
           @if (this.formBasic.get('referenciasFamiliares')?.valid) {
-            <p class="text-light fs-30 icon-navigate tc-green-one"><span aria-hidden="true">✓</span><span class="visually-hidden">Completo</span></p>
+            <p class="text-light fs-30 icon-navigate tc-green-one"><span aria-hidden="true">✓</span><span class="visually-hidden">{{ 'form.completo' | translate }}</span></p>
           }
           @if (!this.formBasic.get('referenciasFamiliares')?.valid) {
-            <p class="text-light fs-30 icon-navigate estado-pendiente"><span aria-hidden="true">x</span><span class="visually-hidden">Pendiente</span></p>
+            <p class="text-light fs-30 icon-navigate estado-pendiente"><span aria-hidden="true">x</span><span class="visually-hidden">{{ 'form.pendiente' | translate }}</span></p>
           }
           </div>
         </div>
-        <button type="button" class="btn-guardar-accion border-0 bg-blue-one pt-1 pb-1 pe-4 ps-4 f-open-sans-c fs-20 shadow-three" (click)="guardar()">Guardar</button>
+        <button type="button" class="btn-guardar-accion border-0 bg-blue-one pt-1 pb-1 pe-4 ps-4 f-open-sans-c fs-20 shadow-three" (click)="guardar()">{{ 'form.guardar' | translate }}</button>
         </nav>
 
         <div class="row">
@@ -153,44 +156,46 @@
               <!--------------------------------------------------------------------------------->
               <!------------------------------- 0. INGRESO DE DATOS ----------------------------->
               <!--------------------------------------------------------------------------------->
-              <div class="carousel-item active">
+              <div class="carousel-item" [class.active]="pasoInicial === 0">
+                @if (importacionDisponible()) {
                 <div class="espaciado"></div>
                 <div class="shadow-two bg-form p-3 p-md-5">
-                  <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">INGRESO DE DATOS</h2>
+                  <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">{{ 'form.titulos.ingreso' | translate }}</h2>
                   <div class="importar f-open-sans-c">
-                    <p class="m-0">¿Ya tienes tu hoja de vida en PDF o Word?</p>
-                    <button type="button" id="abrirImportacion" class="btn-importar border-0 bg-blue-one text-light px-4 fs-18 shadow-three" (click)="abrirImportacion()">Importar datos</button>
+                    <p class="m-0">{{ 'form.ingreso.pregunta' | translate }}</p>
+                    <button type="button" id="abrirImportacion" class="btn-importar border-0 bg-blue-one text-light px-4 fs-18 shadow-three" (click)="abrirImportacion()">{{ 'form.ingreso.importar' | translate }}</button>
                   </div>
                   <div class="importar f-open-sans-c">
-                    <p class="m-0">Si prefieres, llénala paso a paso.</p>
-                    <button type="button" class="btn-enlace" data-bs-target="#carousel-form" data-bs-slide-to="1" (click)="scrollTo()">Empezar</button>
+                    <p class="m-0">{{ 'form.ingreso.pasoAPaso' | translate }}</p>
+                    <button type="button" class="btn-enlace" data-bs-target="#carousel-form" data-bs-slide-to="1" (click)="scrollTo()">{{ 'form.ingreso.empezar' | translate }}</button>
                   </div>
                 </div>
                 <div class="espaciado"></div>
+                }
               </div>
 
               <!--------------------------------------------------------------------------------->
               <!-------------------------------------- 1. NOMBRE -------------------------------->
               <!--------------------------------------------------------------------------------->
-              <div class="carousel-item">
+              <div class="carousel-item" [class.active]="pasoInicial === 1">
                 <div class="espaciado"></div>
                 <div class="shadow-two bg-form p-3 p-md-5">
-                  <p class="contador-paso text-center f-open-sans-c">01<span class="contador-total"> de 14</span></p>
-                  <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">NOMBRE COMPLETO</h2>
+                  <p class="contador-paso text-center f-open-sans-c">01<span class="contador-total"> {{ 'form.deTotal' | translate: { total: 14 } }}</span></p>
+                  <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">{{ 'form.titulos.nombre' | translate }}</h2>
                   <div class="p-3 p-md-5">
-                    <label for="primerNombre" class="estiloLabel f-open-sans-c p-1">Primer nombre<span class="text-danger">*</span></label>
+                    <label for="primerNombre" class="estiloLabel f-open-sans-c p-1">{{ 'form.campos.primerNombre' | translate }}<span class="text-danger">*</span></label>
                     <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="text" id="primerNombre" autocomplete="given-name" formControlName="primerNombre">
 
-                    <label for="segundoNombre" class="estiloLabel f-open-sans-c p-1">Segundo nombre</label>
+                    <label for="segundoNombre" class="estiloLabel f-open-sans-c p-1">{{ 'form.campos.segundoNombre' | translate }}</label>
                     <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="text"id="segundoNombre" autocomplete="additional-name" formControlName="segundoNombre">
 
-                    <label for="primerApellido" class="estiloLabel f-open-sans-c p-1">Primer apellido<span class="text-danger">*</span></label>
+                    <label for="primerApellido" class="estiloLabel f-open-sans-c p-1">{{ 'form.campos.primerApellido' | translate }}<span class="text-danger">*</span></label>
                     <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="text" id="primerApellido" autocomplete="family-name" formControlName="primerApellido">
 
-                    <label for="segundoApellido" class="estiloLabel f-open-sans-c p-1">Segundo apellido</label>
+                    <label for="segundoApellido" class="estiloLabel f-open-sans-c p-1">{{ 'form.campos.segundoApellido' | translate }}</label>
                     <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="text" id="segundoApellido" formControlName="segundoApellido">
 
-                    <button type="button" aria-label="Borrar contenido de los textos" (click)="eraseForm(['primerNombre','segundoNombre','primerApellido','segundoApellido'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" data-bs-toggle="tooltip" data-bs-placement="right" title="BORRAR CONTENIDO DE LOS TEXTOS">
+                    <button type="button" [attr.aria-label]="'form.borrarTextos' | translate" (click)="eraseForm(['primerNombre','segundoNombre','primerApellido','segundoApellido'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" data-bs-toggle="tooltip" data-bs-placement="right" [title]="'form.borrarTextosTitulo' | translate">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                         <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
                       </svg>
@@ -208,37 +213,37 @@
               <div class="carousel-item">
                 <div class="espaciado"></div>
                 <div class="shadow-two bg-form p-3 p-md-5">
-                  <p class="contador-paso text-center f-open-sans-c">02<span class="contador-total"> de 14</span></p>
+                  <p class="contador-paso text-center f-open-sans-c">02<span class="contador-total"> {{ 'form.deTotal' | translate: { total: 14 } }}</span></p>
                   <!-- FRONTAL SIN FONDO -->
                   <div>
                     <div class="espacio"></div>
                     <div class="row">
                       <div class="col-md-12">
-                        <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one mb-5">IMAGEN PERFIL</h2>
+                        <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one mb-5">{{ 'form.titulos.imagenPerfil' | translate }}</h2>
                       </div>
                     </div>
                     <div class="row">
                       <div class="col text-center">
-                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" accept=".png" (change)="loadImg('/frontal-sin-fondo/', $event)" type="file" id="img-sin-fondo" aria-label="Imagen de frente sin fondo">
-                        <label class="estiloLabel f-open-sans-c p-1">Imagen de frente sin fondo<span class="text-danger">*</span></label><br>
+                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" accept=".png" (change)="loadImg('/frontal-sin-fondo/', $event)" type="file" id="img-sin-fondo" [attr.aria-label]="'form.imagenes.frontal' | translate">
+                        <label class="estiloLabel f-open-sans-c p-1">{{ 'form.imagenes.frontal' | translate }}<span class="text-danger">*</span></label><br>
                         <div class="carga-imagen">
                           <label for="img-sin-fondo" class="text-light cursor-p">
                             @if (!fotoFrontalSinFondo[0]) {
-                              <img src="assets/img/icons/agregar-imagen.svg" alt="Agregar imagen" title="Agregar imagen" width="56" height="56" class="icono-agregar mt-2">
-                              <span class="medidas-ejemplo">Ancho 388 px<br>Alto 400 px</span>
+                              <img src="assets/img/icons/agregar-imagen.svg" [alt]="'form.imagenes.agregar' | translate" [title]="'form.imagenes.agregar' | translate" width="56" height="56" class="icono-agregar mt-2">
+                              <span class="medidas-ejemplo">{{ 'form.imagenes.ancho' | translate: { px: 388 } }}<br>{{ 'form.imagenes.alto' | translate: { px: 400 } }}</span>
                             }
                             @if (fotoFrontalSinFondo[0]) {
                               <img src="{{ fotoFrontalSinFondo[0] }}" alt="" height="200" width="auto">
                             }
                           </label>
                           @if (fotoFrontalSinFondo[0]) {
-                            <button type="button" class="btn-eliminar-imagen" aria-label="Eliminar imagen" title="Eliminar imagen" (click)="eliminarImagen('fotoFrontalSinFondo')"><img src="assets/img/icons/equis.webp" alt="" width="40" height="41" class="drop"></button>
+                            <button type="button" class="btn-eliminar-imagen" [attr.aria-label]="'form.imagenes.eliminar' | translate" [title]="'form.imagenes.eliminar' | translate" (click)="eliminarImagen('fotoFrontalSinFondo')"><img src="assets/img/icons/equis.webp" alt="" width="40" height="41" class="drop"></button>
                           }
                         </div>
                       </div>
                       @if (!fotoFrontalSinFondo[0]) {
                         <div class="col text-center">
-                          <label class="estiloLabel f-open-sans-c p-1">Ejemplo</label><br>
+                          <label class="estiloLabel f-open-sans-c p-1">{{ 'form.imagenes.ejemplo' | translate }}</label><br>
                           <img src="assets/img/items/alex-sin-fondo.webp" alt="" loading="lazy" height="200" width="auto" class="drop">
                         </div>
                       }
@@ -252,26 +257,26 @@
 
                     <div class="row">
                       <div class="col text-center">
-                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" accept=".png, .jpg, .jpeg" (change)="loadImg('/semiperfil/', $event)" type="file" id="img-semiperfil" aria-label="Imagen en semiperfil">
-                        <label class="estiloLabel f-open-sans-c p-1">Imagen en semiperfil<span class="text-danger">*</span></label><br>
+                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" accept=".png, .jpg, .jpeg" (change)="loadImg('/semiperfil/', $event)" type="file" id="img-semiperfil" [attr.aria-label]="'form.imagenes.semiperfil' | translate">
+                        <label class="estiloLabel f-open-sans-c p-1">{{ 'form.imagenes.semiperfil' | translate }}<span class="text-danger">*</span></label><br>
                         <div class="carga-imagen">
                           <label for="img-semiperfil" class="text-light cursor-p">
                             @if (!fotoSemiperfil[0]) {
-                              <img src="assets/img/icons/agregar-imagen.svg" alt="Agregar imagen" title="Agregar imagen" width="56" height="56" class="icono-agregar mt-2">
-                              <span class="medidas-ejemplo">Ancho 912 px<br>Alto 1165 px</span>
+                              <img src="assets/img/icons/agregar-imagen.svg" [alt]="'form.imagenes.agregar' | translate" [title]="'form.imagenes.agregar' | translate" width="56" height="56" class="icono-agregar mt-2">
+                              <span class="medidas-ejemplo">{{ 'form.imagenes.ancho' | translate: { px: 912 } }}<br>{{ 'form.imagenes.alto' | translate: { px: 1165 } }}</span>
                             }
                             @if (fotoSemiperfil[0]) {
                               <img src="{{ fotoSemiperfil[0] }}" alt="" height="200" width="auto">
                             }
                           </label>
                           @if (fotoSemiperfil[0]) {
-                            <button type="button" class="btn-eliminar-imagen" aria-label="Eliminar imagen" title="Eliminar imagen" (click)="eliminarImagen('fotoSemiperfil')"><img src="assets/img/icons/equis.webp" alt="" width="40" height="41" class="drop"></button>
+                            <button type="button" class="btn-eliminar-imagen" [attr.aria-label]="'form.imagenes.eliminar' | translate" [title]="'form.imagenes.eliminar' | translate" (click)="eliminarImagen('fotoSemiperfil')"><img src="assets/img/icons/equis.webp" alt="" width="40" height="41" class="drop"></button>
                           }
                         </div>
                       </div>
                       @if (!fotoSemiperfil[0]) {
                         <div class="col text-center">
-                          <label class="estiloLabel f-open-sans-c p-1">Ejemplo</label><br>
+                          <label class="estiloLabel f-open-sans-c p-1">{{ 'form.imagenes.ejemplo' | translate }}</label><br>
                           <img src="assets/img/items/semiperfil.webp" alt="" loading="lazy" height="200" width="auto" class="drop">
                         </div>
                       }
@@ -284,32 +289,32 @@
                     <div class="espacio"></div>
                     <div class="row">
                       <div class="col-md-12">
-                        <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one mb-5">CUERPO COMPLETO / FIRMA</h2>
+                        <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one mb-5">{{ 'form.titulos.cuerpoFirma' | translate }}</h2>
 
                       </div>
                     </div>
                     <div class="row">
                       <div class="col text-center">
-                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" accept=".png, .jpg, .jpeg" (change)="loadImg('/cuerpo-completo/', $event)" type="file" id="img-cuerpo-completo" aria-label="Imagen de cuerpo completo">
-                        <label class="estiloLabel f-open-sans-c p-1">Imagen de cuerpo completo<span class="text-danger">*</span></label><br>
+                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" accept=".png, .jpg, .jpeg" (change)="loadImg('/cuerpo-completo/', $event)" type="file" id="img-cuerpo-completo" [attr.aria-label]="'form.imagenes.cuerpo' | translate">
+                        <label class="estiloLabel f-open-sans-c p-1">{{ 'form.imagenes.cuerpo' | translate }}<span class="text-danger">*</span></label><br>
                         <div class="carga-imagen">
                           <label for="img-cuerpo-completo" class="text-light cursor-p">
                             @if (!fotoCuerpoCompleto[0]) {
-                              <img src="assets/img/icons/agregar-imagen.svg" alt="Agregar imagen" title="Agregar imagen" width="56" height="56" class="icono-agregar mt-2">
-                              <span class="medidas-ejemplo">Ancho 896 px<br>Alto 1167 px</span>
+                              <img src="assets/img/icons/agregar-imagen.svg" [alt]="'form.imagenes.agregar' | translate" [title]="'form.imagenes.agregar' | translate" width="56" height="56" class="icono-agregar mt-2">
+                              <span class="medidas-ejemplo">{{ 'form.imagenes.ancho' | translate: { px: 896 } }}<br>{{ 'form.imagenes.alto' | translate: { px: 1167 } }}</span>
                             }
                             @if (fotoCuerpoCompleto[0]) {
                               <img src="{{ fotoCuerpoCompleto[0] }}" alt="" height="200" width="auto" class="img-fluid">
                             }
                           </label>
                           @if (fotoCuerpoCompleto[0]) {
-                            <button type="button" class="btn-eliminar-imagen" aria-label="Eliminar imagen" title="Eliminar imagen" (click)="eliminarImagen('fotoCuerpoCompleto')"><img src="assets/img/icons/equis.webp" alt="" width="40" height="41" class="drop"></button>
+                            <button type="button" class="btn-eliminar-imagen" [attr.aria-label]="'form.imagenes.eliminar' | translate" [title]="'form.imagenes.eliminar' | translate" (click)="eliminarImagen('fotoCuerpoCompleto')"><img src="assets/img/icons/equis.webp" alt="" width="40" height="41" class="drop"></button>
                           }
                         </div>
                       </div>
                       @if (!fotoCuerpoCompleto[0]) {
                         <div class="col text-center">
-                          <label class="estiloLabel f-open-sans-c p-1">Ejemplo</label><br>
+                          <label class="estiloLabel f-open-sans-c p-1">{{ 'form.imagenes.ejemplo' | translate }}</label><br>
                           <img src="assets/img/items/cuerpomedio.webp" alt="" loading="lazy" height="200" width="auto" class="drop img-fluid">
                         </div>
                       }
@@ -322,26 +327,26 @@
 
                     <div class="row">
                       <div class="col text-center">
-                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" accept=".png, .jpg, .jpeg" (change)="loadImg('/firma/', $event)" type="file" id="firma" aria-label="Firma sin fondo">
-                        <label class="estiloLabel f-open-sans-c p-1">Firma sin fondo<span class="text-danger">*</span></label><br>
+                        <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" accept=".png, .jpg, .jpeg" (change)="loadImg('/firma/', $event)" type="file" id="firma" [attr.aria-label]="'form.imagenes.firma' | translate">
+                        <label class="estiloLabel f-open-sans-c p-1">{{ 'form.imagenes.firma' | translate }}<span class="text-danger">*</span></label><br>
                         <div class="carga-imagen">
                           <label for="firma" class="text-light cursor-p">
                             @if (!imgFirma[0]) {
-                              <img src="assets/img/icons/agregar-imagen.svg" alt="Agregar imagen" title="Agregar imagen" width="56" height="56" class="icono-agregar mt-2">
-                              <span class="medidas-ejemplo">Ancho 415 px<br>Alto 400 px</span>
+                              <img src="assets/img/icons/agregar-imagen.svg" [alt]="'form.imagenes.agregar' | translate" [title]="'form.imagenes.agregar' | translate" width="56" height="56" class="icono-agregar mt-2">
+                              <span class="medidas-ejemplo">{{ 'form.imagenes.ancho' | translate: { px: 415 } }}<br>{{ 'form.imagenes.alto' | translate: { px: 400 } }}</span>
                             }
                             @if (imgFirma[0]) {
                               <img src="{{ imgFirma[0] }}" alt="" height="200" width="auto" class="drop">
                             }
                           </label>
                           @if (imgFirma[0]) {
-                            <button type="button" class="btn-eliminar-imagen" aria-label="Eliminar imagen" title="Eliminar imagen" (click)="eliminarImagen('imgFirma')"><img src="assets/img/icons/equis.webp" alt="" width="40" height="41" class="drop"></button>
+                            <button type="button" class="btn-eliminar-imagen" [attr.aria-label]="'form.imagenes.eliminar' | translate" [title]="'form.imagenes.eliminar' | translate" (click)="eliminarImagen('imgFirma')"><img src="assets/img/icons/equis.webp" alt="" width="40" height="41" class="drop"></button>
                           }
                         </div>
                       </div>
                       @if (!imgFirma[0]) {
                         <div class="col text-center">
-                          <label class="estiloLabel f-open-sans-c p-1">Ejemplo</label><br>
+                          <label class="estiloLabel f-open-sans-c p-1">{{ 'form.imagenes.ejemplo' | translate }}</label><br>
                           <img src="assets/img/items/firma4.webp" alt="" loading="lazy" height="200" width="auto" class="drop">
                         </div>
                       }
@@ -357,31 +362,31 @@
               <div class="carousel-item">
                 <div class="espaciado"></div>
                 <div class="shadow-two bg-form p-3 p-md-5">
-                  <p class="contador-paso text-center f-open-sans-c">03<span class="contador-total"> de 14</span></p>
-                  <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">IDENTIFICACIÓN</h2>
+                  <p class="contador-paso text-center f-open-sans-c">03<span class="contador-total"> {{ 'form.deTotal' | translate: { total: 14 } }}</span></p>
+                  <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">{{ 'form.titulos.identificacion' | translate }}</h2>
 
                   <div class="p-3 p-md-5">
-                    <label for="tipoIdentificacion" class="estiloLabel f-open-sans-c p-1">Tipo documento<span class="text-danger">*</span></label>
+                    <label for="tipoIdentificacion" class="estiloLabel f-open-sans-c p-1">{{ 'form.campos.tipoDocumento' | translate }}<span class="text-danger">*</span></label>
                     <select class="w-100 estilo-input bg-transparent-one mb-2" name="state" id="tipoIdentificacion" formControlName="tipoIdentificacion">
-                      <option value="">---Seleccione---</option>
+                      <option value="">{{ 'form.seleccione' | translate }}</option>
                       @for (tipoIden of listaTipoIdentificacion; track tipoIden) {
                         <option [value]="tipoIden.label" class="f-grape">{{ tipoIden.label}}</option>
                       }
                     </select>
 
-                    <label for="identificacion" class="estiloLabel f-open-sans-c p-1">Identificación<span class="text-danger">*</span></label>
+                    <label for="identificacion" class="estiloLabel f-open-sans-c p-1">{{ 'form.campos.identificacion' | translate }}<span class="text-danger">*</span></label>
                     <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="text" id="identificacion" formControlName="identificacion">
 
 
-                    <label for="nacionalidad" class="estiloLabel f-open-sans-c p-1">Nacionalidad<span class="text-danger">*</span></label>
+                    <label for="nacionalidad" class="estiloLabel f-open-sans-c p-1">{{ 'form.campos.nacionalidad' | translate }}<span class="text-danger">*</span></label>
                     <select class="w-100 estilo-input bg-transparent-one" name="state" id="nacionalidad" formControlName="nacionalidad">
-                      <option value="">---Seleccione---</option>
+                      <option value="">{{ 'form.seleccione' | translate }}</option>
                       @for (pais of paises; track pais) {
                         <option [value]="pais.pais">{{ pais.pais}}</option>
                       }
                     </select>
 
-                    <button type="button" aria-label="Borrar contenido de los textos" (click)="eraseForm(['tipoIdentificacion','identificacion','nacionalidad'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
+                    <button type="button" [attr.aria-label]="'form.borrarTextos' | translate" (click)="eraseForm(['tipoIdentificacion','identificacion','nacionalidad'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" [title]="'form.borrarCampos' | translate">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                         <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
                       </svg>
@@ -398,22 +403,22 @@
               <div class="carousel-item">
                 <div class="espaciado"></div>
                 <div class="shadow-two bg-form p-3 p-md-5">
-                  <p class="contador-paso text-center f-open-sans-c">04<span class="contador-total"> de 14</span></p>
-                  <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">NACIMIENTO</h2>
+                  <p class="contador-paso text-center f-open-sans-c">04<span class="contador-total"> {{ 'form.deTotal' | translate: { total: 14 } }}</span></p>
+                  <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">{{ 'form.titulos.nacimiento' | translate }}</h2>
                   <div class="p-3 p-md-5">
-                    <label for="fechaNacimiento" class="estiloLabel f-open-sans-c p-1">Fecha de nacimiento<span class="text-danger">*</span></label>
+                    <label for="fechaNacimiento" class="estiloLabel f-open-sans-c p-1">{{ 'form.campos.fechaNacimiento' | translate }}<span class="text-danger">*</span></label>
                     <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="date" id="fechaNacimiento" formControlName="fechaNacimiento">
-                    <label for="ciudadNacimiento" class="estiloLabel f-open-sans-c p-1">Lugar de nacimiento<span class="text-danger">*</span></label>
+                    <label for="ciudadNacimiento" class="estiloLabel f-open-sans-c p-1">{{ 'form.campos.lugarNacimiento' | translate }}<span class="text-danger">*</span></label>
                     <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="text" id="ciudadNacimiento" formControlName="ciudadNacimiento">
-                    <label for="genero" class="estiloLabel f-open-sans-c p-1">Género<span class="text-danger">*</span></label>
+                    <label for="genero" class="estiloLabel f-open-sans-c p-1">{{ 'form.genero.titulo' | translate }}<span class="text-danger">*</span></label>
                     <select class="w-100 tc-yellow-one estilo-input bg-black" name="state" id="genero" formControlName="genero">
-                      <option value="">---Seleccione---</option>
-                      <option value="Femenino">Femenino</option>
-                      <option value="Masculino">Masculino</option>
-                      <option value="Transgénero">Transgénero</option>
+                      <option value="">{{ 'form.seleccione' | translate }}</option>
+                      <option value="Femenino">{{ 'form.genero.femenino' | translate }}</option>
+                      <option value="Masculino">{{ 'form.genero.masculino' | translate }}</option>
+                      <option value="Transgénero">{{ 'form.genero.transgenero' | translate }}</option>
                     </select>
 
-                    <button type="button" aria-label="Borrar contenido de los textos" (click)="eraseForm(['fechaNacimiento','ciudadNacimiento','genero'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
+                    <button type="button" [attr.aria-label]="'form.borrarTextos' | translate" (click)="eraseForm(['fechaNacimiento','ciudadNacimiento','genero'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" [title]="'form.borrarCampos' | translate">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                         <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
                       </svg>
@@ -429,21 +434,21 @@
               <div class="carousel-item">
                 <div class="espaciado"></div>
                 <div class="shadow-two bg-form p-3 p-md-5">
-                  <p class="contador-paso text-center f-open-sans-c">05<span class="contador-total"> de 14</span></p>
-                  <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">DE CONTACTO</h2>
+                  <p class="contador-paso text-center f-open-sans-c">05<span class="contador-total"> {{ 'form.deTotal' | translate: { total: 14 } }}</span></p>
+                  <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">{{ 'form.titulos.contacto' | translate }}</h2>
                   <div class="p-3 p-md-5">
-                    <label for="direccionResidencia" class="estiloLabel f-open-sans-c p-1">Dirección residencia<span class="text-danger">*</span></label>
+                    <label for="direccionResidencia" class="estiloLabel f-open-sans-c p-1">{{ 'form.campos.direccion' | translate }}<span class="text-danger">*</span></label>
                     <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" id="direccionResidencia" autocomplete="street-address" formControlName="direccionResidencia">
-                    <label for="barrioResidencia" class="estiloLabel f-open-sans-c p-1">Barrio residencia<span class="text-danger">*</span></label>
+                    <label for="barrioResidencia" class="estiloLabel f-open-sans-c p-1">{{ 'form.campos.barrio' | translate }}<span class="text-danger">*</span></label>
                     <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" id="barrioResidencia" formControlName="barrioResidencia">
-                    <label for="telFijo" class="estiloLabel f-open-sans-c p-1">Número fijo<span class="text-danger">*</span></label>
+                    <label for="telFijo" class="estiloLabel f-open-sans-c p-1">{{ 'form.campos.telFijo' | translate }}<span class="text-danger">*</span></label>
                     <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="tel" placeholder="" id="telFijo" autocomplete="tel" formControlName="telFijo">
-                    <label for="telCel" class="estiloLabel f-open-sans-c p-1">Número móvil<span class="text-danger">*</span></label>
+                    <label for="telCel" class="estiloLabel f-open-sans-c p-1">{{ 'form.campos.telCel' | translate }}<span class="text-danger">*</span></label>
                     <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="tel" placeholder="" id="telCel" autocomplete="tel" formControlName="telCel">
-                    <label for="email" class="estiloLabel f-open-sans-c p-1">Email<span class="text-danger">*</span></label>
+                    <label for="email" class="estiloLabel f-open-sans-c p-1">{{ 'form.campos.email' | translate }}<span class="text-danger">*</span></label>
                     <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="email" placeholder="" id="email" autocomplete="email" formControlName="email">
 
-                    <button type="button" aria-label="Borrar contenido de los textos" (click)="eraseForm(['direccionResidencia','barrioResidencia','telFijo','telCel','email'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
+                    <button type="button" [attr.aria-label]="'form.borrarTextos' | translate" (click)="eraseForm(['direccionResidencia','barrioResidencia','telFijo','telCel','email'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" [title]="'form.borrarCampos' | translate">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                         <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
                       </svg>
@@ -460,16 +465,16 @@
               <div class="carousel-item">
                 <div class="espaciado"></div>
                 <div class="shadow-two bg-form p-3 p-md-5">
-                  <p class="contador-paso text-center f-open-sans-c">06<span class="contador-total"> de 14</span></p>
-                  <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">CARGO</h2>
+                  <p class="contador-paso text-center f-open-sans-c">06<span class="contador-total"> {{ 'form.deTotal' | translate: { total: 14 } }}</span></p>
+                  <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">{{ 'form.titulos.cargo' | translate }}</h2>
                   <div class="p-3 p-md-5">
-                    <label for="cargoActual" class="estiloLabel f-open-sans-c p-1">Cargo actual<span class="text-danger">*</span></label>
+                    <label for="cargoActual" class="estiloLabel f-open-sans-c p-1">{{ 'form.campos.cargoActual' | translate }}<span class="text-danger">*</span></label>
                     <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="" id="cargoActual" formControlName="cargoActual">
-                    <label for="acercaDMi" class="estiloLabel f-open-sans-c p-1">A cerca de mí<span class="text-danger">*</span></label>
+                    <label for="acercaDMi" class="estiloLabel f-open-sans-c p-1">{{ 'form.campos.acercaDeMi' | translate }}<span class="text-danger">*</span></label>
                     <textarea rows="10"class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" style="height:13rem" type="text" placeholder="" id="acercaDMi" formControlName="acercaDMi">
                     </textarea>
 
-                    <button type="button" aria-label="Borrar contenido de los textos" (click)="eraseForm(['cargoActual','acercaDMi'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
+                    <button type="button" [attr.aria-label]="'form.borrarTextos' | translate" (click)="eraseForm(['cargoActual','acercaDMi'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" [title]="'form.borrarCampos' | translate">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                         <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
                       </svg>
@@ -484,26 +489,26 @@
               <div class="carousel-item">
                 <div class="espaciado"></div>
                 <div class="shadow-two bg-form p-3 p-md-5">
-                  <p class="contador-paso text-center f-open-sans-c">07<span class="contador-total"> de 14</span></p>
-                  <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">REDES</h2>
+                  <p class="contador-paso text-center f-open-sans-c">07<span class="contador-total"> {{ 'form.deTotal' | translate: { total: 14 } }}</span></p>
+                  <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">{{ 'form.titulos.redes' | translate }}</h2>
                   <div class="p-3 p-md-5">
 
                     <img src="https://plantillas_dev.gitlab.io/styles/assets/icon/web.png" alt="web" height="30" width="auto" class="drop" title="web">
-                    <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="www.tusitioweb.com" aria-label="Sitio web" formControlName="webSite">
+                    <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" [placeholder]="'form.redes.web' | translate" [attr.aria-label]="'form.redes.sitioWeb' | translate" formControlName="webSite">
 
                     <img src="https://plantillas_dev.gitlab.io/styles/assets/icon/instagram.png" alt="instagram" height="30" width="auto" class="drop" title="instagram">
-                    <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="instagram.com/tu.usuario" aria-label="Instagram" formControlName="instagram">
+                    <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" [placeholder]="'form.redes.instagram' | translate" aria-label="Instagram" formControlName="instagram">
 
                     <img src="https://plantillas_dev.gitlab.io/styles/assets/icon/facebook.png" alt="facebook" height="30" width="auto" class="drop" title="facebook">
-                    <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="facebook.com/tu.usuario" aria-label="Facebook" formControlName="facebook">
+                    <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" [placeholder]="'form.redes.facebook' | translate" aria-label="Facebook" formControlName="facebook">
 
                     <img src="assets/img/icons/x.svg" alt="X (Twitter)" height="30" width="30" class="drop" title="X (Twitter)">
-                    <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="x.com/tu_usuario" aria-label="X (Twitter)" formControlName="twitter">
+                    <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" [placeholder]="'form.redes.x' | translate" aria-label="X (Twitter)" formControlName="twitter">
 
                     <img src="https://plantillas_dev.gitlab.io/styles/assets/icon/linkeding.png" alt="linkeding" height="30" width="auto" class="drop" title="linkeding">
-                    <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" placeholder="linkedin.com/in/tu-usuario" aria-label="LinkedIn" formControlName="linkedin">
+                    <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="text" [placeholder]="'form.redes.linkedin' | translate" aria-label="LinkedIn" formControlName="linkedin">
 
-                    <button type="button" aria-label="Borrar contenido de los textos" (click)="eraseForm(['webSite','instagram','facebook','twitter','linkedin'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
+                    <button type="button" [attr.aria-label]="'form.borrarTextos' | translate" (click)="eraseForm(['webSite','instagram','facebook','twitter','linkedin'])" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" [title]="'form.borrarCampos' | translate">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                         <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
                       </svg>
@@ -518,19 +523,19 @@
               <div class="carousel-item">
                 <div class="espaciado"></div>
                 <div class="shadow-two bg-form p-3 p-md-5">
-                  <p class="contador-paso text-center f-open-sans-c">08<span class="contador-total"> de 14</span></p>
-                  <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">ESTUDIOS</h2>
+                  <p class="contador-paso text-center f-open-sans-c">08<span class="contador-total"> {{ 'form.deTotal' | translate: { total: 14 } }}</span></p>
+                  <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">{{ 'form.titulos.estudios' | translate }}</h2>
                   @if (textoImportado.estudios.length) {
                     <section class="texto-importado f-open-sans-c" aria-labelledby="tituloTextoEstudios">
                       <div class="d-flex align-items-center justify-content-between gap-3">
-                        <h3 id="tituloTextoEstudios" class="f-grape tc-blue-two fs-17 text-shadow-one m-0">Texto de tu hoja de vida</h3>
-                        <button type="button" class="btn-enlace" (click)="ocultarTextoImportado('estudios')">Ocultar</button>
+                        <h3 id="tituloTextoEstudios" class="f-grape tc-blue-two fs-17 text-shadow-one m-0">{{ 'form.importado.titulo' | translate }}</h3>
+                        <button type="button" class="btn-enlace" (click)="ocultarTextoImportado('estudios')">{{ 'form.importado.ocultar' | translate }}</button>
                       </div>
-                      <p class="ayuda-importado">Copia cada parte al campo que le corresponde. Este texto no se guarda en tu perfil.</p>
+                      <p class="ayuda-importado">{{ 'form.importado.ayuda' | translate }}</p>
                       @for (bloque of textoImportado.estudios; track $index) {
                         <div class="bloque-importado">
                           <p class="m-0">{{ bloque }}</p>
-                          <button type="button" class="btn-copiar" (click)="copiarBloque(bloque)">{{ bloqueCopiado === bloque ? 'Copiado' : 'Copiar' }}</button>
+                          <button type="button" class="btn-copiar" (click)="copiarBloque(bloque)">{{ (bloqueCopiado === bloque ? 'form.importado.copiado' : 'form.importado.copiar') | translate }}</button>
                         </div>
                       }
                     </section>
@@ -539,29 +544,29 @@
                     @for (estudio of getControls('estudios'); track estudio; let i = $index) {
                       <div [formGroupName]="i">
                         <div class="p-3 p-md-5">
-                          <h3 class="f-grape tc-blue-two fs-17 text-shadow-one">Estudio {{i + 1}}</h3>
+                          <h3 class="f-grape tc-blue-two fs-17 text-shadow-one">{{ 'form.registro.estudio' | translate: { n: i + 1 } }}</h3>
                           @if (intentoGuardar && estudio.invalid && estudio.touched) {
-                            <p class="resumen-faltantes f-open-sans-c estado-pendiente">Falta completar: {{ camposFaltantes('estudios', estudio) }}.</p>
+                            <p class="resumen-faltantes f-open-sans-c estado-pendiente">{{ 'form.faltaCompletar' | translate: { campos: camposFaltantes('estudios', estudio) } }}</p>
                           }
-                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: estudio, nombre: 'nombreInstitucion', id: 'nombreInstitucion-' + i, etiqueta: 'Nombre institución', error: 'Escribe el nombre de la institución.' }" />
-                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: estudio, nombre: 'tituloObtenido', id: 'tituloObtenido-' + i, etiqueta: 'Título obtenido', error: 'Escribe el título que obtuviste.' }" />
-                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: estudio, nombre: 'fechaInicio', id: 'fechaInicio-' + i, etiqueta: 'Fecha inicio', error: 'Elige la fecha en que empezaste.', tipo: 'date' }" />
-                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: estudio, nombre: 'fechaTitulo', id: 'fechaTitulo-' + i, etiqueta: 'Fecha título', error: 'Elige la fecha en que te graduaste.', tipo: 'date' }" />
-                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: estudio, nombre: 'ciudadEstudio', id: 'ciudadEstudio-' + i, etiqueta: 'Ciudad estudio', error: 'Escribe la ciudad donde estudiaste.' }" />
-                          <label [attr.for]="'descripcionEstudio-' + i" class="estiloLabel f-open-sans-c p-1">Descripción Estudio<span class="text-danger">*</span></label>
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: estudio, nombre: 'nombreInstitucion', id: 'nombreInstitucion-' + i, etiqueta: 'form.campo.nombreInstitucion', error: 'form.error.escribeElNombreDeLaInstitucion' }" />
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: estudio, nombre: 'tituloObtenido', id: 'tituloObtenido-' + i, etiqueta: 'form.campo.tituloObtenido', error: 'form.error.escribeElTituloQueObtuviste' }" />
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: estudio, nombre: 'fechaInicio', id: 'fechaInicio-' + i, etiqueta: 'form.campo.fechaInicio', error: 'form.error.eligeLaFechaEnQueEmpezaste', tipo: 'date' }" />
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: estudio, nombre: 'fechaTitulo', id: 'fechaTitulo-' + i, etiqueta: 'form.campo.fechaTitulo', error: 'form.error.eligeLaFechaEnQueTeGraduaste', tipo: 'date' }" />
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: estudio, nombre: 'ciudadEstudio', id: 'ciudadEstudio-' + i, etiqueta: 'form.campo.ciudadEstudio', error: 'form.error.escribeLaCiudadDondeEstudiaste' }" />
+                          <label [attr.for]="'descripcionEstudio-' + i" class="estiloLabel f-open-sans-c p-1">{{ 'form.campo.descripcionEstudio' | translate }}<span class="text-danger">*</span></label>
                           @let descripcionEstudioControl = estudio.get('descripcionEstudio');
                           @let descripcionEstudioLargo = largoTexto(descripcionEstudioControl);
                           @let descripcionEstudioIncorrecto = mostrarError(descripcionEstudioControl) || (!!descripcionEstudioControl?.invalid && descripcionEstudioLargo > 0);
                           <textarea rows="10" class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" [class.campo-invalido]="descripcionEstudioIncorrecto" [attr.aria-invalid]="descripcionEstudioIncorrecto" style="height:13rem" [id]="'descripcionEstudio-' + i" [attr.aria-describedby]="descripcionEstudioIncorrecto ? 'ayuda-descripcionEstudio-' + i : null" formControlName="descripcionEstudio"></textarea>
                           @if (descripcionEstudioIncorrecto) {
-                            <p [id]="'ayuda-descripcionEstudio-' + i" class="error-campo f-open-sans-c estado-pendiente">{{ descripcionEstudioLargo === 0 && !descripcionEstudioControl?.dirty ? 'Describe tu estudio: mínimo 40 caracteres.' : 'Mínimo 40 caracteres. Llevas ' + descripcionEstudioLargo + '.' }}</p>
+                            <p [id]="'ayuda-descripcionEstudio-' + i" class="error-campo f-open-sans-c estado-pendiente">{{ descripcionEstudioLargo === 0 && !descripcionEstudioControl?.dirty ? ('form.describeEstudio' | translate) : ('form.minimoLlevas' | translate: { n: descripcionEstudioLargo }) }}</p>
                           }
-                          <button type="button" aria-label="Borrar contenido de los textos" (click)="eraseForm(['nombreInstitucion','tituloObtenido','fechaTitulo'], estudio)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
+                          <button type="button" [attr.aria-label]="'form.borrarTextos' | translate" (click)="eraseForm(['nombreInstitucion','tituloObtenido','fechaTitulo'], estudio)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" [title]="'form.borrarCampos' | translate">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                               <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
                             </svg>
                           </button>
-                          <button type="button" aria-label="Eliminar este registro" (click)="deleteControls('estudios', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-end">
+                          <button type="button" [attr.aria-label]="'form.eliminarRegistro' | translate" (click)="deleteControls('estudios', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-end">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill drop" viewBox="0 0 16 16">
                               <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
                             </svg>
@@ -573,7 +578,7 @@
 
                   </ng-container>
 
-                  <button type="button" aria-label="Agregar estudio" title="Agregar" (click)="agregarEstudio()" class="mb-5 bg-transparent f-open-sans-c fs-18 text-light cursor-p border-0">
+                  <button type="button" [attr.aria-label]="'form.agregarEstudio' | translate" [title]="'form.agregar' | translate" (click)="agregarEstudio()" class="mb-5 bg-transparent f-open-sans-c fs-18 text-light cursor-p border-0">
                     <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
                       <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                       <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
@@ -589,33 +594,33 @@
               <div class="carousel-item">
                 <div class="espaciado"></div>
                 <div class="shadow-two bg-form p-3 p-md-5">
-                  <p class="contador-paso text-center f-open-sans-c">09<span class="contador-total"> de 14</span></p>
-                  <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">HABILIDADES</h2>
+                  <p class="contador-paso text-center f-open-sans-c">09<span class="contador-total"> {{ 'form.deTotal' | translate: { total: 14 } }}</span></p>
+                  <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">{{ 'form.titulos.habilidades' | translate }}</h2>
                   <ng-container formArrayName="habilidades">
                     @for (habilidad of getControls('habilidades'); track habilidad; let i = $index) {
                       <div [formGroupName]="i">
                         <div class="p-3 p-md-5">
-                          <h3 class="f-grape tc-blue-two fs-17 text-shadow-one">Habilidad {{i + 1}}</h3>
+                          <h3 class="f-grape tc-blue-two fs-17 text-shadow-one">{{ 'form.registro.habilidad' | translate: { n: i + 1 } }}</h3>
                           @let nombreHabilidad = habilidad.get('habilidad')?.value;
-                          <p class="estiloLabel f-open-sans-c p-1 d-inline-block mb-0">Habilidad<span class="text-danger">*</span></p>
+                          <p class="estiloLabel f-open-sans-c p-1 d-inline-block mb-0">{{ 'form.habilidad.titulo' | translate }}<span class="text-danger">*</span></p>
                           <button type="button" [id]="'habilidad-' + i" class="d-flex align-items-center gap-3 w-100 mb-2 p-2 bg-transparent text-light text-start f-open-sans-c fs-18 border cursor-p" (click)="abrirSelectorHabilidad(i)">
                             @if (nombreHabilidad) {
                               <img [src]="imagenHabilidad(habilidad.get('icono')?.value)" alt="" width="32" height="32">
                               <span class="flex-grow-1">{{ nombreHabilidad }}</span>
-                              <span class="small">Cambiar</span>
+                              <span class="small">{{ 'form.habilidad.cambiar' | translate }}</span>
                             } @else {
-                              <span>Elegir habilidad</span>
+                              <span>{{ 'form.habilidad.elegir' | translate }}</span>
                             }
                           </button>
-                          <label [attr.for]="'nivel-' + i" class="estiloLabel f-open-sans-c p-1">Nivel<span class="text-danger">*</span></label>
+                          <label [attr.for]="'nivel-' + i" class="estiloLabel f-open-sans-c p-1">{{ 'form.habilidad.nivel' | translate }}<span class="text-danger">*</span></label>
                           <input class="w-100 fw-3 mb-2 ps-2 estilo-input" type="range" [id]="'nivel-' + i" formControlName="nivel">
                           <p class="text-light text-center f-shadow-into-l tc-yellow-one fs-50">{{ this.formBasic.value.habilidades[i].nivel }}%</p>
-                          <button type="button" aria-label="Borrar contenido de los textos" (click)="eraseForm(['habilidad','nivel'], habilidad)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
+                          <button type="button" [attr.aria-label]="'form.borrarTextos' | translate" (click)="eraseForm(['habilidad','nivel'], habilidad)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" [title]="'form.borrarCampos' | translate">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                               <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
                             </svg>
                           </button>
-                          <button type="button" aria-label="Eliminar este registro" (click)="deleteControls('habilidades', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-end">
+                          <button type="button" [attr.aria-label]="'form.eliminarRegistro' | translate" (click)="deleteControls('habilidades', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-end">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill drop" viewBox="0 0 16 16">
                               <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
                             </svg>
@@ -627,7 +632,7 @@
 
                   </ng-container>
 
-                  <button type="button" id="agregarHabilidad" aria-label="Agregar habilidad" title="Agregar" (click)="abrirSelectorHabilidad()" class="mb-5 bg-transparent f-open-sans-c fs-18 text-light cursor-p border-0">
+                  <button type="button" id="agregarHabilidad" [attr.aria-label]="'form.agregarHabilidad' | translate" [title]="'form.agregar' | translate" (click)="abrirSelectorHabilidad()" class="mb-5 bg-transparent f-open-sans-c fs-18 text-light cursor-p border-0">
                     <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
                       <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                       <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
@@ -643,15 +648,15 @@
               <div class="carousel-item">
                 <div class="espaciado"></div>
                 <div class="shadow-two bg-form p-3 p-md-5">
-                  <p class="contador-paso text-center f-open-sans-c">10<span class="contador-total"> de 14</span></p>
-                  <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">INTERESES</h2>
+                  <p class="contador-paso text-center f-open-sans-c">10<span class="contador-total"> {{ 'form.deTotal' | translate: { total: 14 } }}</span></p>
+                  <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">{{ 'form.titulos.intereses' | translate }}</h2>
                   <ng-container formArrayName="intereses">
                     <div class="row p-3 p-md-5">
                       @for (inter of getControls('intereses'); track inter; let i = $index) {
                         <div [formGroupName]="i" class="col-3">
                           <div class="d-flex align-items-center">
-                            <input class="f-open-sans-c fw-3 mt-0 mb-0 ms-0 me-2 ps-2 estilo-input" type="checkbox" [attr.aria-label]="this.gustos[i].gusto" formControlName="interes" (click)="cargarIntereses($event)">
-                            <p class="f-open-sans-c text-light m-0">{{ this.gustos[i].gusto }}</p>
+                            <input class="f-open-sans-c fw-3 mt-0 mb-0 ms-0 me-2 ps-2 estilo-input" type="checkbox" [attr.aria-label]="this.gustos[i].clave | translate" formControlName="interes" (click)="cargarIntereses($event)">
+                            <p class="f-open-sans-c text-light m-0">{{ this.gustos[i].clave | translate }}</p>
                           </div>
                         </div>
                       }
@@ -669,19 +674,19 @@
               <div class="carousel-item">
                 <div class="espaciado"></div>
                 <div class="shadow-two bg-form p-3 p-md-5">
-                  <p class="contador-paso text-center f-open-sans-c">11<span class="contador-total"> de 14</span></p>
-                  <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">EXPERIENCIA LABORAL</h2>
+                  <p class="contador-paso text-center f-open-sans-c">11<span class="contador-total"> {{ 'form.deTotal' | translate: { total: 14 } }}</span></p>
+                  <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">{{ 'form.titulos.experiencia' | translate }}</h2>
                   @if (textoImportado.experiencia.length) {
                     <section class="texto-importado f-open-sans-c" aria-labelledby="tituloTextoExperiencia">
                       <div class="d-flex align-items-center justify-content-between gap-3">
-                        <h3 id="tituloTextoExperiencia" class="f-grape tc-blue-two fs-17 text-shadow-one m-0">Texto de tu hoja de vida</h3>
-                        <button type="button" class="btn-enlace" (click)="ocultarTextoImportado('experiencia')">Ocultar</button>
+                        <h3 id="tituloTextoExperiencia" class="f-grape tc-blue-two fs-17 text-shadow-one m-0">{{ 'form.importado.titulo' | translate }}</h3>
+                        <button type="button" class="btn-enlace" (click)="ocultarTextoImportado('experiencia')">{{ 'form.importado.ocultar' | translate }}</button>
                       </div>
-                      <p class="ayuda-importado">Copia cada parte al campo que le corresponde. Este texto no se guarda en tu perfil.</p>
+                      <p class="ayuda-importado">{{ 'form.importado.ayuda' | translate }}</p>
                       @for (bloque of textoImportado.experiencia; track $index) {
                         <div class="bloque-importado">
                           <p class="m-0">{{ bloque }}</p>
-                          <button type="button" class="btn-copiar" (click)="copiarBloque(bloque)">{{ bloqueCopiado === bloque ? 'Copiado' : 'Copiar' }}</button>
+                          <button type="button" class="btn-copiar" (click)="copiarBloque(bloque)">{{ (bloqueCopiado === bloque ? 'form.importado.copiado' : 'form.importado.copiar') | translate }}</button>
                         </div>
                       }
                     </section>
@@ -690,33 +695,33 @@
                     @for (formExpLaboral of getControls('expLaboral'); track formExpLaboral; let i = $index) {
                       <div [formGroupName]="i" >
                         <div class="p-3 p-md-5">
-                          <h3 class="f-grape tc-blue-two fs-17 text-shadow-one">Empresa {{i + 1}}</h3>
+                          <h3 class="f-grape tc-blue-two fs-17 text-shadow-one">{{ 'form.registro.empresa' | translate: { n: i + 1 } }}</h3>
                           @if (intentoGuardar && formExpLaboral.invalid && formExpLaboral.touched) {
-                            <p class="resumen-faltantes f-open-sans-c estado-pendiente">Falta completar: {{ camposFaltantes('expLaboral', formExpLaboral) }}.</p>
+                            <p class="resumen-faltantes f-open-sans-c estado-pendiente">{{ 'form.faltaCompletar' | translate: { campos: camposFaltantes('expLaboral', formExpLaboral) } }}</p>
                           }
-                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: formExpLaboral, nombre: 'nombreEmpresa', id: 'nombreEmpresa-' + i, etiqueta: 'Empresa', error: 'Escribe el nombre de la empresa.' }" />
-                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: formExpLaboral, nombre: 'jefeInmediatoEmpresa', id: 'jefeInmediatoEmpresa-' + i, etiqueta: 'Jefe inmediato', error: 'Escribe el nombre de tu jefe inmediato.' }" />
-                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: formExpLaboral, nombre: 'cargoEjercido', id: 'cargoEjercido-' + i, etiqueta: 'Cargo desempeñado', error: 'Escribe el cargo que tenías.' }" />
-                          <label [attr.for]="'funcionesRealizadas-' + i" class="estiloLabel f-open-sans-c p-1">Describa funciones realizadas<span class="text-danger">*</span></label>
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: formExpLaboral, nombre: 'nombreEmpresa', id: 'nombreEmpresa-' + i, etiqueta: 'form.campo.nombreEmpresa', error: 'form.error.escribeElNombreDeLaEmpresa' }" />
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: formExpLaboral, nombre: 'jefeInmediatoEmpresa', id: 'jefeInmediatoEmpresa-' + i, etiqueta: 'form.campo.jefeInmediatoEmpresa', error: 'form.error.escribeElNombreDeTuJefeInmediato' }" />
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: formExpLaboral, nombre: 'cargoEjercido', id: 'cargoEjercido-' + i, etiqueta: 'form.campo.cargoEjercido', error: 'form.error.escribeElCargoQueTenias' }" />
+                          <label [attr.for]="'funcionesRealizadas-' + i" class="estiloLabel f-open-sans-c p-1">{{ 'form.experiencia.funciones' | translate }}<span class="text-danger">*</span></label>
                           @let funcionesRealizadasControl = formExpLaboral.get('funcionesRealizadas');
                           @let funcionesRealizadasLargo = largoTexto(funcionesRealizadasControl);
                           @let funcionesRealizadasIncorrecto = mostrarError(funcionesRealizadasControl) || (!!funcionesRealizadasControl?.invalid && funcionesRealizadasLargo > 0);
                           <textarea rows="10" class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" [class.campo-invalido]="funcionesRealizadasIncorrecto" [attr.aria-invalid]="funcionesRealizadasIncorrecto" style="height:13rem" [id]="'funcionesRealizadas-' + i" [attr.aria-describedby]="funcionesRealizadasIncorrecto ? 'ayuda-funcionesRealizadas-' + i : null" formControlName="funcionesRealizadas"></textarea>
                           @if (funcionesRealizadasIncorrecto) {
-                            <p [id]="'ayuda-funcionesRealizadas-' + i" class="error-campo f-open-sans-c estado-pendiente">{{ funcionesRealizadasLargo === 0 && !funcionesRealizadasControl?.dirty ? 'Describe tus funciones: mínimo 40 caracteres.' : 'Mínimo 40 caracteres. Llevas ' + funcionesRealizadasLargo + '.' }}</p>
+                            <p [id]="'ayuda-funcionesRealizadas-' + i" class="error-campo f-open-sans-c estado-pendiente">{{ funcionesRealizadasLargo === 0 && !funcionesRealizadasControl?.dirty ? ('form.describeFunciones' | translate) : ('form.minimoLlevas' | translate: { n: funcionesRealizadasLargo }) }}</p>
                           }
-                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: formExpLaboral, nombre: 'fechaInicioEmpresa', id: 'fechaInicioEmpresa-' + i, etiqueta: 'Fecha de inicio', error: 'Elige la fecha en que empezaste.', tipo: 'date' }" />
-                          <label [attr.for]="'fechaFinalEmpresa-' + i" class="estiloLabel f-open-sans-c p-1">Fecha de finalización</label>
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: formExpLaboral, nombre: 'fechaInicioEmpresa', id: 'fechaInicioEmpresa-' + i, etiqueta: 'form.campo.fechaInicioEmpresa', error: 'form.error.eligeLaFechaEnQueEmpezaste', tipo: 'date' }" />
+                          <label [attr.for]="'fechaFinalEmpresa-' + i" class="estiloLabel f-open-sans-c p-1">{{ 'form.experiencia.fechaFin' | translate }}</label>
                           <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" type="date" [id]="'fechaFinalEmpresa-' + i" [attr.aria-describedby]="'ayuda-fechaFinalEmpresa-' + i" formControlName="fechaFinalEmpresa">
-                          <p [id]="'ayuda-fechaFinalEmpresa-' + i" class="error-campo ayuda-campo f-open-sans-c">Déjala vacía si aún trabajas aquí.</p>
-                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: formExpLaboral, nombre: 'telContactoEmpresa', id: 'telContactoEmpresa-' + i, etiqueta: 'Número de contacto', error: 'Escribe un teléfono de la empresa.', tipo: 'tel', modo: 'tel' }" />
-                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: formExpLaboral, nombre: 'ciudadEmpresa', id: 'ciudadEmpresa-' + i, etiqueta: 'Ciudad', error: 'Escribe la ciudad donde trabajaste.' }" />
-                          <button type="button" aria-label="Borrar contenido de los textos" (click)="eraseForm([], formExpLaboral)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
+                          <p [id]="'ayuda-fechaFinalEmpresa-' + i" class="error-campo ayuda-campo f-open-sans-c">{{ 'form.experiencia.fechaFinAyuda' | translate }}</p>
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: formExpLaboral, nombre: 'telContactoEmpresa', id: 'telContactoEmpresa-' + i, etiqueta: 'form.campo.telContactoEmpresa', error: 'form.error.escribeUnTelefonoDeLaEmpresa', tipo: 'tel', modo: 'tel' }" />
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: formExpLaboral, nombre: 'ciudadEmpresa', id: 'ciudadEmpresa-' + i, etiqueta: 'form.campo.ciudadEmpresa', error: 'form.error.escribeLaCiudadDondeTrabajaste' }" />
+                          <button type="button" [attr.aria-label]="'form.borrarTextos' | translate" (click)="eraseForm([], formExpLaboral)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" [title]="'form.borrarCampos' | translate">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                               <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
                             </svg>
                           </button>
-                          <button type="button" aria-label="Eliminar este registro" (click)="deleteControls('expLaboral', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-end">
+                          <button type="button" [attr.aria-label]="'form.eliminarRegistro' | translate" (click)="deleteControls('expLaboral', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-end">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill drop" viewBox="0 0 16 16">
                               <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
                             </svg>
@@ -725,7 +730,7 @@
                       </div>
                     }
                   </ng-container>
-                  <button type="button" aria-label="Agregar experiencia laboral" title="Agregar" (click)="agregarExpLaboral()" class="mb-5 bg-transparent f-open-sans-c fs-18 text-light cursor-p border-0">
+                  <button type="button" [attr.aria-label]="'form.agregarExperiencia' | translate" [title]="'form.agregar' | translate" (click)="agregarExpLaboral()" class="mb-5 bg-transparent f-open-sans-c fs-18 text-light cursor-p border-0">
                     <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
                       <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                       <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
@@ -741,26 +746,26 @@
               <div class="carousel-item">
                 <div class="espaciado"></div>
                 <div class="shadow-two bg-form p-3 p-md-5">
-                  <p class="contador-paso text-center f-open-sans-c">12<span class="contador-total"> de 14</span></p>
-                  <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">OTROS CONOCIMIENTOS</h2>
+                  <p class="contador-paso text-center f-open-sans-c">12<span class="contador-total"> {{ 'form.deTotal' | translate: { total: 14 } }}</span></p>
+                  <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">{{ 'form.titulos.conocimientos' | translate }}</h2>
 
                   <ng-container formArrayName="conocimientosAdicionales">
                     @for (conocimientos of getControls('conocimientosAdicionales'); track conocimientos; let i = $index) {
                       <div [formGroupName]="i" >
                         <div class="p-3 p-md-5">
-                          <h3 class="f-grape tc-blue-two fs-17 text-shadow-one">Conocimiento {{i + 1}}</h3>
+                          <h3 class="f-grape tc-blue-two fs-17 text-shadow-one">{{ 'form.registro.conocimiento' | translate: { n: i + 1 } }}</h3>
                           @if (intentoGuardar && conocimientos.invalid && conocimientos.touched) {
-                            <p class="resumen-faltantes f-open-sans-c estado-pendiente">Falta completar: {{ camposFaltantes('conocimientosAdicionales', conocimientos) }}.</p>
+                            <p class="resumen-faltantes f-open-sans-c estado-pendiente">{{ 'form.faltaCompletar' | translate: { campos: camposFaltantes('conocimientosAdicionales', conocimientos) } }}</p>
                           }
-                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: conocimientos, nombre: 'nombreConocimiento', id: 'nombreConocimiento-' + i, etiqueta: 'Conocimiento', error: 'Escribe el nombre del curso o conocimiento.' }" />
-                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: conocimientos, nombre: 'duracion', id: 'duracion-' + i, etiqueta: 'Duración', error: 'Escribe cuánto duró, por ejemplo: 40 horas.' }" />
-                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: conocimientos, nombre: 'fechaFinalizacion', id: 'fechaFinalizacion-' + i, etiqueta: 'Fecha Finalización', error: 'Elige la fecha en que terminaste.', tipo: 'date' }" />
-                          <button type="button" aria-label="Borrar contenido de los textos" (click)="eraseForm([], conocimientos)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: conocimientos, nombre: 'nombreConocimiento', id: 'nombreConocimiento-' + i, etiqueta: 'form.campo.nombreConocimiento', error: 'form.error.escribeElNombreDelCursoOConocimiento' }" />
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: conocimientos, nombre: 'duracion', id: 'duracion-' + i, etiqueta: 'form.campo.duracion', error: 'form.error.escribeCuantoDuroPorEjemplo40Horas' }" />
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: conocimientos, nombre: 'fechaFinalizacion', id: 'fechaFinalizacion-' + i, etiqueta: 'form.campo.fechaFinalizacion', error: 'form.error.eligeLaFechaEnQueTerminaste', tipo: 'date' }" />
+                          <button type="button" [attr.aria-label]="'form.borrarTextos' | translate" (click)="eraseForm([], conocimientos)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" [title]="'form.borrarCampos' | translate">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                               <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
                             </svg>
                           </button>
-                          <button type="button" aria-label="Eliminar este registro" (click)="deleteControls('conocimientosAdicionales', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-end">
+                          <button type="button" [attr.aria-label]="'form.eliminarRegistro' | translate" (click)="deleteControls('conocimientosAdicionales', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-end">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill drop" viewBox="0 0 16 16">
                               <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
                             </svg>
@@ -769,7 +774,7 @@
                       </div>
                     }
                   </ng-container>
-                  <button type="button" aria-label="Agregar conocimiento" title="Agregar" (click)="agregarConocimientos()" class="mb-5 bg-transparent f-open-sans-c fs-18 text-light cursor-p border-0">
+                  <button type="button" [attr.aria-label]="'form.agregarConocimiento' | translate" [title]="'form.agregar' | translate" (click)="agregarConocimientos()" class="mb-5 bg-transparent f-open-sans-c fs-18 text-light cursor-p border-0">
                     <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
                       <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                       <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
@@ -785,27 +790,27 @@
               <div class="carousel-item">
                 <div class="espaciado"></div>
                 <div class="shadow-two bg-form p-3 p-md-5">
-                  <p class="contador-paso text-center f-open-sans-c">13<span class="contador-total"> de 14</span></p>
-                  <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">REFERENCIAS PERSONALES</h2>
+                  <p class="contador-paso text-center f-open-sans-c">13<span class="contador-total"> {{ 'form.deTotal' | translate: { total: 14 } }}</span></p>
+                  <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">{{ 'form.titulos.refPersonales' | translate }}</h2>
 
                   <ng-container formArrayName="referenciasPersonales">
                     @for (referenciasPersonales of getControls('referenciasPersonales'); track referenciasPersonales; let i = $index) {
                       <div [formGroupName]="i" >
                         <div class="p-3 p-md-5">
-                          <h3 class="f-grape tc-blue-two fs-17 text-shadow-one">Persona {{i + 1}}</h3>
+                          <h3 class="f-grape tc-blue-two fs-17 text-shadow-one">{{ 'form.registro.persona' | translate: { n: i + 1 } }}</h3>
                           @if (intentoGuardar && referenciasPersonales.invalid && referenciasPersonales.touched) {
-                            <p class="resumen-faltantes f-open-sans-c estado-pendiente">Falta completar: {{ camposFaltantes('referenciasPersonales', referenciasPersonales) }}.</p>
+                            <p class="resumen-faltantes f-open-sans-c estado-pendiente">{{ 'form.faltaCompletar' | translate: { campos: camposFaltantes('referenciasPersonales', referenciasPersonales) } }}</p>
                           }
-                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: referenciasPersonales, nombre: 'nombreCompleto', id: 'refPersonal-nombreCompleto-' + i, etiqueta: 'Nombre Completo', error: 'Escribe el nombre de la persona.' }" />
-                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: referenciasPersonales, nombre: 'ocupacion', id: 'refPersonal-ocupacion-' + i, etiqueta: 'Ocupación - Cargo', error: 'Escribe a qué se dedica.' }" />
-                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: referenciasPersonales, nombre: 'telefono', id: 'refPersonal-telefono-' + i, etiqueta: 'Teléfono', error: 'Escribe un teléfono de contacto.', tipo: 'tel', modo: 'tel' }" />
-                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: referenciasPersonales, nombre: 'empresa', id: 'refPersonal-empresa-' + i, etiqueta: 'Empresa', error: 'Escribe dónde trabaja.' }" />
-                          <button type="button" aria-label="Borrar contenido de los textos" (click)="eraseForm([], referenciasPersonales)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: referenciasPersonales, nombre: 'nombreCompleto', id: 'refPersonal-nombreCompleto-' + i, etiqueta: 'form.campo.nombreCompleto', error: 'form.error.escribeElNombreDeLaPersona' }" />
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: referenciasPersonales, nombre: 'ocupacion', id: 'refPersonal-ocupacion-' + i, etiqueta: 'form.campo.ocupacion', error: 'form.error.escribeAQueSeDedica' }" />
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: referenciasPersonales, nombre: 'telefono', id: 'refPersonal-telefono-' + i, etiqueta: 'form.campo.telefono', error: 'form.error.escribeUnTelefonoDeContacto', tipo: 'tel', modo: 'tel' }" />
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: referenciasPersonales, nombre: 'empresa', id: 'refPersonal-empresa-' + i, etiqueta: 'form.campo.empresa', error: 'form.error.escribeDondeTrabaja' }" />
+                          <button type="button" [attr.aria-label]="'form.borrarTextos' | translate" (click)="eraseForm([], referenciasPersonales)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" [title]="'form.borrarCampos' | translate">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                               <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
                             </svg>
                           </button>
-                          <button type="button" aria-label="Eliminar este registro" (click)="deleteControls('referenciasPersonales', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-end">
+                          <button type="button" [attr.aria-label]="'form.eliminarRegistro' | translate" (click)="deleteControls('referenciasPersonales', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-end">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill drop" viewBox="0 0 16 16">
                               <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
                             </svg>
@@ -814,7 +819,7 @@
                       </div>
                     }
                   </ng-container>
-                  <button type="button" aria-label="Agregar referencia personal" title="Agregar" (click)="agregarReferenciaPersonal()" class="mb-5 bg-transparent f-open-sans-c fs-18 text-light cursor-p border-0">
+                  <button type="button" [attr.aria-label]="'form.agregarRefPersonal' | translate" [title]="'form.agregar' | translate" (click)="agregarReferenciaPersonal()" class="mb-5 bg-transparent f-open-sans-c fs-18 text-light cursor-p border-0">
                     <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
                       <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                       <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
@@ -830,28 +835,28 @@
               <div class="carousel-item">
                 <div class="espaciado"></div>
                 <div class="shadow-two bg-form p-3 p-md-5">
-                  <p class="contador-paso text-center f-open-sans-c">14<span class="contador-total"> de 14</span></p>
-                  <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">REFERENCIAS FAMILIARES</h2>
+                  <p class="contador-paso text-center f-open-sans-c">14<span class="contador-total"> {{ 'form.deTotal' | translate: { total: 14 } }}</span></p>
+                  <h2 class="f-open-sans-c ls-5 fw-6 fs-50 text-light text-center text-shadow-one">{{ 'form.titulos.refFamiliares' | translate }}</h2>
 
                   <ng-container formArrayName="referenciasFamiliares">
                     @for (referenciasFamiliares of getControls('referenciasFamiliares'); track referenciasFamiliares; let i = $index) {
                       <div [formGroupName]="i" >
                         <div class="p-3 p-md-5">
-                          <h3 class="f-grape tc-blue-two fs-17 text-shadow-one">Familiar {{i + 1}}</h3>
+                          <h3 class="f-grape tc-blue-two fs-17 text-shadow-one">{{ 'form.registro.familiar' | translate: { n: i + 1 } }}</h3>
                           @if (intentoGuardar && referenciasFamiliares.invalid && referenciasFamiliares.touched) {
-                            <p class="resumen-faltantes f-open-sans-c estado-pendiente">Falta completar: {{ camposFaltantes('referenciasFamiliares', referenciasFamiliares) }}.</p>
+                            <p class="resumen-faltantes f-open-sans-c estado-pendiente">{{ 'form.faltaCompletar' | translate: { campos: camposFaltantes('referenciasFamiliares', referenciasFamiliares) } }}</p>
                           }
-                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: referenciasFamiliares, nombre: 'nombreCompleto', id: 'refFamiliar-nombreCompleto-' + i, etiqueta: 'Nombre Completo', error: 'Escribe el nombre de tu familiar.' }" />
-                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: referenciasFamiliares, nombre: 'ocupacion', id: 'refFamiliar-ocupacion-' + i, etiqueta: 'Ocupación', error: 'Escribe a qué se dedica.' }" />
-                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: referenciasFamiliares, nombre: 'telefono', id: 'refFamiliar-telefono-' + i, etiqueta: 'Teléfono', error: 'Escribe un teléfono de contacto.', tipo: 'tel', modo: 'tel' }" />
-                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: referenciasFamiliares, nombre: 'parentesco', id: 'refFamiliar-parentesco-' + i, etiqueta: 'Parentesco', error: 'Escribe el parentesco, por ejemplo: hermana.' }" />
-                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: referenciasFamiliares, nombre: 'empresa', id: 'refFamiliar-empresa-' + i, etiqueta: 'Empresa', error: 'Escribe dónde trabaja.' }" />
-                          <button type="button" aria-label="Borrar contenido de los textos" (click)="eraseForm([], referenciasFamiliares)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" title="Borrar contenido de campos">
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: referenciasFamiliares, nombre: 'nombreCompleto', id: 'refFamiliar-nombreCompleto-' + i, etiqueta: 'form.campo.nombreCompleto', error: 'form.error.escribeElNombreDeTuFamiliar' }" />
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: referenciasFamiliares, nombre: 'ocupacion', id: 'refFamiliar-ocupacion-' + i, etiqueta: 'form.campo.ocupacionFamiliar', error: 'form.error.escribeAQueSeDedica' }" />
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: referenciasFamiliares, nombre: 'telefono', id: 'refFamiliar-telefono-' + i, etiqueta: 'form.campo.telefono', error: 'form.error.escribeUnTelefonoDeContacto', tipo: 'tel', modo: 'tel' }" />
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: referenciasFamiliares, nombre: 'parentesco', id: 'refFamiliar-parentesco-' + i, etiqueta: 'form.campo.parentesco', error: 'form.error.escribeElParentescoPorEjemploHermana' }" />
+                          <ng-container *ngTemplateOutlet="campoRegistro; context: { grupo: referenciasFamiliares, nombre: 'empresa', id: 'refFamiliar-empresa-' + i, etiqueta: 'form.campo.empresa', error: 'form.error.escribeDondeTrabaja' }" />
+                          <button type="button" [attr.aria-label]="'form.borrarTextos' | translate" (click)="eraseForm([], referenciasFamiliares)" class="tc-blue-one bg-transparent cursor-p w-100 border-0 text-end" [title]="'form.borrarCampos' | translate">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill drop" viewBox="0 0 16 16">
                               <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
                             </svg>
                           </button>
-                          <button type="button" aria-label="Eliminar este registro" (click)="deleteControls('referenciasFamiliares', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-end">
+                          <button type="button" [attr.aria-label]="'form.eliminarRegistro' | translate" (click)="deleteControls('referenciasFamiliares', i)" class="tc-red-one bg-transparent cursor-p w-100 border-0 text-end">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill drop" viewBox="0 0 16 16">
                               <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
                             </svg>
@@ -860,7 +865,7 @@
                       </div>
                     }
                   </ng-container>
-                  <button type="button" aria-label="Agregar referencia familiar" title="Agregar" (click)="agregarReferenciaFamiliar()" class="mb-5 bg-transparent f-open-sans-c fs-18 text-light cursor-p border-0">
+                  <button type="button" [attr.aria-label]="'form.agregarRefFamiliar' | translate" [title]="'form.agregar' | translate" (click)="agregarReferenciaFamiliar()" class="mb-5 bg-transparent f-open-sans-c fs-18 text-light cursor-p border-0">
                     <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
                       <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                       <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
@@ -876,19 +881,19 @@
 
         <button class="carousel-control-prev border-0 bg-cero" type="button" data-bs-target="#carousel-form" data-bs-slide="prev" (click)="scrollTo()">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Anterior</span>
+          <span class="visually-hidden">{{ 'comun.anterior' | translate }}</span>
         </button>
         <button class="carousel-control-next border-0 bg-cero" type="button" data-bs-target="#carousel-form" data-bs-slide="next" (click)="scrollTo()">
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Siguiente</span>
+          <span class="visually-hidden">{{ 'comun.siguiente' | translate }}</span>
         </button>
       </div>
       <p class="visually-hidden" role="status">{{anuncio}}</p>
       @if (borrado) {
         <div class="barra-deshacer f-open-sans-c position-fixed start-50 translate-middle-x d-flex align-items-center justify-content-between gap-3 py-2 px-3 fs-18 text-white bg-dark border shadow">
           <p class="m-0">{{borrado.mensaje}}</p>
-          <button #botonDeshacer type="button" class="btn-deshacer border-0 flex-shrink-0 px-3 fw-bold text-dark" (click)="deshacer()">Deshacer</button>
-          <button type="button" class="btn-close btn-close-white flex-shrink-0" aria-label="Cerrar aviso" (click)="cerrarDeshacer()"></button>
+          <button #botonDeshacer type="button" class="btn-deshacer border-0 flex-shrink-0 px-3 fw-bold text-dark" (click)="deshacer()">{{ 'form.deshacer' | translate }}</button>
+          <button type="button" class="btn-close btn-close-white flex-shrink-0" [attr.aria-label]="'form.cerrarAviso' | translate" (click)="cerrarDeshacer()"></button>
         </div>
       }
     </form>
@@ -904,7 +909,7 @@
     <div class="modal-content bg-transparent">
       <div class="text-center">
         <div class="spinner-border text-warning" style="width: 3rem; height: 3rem;" role="status">
-          <span class="visually-hidden">Cargando…</span>
+          <span class="visually-hidden">{{ 'comun.cargando' | translate }}</span>
         </div>
       </div>
     </div>
@@ -916,9 +921,9 @@
 <ng-template #campoRegistro let-grupo="grupo" let-nombre="nombre" let-id="id" let-etiqueta="etiqueta" let-error="error" let-tipo="tipo" let-modo="modo">
   @let control = $any(grupo.get(nombre));
   @let conError = mostrarError(control);
-  <label [attr.for]="id" class="estiloLabel f-open-sans-c p-1">{{ etiqueta }}<span class="text-danger">*</span></label>
+  <label [attr.for]="id" class="estiloLabel f-open-sans-c p-1">{{ etiqueta | translate }}<span class="text-danger">*</span></label>
   <input class="f-open-sans-c w-100 fw-3 mb-2 ps-2 estilo-input" [class.campo-invalido]="conError" [attr.aria-invalid]="conError" [attr.aria-describedby]="conError ? 'error-' + id : null" [type]="tipo ?? 'text'" [attr.inputmode]="modo ?? null" [id]="id" [formControl]="control">
   @if (conError) {
-    <p [id]="'error-' + id" class="error-campo f-open-sans-c estado-pendiente">{{ error }}</p>
+    <p [id]="'error-' + id" class="error-campo f-open-sans-c estado-pendiente">{{ error | translate }}</p>
   }
 </ng-template>

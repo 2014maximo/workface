@@ -2,26 +2,26 @@
 <div class="iota">
   <div class="iota-acciones">
     <button type="button" class="iota-descargar" (click)="descargarPdf()" [disabled]="generando" [attr.aria-busy]="generando">
-      {{ generando ? 'Generando PDF…' : 'Descargar PDF' }}
+      {{ (generando ? 'iota.generando' : 'iota.descargar') | translate }}
     </button>
     @if (cv.foto) {
       <label class="iota-interruptor">
         <input type="checkbox" role="switch" [checked]="conFoto" (change)="conFoto = $any($event.target).checked">
-        <span>Incluir foto</span>
+        <span>{{ 'iota.incluirFoto' | translate }}</span>
       </label>
     }
-    <p class="iota-nota">El PDF trae texto real: los sistemas de selección (ATS) lo pueden leer.</p>
+    <p class="iota-nota">{{ 'iota.notaAts' | translate }}</p>
     @if (cv.empresasOmitidas > 0) {
       <p class="iota-aviso" role="status">
         <svg class="iota-aviso-icono" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="9.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 10.75v5.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><circle cx="12" cy="7.75" r="1.1" fill="currentColor"/></svg>
-        <span>Para que tu hoja de vida quepa en una página, esta plantilla muestra solo tus {{ maximoEmpresas }} experiencias laborales más recientes.
-          {{ cv.empresasOmitidas === 1 ? 'La otra sigue guardada' : 'Las otras ' + cv.empresasOmitidas + ' siguen guardadas' }} en tu perfil.</span>
+        <span>{{ 'iota.avisoMaximo' | translate: { max: maximoEmpresas } }}
+          {{ (cv.empresasOmitidas === 1 ? 'iota.omitidaUna' : 'iota.omitidasVarias') | translate: { n: cv.empresasOmitidas } }}</span>
       </p>
     }
   </div>
 
   <div class="iota-marco">
-    <article class="iota-hoja" lang="es" aria-label="Vista previa de la hoja de vida">
+    <article class="iota-hoja" [lang]="cv.idioma" [attr.aria-label]="'iota.vistaPrevia' | translate">
       <header class="iota-encabezado" [class.con-foto]="conFoto && cv.foto">
         <div>
           @if (cv.nombre) {

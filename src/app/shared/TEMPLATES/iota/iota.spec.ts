@@ -2,6 +2,7 @@ import { combinarLecturas, normalizar } from '../../../services/importar-cv/inte
 import { leerArchivo } from '../../../services/importar-cv/leer-archivo';
 import { documentoIota, mesYAnio, nombreArchivoIota, puntosDe, rangoFechas, TITULOS_IOTA } from './iota-documento';
 import { crearPdfIota } from './iota-pdf';
+import { EN } from '../../../i18n/en';
 
 // Perfil de prueba: datos inventados, con tildes y ñ para comprobar que el texto sale bien.
 const perfil = () => ({
@@ -78,6 +79,18 @@ describe('Plantilla iota: contenido', () => {
     expect(mesYAnio('')).toBe('');
     expect(rangoFechas('2020-01-01', '')).toBe('Enero 2020');
     expect(puntosDe('  uno \n\n * dos ')).toEqual(['uno', 'dos']);
+  });
+
+  it('arma la hoja en otro idioma con los textos que recibe', () => {
+    const t = EN.iota;
+    const cv = documentoIota(perfil(), {
+      idioma: t.idiomaDocumento, titulos: t.titulos, actualidad: t.actualidad,
+      meses: Object.values(t.meses), tituloDocumento: t.tituloDocumento, archivo: t.archivo,
+    });
+    expect(cv.idioma).toBe('en-US');
+    expect(cv.secciones.map(s => s.titulo)).toContain('Work Experience');
+    expect(cv.secciones.find(s => s.titulo === 'Work Experience')!.entradas[0].fechas).toBe('July 2021 - Present');
+    expect(nombreArchivoIota('María José Peña', t.archivo)).toBe('Resume-Maria-Jose-Pena.pdf');
   });
 
   it('nombra el archivo sin tildes ni espacios', () => {

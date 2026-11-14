@@ -3,19 +3,19 @@
     <img src="assets/img/icons/workface-blanco-160.webp" alt="Workface" width="198" height="160" class="logo drop">
   }
   @if (returnHome) {
-    <a href="{{ returnHome }}" aria-label="Workface, ir al inicio">
+    <a href="{{ returnHome }}" [attr.aria-label]="'comun.irInicio' | translate">
       <img src="assets/img/icons/workface-blanco-160.webp" alt="" width="198" height="160" class="logo drop">
     </a>
   }
-  <button #botonAbrir type="button" class="btn-menu" aria-label="Abrir menú" aria-controls="menu-principal" [attr.aria-expanded]="menuAbierto" (click)="abreMenu()">
+  <button #botonAbrir type="button" class="btn-menu" [attr.aria-label]="'menu.abrir' | translate" aria-controls="menu-principal" [attr.aria-expanded]="menuAbierto" (click)="abreMenu()">
     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16" aria-hidden="true">
       <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
     </svg>
   </button>
 </header>
-<nav #menu id="menu-principal" class="sidenav" [class.sidenav-abierto]="menuAbierto" aria-label="Principal" (keydown.escape)="cierreMenu()" (keydown.tab)="mantenerFoco($event)" (keydown.shift.tab)="mantenerFoco($event)">
+<nav #menu id="menu-principal" class="sidenav" [class.sidenav-abierto]="menuAbierto" [attr.aria-label]="'menu.principal' | translate" (keydown.escape)="cierreMenu()" (keydown.tab)="mantenerFoco($event)" (keydown.shift.tab)="mantenerFoco($event)">
   <div class="text-end">
-    <button #botonCerrar type="button" class="btn-menu" aria-label="Cerrar menú" (click)="cierreMenu()">
+    <button #botonCerrar type="button" class="btn-menu" [attr.aria-label]="'menu.cerrar' | translate" (click)="cierreMenu()">
       <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16" aria-hidden="true">
         <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
       </svg>
@@ -33,25 +33,31 @@
     }
     @if (email) {
       <li class="f-shadow-into-l">
-        <a href="profile">INFORMACIÓN DE CV</a>
+        <a href="profile">{{ 'menu.perfil' | translate }}</a>
       </li>
       <li class="f-shadow-into-l">
-        <a class="enlace-destacado" href="galeria"><span class="tc-yellow-one">PLANTILLAS</span> CV</a>
+        <a class="enlace-destacado" href="galeria"><span class="tc-yellow-one">{{ 'menu.plantillas' | translate }}</span> {{ 'menu.plantillasCv' | translate }}</a>
       </li>
       <li class="menu-separador" aria-hidden="true"></li>
     }
     @if (!email && !enLogin) {
       <li class="f-shadow-into-l">
-        <a href="login">INGRESAR</a>
+        <a href="login">{{ 'menu.ingresar' | translate }}</a>
       </li>
     }
     <li class="f-shadow-into-l">
-      <a href="contacto">CONTACTO</a>
+      <a href="contacto">{{ 'menu.contacto' | translate }}</a>
     </li>
     @if (email) {
       <li class="f-shadow-into-l">
-        <button type="button" class="btn-salir" (click)="logout()">SALIR</button>
+        <button type="button" class="btn-salir" (click)="logout()">{{ 'menu.salir' | translate }}</button>
       </li>
     }
+    <li class="menu-separador" aria-hidden="true"></li>
+    <li class="menu-idiomas f-open-sans-c" role="group" [attr.aria-label]="'idioma.titulo' | translate">
+      @for (opcion of idiomas; track opcion.codigo) {
+        <button type="button" class="btn-idioma" [lang]="opcion.codigo" [attr.aria-label]="opcion.nombre" [attr.aria-pressed]="idioma.actual() === opcion.codigo" (click)="idioma.usar(opcion.codigo)">{{ opcion.codigo }}</button>
+      }
+    </li>
   </ul>
 </nav>

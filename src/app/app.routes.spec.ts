@@ -1,3 +1,4 @@
+import { proveerTraduccionPruebas } from './i18n/pruebas';
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
@@ -17,6 +18,7 @@ describe('Rutas protegidas', () => {
   const navegar = async (usuario: unknown, ruta: string) => {
     TestBed.configureTestingModule({
       providers: [
+        proveerTraduccionPruebas(),
         provideRouter(rutas),
         { provide: AngularFireAuth, useValue: { user: of(usuario) } }
       ]

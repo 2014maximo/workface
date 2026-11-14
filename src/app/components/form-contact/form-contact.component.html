@@ -6,20 +6,20 @@
         <div class="p-3 p-md-5 shadow-one">
             <div class="d-flex justify-content-center align-items-center">
                 <img src="assets/img/icons/emoticon.png" alt="" height="60" width="auto" class="me-3 drop">
-                <h1 class="f-shadow-into-l tc-blue-two fs-40 fw-6 text-center text-shadow-one m-0">CONTACTO</h1>
+                <h1 class="f-shadow-into-l tc-blue-two fs-40 fw-6 text-center text-shadow-one m-0">{{ 'contacto.titulo' | translate }}</h1>
             </div>
             <form action="" class="contacto-form f-open-sans-c">
-                <label for="contacto-nombre">Nombre</label>
+                <label for="contacto-nombre">{{ 'contacto.nombre' | translate }}</label>
                 <input id="contacto-nombre" type="text" autocomplete="name">
-                <label for="contacto-email">Email</label>
+                <label for="contacto-email">{{ 'contacto.email' | translate }}</label>
                 <input id="contacto-email" type="email" autocomplete="email">
-                <label for="contacto-telefono">Teléfono</label>
+                <label for="contacto-telefono">{{ 'contacto.telefono' | translate }}</label>
                 <input id="contacto-telefono" type="tel" autocomplete="tel">
-                <label for="contacto-asunto">Asunto</label>
+                <label for="contacto-asunto">{{ 'contacto.asunto' | translate }}</label>
                 <input id="contacto-asunto" type="text">
-                <label for="contacto-mensaje">Mensaje</label>
+                <label for="contacto-mensaje">{{ 'contacto.mensaje' | translate }}</label>
                 <textarea id="contacto-mensaje" rows="8"></textarea>
-                <button class="contacto-enviar border-0 bgBase text-light f-shadow-into-l fs-20 shadow-three">Enviar</button>
+                <button class="contacto-enviar border-0 bgBase text-light f-shadow-into-l fs-20 shadow-three">{{ 'contacto.enviar' | translate }}</button>
             </form>
         </div>
     </div>

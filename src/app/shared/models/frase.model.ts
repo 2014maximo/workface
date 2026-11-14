@@ -1,4 +1,5 @@
 export interface FraseModel {
     id: number,
-    texto: string
+    /** Clave de traduccion de la frase */
+    clave: string
 }
