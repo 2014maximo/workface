@@ -11,18 +11,21 @@ import { CurriculumsComponent } from './shared/components/curriculus/curriculums
 // Sin un destino, el guard solo cancela la navegacion y la pagina queda en blanco.
 const requiereSesion = canActivate(() => redirectUnauthorizedTo(['login']));
 
+// canActivate() guarda el guard en data (authGuardPipe): los datos de SEO se suman, no lo reemplazan
+const privada = (seo: string) => ({ ...requiereSesion, data: { ...requiereSesion.data, seo } });
+
 export const ROUTES: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'home'},
-    { path: 'home', component: HomeComponent },
+    { path: 'home', component: HomeComponent, data: { seo: 'inicio', indexable: true } },
 
 // COMPONENTS
-    { path: 'login', component: LoginComponent },
-    { path: 'profile', component: ProfileComponent, ...requiereSesion },
-    { path: 'galeria', component: SliderTemplatesComponent, ...requiereSesion },
-    { path: 'contacto', component: FormContactComponent, ...requiereSesion },
+    { path: 'login', component: LoginComponent, data: { seo: 'login' } },
+    { path: 'profile', component: ProfileComponent, ...privada('perfil') },
+    { path: 'galeria', component: SliderTemplatesComponent, ...privada('galeria') },
+    { path: 'contacto', component: FormContactComponent, ...privada('contacto') },
     
     // TEMPLATES
-    { path: 'iota', component: IotaComponent, ...requiereSesion },
+    { path: 'iota', component: IotaComponent, ...privada('galeria') },
     
     // SHARED
     { path: 'curriculums', component: CurriculumsComponent },

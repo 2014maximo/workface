@@ -36,6 +36,15 @@ export const ES = {
     f3: 'La primera imagen es la más importante.',
     f4: 'Llegará en un momento en que nos cansemos de tanta información, personalizaciones avanzadas y cargadas de contenido.',
   },
+  seo: {
+    descripcion: 'Llena tus datos una sola vez y descarga tu hoja de vida en PDF, con una plantilla pensada para los sistemas de selección (ATS). Gratis y desde el celular.',
+    general: { titulo: 'Workface' },
+    inicio: { titulo: 'Workface: crea tu hoja de vida gratis' },
+    login: { titulo: 'Ingresar · Workface' },
+    perfil: { titulo: 'Mi perfil · Workface' },
+    galeria: { titulo: 'Plantillas · Workface' },
+    contacto: { titulo: 'Contacto · Workface' },
+  },
   zonas: {
     remotoTitulo: 'ZONA DE TRABAJO REMOTO',
     remotoIntro: 'Bolsas de empleo y empresas donde puedes trabajar desde cualquier lugar.',

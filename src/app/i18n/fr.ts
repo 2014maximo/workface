@@ -38,6 +38,15 @@ export const FR: Diccionario<typeof ES> = {
     f3: 'La première impression est la plus importante.',
     f4: "Un jour viendra où nous serons lassés de tant d'informations et de personnalisations chargées de contenu.",
   },
+  seo: {
+    descripcion: 'Saisissez vos informations une seule fois et téléchargez votre CV en PDF, avec un modèle conçu pour les logiciels de recrutement (ATS). Gratuit et utilisable sur mobile.',
+    general: { titulo: 'Workface' },
+    inicio: { titulo: 'Workface : créez votre CV gratuitement' },
+    login: { titulo: 'Connexion · Workface' },
+    perfil: { titulo: 'Mon profil · Workface' },
+    galeria: { titulo: 'Modèles · Workface' },
+    contacto: { titulo: 'Contact · Workface' },
+  },
   zonas: {
     remotoTitulo: 'ZONE TÉLÉTRAVAIL',
     remotoIntro: 'Sites d’emploi et entreprises où travailler de n’importe où.',

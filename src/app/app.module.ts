@@ -17,6 +17,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ComponentsModule } from './components/components.module';
 import { CargadorTraducciones } from './i18n/cargador-traducciones';
 import { IdiomaService } from './services/idioma.service';
+import { SeoService } from './services/seo.service';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { IdiomaService } from './services/idioma.service';
       loader: provideTranslateLoader(CargadorTraducciones),
       fallbackLang: 'es'
     }),
-    provideAppInitializer(() => inject(IdiomaService).iniciar())
+    provideAppInitializer(() => inject(IdiomaService).iniciar()),
+    provideAppInitializer(() => inject(SeoService).iniciar())
   ],
   bootstrap: [AppComponent]
 })

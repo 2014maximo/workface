@@ -38,6 +38,15 @@ export const EN: Diccionario<typeof ES> = {
     f3: 'The first impression is the one that matters most.',
     f4: 'A time will come when we grow tired of so much information and heavy, content-packed customization.',
   },
+  seo: {
+    descripcion: 'Fill in your details once and download your resume as a PDF, with a template built for applicant tracking systems (ATS). Free, and it works on your phone.',
+    general: { titulo: 'Workface' },
+    inicio: { titulo: 'Workface: build your resume for free' },
+    login: { titulo: 'Sign in · Workface' },
+    perfil: { titulo: 'My profile · Workface' },
+    galeria: { titulo: 'Templates · Workface' },
+    contacto: { titulo: 'Contact · Workface' },
+  },
   zonas: {
     remotoTitulo: 'REMOTE WORK ZONE',
     remotoIntro: 'Job boards and companies where you can work from anywhere.',

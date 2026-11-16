@@ -95,6 +95,13 @@ Después de publicar, comprueba lo siguiente:
 - En GitHub, **Settings > Pages** debe tener `gh-pages` como rama de origen.
 - En Firebase, `2014maximo.github.io` debe estar en **Authentication > Settings > Authorized domains**. Sin eso falla el inicio de sesión con Google.
 
+### SEO
+
+- Solo la raíz (`https://2014maximo.github.io/workface/`) se puede indexar: GitHub Pages sirve las demás rutas desde `404.html` con código 404, y casi todas piden sesión. `SeoService` marca el resto como `noindex`.
+- El título, la descripción, las etiquetas para redes (Open Graph y Twitter) y los datos estructurados están en `src/index.html`. Si cambia la dirección del sitio, hay que actualizar esas URL, `URL_PUBLICA` en `src/app/services/seo.service.ts` y `src/sitemap.xml`.
+- En un sitio de proyecto de GitHub Pages, un `robots.txt` propio no sirve: solo cuenta el de la raíz del dominio.
+- Para que Google lo encuentre: en [Google Search Console](https://search.google.com/search-console) agrega la propiedad con prefijo de URL `https://2014maximo.github.io/workface/`, verifícala (por ejemplo con la etiqueta HTML) y envía `sitemap.xml`.
+
 ## Reglas de Firebase
 
 Las reglas están en `firestore.rules` y `storage.rules`: cada usuario solo accede a sus propios datos. En Storage, los archivos deben ir dentro de `usuarios/{uid}/`, y solo se permiten imágenes de hasta 5 MB.
