@@ -5,6 +5,11 @@
   <app-slider-home></app-slider-home>
   <div class="espacio"></div>
   <app-slider-frases-home></app-slider-frases-home>
+  <div class="zonas">
+    <app-zona-trabajo titulo="zonas.remotoTitulo" intro="zonas.remotoIntro" [grupos]="zonaRemota"></app-zona-trabajo>
+    <app-zona-trabajo titulo="zonas.freelanceTitulo" intro="zonas.freelanceIntro" [grupos]="zonaFreelance"></app-zona-trabajo>
+    <p class="aviso-sitios">{{ 'zonas.aviso' | translate }}</p>
+  </div>
 </main>
 <div class="espacio-superior"></div>
 <app-footer></app-footer>

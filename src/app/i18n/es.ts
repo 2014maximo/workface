@@ -36,6 +36,21 @@ export const ES = {
     f3: 'La primera imagen es la más importante.',
     f4: 'Llegará en un momento en que nos cansemos de tanta información, personalizaciones avanzadas y cargadas de contenido.',
   },
+  zonas: {
+    remotoTitulo: 'ZONA DE TRABAJO REMOTO',
+    remotoIntro: 'Bolsas de empleo y empresas donde puedes trabajar desde cualquier lugar.',
+    bolsas: 'Bolsas de empleo',
+    empresas: 'Empresas 100 % remotas',
+    freelanceTitulo: 'ZONA FREELANCE',
+    freelanceIntro: 'Plataformas para conseguir proyectos y clientes por tu cuenta.',
+    pestanaNueva: '(se abre en una pestaña nueva)',
+    aviso: 'Workface no tiene relación con estos sitios. Los enlaces se abren en una pestaña nueva.',
+    region: {
+      global: 'Global',
+      latam: 'Latinoamérica',
+      europa: 'Europa',
+    },
+  },
   login: {
     tituloIngresar: 'INGRESAR',
     tituloRegistrar: 'REGISTRAR',

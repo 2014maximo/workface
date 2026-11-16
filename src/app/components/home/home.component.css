@@ -1,0 +1,13 @@
+.zonas {
+    display: grid;
+    gap: clamp(96px, 12vw, 160px);
+    margin-top: clamp(96px, 12vw, 160px);
+}
+.aviso-sitios {
+    margin: calc(clamp(96px, 12vw, 160px) * -1 + 40px) 0 0;
+    padding-inline: clamp(12px, 8.33vw, 160px);
+    font-family: var(--fuente-uno);
+    font-size: 1rem;
+    letter-spacing: 0.04em;
+    color: var(--texto-secundario);
+}

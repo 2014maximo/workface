@@ -38,6 +38,21 @@ export const EN: Diccionario<typeof ES> = {
     f3: 'The first impression is the one that matters most.',
     f4: 'A time will come when we grow tired of so much information and heavy, content-packed customization.',
   },
+  zonas: {
+    remotoTitulo: 'REMOTE WORK ZONE',
+    remotoIntro: 'Job boards and companies where you can work from anywhere.',
+    bolsas: 'Job boards',
+    empresas: 'Fully remote companies',
+    freelanceTitulo: 'FREELANCE ZONE',
+    freelanceIntro: 'Platforms to find projects and clients on your own.',
+    pestanaNueva: '(opens in a new tab)',
+    aviso: 'Workface is not affiliated with these sites. Links open in a new tab.',
+    region: {
+      global: 'Global',
+      latam: 'Latin America',
+      europa: 'Europe',
+    },
+  },
   login: {
     tituloIngresar: 'SIGN IN',
     tituloRegistrar: 'SIGN UP',

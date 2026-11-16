@@ -12,6 +12,7 @@ import { CurriculumsComponent } from './components/curriculus/curriculums.compon
 import { CarruselDirective } from './carrusel.directive';
 import { SelectorHabilidadComponent } from './selector-habilidad/selector-habilidad.component';
 import { ImportarCvComponent } from './importar-cv/importar-cv.component';
+import { ZonaTrabajoComponent } from './zona-trabajo/zona-trabajo.component';
 
 
 
@@ -29,7 +30,8 @@ import { ImportarCvComponent } from './importar-cv/importar-cv.component';
     CurriculumsComponent,
     CarruselDirective,
     SelectorHabilidadComponent,
-    ImportarCvComponent
+    ImportarCvComponent,
+    ZonaTrabajoComponent
   ],
   imports: [
     CommonModule,
@@ -44,7 +46,8 @@ import { ImportarCvComponent } from './importar-cv/importar-cv.component';
     SliderFrasesHomeComponent,
     SliderHomeComponent,
     IotaComponent,
-    FormBasicComponent
+    FormBasicComponent,
+    ZonaTrabajoComponent
   ]
 })
 export class SharedModule { }

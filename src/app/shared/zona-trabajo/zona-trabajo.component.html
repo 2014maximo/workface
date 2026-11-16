@@ -1,0 +1,30 @@
+<section class="zona" [attr.aria-labelledby]="idTitulo">
+  <div class="zona-cabecera">
+    <h2 class="zona-titulo fuenteOcho" [id]="idTitulo">{{ titulo() | translate }}</h2>
+    <p class="zona-intro">{{ intro() | translate }}</p>
+  </div>
+  <div class="zona-grupos">
+    @for (grupo of grupos(); track $index) {
+      <div class="grupo">
+        @if (grupo.titulo) {
+          <h3 class="grupo-titulo">{{ grupo.titulo | translate }}</h3>
+        }
+        <ul class="sitios">
+          @for (sitio of grupo.sitios; track sitio.url) {
+            <li>
+              <a class="sitio" [href]="sitio.url" target="_blank" rel="noopener noreferrer">
+                <span class="sitio-nombre">{{ sitio.nombre }}</span>
+                <span class="sitio-descripcion">{{ sitio.descripcion[idioma()] }}</span>
+                <span class="sitio-region">{{ 'zonas.region.' + sitio.region | translate }}</span>
+                <svg class="sitio-flecha" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4.5 11.5l7-7M6 4.5h5.5V10"/>
+                </svg>
+                <span class="visually-hidden">{{ 'zonas.pestanaNueva' | translate }}</span>
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+    }
+  </div>
+</section>

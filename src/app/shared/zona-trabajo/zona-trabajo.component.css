@@ -1,0 +1,176 @@
+:host {
+    display: block;
+    --linea: rgba(255, 255, 255, 0.14);
+    --ease-salida: cubic-bezier(0.16, 1, 0.3, 1);
+}
+.zona {
+    display: grid;
+    gap: 32px;
+    padding-inline: clamp(12px, 8.33vw, 160px);
+}
+/* Titulo en Six Caps, la letra alta y estrecha del logo de Trucos pa' desarrollo */
+.zona-titulo {
+    margin: 0;
+    font-size: clamp(4rem, 2.5rem + 6vw, 6rem);
+    font-weight: 400;
+    line-height: 1.28;
+    letter-spacing: 0.02em;
+    color: #fff;
+    text-wrap: balance;
+}
+.zona-intro {
+    max-width: 34ch;
+    margin: 16px 0 0;
+    font-family: var(--fuente-uno);
+    font-weight: 300;
+    font-size: 1.25rem;
+    line-height: 1.4;
+    letter-spacing: 0.04em;
+    color: var(--texto-secundario);
+}
+.grupo + .grupo {
+    margin-top: 48px;
+}
+.grupo-titulo {
+    margin: 0 0 8px;
+    font-family: var(--fuente-uno);
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accion);
+}
+.sitios {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--linea);
+}
+.sitios li {
+    border-bottom: 1px solid var(--linea);
+}
+/* Cada sitio es una fila del indice: nombre, descripcion, region y flecha */
+.sitio {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+        "nombre flecha"
+        "descripcion flecha"
+        "region flecha";
+    align-items: center;
+    column-gap: 16px;
+    row-gap: 2px;
+    min-height: 48px;
+    padding: 14px 4px;
+    color: #fff;
+    text-decoration: none;
+    transition: background-color 200ms ease-out;
+}
+.sitio-nombre {
+    grid-area: nombre;
+    font-family: var(--fuente-uno);
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 1.15;
+    letter-spacing: 0.04em;
+    transition: color 200ms ease-out;
+}
+.sitio-descripcion {
+    grid-area: descripcion;
+    font-family: var(--fuente-uno);
+    font-weight: 300;
+    font-size: 1.125rem;
+    line-height: 1.35;
+    letter-spacing: 0.03em;
+    color: #d4d4d4;
+}
+.sitio-region {
+    grid-area: region;
+    margin-top: 4px;
+    font-family: var(--fuente-uno);
+    font-weight: 700;
+    font-size: 0.8125rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--texto-secundario);
+}
+.sitio-flecha {
+    grid-area: flecha;
+    width: 22px;
+    height: 22px;
+    color: var(--texto-secundario);
+    transition: transform 320ms var(--ease-salida), color 200ms ease-out;
+}
+@media (hover: hover) {
+    .sitio:hover {
+        background-color: rgba(255, 255, 255, 0.04);
+    }
+    .sitio:hover .sitio-nombre,
+    .sitio:hover .sitio-flecha {
+        color: var(--accion);
+    }
+    .sitio:hover .sitio-flecha {
+        transform: translate(3px, -3px);
+    }
+}
+.sitio:focus-visible {
+    outline: 2px solid var(--foco);
+    outline-offset: 2px;
+}
+.sitio:focus-visible .sitio-nombre {
+    color: var(--accion);
+}
+
+/* Tableta: nombre y region a la izquierda, descripcion al centro */
+@media (min-width: 768px) {
+    .sitio {
+        grid-template-columns: minmax(10rem, 14rem) 1fr auto auto;
+        grid-template-areas: "nombre descripcion region flecha";
+        column-gap: 24px;
+        padding: 18px 8px;
+    }
+    .sitio-region {
+        margin-top: 0;
+        text-align: right;
+    }
+}
+/* Escritorio: el titulo queda fijo a la izquierda mientras se recorre la lista */
+@media (min-width: 1200px) {
+    .zona {
+        grid-template-columns: minmax(18rem, 1fr) 2fr;
+        gap: 64px;
+        align-items: start;
+    }
+    .zona-cabecera {
+        position: sticky;
+        top: 140px;
+    }
+}
+
+/* Al entrar en pantalla, cada fila sube un poco; si el navegador no lo soporta quedan visibles */
+@supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+        .sitios li {
+            animation: fila-entrar linear both;
+            animation-timeline: view();
+            animation-range: entry 0% entry 60%;
+        }
+    }
+}
+@keyframes fila-entrar {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .sitio,
+    .sitio-nombre,
+    .sitio-flecha {
+        transition: none;
+    }
+}

@@ -38,6 +38,21 @@ export const FR: Diccionario<typeof ES> = {
     f3: 'La première impression est la plus importante.',
     f4: "Un jour viendra où nous serons lassés de tant d'informations et de personnalisations chargées de contenu.",
   },
+  zonas: {
+    remotoTitulo: 'ZONE TÉLÉTRAVAIL',
+    remotoIntro: 'Sites d’emploi et entreprises où travailler de n’importe où.',
+    bolsas: 'Sites d’emploi',
+    empresas: 'Entreprises 100 % à distance',
+    freelanceTitulo: 'ZONE FREELANCE',
+    freelanceIntro: 'Plateformes pour trouver des missions et des clients en indépendant.',
+    pestanaNueva: '(s’ouvre dans un nouvel onglet)',
+    aviso: 'Workface n’est affilié à aucun de ces sites. Les liens s’ouvrent dans un nouvel onglet.',
+    region: {
+      global: 'Monde',
+      latam: 'Amérique latine',
+      europa: 'Europe',
+    },
+  },
   login: {
     tituloIngresar: 'SE CONNECTER',
     tituloRegistrar: "S'INSCRIRE",
