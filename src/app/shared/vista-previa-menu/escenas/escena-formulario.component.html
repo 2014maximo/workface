@@ -1,0 +1,18 @@
+<div class="mini-form">
+  <div class="mini-titulo"><i></i><i></i></div>
+  @for (campo of [1, 2, 3]; track campo) {
+    <div class="mini-campo">
+      <span class="mini-etiqueta"></span>
+      <span class="mini-input"><span class="mini-texto"></span></span>
+    </div>
+  }
+</div>
+<div class="mini-barra">
+  <span class="mini-ingreso"></span>
+  <span class="mini-pasos">
+    @for (paso of pasos; track paso) {
+      <i></i>
+    }
+  </span>
+  <span class="mini-guardar"></span>
+</div>

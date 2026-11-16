@@ -1,0 +1,32 @@
+<svg viewBox="30 110 200 260" xmlns="http://www.w3.org/2000/svg">
+  <polygon class="luz-piso" points="148,280 212,280 250,312 110,312"/>
+  <rect class="puerta-luz" x="148" y="172" width="64" height="108"/>
+  <defs>
+    <clipPath id="vista-salir-vano"><rect x="148" y="172" width="64" height="108"/></clipPath>
+  </defs>
+  <g class="puerta-hoja">
+    <rect x="148" y="172" width="64" height="108"/>
+    <circle cx="203" cy="228" r="2.5"/>
+  </g>
+  <g class="muneco">
+    <line class="pierna pierna-a" x1="0" y1="-26" x2="0" y2="0"/>
+    <line class="pierna pierna-b" x1="0" y1="-26" x2="0" y2="0"/>
+    <line x1="0" y1="-53" x2="0" y2="-26"/>
+    <line class="brazo brazo-a" x1="0" y1="-49" x2="0" y2="-31"/>
+    <line class="brazo brazo-b" x1="0" y1="-49" x2="0" y2="-31"/>
+    <circle cx="0" cy="-63" r="9"/>
+  </g>
+  <!-- La misma figura en oscuro, recortada al vano: se ve a contraluz al cruzar la puerta -->
+  <g clip-path="url(#vista-salir-vano)">
+    <g class="muneco muneco-contraluz">
+      <line class="pierna pierna-a" x1="0" y1="-26" x2="0" y2="0"/>
+      <line class="pierna pierna-b" x1="0" y1="-26" x2="0" y2="0"/>
+      <line x1="0" y1="-53" x2="0" y2="-26"/>
+      <line class="brazo brazo-a" x1="0" y1="-49" x2="0" y2="-31"/>
+      <line class="brazo brazo-b" x1="0" y1="-49" x2="0" y2="-31"/>
+      <circle cx="0" cy="-63" r="9"/>
+    </g>
+  </g>
+  <rect class="puerta-marco" x="146" y="170" width="68" height="111"/>
+  <line class="piso" x1="20" y1="281" x2="240" y2="281"/>
+</svg>

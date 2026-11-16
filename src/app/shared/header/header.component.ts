@@ -4,8 +4,7 @@ import { animate, stagger, AnimationPlaybackControls } from 'motion';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { UserFirebase } from '../../models/usuario.model';
-
-export type VistaPrevia = 'perfil' | 'plantillas' | 'contacto' | 'salir';
+import { VistaPrevia } from '../vista-previa-menu/vista-previa-menu.component';
 
 @Component({
   standalone: false,
@@ -32,8 +31,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   /** Destino que se muestra en la vista previa del menu (solo escritorio). */
   public vistaPrevia: VistaPrevia | null = null;
-  /** Los 14 pasos del formulario, para la miniatura de su barra. */
-  public readonly pasosMiniatura = Array.from({ length: 14 }, (_, i) => i);
   private esperaOcultar?: ReturnType<typeof setTimeout>;
 
   constructor(private route: ActivatedRoute,

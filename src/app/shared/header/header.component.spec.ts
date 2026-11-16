@@ -4,6 +4,8 @@ import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testin
 import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { HeaderComponent } from './header.component';
+import { VistaPreviaMenuComponent } from '../vista-previa-menu/vista-previa-menu.component';
+import { ESCENAS_VISTA_PREVIA } from '../vista-previa-menu/escenas';
 import { AuthService } from '../../services/auth.service';
 
 describe('HeaderComponent', () => {
@@ -12,7 +14,7 @@ describe('HeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [HeaderComponent],
+      declarations: [HeaderComponent, VistaPreviaMenuComponent, ...ESCENAS_VISTA_PREVIA],
       imports: [TranslatePipe],
       providers: [
         proveerTraduccionPruebas(),
@@ -74,7 +76,7 @@ describe('HeaderComponent con sesión: vista previa del menú', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [HeaderComponent],
+      declarations: [HeaderComponent, VistaPreviaMenuComponent, ...ESCENAS_VISTA_PREVIA],
       imports: [TranslatePipe],
       providers: [
         proveerTraduccionPruebas(),

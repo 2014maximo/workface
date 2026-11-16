@@ -1,0 +1,22 @@
+<svg viewBox="30 110 200 260" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- El sobre deja de verse al bajar por la ranura -->
+    <clipPath id="vista-contacto-ranura"><rect x="0" y="0" width="260" height="178"/></clipPath>
+  </defs>
+  <rect class="buzon-poste" x="134" y="230" width="12" height="51"/>
+  <g class="buzon">
+    <path class="buzon-cuerpo" d="M100 230 V182 A40 24 0 0 1 180 182 V230 Z"/>
+    <rect class="buzon-ranura" x="118" y="176" width="44" height="5" rx="2"/>
+  </g>
+  <g clip-path="url(#vista-contacto-ranura)">
+    <g class="sobre">
+      <rect x="-20" y="-13" width="40" height="26" rx="2"/>
+      <path d="M-19 -12 L0 3 L19 -12"/>
+    </g>
+  </g>
+  <g class="bandera">
+    <line x1="184" y1="216" x2="184" y2="188"/>
+    <rect x="184" y="188" width="14" height="10"/>
+  </g>
+  <line class="piso" x1="20" y1="281" x2="240" y2="281"/>
+</svg>

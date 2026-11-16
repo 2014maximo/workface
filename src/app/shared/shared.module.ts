@@ -13,6 +13,8 @@ import { CarruselDirective } from './carrusel.directive';
 import { SelectorHabilidadComponent } from './selector-habilidad/selector-habilidad.component';
 import { ImportarCvComponent } from './importar-cv/importar-cv.component';
 import { ZonaTrabajoComponent } from './zona-trabajo/zona-trabajo.component';
+import { VistaPreviaMenuComponent } from './vista-previa-menu/vista-previa-menu.component';
+import { ESCENAS_VISTA_PREVIA } from './vista-previa-menu/escenas';
 
 
 
@@ -31,7 +33,9 @@ import { ZonaTrabajoComponent } from './zona-trabajo/zona-trabajo.component';
     CarruselDirective,
     SelectorHabilidadComponent,
     ImportarCvComponent,
-    ZonaTrabajoComponent
+    ZonaTrabajoComponent,
+    VistaPreviaMenuComponent,
+    ...ESCENAS_VISTA_PREVIA
   ],
   imports: [
     CommonModule,

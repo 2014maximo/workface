@@ -1,0 +1,43 @@
+/* Plantillas CV: la hoja Iota se asienta sobre otra */
+:host {
+    height: 100%;
+    display: grid;
+    place-items: center;
+    background: radial-gradient(120% 80% at 50% 110%, #2a2a2a, #161616 70%);
+}
+.hoja-fondo,
+.hoja {
+    grid-area: 1 / 1;
+    width: 186px;
+    height: 240px;
+}
+.hoja-fondo {
+    background: #d9d6cf;
+    transform: rotate(-6deg) translate(-10px, 6px);
+    box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.8);
+}
+.hoja {
+    object-fit: cover;
+    object-position: top;
+    box-shadow: 0 16px 30px -10px rgba(0, 0, 0, 0.85), 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+:host(.activa) .hoja {
+    animation: hoja-asentar 620ms var(--ease-salida) 80ms both;
+}
+:host(.activa) .hoja-fondo {
+    animation: hoja-fondo-abrir 620ms var(--ease-salida) 80ms both;
+}
+@keyframes hoja-asentar {
+    from { transform: translateY(26px) rotate(5deg); }
+    to { transform: none; }
+}
+@keyframes hoja-fondo-abrir {
+    from { transform: rotate(0) translate(0, 0); }
+    to { transform: rotate(-6deg) translate(-10px, 6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :host * {
+        animation: none !important;
+    }
+}

@@ -1,0 +1,65 @@
+/* ---------- Vista previa del destino (solo escritorio con puntero) ---------- */
+.vista-previa {
+    display: none;
+}
+@media (min-width: 1024px) and (hover: hover) {
+    .vista-previa {
+        --ease-salida: cubic-bezier(0.16, 1, 0.3, 1);
+        display: block;
+        position: absolute;
+        top: 50%;
+        /* A la derecha de la lista centrada, sin taparla */
+        left: calc(50% + 190px);
+        width: 260px;
+        height: 340px;
+        overflow: hidden;
+        background: #161616;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 6px;
+        box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.7), 0 2px 6px rgba(0, 0, 0, 0.4);
+        pointer-events: none;
+        opacity: 0;
+        transform: translate(-12px, -50%);
+        clip-path: inset(0 100% 0 0 round 6px);
+        transition: opacity 160ms ease-out, transform 160ms ease-out, clip-path 160ms ease-out;
+    }
+    /* Entra abriéndose de izquierda a derecha, desde la opción hacia la derecha */
+    .vista-previa[data-vista] {
+        opacity: 1;
+        transform: translate(0, -50%);
+        clip-path: inset(0 0 0 0 round 6px);
+        transition: opacity 240ms var(--ease-salida), transform 420ms var(--ease-salida), clip-path 420ms var(--ease-salida);
+    }
+    .escena {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transform: translateY(10px);
+        filter: blur(4px);
+        transition: opacity 180ms ease-out, transform 180ms ease-out, filter 180ms ease-out;
+    }
+    .vista-previa[data-vista="perfil"] .escena-perfil,
+    .vista-previa[data-vista="plantillas"] .escena-plantillas,
+    .vista-previa[data-vista="salir"] .escena-salir,
+    .vista-previa[data-vista="contacto"] .escena-contacto {
+        opacity: 1;
+        transform: none;
+        filter: none;
+        transition: opacity 260ms var(--ease-salida) 60ms, transform 420ms var(--ease-salida) 60ms, filter 260ms var(--ease-salida) 60ms;
+    }
+}
+/* Menos movimiento: la vista previa solo aparece y cambia, sin desplazarse */
+@media (min-width: 1024px) and (hover: hover) and (prefers-reduced-motion: reduce) {
+    .vista-previa,
+    .vista-previa[data-vista] {
+        transform: translate(0, -50%);
+        clip-path: none;
+        transition: opacity 150ms linear;
+    }
+    .escena,
+    .vista-previa[data-vista] .escena {
+        transform: none;
+        filter: none;
+        transition: opacity 150ms linear;
+    }
+}

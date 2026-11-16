@@ -1,0 +1,14 @@
+<div class="vista-previa" aria-hidden="true" [attr.data-vista]="vista()">
+  <div class="escena escena-perfil">
+    <app-escena-formulario [class.activa]="vista() === 'perfil'"></app-escena-formulario>
+  </div>
+  <div class="escena escena-plantillas">
+    <app-escena-plantilla [class.activa]="vista() === 'plantillas'"></app-escena-plantilla>
+  </div>
+  <div class="escena escena-contacto">
+    <app-escena-buzon [class.activa]="vista() === 'contacto'"></app-escena-buzon>
+  </div>
+  <div class="escena escena-salir">
+    <app-escena-salida [class.activa]="vista() === 'salir'"></app-escena-salida>
+  </div>
+</div>

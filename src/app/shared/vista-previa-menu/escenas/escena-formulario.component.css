@@ -1,0 +1,140 @@
+/* Información de CV: miniatura del formulario que se va llenando */
+:host {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: #202020;
+}
+.mini-form {
+    margin: auto 20px;
+    padding: 18px 16px 20px;
+    background: #121212;
+    box-shadow: 0 8px 18px -6px rgba(0, 0, 0, 0.8);
+}
+.mini-titulo {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 18px;
+}
+.mini-titulo i {
+    height: 8px;
+    width: 64px;
+    border-radius: 1px;
+    background: #9c9c9c;
+}
+.mini-titulo i + i {
+    width: 46px;
+}
+.mini-campo + .mini-campo {
+    margin-top: 12px;
+}
+.mini-etiqueta {
+    display: block;
+    width: 38%;
+    height: 4px;
+    margin-bottom: 6px;
+    border-radius: 1px;
+    background: var(--texto-secundario);
+    opacity: 0.7;
+}
+.mini-campo:nth-child(3) .mini-etiqueta { width: 52%; }
+.mini-campo:nth-child(4) .mini-etiqueta { width: 30%; }
+.mini-input {
+    display: flex;
+    align-items: center;
+    height: 18px;
+    padding: 0 6px;
+    border: 1px solid var(--borde-campo);
+    border-radius: 2px;
+}
+.mini-texto {
+    display: block;
+    width: 0;
+    height: 5px;
+    border-radius: 1px;
+    background: #eaeaea;
+}
+.mini-barra {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: #1a1a1a;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+.mini-ingreso {
+    width: 14px;
+    height: 14px;
+    border: 1px solid var(--accion);
+    border-radius: 2px;
+}
+.mini-pasos {
+    display: flex;
+    flex: 1;
+    gap: 2px;
+}
+.mini-pasos i {
+    flex: 1;
+    height: 4px;
+    background: #6a6a6a;
+}
+.mini-guardar {
+    width: 30px;
+    height: 14px;
+    border-radius: 2px;
+    background: var(--color-alpha);
+}
+/* Al mostrarse: cada campo se escribe, toma el foco azul y su paso queda en verde */
+:host(.activa) .mini-campo .mini-texto {
+    animation: mini-escribir 520ms steps(9, end) forwards;
+}
+:host(.activa) .mini-campo .mini-input {
+    animation: mini-foco 520ms linear;
+}
+:host(.activa) .mini-pasos i:nth-child(-n+3) {
+    animation: mini-paso 240ms var(--ease-salida) forwards;
+}
+.mini-campo:nth-child(2) .mini-texto,
+.mini-campo:nth-child(2) .mini-input,
+.mini-pasos i:nth-child(1) { --tramo: 0; }
+.mini-campo:nth-child(3) .mini-texto,
+.mini-campo:nth-child(3) .mini-input,
+.mini-pasos i:nth-child(2) { --tramo: 1; }
+.mini-campo:nth-child(4) .mini-texto,
+.mini-campo:nth-child(4) .mini-input,
+.mini-pasos i:nth-child(3) { --tramo: 2; }
+:host(.activa) .mini-campo .mini-texto,
+:host(.activa) .mini-campo .mini-input {
+    animation-delay: calc(280ms + var(--tramo) * 560ms);
+    animation-fill-mode: both;
+}
+:host(.activa) .mini-campo .mini-input {
+    animation-fill-mode: none;
+}
+:host(.activa) .mini-pasos i:nth-child(-n+3) {
+    animation-delay: calc(800ms + var(--tramo) * 560ms);
+}
+.mini-campo:nth-child(3) { --largo: 58%; }
+.mini-campo:nth-child(4) { --largo: 44%; }
+@keyframes mini-escribir {
+    to { width: var(--largo, 72%); }
+}
+@keyframes mini-foco {
+    0%, 100% { border-color: var(--foco); box-shadow: 0 0 0 1px var(--foco); }
+}
+@keyframes mini-paso {
+    from { background: #6a6a6a; transform: scaleY(1); }
+    50% { transform: scaleY(1.8); }
+    to { background: #8bc53f; transform: scaleY(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :host * {
+        animation: none !important;
+    }
+    /* Estado final fijo: el formulario lleno */
+    .mini-texto { width: var(--largo, 72%); }
+    .mini-pasos i:nth-child(-n+3) { background: #8bc53f; }
+}
