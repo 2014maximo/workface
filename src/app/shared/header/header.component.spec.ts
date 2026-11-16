@@ -32,6 +32,12 @@ describe('HeaderComponent', () => {
   const abrir = () => elemento.querySelector<HTMLButtonElement>('header button')!;
   const menu = () => elemento.querySelector<HTMLElement>('nav')!;
 
+  it('sin sesión, Contacto también muestra su vista previa', () => {
+    elemento.querySelector<HTMLElement>('a[href="contacto"]')!.dispatchEvent(new MouseEvent('mouseenter'));
+    fixture.detectChanges();
+    expect(elemento.querySelector('.vista-previa')!.getAttribute('data-vista')).toBe('contacto');
+  });
+
   it('el encabezado no se oculta por ancho de pantalla', () => {
     expect(elemento.querySelector('header')!.className).not.toContain('d-none');
   });
@@ -91,7 +97,7 @@ describe('HeaderComponent con sesión: vista previa del menú', () => {
   });
 
   it('muestra el destino de cada opción al pasar el puntero o enfocarla', () => {
-    const casos: [string, string][] = [['a[href="profile"]', 'perfil'], ['a[href="galeria"]', 'plantillas'], ['.btn-salir', 'salir']];
+    const casos: [string, string][] = [['a[href="profile"]', 'perfil'], ['a[href="galeria"]', 'plantillas'], ['a[href="contacto"]', 'contacto'], ['.btn-salir', 'salir']];
     for (const [selector, esperada] of casos) {
       opcion(selector).dispatchEvent(new MouseEvent('mouseenter'));
       fixture.detectChanges();

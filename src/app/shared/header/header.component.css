@@ -240,7 +240,8 @@ a {
     }
     .vista-previa[data-vista="perfil"] .escena-perfil,
     .vista-previa[data-vista="plantillas"] .escena-plantillas,
-    .vista-previa[data-vista="salir"] .escena-salir {
+    .vista-previa[data-vista="salir"] .escena-salir,
+    .vista-previa[data-vista="contacto"] .escena-contacto {
         opacity: 1;
         transform: none;
         filter: none;
@@ -416,7 +417,8 @@ a {
     }
 
     /* Salir: el muñeco camina hacia la luz de la puerta y la puerta se cierra */
-    .escena-salir svg {
+    .escena-salir svg,
+    .escena-contacto svg {
         display: block;
         width: 100%;
         height: 100%;
@@ -508,6 +510,75 @@ a {
     @keyframes luz-apagar {
         to { opacity: 0; }
     }
+
+    /* Contacto: un sobre vuela hasta el buzón, entra por la ranura y se levanta la bandera */
+    .buzon-poste {
+        fill: #2b2b2b;
+        stroke: rgba(255, 255, 255, 0.3);
+    }
+    .buzon-cuerpo {
+        fill: #2b2b2b;
+        stroke: rgba(255, 255, 255, 0.55);
+        stroke-width: 2;
+    }
+    .buzon-ranura {
+        fill: #050505;
+        stroke: rgba(255, 255, 255, 0.35);
+    }
+    .buzon {
+        transform-box: fill-box;
+        transform-origin: 50% 100%;
+    }
+    .sobre rect {
+        fill: #f2f2f2;
+    }
+    .sobre path {
+        fill: none;
+        stroke: #8a8a8a;
+        stroke-width: 1.5;
+        stroke-linejoin: round;
+    }
+    .sobre {
+        /* Por defecto ya entró: solo se ve durante la animación */
+        transform: translate(140px, 200px);
+    }
+    .bandera line {
+        stroke: rgba(255, 255, 255, 0.7);
+        stroke-width: 2.5;
+        stroke-linecap: round;
+    }
+    .bandera rect {
+        fill: var(--accion);
+    }
+    .bandera {
+        transform-box: fill-box;
+        transform-origin: 0 100%;
+        transform: rotate(90deg);
+    }
+    .vista-previa[data-vista="contacto"] .sobre {
+        animation: sobre-volar 1150ms cubic-bezier(0.33, 0, 0.2, 1) 200ms both;
+    }
+    .vista-previa[data-vista="contacto"] .buzon {
+        animation: buzon-recibir 360ms ease-out 1300ms both;
+    }
+    .vista-previa[data-vista="contacto"] .bandera {
+        animation: bandera-subir 560ms cubic-bezier(0.34, 1.56, 0.64, 1) 1450ms both;
+    }
+    @keyframes sobre-volar {
+        0% { transform: translate(52px, 150px) rotate(-16deg); opacity: 0; }
+        10% { opacity: 1; }
+        58% { transform: translate(140px, 160px) rotate(0deg); }
+        70% { transform: translate(140px, 160px) rotate(0deg); }
+        100% { transform: translate(140px, 196px) rotate(0deg); }
+    }
+    @keyframes buzon-recibir {
+        0%, 100% { transform: none; }
+        40% { transform: scaleY(0.97); }
+    }
+    @keyframes bandera-subir {
+        from { transform: rotate(90deg); }
+        to { transform: rotate(0deg); }
+    }
 }
 /* Menos movimiento: la vista previa solo aparece y cambia, sin desplazarse ni animar escenas */
 @media (min-width: 1024px) and (hover: hover) and (prefers-reduced-motion: reduce) {
@@ -530,4 +601,5 @@ a {
     .mini-texto { width: var(--largo, 72%); }
     .mini-pasos i:nth-child(-n+3) { background: #8bc53f; }
     .muneco { transform: translate(120px, 280px); }
+    .bandera { transform: none; }
 }

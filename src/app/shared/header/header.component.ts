@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { UserFirebase } from '../../models/usuario.model';
 
-export type VistaPrevia = 'perfil' | 'plantillas' | 'salir';
+export type VistaPrevia = 'perfil' | 'plantillas' | 'contacto' | 'salir';
 
 @Component({
   standalone: false,
