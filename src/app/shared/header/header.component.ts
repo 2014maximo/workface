@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { UserFirebase } from '../../models/usuario.model';
 
+export type VistaPrevia = 'perfil' | 'plantillas' | 'salir';
+
 @Component({
   standalone: false,
   selector: 'app-header',
@@ -27,6 +29,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public email: string = '';
   public enLogin: boolean = false;
   private animaciones: AnimationPlaybackControls[] = [];
+
+  /** Destino que se muestra en la vista previa del menu (solo escritorio). */
+  public vistaPrevia: VistaPrevia | null = null;
+  /** Los 14 pasos del formulario, para la miniatura de su barra. */
+  public readonly pasosMiniatura = Array.from({ length: 14 }, (_, i) => i);
+  private esperaOcultar?: ReturnType<typeof setTimeout>;
 
   constructor(private route: ActivatedRoute,
     private authService: AuthService,
@@ -64,6 +72,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.terminarAnimaciones();
+    clearTimeout(this.esperaOcultar);
+  }
+
+  public mostrarVista(vista: VistaPrevia){
+    clearTimeout(this.esperaOcultar);
+    this.vistaPrevia = vista;
+  }
+
+  // Una pausa corta para que, al pasar de una opcion a otra, la vista cambie sin apagarse
+  public ocultarVista(){
+    clearTimeout(this.esperaOcultar);
+    this.esperaOcultar = setTimeout(() => this.vistaPrevia = null, 120);
   }
 
   public abreMenu(){
@@ -74,6 +94,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   public cierreMenu(){
     this.menuAbierto = false;
+    clearTimeout(this.esperaOcultar);
+    this.vistaPrevia = null;
     this.terminarAnimaciones();
     this.enfocarDespuesDeRenderizar(this.botonAbrir);
   }

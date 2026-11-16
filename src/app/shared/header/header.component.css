@@ -197,3 +197,337 @@ a {
         transition: opacity 150ms linear, visibility 0s;
     }
 }
+
+/* ---------- Vista previa del destino (solo escritorio con puntero) ---------- */
+.vista-previa {
+    display: none;
+}
+@media (min-width: 1024px) and (hover: hover) {
+    .vista-previa {
+        --ease-salida: cubic-bezier(0.16, 1, 0.3, 1);
+        display: block;
+        position: absolute;
+        top: 50%;
+        /* A la derecha de la lista centrada, sin taparla */
+        left: calc(50% + 190px);
+        width: 260px;
+        height: 340px;
+        overflow: hidden;
+        background: #161616;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 6px;
+        box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.7), 0 2px 6px rgba(0, 0, 0, 0.4);
+        pointer-events: none;
+        opacity: 0;
+        transform: translate(-12px, -50%);
+        clip-path: inset(0 100% 0 0 round 6px);
+        transition: opacity 160ms ease-out, transform 160ms ease-out, clip-path 160ms ease-out;
+    }
+    /* Entra abriéndose de izquierda a derecha, desde la opción hacia la derecha */
+    .vista-previa[data-vista] {
+        opacity: 1;
+        transform: translate(0, -50%);
+        clip-path: inset(0 0 0 0 round 6px);
+        transition: opacity 240ms var(--ease-salida), transform 420ms var(--ease-salida), clip-path 420ms var(--ease-salida);
+    }
+    .escena {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transform: translateY(10px);
+        filter: blur(4px);
+        transition: opacity 180ms ease-out, transform 180ms ease-out, filter 180ms ease-out;
+    }
+    .vista-previa[data-vista="perfil"] .escena-perfil,
+    .vista-previa[data-vista="plantillas"] .escena-plantillas,
+    .vista-previa[data-vista="salir"] .escena-salir {
+        opacity: 1;
+        transform: none;
+        filter: none;
+        transition: opacity 260ms var(--ease-salida) 60ms, transform 420ms var(--ease-salida) 60ms, filter 260ms var(--ease-salida) 60ms;
+    }
+
+    /* Información de CV: miniatura del formulario que se va llenando */
+    .escena-perfil {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background: #202020;
+    }
+    .mini-form {
+        margin: auto 20px;
+        padding: 18px 16px 20px;
+        background: #121212;
+        box-shadow: 0 8px 18px -6px rgba(0, 0, 0, 0.8);
+    }
+    .mini-titulo {
+        display: flex;
+        justify-content: center;
+        gap: 6px;
+        margin-bottom: 18px;
+    }
+    .mini-titulo i {
+        height: 8px;
+        width: 64px;
+        border-radius: 1px;
+        background: #9c9c9c;
+    }
+    .mini-titulo i + i {
+        width: 46px;
+    }
+    .mini-campo + .mini-campo {
+        margin-top: 12px;
+    }
+    .mini-etiqueta {
+        display: block;
+        width: 38%;
+        height: 4px;
+        margin-bottom: 6px;
+        border-radius: 1px;
+        background: var(--texto-secundario);
+        opacity: 0.7;
+    }
+    .mini-campo:nth-child(3) .mini-etiqueta { width: 52%; }
+    .mini-campo:nth-child(4) .mini-etiqueta { width: 30%; }
+    .mini-input {
+        display: flex;
+        align-items: center;
+        height: 18px;
+        padding: 0 6px;
+        border: 1px solid var(--borde-campo);
+        border-radius: 2px;
+    }
+    .mini-texto {
+        display: block;
+        width: 0;
+        height: 5px;
+        border-radius: 1px;
+        background: #eaeaea;
+    }
+    .mini-barra {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 12px;
+        background: #1a1a1a;
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    .mini-ingreso {
+        width: 14px;
+        height: 14px;
+        border: 1px solid var(--accion);
+        border-radius: 2px;
+    }
+    .mini-pasos {
+        display: flex;
+        flex: 1;
+        gap: 2px;
+    }
+    .mini-pasos i {
+        flex: 1;
+        height: 4px;
+        background: #6a6a6a;
+    }
+    .mini-guardar {
+        width: 30px;
+        height: 14px;
+        border-radius: 2px;
+        background: var(--color-alpha);
+    }
+    /* Al mostrarse: cada campo se escribe, toma el foco azul y su paso queda en verde */
+    .vista-previa[data-vista="perfil"] .mini-campo .mini-texto {
+        animation: mini-escribir 520ms steps(9, end) forwards;
+    }
+    .vista-previa[data-vista="perfil"] .mini-campo .mini-input {
+        animation: mini-foco 520ms linear;
+    }
+    .vista-previa[data-vista="perfil"] .mini-pasos i:nth-child(-n+3) {
+        animation: mini-paso 240ms var(--ease-salida) forwards;
+    }
+    .mini-campo:nth-child(2) .mini-texto,
+    .mini-campo:nth-child(2) .mini-input,
+    .mini-pasos i:nth-child(1) { --tramo: 0; }
+    .mini-campo:nth-child(3) .mini-texto,
+    .mini-campo:nth-child(3) .mini-input,
+    .mini-pasos i:nth-child(2) { --tramo: 1; }
+    .mini-campo:nth-child(4) .mini-texto,
+    .mini-campo:nth-child(4) .mini-input,
+    .mini-pasos i:nth-child(3) { --tramo: 2; }
+    .vista-previa[data-vista="perfil"] .mini-campo .mini-texto,
+    .vista-previa[data-vista="perfil"] .mini-campo .mini-input {
+        animation-delay: calc(280ms + var(--tramo) * 560ms);
+        animation-fill-mode: both;
+    }
+    .vista-previa[data-vista="perfil"] .mini-campo .mini-input {
+        animation-fill-mode: none;
+    }
+    .vista-previa[data-vista="perfil"] .mini-pasos i:nth-child(-n+3) {
+        animation-delay: calc(800ms + var(--tramo) * 560ms);
+    }
+    .mini-campo:nth-child(3) { --largo: 58%; }
+    .mini-campo:nth-child(4) { --largo: 44%; }
+    @keyframes mini-escribir {
+        to { width: var(--largo, 72%); }
+    }
+    @keyframes mini-foco {
+        0%, 100% { border-color: var(--foco); box-shadow: 0 0 0 1px var(--foco); }
+    }
+    @keyframes mini-paso {
+        from { background: #6a6a6a; transform: scaleY(1); }
+        50% { transform: scaleY(1.8); }
+        to { background: #8bc53f; transform: scaleY(1); }
+    }
+
+    /* Plantillas CV: la hoja Iota se asienta sobre otra */
+    .escena-plantillas {
+        display: grid;
+        place-items: center;
+        background: radial-gradient(120% 80% at 50% 110%, #2a2a2a, #161616 70%);
+    }
+    .hoja-fondo,
+    .hoja {
+        grid-area: 1 / 1;
+        width: 186px;
+        height: 240px;
+    }
+    .hoja-fondo {
+        background: #d9d6cf;
+        transform: rotate(-6deg) translate(-10px, 6px);
+        box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.8);
+    }
+    .hoja {
+        object-fit: cover;
+        object-position: top;
+        box-shadow: 0 16px 30px -10px rgba(0, 0, 0, 0.85), 0 1px 3px rgba(0, 0, 0, 0.5);
+    }
+    .vista-previa[data-vista="plantillas"] .hoja {
+        animation: hoja-asentar 620ms var(--ease-salida) 80ms both;
+    }
+    .vista-previa[data-vista="plantillas"] .hoja-fondo {
+        animation: hoja-fondo-abrir 620ms var(--ease-salida) 80ms both;
+    }
+    @keyframes hoja-asentar {
+        from { transform: translateY(26px) rotate(5deg); }
+        to { transform: none; }
+    }
+    @keyframes hoja-fondo-abrir {
+        from { transform: rotate(0) translate(0, 0); }
+        to { transform: rotate(-6deg) translate(-10px, 6px); }
+    }
+
+    /* Salir: el muñeco camina hacia la luz de la puerta y la puerta se cierra */
+    .escena-salir svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+    .piso {
+        stroke: rgba(255, 255, 255, 0.28);
+        stroke-width: 1.5;
+    }
+    .puerta-marco {
+        fill: none;
+        stroke: rgba(255, 255, 255, 0.55);
+        stroke-width: 2;
+    }
+    .puerta-luz {
+        fill: var(--accion);
+        opacity: 0.85;
+    }
+    .luz-piso {
+        fill: var(--accion);
+        opacity: 0.12;
+    }
+    .puerta-hoja rect {
+        fill: #2b2b2b;
+        stroke: rgba(255, 255, 255, 0.3);
+    }
+    .puerta-hoja circle {
+        fill: var(--texto-secundario);
+    }
+    .puerta-hoja {
+        transform-box: fill-box;
+        transform-origin: left center;
+        transform: scaleX(0.14);
+    }
+    .muneco {
+        fill: none;
+        stroke: #f2f2f2;
+        stroke-width: 3.5;
+        stroke-linecap: round;
+        transform: translate(70px, 280px);
+    }
+    .muneco circle {
+        fill: #161616;
+    }
+    .muneco-contraluz {
+        stroke: #1a1a1a;
+    }
+    .muneco-contraluz circle {
+        fill: #1a1a1a;
+    }
+    .pierna,
+    .brazo {
+        transform-box: fill-box;
+        transform-origin: 50% 0;
+    }
+    .pierna-a, .brazo-b { transform: rotate(18deg); }
+    .pierna-b, .brazo-a { transform: rotate(-18deg); }
+    .vista-previa[data-vista="salir"] .muneco {
+        animation: muneco-salir 1800ms linear 200ms both;
+    }
+    .vista-previa[data-vista="salir"] .pierna-a,
+    .vista-previa[data-vista="salir"] .brazo-b {
+        animation: balanceo 400ms ease-in-out 200ms 4 alternate both;
+    }
+    .vista-previa[data-vista="salir"] .pierna-b,
+    .vista-previa[data-vista="salir"] .brazo-a {
+        animation: balanceo 400ms ease-in-out 200ms 4 alternate-reverse both;
+    }
+    .vista-previa[data-vista="salir"] .puerta-hoja {
+        animation: puerta-cerrar 520ms cubic-bezier(0.5, 0, 0.2, 1.25) 2000ms both;
+    }
+    .vista-previa[data-vista="salir"] .luz-piso,
+    .vista-previa[data-vista="salir"] .puerta-luz {
+        animation: luz-apagar 400ms ease-out 2120ms both;
+    }
+    @keyframes muneco-salir {
+        0% { transform: translate(56px, 280px) scale(1); opacity: 1; }
+        86% { opacity: 1; }
+        82% { transform: translate(178px, 280px) scale(1); }
+        100% { transform: translate(180px, 274px) scale(0.78); opacity: 0; }
+    }
+    @keyframes balanceo {
+        from { transform: rotate(22deg); }
+        to { transform: rotate(-22deg); }
+    }
+    @keyframes puerta-cerrar {
+        from { transform: scaleX(0.14); }
+        to { transform: scaleX(1); }
+    }
+    @keyframes luz-apagar {
+        to { opacity: 0; }
+    }
+}
+/* Menos movimiento: la vista previa solo aparece y cambia, sin desplazarse ni animar escenas */
+@media (min-width: 1024px) and (hover: hover) and (prefers-reduced-motion: reduce) {
+    .vista-previa,
+    .vista-previa[data-vista] {
+        transform: translate(0, -50%);
+        clip-path: none;
+        transition: opacity 150ms linear;
+    }
+    .escena,
+    .vista-previa[data-vista] .escena {
+        transform: none;
+        filter: none;
+        transition: opacity 150ms linear;
+    }
+    .vista-previa[data-vista] * {
+        animation: none !important;
+    }
+    /* Estados finales fijos: formulario lleno y el muñeco junto a la puerta abierta */
+    .mini-texto { width: var(--largo, 72%); }
+    .mini-pasos i:nth-child(-n+3) { background: #8bc53f; }
+    .muneco { transform: translate(120px, 280px); }
+}
