@@ -1,7 +1,7 @@
 import { combinarLecturas, normalizar } from '../../../services/importar-cv/interpretar-cv';
 import { leerArchivo } from '../../../services/importar-cv/leer-archivo';
 import { documentoIota, mesYAnio, nombreArchivoIota, puntosDe, rangoFechas, TITULOS_IOTA } from './iota-documento';
-import { crearPdfIota } from './iota-pdf';
+import { crearPdfIota, ESCALAS_IOTA, medirIota, TrazoIota } from './iota-pdf';
 import { EN } from '../../../i18n/en';
 
 // Perfil de prueba: datos inventados, con tildes y ñ para comprobar que el texto sale bien.
@@ -137,5 +137,96 @@ describe('Plantilla iota: lectura ATS del PDF', () => {
     expect(habilidades.join(' ')).toContain('TypeScript');
     expect(bloquesExperiencia.join('\n')).toContain('Tiendas Cafeteras');
     expect(bloquesEstudios.join('\n')).toContain('Universidad de Antioquia');
+  });
+});
+
+// Perfil con muchas funciones en el trabajo actual, para pasar de una hoja.
+const perfilLargo = (funciones: number) => {
+  const datos: any = perfil();
+  datos.formBasic.expLaboral[1].funcionesRealizadas = Array.from({ length: funciones },
+    (_, i) => `Coordiné el proyecto número ${i + 1} con equipos de diseño, producto y calidad en tres países.`).join('\n');
+  return documentoIota(datos);
+};
+
+// Texto de cada hoja del PDF, en el orden en que se escribio.
+async function textoPorHoja(datos: ArrayBuffer): Promise<string[]> {
+  const pdfjs = await import('pdfjs-dist/legacy/build/pdf.mjs');
+  pdfjs.GlobalWorkerOptions.workerSrc = new URL('assets/pdfjs/pdf.worker.min.mjs', document.baseURI).href;
+  const carga = pdfjs.getDocument({ data: new Uint8Array(datos), verbosity: 0 });
+  const documento = await carga.promise;
+  const hojas: string[] = [];
+  for (let numero = 1; numero <= documento.numPages; numero++) {
+    const contenido = await (await documento.getPage(numero)).getTextContent();
+    hojas.push(contenido.items.map(item => 'str' in item ? item.str : '').join(''));
+  }
+  await carga.destroy();
+  return hojas;
+}
+
+const hojas = (c: { paginas: unknown[] }) => c.paginas.length;
+const textosDe = (pagina: TrazoIota[]) => pagina.flatMap(t => t.tipo === 'texto' ? [t.texto] : []);
+
+describe('Plantilla iota: cantidad de hojas', () => {
+  it('un perfil corto ocupa una hoja y no se reduce', async () => {
+    const { normal, ajustada } = await medirIota(documentoIota(perfil()), false);
+    expect(hojas(normal)).toBe(1);
+    expect(normal.escala).toBe(1);
+    expect(ajustada).toBe(normal);
+  });
+
+  it('si apenas pasa de una hoja, al ajustarlo cabe en una y el PDF sale de una hoja', async () => {
+    // El primer largo que pasa de una hoja con la letra normal.
+    let funciones = 10;
+    let medida = await medirIota(perfilLargo(funciones), false);
+    while (hojas(medida.normal) === 1 && funciones < 80) {
+      funciones += 1;
+      medida = await medirIota(perfilLargo(funciones), false);
+    }
+    expect(hojas(medida.normal)).toBe(2);
+    expect(hojas(medida.ajustada)).toBe(1);
+    expect(medida.ajustada.escala).toBeLessThan(1);
+
+    const pdf = await crearPdfIota(perfilLargo(funciones), { conFoto: false, escala: medida.ajustada.escala });
+    expect(pdf.getNumberOfPages()).toBe(1);
+  });
+
+  it('si no cabe ni con la letra minima, usa la minima y cuenta las hojas', async () => {
+    const { normal, ajustada } = await medirIota(perfilLargo(120), false);
+    expect(ajustada.escala).toBe(ESCALAS_IOTA[ESCALAS_IOTA.length - 1]);
+    expect(hojas(ajustada)).toBeGreaterThan(1);
+    expect(hojas(ajustada)).toBeLessThanOrEqual(hojas(normal));
+  });
+
+  it('la vista paginada tiene las mismas hojas y el mismo texto que el PDF', async () => {
+    const cv = perfilLargo(60);
+    const { normal } = await medirIota(cv, false);
+    const pdf = await crearPdfIota(cv, { conFoto: false });
+    expect(hojas(normal)).toBe(pdf.getNumberOfPages());
+
+    const lectura = await textoPorHoja(pdf.output('arraybuffer'));
+    const sinEspacios = (texto: string) => texto.replace(/\s+/g, '');
+    normal.paginas.forEach((pagina, i) => {
+      // Cada hoja de la vista previa tiene exactamente los renglones de la misma hoja del PDF.
+      expect(sinEspacios(lectura[i])).toBe(sinEspacios(textosDe(pagina).join('')));
+    });
+    // La franja de color solo va en la primera hoja.
+    expect(normal.paginas[0].some(t => t.tipo === 'rectangulo')).toBeTrue();
+    expect(normal.paginas[1].some(t => t.tipo === 'rectangulo')).toBeFalse();
+  });
+
+  it('el PDF reducido sigue teniendo texto legible por un ATS', async () => {
+    const pdf = await crearPdfIota(perfilLargo(30), { conFoto: false, escala: 0.85 });
+    const [texto] = await leerArchivo(new File([pdf.output('arraybuffer')], 'cv.pdf', { type: 'application/pdf' }));
+    expect(texto).toContain('María José Peña Castaño');
+    expect(texto).toContain('Coordiné el proyecto número 30');
+  });
+
+  it('componer las hojas es rapido', async () => {
+    const cv = perfilLargo(40);
+    await medirIota(cv, false);
+    const inicio = performance.now();
+    await medirIota(cv, false);
+    // Se compone mientras se escribe en el perfil: no debe trabar la pagina.
+    expect(performance.now() - inicio).toBeLessThan(1000);
   });
 });

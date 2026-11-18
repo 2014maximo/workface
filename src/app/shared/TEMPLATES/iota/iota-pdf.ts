@@ -11,7 +11,8 @@ export const COLORES_IOTA = {
   acento: '#0B5D57',
 };
 
-const HOJA = { ancho: 612, alto: 792 };
+export const HOJA_IOTA = { ancho: 612, alto: 792 };
+const HOJA = HOJA_IOTA;
 const MARGEN = { izquierda: 54, derecha: 54, arriba: 58, abajo: 54 };
 const ANCHO_UTIL = HOJA.ancho - MARGEN.izquierda - MARGEN.derecha;
 const FRANJA = 5;
@@ -63,16 +64,58 @@ function cargarFuentes(): Promise<[string, string, string][]> {
 
 export interface OpcionesPdfIota {
   conFoto: boolean;
+  // Reduce la letra y los espacios para que quepa mas en cada hoja. 1 es el tamaño normal.
+  escala?: number;
 }
 
-export async function crearPdfIota(cv: DocumentoCv, opciones: OpcionesPdfIota): Promise<jsPDF> {
+// Pasos de "Ajustar a una página". El ultimo deja el cuerpo en 8,5 pt: menos ya cuesta leerlo.
+export const ESCALAS_IOTA = [1, 0.97, 0.94, 0.91, 0.88, 0.85];
+
+// Cada cosa que se dibuja en una hoja, en puntos y con la y en la linea base del texto.
+// La vista previa paginada los pinta en SVG: asi corta las hojas igual que el PDF.
+export type TrazoIota =
+  | { tipo: 'texto'; x: number; y: number; texto: string; tamano: number; negrita: boolean; color: string; alDerecha: boolean }
+  | { tipo: 'rectangulo'; x: number; y: number; ancho: number; alto: number; color: string }
+  | { tipo: 'linea'; x1: number; y1: number; x2: number; y2: number; grosor: number; color: string }
+  | { tipo: 'circulo'; x: number; y: number; radio: number; color: string }
+  | { tipo: 'imagen'; x: number; y: number; ancho: number; alto: number; src: string };
+
+export interface ComposicionIota {
+  escala: number;
+  // Una lista de trazos por hoja.
+  paginas: TrazoIota[][];
+}
+
+export interface MedidaIota {
+  // Con la letra normal.
+  normal: ComposicionIota;
+  // Con la escala mas grande con la que cabe en una hoja; si no cabe ni con la menor, con la menor.
+  // Si ya cabe en una hoja, es la misma que la normal.
+  ajustada: ComposicionIota;
+}
+
+type Jspdf = typeof import('jspdf').jsPDF;
+
+// Lo que no cambia entre un intento y otro: la libreria, las fuentes y la foto.
+async function preparar(cv: DocumentoCv, conFoto: boolean) {
   const [{ jsPDF }, archivosFuente] = await Promise.all([import('jspdf'), cargarFuentes()]);
+  const foto = conFoto ? await fotoCompatible(cv.foto) : '';
+  return { jsPDF, archivosFuente, foto };
+}
+
+function dibujar(cv: DocumentoCv, escala: number, { jsPDF, archivosFuente, foto }: { jsPDF: Jspdf; archivosFuente: [string, string, string][]; foto: string }) {
   const pdf = new jsPDF({ unit: 'pt', format: 'letter', compress: true, putOnlyUsedFonts: true });
   archivosFuente.forEach(([archivo, estilo, base64]) => {
     pdf.addFileToVFS(archivo, base64);
     pdf.addFont(archivo, FUENTE, estilo);
   });
+  const dibujo = new DibujoIota(pdf, escala);
+  dibujo.documento(cv, foto);
+  return { pdf, composicion: { escala, paginas: dibujo.paginas } as ComposicionIota };
+}
 
+export async function crearPdfIota(cv: DocumentoCv, opciones: OpcionesPdfIota): Promise<jsPDF> {
+  const { pdf } = dibujar(cv, opciones.escala ?? 1, await preparar(cv, opciones.conFoto));
   pdf.setProperties({
     title: cv.nombre ? `${cv.nombre} - ${cv.tituloDocumento}` : cv.tituloDocumento,
     subject: cv.cargo,
@@ -81,10 +124,23 @@ export async function crearPdfIota(cv: DocumentoCv, opciones: OpcionesPdfIota): 
     creator: 'Workface',
   });
   pdf.setLanguage(cv.idioma as Parameters<typeof pdf.setLanguage>[0]);
-
-  const foto = opciones.conFoto ? await fotoCompatible(cv.foto) : '';
-  new DibujoIota(pdf).documento(cv, foto);
   return pdf;
+}
+
+// Compone las hojas con el mismo dibujo del PDF, sin generar el archivo: sirve para contarlas
+// y para la vista previa paginada.
+export async function medirIota(cv: DocumentoCv, conFoto: boolean): Promise<MedidaIota> {
+  const recursos = await preparar(cv, conFoto);
+  const componer = (escala: number) => dibujar(cv, escala, recursos).composicion;
+  const normal = componer(1);
+  let ajustada = normal;
+  for (const escala of ESCALAS_IOTA.slice(1)) {
+    if (ajustada.paginas.length === 1) {
+      break;
+    }
+    ajustada = componer(escala);
+  }
+  return { normal, ajustada };
 }
 
 // jsPDF solo acepta JPEG y PNG. Otro formato se convierte a PNG; si no se puede, el PDF sale sin foto.
@@ -109,23 +165,68 @@ async function fotoCompatible(foto: string): Promise<string> {
 
 class DibujoIota {
   private y = MARGEN.arriba;
+  // Lo dibujado en cada hoja, para la vista previa.
+  readonly paginas: TrazoIota[][] = [[]];
+  private actual = { tamano: TAMANOS.cuerpo, negrita: false, color: COLORES_IOTA.tinta };
+  // Tamaños de letra con la escala aplicada.
+  private readonly t: typeof TAMANOS;
 
-  constructor(private pdf: jsPDF) { }
+  // Los margenes de la hoja no cambian; la letra y los espacios entre bloques, si.
+  constructor(private pdf: jsPDF, private escala = 1) {
+    this.t = Object.fromEntries(Object.entries(TAMANOS).map(([clave, tamano]) => [clave, tamano * escala])) as typeof TAMANOS;
+  }
 
   private alto = (tamano: number) => tamano * 1.4;
+  private e = (medida: number) => medida * this.escala;
 
   private estilo(tamano: number, peso: 'normal' | 'bold', color: string) {
     this.pdf.setFont(FUENTE, peso);
     this.pdf.setFontSize(tamano);
     this.pdf.setTextColor(color);
+    this.actual = { tamano, negrita: peso === 'bold', color };
   }
 
   // Pasa a una hoja nueva si lo que sigue no cabe en la actual.
   private reservar(alto: number) {
     if (this.y + alto > HOJA.alto - MARGEN.abajo) {
       this.pdf.addPage();
+      this.paginas.push([]);
       this.y = MARGEN.arriba;
     }
+  }
+
+  // Cada trazo se dibuja en el PDF y se anota para la vista previa.
+  private anotar(trazo: TrazoIota) {
+    this.paginas[this.paginas.length - 1].push(trazo);
+  }
+
+  private texto(texto: string, x: number, y: number, alDerecha = false) {
+    this.pdf.text(texto, x, y, alDerecha ? { align: 'right' } : undefined);
+    this.anotar({ tipo: 'texto', x, y, texto, ...this.actual, alDerecha });
+  }
+
+  private rectangulo(x: number, y: number, ancho: number, alto: number, color: string) {
+    this.pdf.setFillColor(color);
+    this.pdf.rect(x, y, ancho, alto, 'F');
+    this.anotar({ tipo: 'rectangulo', x, y, ancho, alto, color });
+  }
+
+  private linea(x1: number, y1: number, x2: number, y2: number, grosor: number, color: string) {
+    this.pdf.setDrawColor(color);
+    this.pdf.setLineWidth(grosor);
+    this.pdf.line(x1, y1, x2, y2);
+    this.anotar({ tipo: 'linea', x1, y1, x2, y2, grosor, color });
+  }
+
+  private circulo(x: number, y: number, radio: number, color: string) {
+    this.pdf.setFillColor(color);
+    this.pdf.circle(x, y, radio, 'F');
+    this.anotar({ tipo: 'circulo', x, y, radio, color });
+  }
+
+  private imagen(src: string, x: number, y: number, ancho: number, alto: number) {
+    this.pdf.addImage(src, x, y, ancho, alto);
+    this.anotar({ tipo: 'imagen', x, y, ancho, alto, src });
   }
 
   // Escribe un texto que puede ocupar varias lineas, cortando de hoja si hace falta.
@@ -134,7 +235,7 @@ class DibujoIota {
     (this.pdf.splitTextToSize(texto, ancho) as string[]).forEach((linea, indice) => {
       this.reservar(alto);
       antesDeCadaLinea?.(this.y, indice === 0);
-      this.pdf.text(linea, x, this.y);
+      this.texto(linea, x, this.y);
       this.y += alto;
     });
   }
@@ -148,107 +249,105 @@ class DibujoIota {
     const conFoto = !!foto;
     const pdf = this.pdf;
     // La franja de color es la linea de la ruta: solo en la primera hoja.
-    pdf.setFillColor(COLORES_IOTA.acento);
-    pdf.rect(0, 0, HOJA.ancho, FRANJA, 'F');
+    this.rectangulo(0, 0, HOJA.ancho, FRANJA, COLORES_IOTA.acento);
 
     let anchoTexto = ANCHO_UTIL;
     if (conFoto) {
       const { width, height } = pdf.getImageProperties(foto);
-      const escala = Math.min(FOTO / width, FOTO / height);
+      const lado = this.e(FOTO);
+      const escala = Math.min(lado / width, lado / height);
       const ancho = width * escala;
       const alto = height * escala;
       const x = HOJA.ancho - MARGEN.derecha - ancho;
-      pdf.addImage(foto, x, MARGEN.arriba - 24 + (FOTO - alto) / 2, ancho, alto);
-      anchoTexto -= FOTO + 18;
+      this.imagen(foto, x, MARGEN.arriba - this.e(24) + (lado - alto) / 2, ancho, alto);
+      anchoTexto -= lado + this.e(18);
     }
 
     this.y = MARGEN.arriba;
     if (cv.nombre) {
-      this.estilo(TAMANOS.nombre, 'bold', COLORES_IOTA.tinta);
-      this.lineas(cv.nombre, MARGEN.izquierda, anchoTexto, TAMANOS.nombre);
-      this.y -= 4;
+      this.estilo(this.t.nombre, 'bold', COLORES_IOTA.tinta);
+      this.lineas(cv.nombre, MARGEN.izquierda, anchoTexto, this.t.nombre);
+      this.y -= this.e(4);
     }
     if (cv.cargo) {
-      this.estilo(TAMANOS.cargo, 'bold', COLORES_IOTA.acento);
-      this.lineas(cv.cargo, MARGEN.izquierda, anchoTexto, TAMANOS.cargo);
+      this.estilo(this.t.cargo, 'bold', COLORES_IOTA.acento);
+      this.lineas(cv.cargo, MARGEN.izquierda, anchoTexto, this.t.cargo);
     }
     if (cv.contacto.length) {
-      this.y += 2;
-      this.estilo(TAMANOS.contacto, 'normal', COLORES_IOTA.secundario);
-      this.lineas(cv.contacto.join('  |  '), MARGEN.izquierda, anchoTexto, TAMANOS.contacto);
+      this.y += this.e(2);
+      this.estilo(this.t.contacto, 'normal', COLORES_IOTA.secundario);
+      this.lineas(cv.contacto.join('  |  '), MARGEN.izquierda, anchoTexto, this.t.contacto);
     }
     if (conFoto) {
-      this.y = Math.max(this.y, MARGEN.arriba - 24 + FOTO + 6);
+      this.y = Math.max(this.y, MARGEN.arriba + this.e(FOTO - 24 + 6));
     }
   }
 
   private seccion(seccion: SeccionCv) {
     const pdf = this.pdf;
-    this.y += 16;
+    this.y += this.e(16);
     // El titulo no queda solo al final de una hoja: se reserva tambien el primer renglon del contenido.
-    this.reservar(this.alto(TAMANOS.seccion) + this.alto(TAMANOS.titulo) * 2 + 6);
+    this.reservar(this.alto(this.t.seccion) + this.alto(this.t.titulo) * 2 + this.e(6));
 
-    this.estilo(TAMANOS.seccion, 'bold', COLORES_IOTA.acento);
-    pdf.text(seccion.titulo, MARGEN.izquierda, this.y);
+    this.estilo(this.t.seccion, 'bold', COLORES_IOTA.acento);
+    this.texto(seccion.titulo, MARGEN.izquierda, this.y);
     // El anden: una linea del color de acento desde el titulo hasta el margen.
-    const inicioLinea = MARGEN.izquierda + pdf.getTextWidth(seccion.titulo) + 8;
-    pdf.setDrawColor(COLORES_IOTA.acento);
-    pdf.setLineWidth(0.8);
-    pdf.line(inicioLinea, this.y - TAMANOS.seccion * 0.32, HOJA.ancho - MARGEN.derecha, this.y - TAMANOS.seccion * 0.32);
-    this.y += this.alto(TAMANOS.seccion) + 2;
+    const inicioLinea = MARGEN.izquierda + pdf.getTextWidth(seccion.titulo) + this.e(8);
+    const yLinea = this.y - this.t.seccion * 0.32;
+    this.linea(inicioLinea, yLinea, HOJA.ancho - MARGEN.derecha, yLinea, this.e(0.8), COLORES_IOTA.acento);
+    this.y += this.alto(this.t.seccion) + this.e(2);
 
     if (seccion.parrafo) {
-      this.estilo(TAMANOS.cuerpo, 'normal', COLORES_IOTA.tinta);
-      this.lineas(seccion.parrafo, MARGEN.izquierda, ANCHO_UTIL, TAMANOS.cuerpo);
+      this.estilo(this.t.cuerpo, 'normal', COLORES_IOTA.tinta);
+      this.lineas(seccion.parrafo, MARGEN.izquierda, ANCHO_UTIL, this.t.cuerpo);
     }
     seccion.entradas.forEach((entrada, indice) => {
       if (indice > 0) {
-        this.y += 8;
+        this.y += this.e(8);
       }
       this.entrada(entrada);
     });
     if (seccion.elementos.length) {
-      this.estilo(TAMANOS.cuerpo, 'normal', COLORES_IOTA.tinta);
+      this.estilo(this.t.cuerpo, 'normal', COLORES_IOTA.tinta);
       // Separados por comas: es la forma en que los ATS reconocen cada habilidad.
-      this.lineas(seccion.elementos.join(', '), MARGEN.izquierda, ANCHO_UTIL, TAMANOS.cuerpo);
+      this.lineas(seccion.elementos.join(', '), MARGEN.izquierda, ANCHO_UTIL, this.t.cuerpo);
     }
   }
 
   private entrada(entrada: EntradaCv) {
     const pdf = this.pdf;
-    this.reservar(this.alto(TAMANOS.titulo) * 2);
+    this.reservar(this.alto(this.t.titulo) * 2);
 
     // Las fechas van a la derecha, en la misma linea del cargo, como la hora en un itinerario.
-    this.estilo(TAMANOS.lugar, 'normal', COLORES_IOTA.secundario);
-    const anchoFechas = entrada.fechas ? pdf.getTextWidth(entrada.fechas) + 16 : 0;
+    this.estilo(this.t.lugar, 'normal', COLORES_IOTA.secundario);
+    const anchoFechas = entrada.fechas ? pdf.getTextWidth(entrada.fechas) + this.e(16) : 0;
     const yTitulo = this.y;
 
-    this.estilo(TAMANOS.titulo, 'bold', COLORES_IOTA.tinta);
-    this.lineas(entrada.titulo, MARGEN.izquierda, ANCHO_UTIL - anchoFechas, TAMANOS.titulo);
+    this.estilo(this.t.titulo, 'bold', COLORES_IOTA.tinta);
+    this.lineas(entrada.titulo, MARGEN.izquierda, ANCHO_UTIL - anchoFechas, this.t.titulo);
 
     if (entrada.fechas) {
-      this.estilo(TAMANOS.lugar, 'normal', COLORES_IOTA.secundario);
-      pdf.text(entrada.fechas, HOJA.ancho - MARGEN.derecha, yTitulo, { align: 'right' });
+      this.estilo(this.t.lugar, 'normal', COLORES_IOTA.secundario);
+      this.texto(entrada.fechas, HOJA.ancho - MARGEN.derecha, yTitulo, true);
     }
     if (entrada.lugar) {
-      this.estilo(TAMANOS.lugar, 'normal', COLORES_IOTA.secundario);
-      this.lineas(entrada.lugar, MARGEN.izquierda, ANCHO_UTIL, TAMANOS.lugar);
+      this.estilo(this.t.lugar, 'normal', COLORES_IOTA.secundario);
+      this.lineas(entrada.lugar, MARGEN.izquierda, ANCHO_UTIL, this.t.lugar);
     }
     if (entrada.parrafo) {
-      this.y += 2;
-      this.estilo(TAMANOS.cuerpo, 'normal', COLORES_IOTA.tinta);
-      this.lineas(entrada.parrafo, MARGEN.izquierda, ANCHO_UTIL, TAMANOS.cuerpo);
+      this.y += this.e(2);
+      this.estilo(this.t.cuerpo, 'normal', COLORES_IOTA.tinta);
+      this.lineas(entrada.parrafo, MARGEN.izquierda, ANCHO_UTIL, this.t.cuerpo);
     }
     if (entrada.puntos.length) {
-      this.y += 2;
+      this.y += this.e(2);
     }
     entrada.puntos.forEach(punto => {
-      this.estilo(TAMANOS.cuerpo, 'normal', COLORES_IOTA.tinta);
+      this.estilo(this.t.cuerpo, 'normal', COLORES_IOTA.tinta);
       // La viñeta se dibuja, no se escribe: el texto que lee el ATS queda limpio.
-      this.lineas(punto, MARGEN.izquierda + SANGRIA_PUNTO, ANCHO_UTIL - SANGRIA_PUNTO, TAMANOS.cuerpo, (y, primera) => {
+      this.lineas(punto, MARGEN.izquierda + this.e(SANGRIA_PUNTO), ANCHO_UTIL - this.e(SANGRIA_PUNTO), this.t.cuerpo, (y, primera) => {
         if (primera) {
-          pdf.setFillColor(COLORES_IOTA.acento);
-          pdf.circle(MARGEN.izquierda + 3.5, y - TAMANOS.cuerpo * 0.33, 1.9, 'F');
+          this.circulo(MARGEN.izquierda + this.e(3.5), y - this.t.cuerpo * 0.33, this.e(1.9), COLORES_IOTA.acento);
         }
       });
     });

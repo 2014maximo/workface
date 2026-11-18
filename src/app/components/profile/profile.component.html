@@ -11,7 +11,7 @@
       <h2 id="tituloVistaPrevia" class="vista-previa-titulo">{{ 'perfil.vistaPrevia' | translate }}</h2>
       <p class="vista-previa-ayuda">{{ 'perfil.vistaPreviaAyuda' | translate }}</p>
       @if (tieneDatos()) {
-        <app-iota [contenido]="borrador()"></app-iota>
+        <app-iota [contenido]="borrador()" [paginada]="true"></app-iota>
       } @else {
         <p class="vista-previa-vacia">{{ 'perfil.vistaPreviaVacia' | translate }}</p>
       }

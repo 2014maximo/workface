@@ -6,11 +6,31 @@
     </button>
     @if (cv.foto) {
       <label class="iota-interruptor">
-        <input type="checkbox" role="switch" [checked]="conFoto" (change)="conFoto = $any($event.target).checked">
+        <input type="checkbox" role="switch" [checked]="conFoto" (change)="cambiarFoto($any($event.target).checked)">
         <span>{{ 'iota.incluirFoto' | translate }}</span>
       </label>
     }
+    @if (medida && medida.normal.paginas.length > 1) {
+      <label class="iota-interruptor">
+        <input type="checkbox" role="switch" [checked]="unaPagina" (change)="cambiarUnaPagina($any($event.target).checked)">
+        <span>{{ 'iota.unaPagina' | translate }}</span>
+      </label>
+    }
     <p class="iota-nota">{{ 'iota.notaAts' | translate }}</p>
+    @if (medida && medida.normal.paginas.length > 1) {
+      <p class="iota-aviso" role="status">
+        <svg class="iota-aviso-icono" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="4.75" y="2.75" width="11.5" height="15" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8.75 21.25h10.5v-14" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+        <span>
+          @if (!unaPagina) {
+            {{ 'iota.variasPaginas' | translate: { n: medida.normal.paginas.length } }}
+          } @else if (medida.ajustada.paginas.length === 1) {
+            {{ 'iota.ajustada' | translate: { p: reduccion } }}
+          } @else {
+            {{ 'iota.noCabe' | translate: { n: medida.ajustada.paginas.length } }}
+          }
+        </span>
+      </p>
+    }
     @if (cv.empresasOmitidas > 0) {
       <p class="iota-aviso" role="status">
         <svg class="iota-aviso-icono" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="9.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 10.75v5.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><circle cx="12" cy="7.75" r="1.1" fill="currentColor"/></svg>
@@ -20,8 +40,46 @@
     }
   </div>
 
+  @if (paginada && composicion; as composicion) {
+    <!-- Las mismas hojas del PDF, dibujadas con sus trazos: cortan exactamente donde corta el archivo -->
+    <div class="iota-paginas" [lang]="cv.idioma" role="region" [attr.aria-label]="'iota.vistaPrevia' | translate">
+      @for (pagina of composicion.paginas; track $index; let numero = $index, total = $count) {
+        <figure class="iota-pagina">
+          <svg class="iota-pagina-hoja" [attr.viewBox]="'0 0 ' + hoja.ancho + ' ' + hoja.alto" xmlns="http://www.w3.org/2000/svg"
+               role="group" [attr.aria-label]="'iota.pagina' | translate: { n: numero + 1, total }">
+            @for (trazo of pagina; track $index) {
+              @switch (trazo.tipo) {
+                @case ('texto') {
+                  <svg:text class="iota-trazo-texto" [attr.x]="trazo.x" [attr.y]="trazo.y" [attr.font-size]="trazo.tamano"
+                            [attr.font-weight]="trazo.negrita ? 700 : 400" [attr.fill]="trazo.color"
+                            [attr.text-anchor]="trazo.alDerecha ? 'end' : null">{{ trazo.texto }}</svg:text>
+                }
+                @case ('rectangulo') {
+                  <svg:rect [attr.x]="trazo.x" [attr.y]="trazo.y" [attr.width]="trazo.ancho" [attr.height]="trazo.alto" [attr.fill]="trazo.color" aria-hidden="true"/>
+                }
+                @case ('linea') {
+                  <svg:line [attr.x1]="trazo.x1" [attr.y1]="trazo.y1" [attr.x2]="trazo.x2" [attr.y2]="trazo.y2"
+                            [attr.stroke]="trazo.color" [attr.stroke-width]="trazo.grosor" aria-hidden="true"/>
+                }
+                @case ('circulo') {
+                  <svg:circle [attr.cx]="trazo.x" [attr.cy]="trazo.y" [attr.r]="trazo.radio" [attr.fill]="trazo.color" aria-hidden="true"/>
+                }
+                @case ('imagen') {
+                  <svg:image [attr.href]="trazo.src" [attr.x]="trazo.x" [attr.y]="trazo.y" [attr.width]="trazo.ancho" [attr.height]="trazo.alto"
+                             preserveAspectRatio="xMidYMid meet" aria-hidden="true"/>
+                }
+              }
+            }
+          </svg>
+          @if (total > 1) {
+            <figcaption class="iota-pagina-numero" aria-hidden="true">{{ 'iota.pagina' | translate: { n: numero + 1, total } }}</figcaption>
+          }
+        </figure>
+      }
+    </div>
+  } @else {
   <div class="iota-marco">
-    <article class="iota-hoja" [lang]="cv.idioma" [attr.aria-label]="'iota.vistaPrevia' | translate">
+    <article class="iota-hoja" [lang]="cv.idioma" [style.--iota-escala]="escala" [attr.aria-label]="'iota.vistaPrevia' | translate">
       <header class="iota-encabezado" [class.con-foto]="conFoto && cv.foto">
         <div>
           @if (cv.nombre) {
@@ -82,5 +140,6 @@
       }
     </article>
   </div>
+  }
 </div>
 }
